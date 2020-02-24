@@ -1,0 +1,58 @@
+<html>
+
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="main.js"></script>-->
+		<script src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="main.css">
+		
+	</head>
+	<body>
+	
+		<!--Login Screen-->
+		<div id="loginScreen" class="fitScreen">
+			<img class="screenImage" src="pictures/loginScreen.png"></img>
+			<a id="registerBtn" class="btn navBtn"></a>
+			<!--Settings button seen on many screens-->
+			<a id="settingsBtn" class="btn navBtn"></a>
+		</div>
+		
+		<!--Module selection screen-->
+		<div id="moduleSelectScreen" class="fitScreen">
+			<img class="screenImage" src="pictures/moduleSelectScreen.png"></img>
+			<a id="backToLoginBtn" class="btn navBtn"></a>
+			<!--Settings button seen on many screens-->
+			<a id="settingsBtn" class="btn navBtn"></a>
+			
+			<ul id="moduleList">
+				<li>
+					<a id="beatsModuleBtn" class="btn moduleBtn"></a>
+				</li>
+				<li>
+					<a class="btn moduleBtn"></a>
+				</li>
+			</ul>
+		</div>
+		
+		
+		
+		<div id="beatsModuleScreen" class="fitScreen"><!--Hardcoded for now-->
+			<img class="screenImage" src="pictures/moduleScreen.png"></img>
+			<a id="backToModulesBtn" class="btn navBtn"></a>
+			<!--Settings button seen on many screens-->
+			<a id="settingsBtn" class="btn navBtn"></a>
+		</div>
+		
+		
+		<div id="moduleContainer">
+			<!--Could dynamically inject html into this container from config etc-->
+		</div>
+		
+		<!--Settings screen-->
+		<div id="settingsScreen" class="fitScreen">
+			<img class="screenImage" src="pictures/settingsScreen.png"></img>
+			<a id="backFromSettingsBtn" class="btn navBtn"></a>
+		</div>
+		
+	</body>
+</html>
