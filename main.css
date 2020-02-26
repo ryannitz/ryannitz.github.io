@@ -176,7 +176,7 @@ img#colorBlindOptImage{
 	Level 1, lesson 1
 */
 
-ul#lev1_les1{
+ul#lev1{
 	border: 1px solid green;
     position: fixed;
     background-color: rgb(239, 228, 176);
@@ -192,4 +192,50 @@ li.lessonsMultChoiceOpt{
 }
 li.lessonsMultChoiceOpt > img{
 	width: 100%;
+}
+
+a#checkQuestion{
+	height: 8%;
+	width:20%;
+	bottom:2%;
+	right:10%;
+}
+
+a.nextQuestion{
+	width: 30%;
+    height: 5%;
+    bottom: 23%;
+    right: 25%;
+}
+
+
+#correctPop{
+
+}
+
+.feedback{
+	position: fixed;
+	display:none;
+	right:20%;
+	bottom:20%;
+}
+
+
+ul#feedbackIndicators{
+	position:fixed;
+}
+li.feedbackIndImg{
+
+}
+
+.indOff{
+	display:none;
+}
+
+.indCorrect{
+	background-image: url();
+}
+
+.indIncorrect{
+	background-image: url();
 }

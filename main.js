@@ -3,7 +3,6 @@ var loginScreen = "div#loginScreen"
 var moduleSelectScreen = "div#moduleSelectScreen"
 var settingsScreen = "div#settingsScreen"
 
-
 var readingNotesModule = "div#readingNotesModule"
 
 var readingNotesLesson1 = "div#readingNotesLesson1"
@@ -11,7 +10,7 @@ var readingNotesLesson1 = "div#readingNotesLesson1"
 var fromSettings = null;
 var previousScreen = null;
 
-var currentModule = 3;
+var currentModule = 3;//for croll to functionality
 
 $(document).ready(function(){
 	$(".fitScreen").hide();//super hacky
@@ -19,16 +18,17 @@ $(document).ready(function(){
 	previousScreen = "loginScreen"
 
 
+	//this may not work if the previous screens are back to back and get in a fun loop
+	// $("a.backBtn").click(function(){
+	// 	console.log("Back to: " + previousScreen)
+	// 	$(this).closest(".fitScreen").hide();
+	// 	if(previousScreen != null){
+	// 		$("div#"+previousScreen).show();
+	// 	}else{
+	// 		console.log("Do something");
+	// 	}
+	// });
 
-	$("a.backBtn").click(function(){
-		console.log("Back to: " + previousScreen)
-		$(this).closest(".fitScreen").hide();
-		if(previousScreen != null){
-			$("div#"+previousScreen).show();
-		}else{
-			console.log("Do something");
-		}
-	});
 	//general controller for nav buttons
 	$(".navBtn").click(function(){
 		previousScreen = $(this).closest(".fitScreen").attr('id');
@@ -36,20 +36,30 @@ $(document).ready(function(){
 		$(this).closest(".fitScreen").hide();
 		
 	});
-	
+
 	$("a#registerBtn").click(function(){
 		$(moduleSelectScreen).show();
 	});
-
 	$("a#readingNotesModuleBtn").click(function(){
 		$(readingNotesModule).show();
 	});
 
+	
+
+	$("a#backToLoginBtn").click(function(){
+		$(loginScreen).show();
+	});
+	$("a#backToModuleSelectBtn").click(function(){
+		$(moduleSelectScreen).show();
+	});
+	$("a#backToModuleBtn").click(function(){
+		$(readingNotesModule).show();
+	});
+	
 	$("a#settingsBtn").click(function(){
 		fromSettings = $(this).closest(".fitScreen").attr('id');
 		$(settingsScreen).show();
 	});
-
 	//dynamic controller for returning to correct screen 
 	$("a#backFromSettingsBtn").click(function(){
 		$("div#"+fromSettings).show();
@@ -75,10 +85,12 @@ $(document).ready(function(){
 		});
 	});
 
-	var unlocked = "pictures/module1/module1_level_unlocked.png"
-	$("a.nodeBtn").click(function(){//use this for when a lesson is completed
-		$(this).children().attr('src', unlocked)
-	});
+	//I wrote this, but it's useless ahaha Can maybe turn it into a function
+
+	// var unlocked = "pictures/module1/module1_level_unlocked.png"
+	// $("a.nodeBtn").click(function(){//use this for when a lesson is completed
+	// 	$(this).children().attr('src', unlocked)
+	// });
 
 	$("a#n1").click(function(){
 		//go to the first lesson., start saving the sequence vars
@@ -97,13 +109,77 @@ $(document).ready(function(){
 			l1_q1_letter = $(this).children().attr('alt');
 			var newSrc = level1_ans  + l1_q1_letter + selectedStr;
 			$(this).children().attr('src', newSrc);
+			$(this).addClass("selected");
 			l1_q1_picked = true;
 		}
 		
 	});
 
+	var answerQ1 = "c";
+	var answerQ2 = "d";
+	var answerQ3 = "a";
+
 	//onclick of next btn in lessons, show if correct modal
+	$("a#checkQuestion").click(function(){
+		var currentQ = $("img#l1Image").attr('src');
+		var selectedLetter = $("ul#lev1 > li.selected > img").attr('alt');
+		console.log("selected letter" + selectedLetter)
+		if(currentQ.includes("q1")){
+			console.log("is q1")
+			if(answerQ1 === selectedLetter){
+				console.log("true")
+				showCorrect();
+			}else{
+				showCorrect();
+				//showIncorrect(answerQ1);
+			}
+		}else if(currentQ.includes("q2")){
+			if(answerQ1 === selectedLetter){
+				showCorrect();
+			}else{
+				showCorrect();
+				//showIncorrect(answerQ2);
+			}
+		}else if(currentQ.includes("q3")){
+			if(answerQ1 === selectedLetter){
+				showCorrect();
+			}else{
+				showCorrect();//getting reallll hacky and tired. time: 1am lolll
+				//showIncorrect(answerQ3);
+			}
+		}
+	});
+
+	function showCorrect(){
+		$("div#correctPop").show();
+	}
+
+	function showIncorrect(ans){
+		//hmmm nope
+	}
+
+	//can be abstarcted to allow for param inputs
+	$("a.nextQuestion").click(function(){
+		$(".feedback").hide();
+		var currentQ = $("img#l1Image").attr('src');
+		if(currentQ.includes("q1")){
+			//then just change the screen (shoould probably implement a check to see if they answered first)
+			$("img#l1Image").attr('src', "pictures/level1/level1_q2.png");
+		}else if(currentQ.includes("q2")){
+			$("img#l1Image").attr('src', "pictures/level1/level1_q3.png");
+		}else if(currentQ.includes("q3")){
+			//go back to module screen. also set it so that the module is completed (shhh),
+
+			$(readingNotesLesson1).hide();
+			$(readingNotesModule).show();
+			$("a#n2 > img").hide();
+			$("a#n2").addClass("unlockedNode navBtn");
+			$("#moduleSelectBody > img.screenImage").attr('src', 'pictures/menu/menu_scroll - after_module1_complete.png')
+		}
+	});
 
 	//next button on modal will bring to next page
-	//see correct answer will do something
+	//'see correct answer' will do something
+
+	//if back button is pressed on a question screen, just go back to node screen
 });
