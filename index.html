@@ -12,6 +12,10 @@
 		<!--Login Screen-->
 		<div id="loginScreen" class="fitScreen">
 			<img class="screenImage" src="pictures/loginScreen.png"></img>
+				<form id="loginForm">
+					<input type="text"/>
+					<input type="password"/>
+				</form>
 			<a id="registerBtn" class="btn navBtn"></a>
 			<!--Settings button seen on many screens-->
 			<a id="settingsBtn" class="btn navBtn"></a>
@@ -19,28 +23,78 @@
 		
 		<!--Module selection screen-->
 		<div id="moduleSelectScreen" class="fitScreen">
-			<img class="screenImage" src="pictures/moduleSelectScreen.png"></img>
-			<a id="backToLoginBtn" class="btn navBtn"></a>
-			<!--Settings button seen on many screens-->
-			<a id="settingsBtn" class="btn navBtn"></a>
-			
-			<ul id="moduleList">
-				<li>
-					<a id="beatsModuleBtn" class="btn moduleBtn"></a>
-				</li>
-				<li>
-					<a class="btn moduleBtn"></a>
-				</li>
-			</ul>
+
+			<div id="moduleSelectionHeader">
+				<img class="headerImage" src="pictures/menu/menu_header.png"></img>
+				<a id="backToLoginBtn" class="btn navBtn"></a>
+				<a id="scrollToModule" class="btn"></a>
+				<!--Settings button seen on many screens-->
+				<a id="settingsBtn" class="btn navBtn"></a>
+			</div>
+
+			<div id="moduleSelectBody">
+				<img class="screenImage" src="pictures/menu/menu_scroll.png"></img>
+				<ul id="moduleList">
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a class="btn navBtn moduleBtn"></a>
+					</li>
+				</ul>
+			</div>
 		</div>
 		
+		<div id="readingNotesModule" class="fitScreen">
+			<img class="screenImage" src="pictures/module1/module1_v2.png"/>
+			<div>
+				<a id="n1" class="btn navBtn nodeBtn unlockedNode">
+					<div>
+						<img>
+					</div>
+					<img src=""/>
+				</a>
+				<a id="n2" class="btn nodeBtn">
+					<img src="pictures/module1/module1_level_lock.png"/>
+				</a>
+				<a id="n3" class="btn nodeBtn">
+					<img src="pictures/module1/module1_level_lock.png"/>
+				</a>
+				<a id="n4" class="btn nodeBtn">
+					<img src="pictures/module1/module1_level_lock.png"/>
+				</a>
+				<a id="n5" class="btn nodeBtn"><!--Requires diff pic for boss level-->
+					<img src="pictures/module1/module1_boss_lock.png"/>
+				</a>
+			</div>
+			<div>
+				<a id="backToModulesBtn" class="btn navBtn"></a>
+				<!--Settings button seen on many screens-->
+				<a id="settingsBtn" class="btn navBtn"></a>
+			</div>
+		</div>
+
+		<div id="readingNotesLesson1" class="fitScreen">
+			<img class="screenImage" src="pictures/..">
+		</div>
 		
 		
 		<div id="beatsModuleScreen" class="fitScreen"><!--Hardcoded for now-->
 			<img class="screenImage" src="pictures/moduleScreen.png"></img>
-			<a id="backToModulesBtn" class="btn navBtn"></a>
-			<!--Settings button seen on many screens-->
-			<a id="settingsBtn" class="btn navBtn"></a>
+			<div>
+				<a id="backToModulesBtn" class="btn navBtn"></a>
+				<!--Settings button seen on many screens-->
+				<a id="settingsBtn" class="btn navBtn"></a>
+			</div>
 		</div>
 		
 		
@@ -50,8 +104,25 @@
 		
 		<!--Settings screen-->
 		<div id="settingsScreen" class="fitScreen">
-			<img class="screenImage" src="pictures/settingsScreen.png"></img>
-			<a id="backFromSettingsBtn" class="btn navBtn"></a>
+			<img class="screenImage" src="pictures/settingsScreen/setting_screen.png"></img>
+			<a id="toggleColorBlind" class="btn">
+				<img id="colorBlindOptImage" src = "pictures/settingsScreen/setting_blind_uncheck.png"/>
+			</a>
+			<div>
+				<a id="backFromSettingsBtn" class="btn navBtn"></a>
+			</div>
+		</div>
+
+		<!--CONGRATS POPUP on module selection screen-->
+		<div id="popup" class="popupContainer">
+			<!-- could script to use existing html elements and style them as a popup-->
+			<div id="settingsPop">
+				<img src="pictures/settingsScreen/setting_screen.png"/>
+			</div>
+
+			<div id="congratsPop">
+				<img src=""/>
+			</div>
 		</div>
 		
 	</body>
