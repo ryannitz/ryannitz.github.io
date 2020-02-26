@@ -188,6 +188,7 @@ ul#lev1_les1{
 
 li.lessonsMultChoiceOpt{
 	height:25%;
+	border: 1px solid red;
 }
 li.lessonsMultChoiceOpt > img{
 	width: 100%;

@@ -93,11 +93,11 @@ $(document).ready(function(){
 	var level1_ans = "pictures/level1/level1_ans/level1_ans_";
 	var selectedStr = "_select.png"
 	$("li.lessonsMultChoiceOpt").click(function(){
-		if(!level1_picked){
+		if(!l1_q1_picked){
 			l1_q1_letter = $(this).children().attr('alt');
 			var newSrc = level1_ans  + l1_q1_letter + selectedStr;
 			$(this).children().attr('src', newSrc);
-			level1_picked = true;
+			l1_q1_picked = true;
 		}
 		
 	});
