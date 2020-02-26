@@ -2,6 +2,12 @@ body,html{
 	padding:0px;
 	margin:0px;
 }
+ul{
+	list-style-type:none!important;
+	margin:0!important;
+	padding:0!important;
+}
+
 .fitScreen{
 	width:100%;
 	height:1150px;
@@ -24,6 +30,12 @@ body,html{
 	right: 3%;
 	height:9%;
 	width:12%;
+}
+.backBtn{
+	height:9%;
+	width:20%;
+	top: 2%;
+	left: 4%;
 }
 
 /*
@@ -56,13 +68,6 @@ body,html{
 	width:100%;
 }
 
-#backToLoginBtn{
-	height:9%;
-	width:20%;
-	top: 2%;
-	left: 4%;
-}
-
 #scrollToModule{
 	height:9%;
 	width:50%;
@@ -74,10 +79,7 @@ body,html{
 	overflow-y:scroll!important;
 }
 
-#moduleList{
-	list-style-type:none;
-	margin:0;
-	padding:0;
+ul#moduleList{
 	position: absolute;
 	border: 1px solid green;
 	width: 70%;
@@ -92,41 +94,40 @@ body,html{
 	width:100%;
 	height: 18%;
 }
-#backToModulesBtn{
-	height:9%;
-	width:20%;
-	top: 2%;
-	left: 4%;
-}
 
 
 /**
 	MODULE SCREEN
 **/
 
-.nodeButton{
+.nodeBtn{
 	border-radius: 50%;
 }
 
+.unlockedNode{
+	height:6%;
+	width:10%;
+}
+
 #n1{
-	bottom:10%;
-	right:10%;
+	bottom:23%;
+	right:22%;
 }
 #n2{
-	bottom:10%;
-	right:10%;
+	bottom:37%;
+	right:54%;
 }
 #n3{
-	bottom:10%;
-	right:10%;
+	bottom:51%;
+	right:55%;
 }
 #n4{
-	bottom:10%;
-	right:10%;
+	bottom:62%;
+	right:40%;
 }
 #n5{
-	bottom:10%;
-	right:10%;
+	bottom:85%;
+	right:29%;
 }
 
 /*
@@ -160,7 +161,7 @@ img#colorBlindOptImage{
 }
 
 .popupContainer{
-
+	display:none;
 }
 
 #settingsPop{
@@ -169,4 +170,25 @@ img#colorBlindOptImage{
 
 #congratsPop{
 
+}
+
+/*
+	Level 1, lesson 1
+*/
+
+ul#lev1_les1{
+	border: 1px solid green;
+    position: fixed;
+    background-color: rgb(239, 228, 176);
+    top: 69%;
+    left: 52%;
+    width: 44%;
+    height: 20%;
+}
+
+li.lessonsMultChoiceOpt{
+	height:25%;
+}
+li.lessonsMultChoiceOpt > img{
+	width: 100%;
 }
