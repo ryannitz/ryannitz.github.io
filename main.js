@@ -17,6 +17,20 @@ $(document).ready(function(){
 	$(loginScreen).show();
 	previousScreen = "loginScreen"
 
+	var actUser = "user";
+	var actPass = "abc";
+	var allowEnter = false;
+	$("a#registerBtn").click(function(){
+		var user = $("#username").val();
+		var pass = $("#password").val();
+
+		if(pass == actPass){
+			if(user == actUser){
+				allowEnter = true;
+			}
+		}
+	});
+
 
 	//this may not work if the previous screens are back to back and get in a fun loop
 	// $("a.backBtn").click(function(){
@@ -31,14 +45,18 @@ $(document).ready(function(){
 
 	//general controller for nav buttons
 	$(".navBtn").click(function(){
-		previousScreen = $(this).closest(".fitScreen").attr('id');
-		console.log("setting previous:" + previousScreen)
-		$(this).closest(".fitScreen").hide();
-		
+		var idStr = $(this).closest(".fitScreen").attr('id')
+		if(allowEnter ||  idStr == "settingsScreen"){
+			previousScreen = idStr;
+			console.log("setting previous:" + previousScreen)
+			$(this).closest(".fitScreen").hide();
+		}
 	});
 
 	$("a#registerBtn").click(function(){
-		$(moduleSelectScreen).show();
+		if(allowEnter){
+			$(moduleSelectScreen).show();
+		}
 	});
 	$("a#readingNotesModuleBtn").click(function(){
 		$(readingNotesModule).show();
@@ -58,6 +76,7 @@ $(document).ready(function(){
 	
 	$("a#settingsBtn").click(function(){
 		fromSettings = $(this).closest(".fitScreen").attr('id');
+		$(this).closest(".fitScreen").hide();//added because login control
 		$(settingsScreen).show();
 	});
 	//dynamic controller for returning to correct screen 
@@ -94,6 +113,11 @@ $(document).ready(function(){
 
 	$("a#n1").click(function(){
 		//go to the first lesson., start saving the sequence vars
+		$(readingNotesLesson1).show();
+	});
+	$("a#n2").click(function(){
+		//go to the first lesson., start saving the sequence vars
+		$(this).closest(".fitScreen").hide();
 		$(readingNotesLesson1).show();
 	});
 
