@@ -1,0 +1,192 @@
+<html>
+	<!--Have to us some sort of state saving metric. maybe printing to a json file in local host-->
+	<head>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<!--<script type="text/javascript" src="main.js"></script>-->
+		<script src="main.js"></script>
+		<link rel="stylesheet" type="text/css" href="main.css">
+		
+	</head>
+	<body>
+	
+		<!--Login Screen-->
+		<div id="loginScreen" class="fitScreen">
+			<img class="screenImage" src="pictures/loginScreen.png"></img>
+				<form id="loginForm">
+					
+					<input id="username" type="text"/>
+					<br/>
+					<input id="password" type="password"/>
+				</form>
+			<a id="registerBtn" class="btn navBtn"></a>
+			<!--Settings button seen on many screens-->
+			<a id="settingsBtn" class="btn navBtn"></a>
+		</div>
+		
+		<!--Module selection screen-->
+		<div id="moduleSelectScreen" class="fitScreen">
+
+			<div id="moduleSelectionHeader">
+				<img class="headerImage" src="pictures/menu/menu_header.png"></img>
+				<a id="backToLoginBtn" class="btn navBtn backBtn"></a>
+				<a id="scrollToModule" class="btn"></a>
+				<!--Settings button seen on many screens-->
+				<a id="settingsBtn" class="btn navBtn"></a>
+			</div>
+
+			<div id="moduleSelectBody">
+				<img class="screenImage" src="pictures/menu/menu_scroll.png"></img>
+				<ul id="moduleList">
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+					<li>
+						<a id="readingNotesModuleBtn" class="btn navBtn moduleBtn"></a>
+					</li>
+				</ul>
+			</div>
+		</div>
+		
+		<div id="readingNotesModule" class="fitScreen">
+			<img class="screenImage" src="pictures/module1/module1_v2.png"/>
+			<div>
+				<a id="n1" class="btn navBtn nodeBtn unlockedNode"></a>
+				<a id="n2" class="btn nodeBtn">
+					<img src="pictures/module1/module1_level_lock.png"/>
+				</a>
+				<a id="n3" class="btn nodeBtn">
+					<img src="pictures/module1/module1_level_lock.png"/>
+				</a>
+				<a id="n4" class="btn nodeBtn">
+					<img src="pictures/module1/module1_level_lock.png"/>
+				</a>
+				<a id="n5" class="btn nodeBtn"><!--Requires diff pic for boss level-->
+					<img src="pictures/module1/module1_boss_lock.png"/>
+				</a>
+			</div>
+			<div>
+				<a id="backToModuleSelectBtn" class="btn navBtn backBtn"></a>
+				<a id="settingsBtn" class="btn navBtn"></a>
+			</div>
+		</div>
+
+		<!--Pretend after this one lesson, that the module is complete. :) 
+			cause this hardcoding is actually a lot of blunt extra work-->
+		<div id="readingNotesLesson1" class="fitScreen">
+
+			<div id="l1q1">
+				<img id="l1Image" class="screenImage" src="pictures/level1/level1_q1.png">
+
+				<ul id="lev1">
+					<li class="lessonsMultChoiceOpt">
+						<img src="pictures/level1/level1_ans/level1_ans_a.png" alt="a">
+					</li>
+					<li class="lessonsMultChoiceOpt">
+						<img src="pictures/level1/level1_ans/level1_ans_b.png" alt="b">
+					</li>
+					<li class="lessonsMultChoiceOpt"><!--Super bad practice to put correct answer here xD-->
+						<img src="pictures/level1/level1_ans/level1_ans_c.png" alt="c">
+					</li>
+					<li class="lessonsMultChoiceOpt">
+						<img src="pictures/level1/level1_ans/level1_ans_d.png" alt="d">
+					</li>
+				</ul>
+				
+
+				<div id="correctPop" class="feedback">
+					<img src="pictures/level_objects/correct.png"/>
+					<a class="btn nextQuestion"></a>
+				</div>
+	
+				<div id="wrongPop" class="feedback">
+					<img src=""/>
+				</div>
+				<!--Main controls across all question screens-->
+				<div>
+					<a id="backToModuleBtn" class="btn navBtn backBtn"></a>
+					<a id="settingsBtn" class="btn navBtn"></a>
+					<a id="checkQuestion" class="btn questionBtn"></a>
+				</div>
+
+				<!--Not implemented yet-->
+				<ul id="feedbackIndicators">
+					<li class="feedbackIndImg indOff">
+					<li class="feedbackIndImg indOff">
+					<li class="feedbackIndImg indOff">
+				</ul>
+
+			</div>
+<!--
+			<div id="l1q2"> <!--Look at injecting the uls into the div.innerHTML
+				<img class="screenImage" src="pictures/level1/level1_q2.png" alt="">
+			</div>
+		-->
+		
+		</div>
+		
+		<!--
+		<div id="beatsModuleScreen" class="fitScreen"> Hardcoded for now
+			<img class="screenImage" src="pictures/moduleScreen.png"></img>
+			<div>
+				<a id="backToModulesBtn" class="btn navBtn backBtn"></a>
+				Settings button seen on many screens
+				<a id="settingsBtn" class="btn navBtn"></a>
+			</div>
+		</div>
+	-->
+		
+		
+		<div id="moduleContainer">
+			<!--Could dynamically inject html into this container etc-->
+		</div>
+		
+		<!--Settings screen-->
+		<div id="settingsScreen" class="fitScreen">
+			<img class="screenImage" src="pictures/settingsScreen/setting_screen.png"></img>
+			<a id="toggleColorBlind" class="btn">
+				<img id="colorBlindOptImage" src = "pictures/settingsScreen/setting_blind_uncheck.png"/>
+			</a>
+			<div>
+				<a id="backFromSettingsBtn" class="btn navBtn"></a>
+			</div>
+		</div>
+
+		<!--CONGRATS POPUP on module selection screen-->
+		<div id="popup" class="popupContainer">
+			<!-- could script to use existing html elements and style them as a popup-->
+			<div id="settingsPop">
+				<img src="pictures/settingsScreen/setting_screen.png"/>
+			</div>
+
+			<div id="correcop">
+				<img src=""/>
+			</div>
+
+			<div id="wronop">
+				<img src=""/>
+			</div>
+		</div>
+		
+	</body>
+</html>

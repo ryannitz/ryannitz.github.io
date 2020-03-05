@@ -1,129 +1,329 @@
+html{
+	max-width: 800px;
+	font-family: "Comic Sans MS", cursive, sans-serif;
+}
+body{
+	width:100%;
+	height:100%;
+	background-color: black;
+}
 body,html{
 	padding:0px;
-	margin:0px;
+	margin:auto;
 }
 ul{
 	list-style-type:none!important;
-	margin:0!important;
-	padding:0!important;
+	margin:0;
+	padding:0;
 }
 
-.fitScreen{
-	width:100%;
-	height:1150px;
-}
-.screenImage {
-	width:100%;
-	min-height: 100%;
-	min-width: 800px;
-	/*overflow-y: scroll;*/
-	position:absolute;
-}
-
-.btn{
-	/*border: 2px solid red;*/
-	position:fixed;
+a:hover{
 	cursor: pointer;
 }
-#settingsBtn{
-	top: 1%;
-	right: 3%;
-	height:9%;
-	width:12%;
+
+.hide{
+	display:none;
 }
-.backBtn{
-	height:9%;
-	width:20%;
-	top: 2%;
-	left: 4%;
+.show{
+	display:block;
 }
 
-/*
-	LoginScreen
-*/
-
-#registerBtn{
-	height:7%;
-	width:31%;
-	top: 74%;
-	left: calc(50% - 13%);
+.fitWidth{
+	width:100%;
 }
 
+.screen{
+	min-height: 1150px;
+	width:800px;
+	margin:auto;
+	
+}
+
+
+.screenImage{
+	position: absolute;
+	right:0;
+	width:100%;
+	height:100%;
+	/*min-width: 800px;
+	min-height: 1150px;*/
+}
+
+
+.upperLeftBack{
+	margin:2%;
+}
+
+.primaryBtn{
+
+}
+.secondaryBtn{
+
+}
+
+.settingsBtn {
+	position: sticky;
+	margin: 2%;
+	float:right;
+}
+#loginScreen{
+	background-color: #99d9ea;
+}
+#loginLogo{
+	position: relative;
+	width: min-content;
+	margin:auto;
+	padding-top: 15%;
+}
 #loginForm{
-	position: fixed;
-    right: 19%;
+	position: relative;
     z-index: 2;
-    top: 57%;
-    width: 30%;
-    height: 15%;
+    width: 100%;
+	height: 15%;
+	margin-top:10%;
 }
-
-#loginForm > input{
-	width: 100%;
-    height: 25%;
-	margin-bottom: 23%;
-	border:none;
+#loginForm > div{
+	display:block;
+	height: 100%;
+	width:60%;
+	float:right;
+	margin-right:20%;
+	margin-bottom: 30px;
+}
+#loginForm > div > input{
+	float: right;
+	height: 40%;
+	width: 50%;
+	border: 6px solid black;
+	border-radius: 20%;
+	margin-left: 2%;
 	font-size: 200%;
+}
+#loginForm > div > label {
+	float:right;
+	text-align: right;
+	font-size: 200%;
+	
+	font-weight: bold;
 }
 #loginForm > input:focus{
 	outline: none;
 	outline-offset: 0;
 }
+#registerBtnWrapper{
+	width:33%;
+	margin: auto;
+	margin-top: 25%;
+}
+#registerBtn{
+	display: block;
+	height: min-content;
+	width:100%;
+	height: 100%;
+	background-color: #f4d284;
+	border:6px solid black;
+	border-radius: 20%;
 
+}
+#registerBtn > img{
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+	height:80%;
+	margin-top: 3%;
+	margin-bottom: 3%;
+}
 
 /*
-	Module Select Screen
-	NOTE: all of the elements for this screen will have to accomodate movement/sticky
+	MODULE SELECTION SCREEEn
 */
+
 #moduleSelectScreen{
-	
+	background-color: #99d9ea;
 }
-
-
 #moduleSelectionHeader{
-	width:100%;
-	top:0;
 	position: sticky;
-	z-index: 1;
+	top:0px;
+	display: block;
+	background-color: #324e72;
+	color:white;
+	border-bottom: 6px solid black;
 }
-.headerImage{
-	width:100%;
+#moduleSelectionHeader > a{
+	display: inline-block;
+}
+#moduleSelectionHeader > a:hover{
+	cursor: pointer;
 }
 
-#scrollToModule{
-	height:9%;
+#scrollToModule {
+	position: absolute;
 	width:50%;
-	top: 2%;
-	left:28%;
+	text-align: center;
+	top:0;
+	padding-top: 5%;
+	height: 8%;
+}
+#scrollToModule > h1{
+	margin: 0px;
+	font-size: 275%;
 }
 
 #moduleSelectBody{
-	overflow-y:scroll!important;
+	background-color: #99d9ea;
+	height:100%;
+	width:100%;
+	overflow-y: scroll;
 }
 
 ul#moduleList{
-	position: absolute;
-	/*border: 1px solid green;*/
-	width: 70%;
-	left: 15%;
-	top:16%;
-	height:86%;
+	width:70%;
+	margin:auto;
+	margin-top:5%;
 }
-.moduleBtn{
-	display:block;
-	position:relative;
-	margin-bottom:6%;
+
+ul#moduleList > li{
+	border: 6px solid black;
+	border-radius: 20%;
+	margin-bottom: 5%;
+	text-align: center;
+	padding: 10% 0 10% 0;
+	font-size: 250%;
+	font-weight: bold;
+}
+
+ul#moduleList > li.unlockedModule{
+	background-color:#f4d284;
+	color: black;
+}	
+
+ul#moduleList > li.lockedModule{
+	background-color: #7092be;
+	color: #f4d284;
+}
+
+ul#moduleList > li:hover{
+	cursor: pointer;
+}
+
+/*
+	POPUP content
+*/
+
+.popupContainer{
+	z-index: 999;
+	position:fixed;
+	top:0;
+	height:100%;
 	width:100%;
-	height: 18%;
+	background-color: rgba(0, 0, 0, 0.7);
+	max-width: 800px;
+	max-height: 1150px;
 }
 
+.popupContent{
+	position:absolute;
+	height:80%;
+	width:80%;
+	top:10%;
+	left:10%;
+	
+}
 
-/**
+#settingsContent{
+	background-color: #f4d284;
+	position: inherit;
+	width:90%;
+	height:90%;
+	padding:5%;
+	border:6px solid black;
+	border-radius: 5%;
+}
+
+#settingsLogoImg{
+	display:block;
+	width:60%;
+	margin:auto;
+	margin-bottom: 5%;
+}
+
+#settingsBackBtn{
+	position:absolute;
+	bottom:0%;
+	margin:auto;
+	width:90%;
+}
+
+#closeSettings{
+	display:block;
+	width:30%;
+	margin:auto;
+	margin-bottom: 5%;
+}
+#closeSettings:hover{
+	cursor: pointer;
+}
+
+.settingsItem{
+	display:block;
+	width:90%;
+	overflow: hidden;
+	padding-right:5%;
+	padding-left:5%;
+}
+
+.toggleOption{
+	font-size: 250%;
+	display: block;
+	overflow: hidden;
+	font-weight: bold;
+	text-align: center;
+	padding-top:5%;
+	padding-bottom:5%;
+}
+.toggleOption > span{
+	float:left;
+	width:80%;
+	display:block;
+}
+
+.toggleOption > i{
+	float:right;
+	width:10%;
+	display:block;
+	font-size: 125%;
+}
+
+#correctPop{
+	display: block;
+    position: sticky;
+    margin: auto;
+    width: 50%;
+    top: 50%;
+    margin-top: 90%;
+}
+
+/*
 	MODULE SCREEN
-**/
+*/
+#backToModuleSelectBtn > img{
+	position:relative;
+	margin:2%;
+}
+
+#moduleSettingsBtn{
+	position:sticky;
+	right:0;
+}
 
 .nodeBtn{
+	position: absolute;
 	border-radius: 50%;
+	width:10%;
+}
+.nodeBtn > img{
+	height:100%;
+	width:100%;
 }
 
 .unlockedNode{
@@ -136,128 +336,117 @@ ul#moduleList{
 	right:22%;
 }
 #n2{
-	bottom:37%;
-	right:54%;
+	bottom:36%;
+	right:calc(54% + 3px);
 }
 #n3{
 	bottom:51%;
 	right:55%;
 }
 #n4{
-	bottom:62%;
-	right:40%;
+	bottom:61%;
+	right:39%;
 }
 #n5{
 	bottom:85%;
-	right:29%;
+	right:calc(29% + 3px);
+	width:12%;
 }
+
+
 
 /*
-	Settings Screen
+	LESSON screen
 */
 
-#backFromSettingsBtn{
-	height:12%;
-	width:30%;
-	bottom: 4%;
-	left: calc(50% - 15%);
-}
 
-a#toggleColorBlind{
-	width:10%;
-	height: 7%;
-	right: 14%;
-	top:23%;
-}
-img#colorBlindOptImage{
-	height: 100%;
+#lessonControls{
+	display:block;
+	position:inherit;
 	width:100%;
+	height:100%;
 }
 
-/**
-	POPUP styles
-**/
-
-#popup{
-
+#backToModuleBtn{
+	display:block;
 }
 
-.popupContainer{
-	display:none;
+#backToModuleBtn > img{
+	position: absolute;
+	margin:2%;
 }
 
-#settingsPop{
-
+#checkQuestion > img{
+	display:block;
+	position: absolute;
+	bottom: 2%;
+	right: 5%;
 }
 
-#congratsPop{
-
+#feedbackIndicators{
+	position: absolute;
+	bottom: 4%;
+	height: 3%;
+	width:33%;
+	text-align: center;
+	left:33%;
 }
-
-/*
-	Level 1, lesson 1
-*/
-
-ul#lev1{
-	/*border: 1px solid green;*/
-    position: fixed;
-    background-color: rgb(239, 228, 176);
-    top: 69%;
-    left: 52%;
-    width: 44%;
-    height: 20%;
-}
-
-li.lessonsMultChoiceOpt{
-	height:25%;
-	/*border: 1px solid red;*/
-}
-li.lessonsMultChoiceOpt > img{
-	width: 100%;
-}
-
-a#checkQuestion{
-	height: 8%;
-	width:20%;
-	bottom:2%;
-	right:10%;
-}
-
-a.nextQuestion{
-	width: 30%;
-    height: 5%;
-    bottom: 23%;
-    right: 25%;
-}
-
-
-#correctPop{
-
-}
-
-.feedback{
-	position: fixed;
-	display:none;
-	right:20%;
-	bottom:20%;
-}
-
-
-ul#feedbackIndicators{
-	position:fixed;
-}
-li.feedbackIndImg{
-
-}
-
-.indOff{
-	display:none;
+.feedbackInd{
+	display: inline-block;
+	border-radius: 50%;
+	width: 11%; /*these indicators will change for the worse when x-number are inserted*/
+	/*would need to inject these with a set calcuated width in jquery based on number of instances*/
+	border: 5px solid black;
+	height: 100%;
+	position: relative;
+	margin-left: 1%;
+	margin-right: 1%;
 }
 
 .indCorrect{
-	background-image: url();
+	background-color: green;
+}
+.indWrong{
+	background-color: red;
 }
 
-.indIncorrect{
-	background-image: url();
+#l1q1{
+	position: absolute;
+	right:0;
+	bottom:10%;
+	width:50%;
+	height:20%;
 }
+
+#answerForm{
+	font-size: 200%;
+	font-weight: bold;
+	width:80%;
+	margin-left:10%;
+	height: 90%;
+}
+
+#answerForm > div{
+	margin-bottom:3%;
+	background-color: #e7d687;
+	height:20%;
+}
+
+#answerForm > div:hover{
+	cursor: pointer;
+}
+
+#answerForm > div > label{
+	margin-left:10px;
+}
+
+
+.answer{
+	
+	display:inline-block;
+}
+
+.answer > i{
+	float:right;
+}
+
