@@ -295,7 +295,6 @@ ul#moduleList > li:hover{
 }
 
 #correctPop{
-	display: block;
     position: sticky;
     margin: auto;
     width: 50%;
