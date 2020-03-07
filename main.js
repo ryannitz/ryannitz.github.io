@@ -104,6 +104,35 @@ $(document).ready(function(){
 ///				LESSONS LOGIC
 /////
 
+
+	opts = ["a", "b", "c", "d", "e"]//could do this dynamically with charCodes but meh
+
+	vals_m1 = [
+		[//lesson 1
+			["A","B","C","D"],//question 1 = vals_m1[0][0][2] == "C"
+			["A","B","C","D"],
+			["A","B","C","D"]
+		],
+		[//lesson 2
+			["2","4","8","10"],//question 1
+			["2","4","8","10"],
+			["2 quarter notes","2 half notes","1 whole note","2 whole notes"]
+		],
+		[//lesson 3
+			["1","2","3","4"],// question 2
+			["1","2","3","4"],
+			["half","one and half","two and half","not allowed"]
+		],
+		[
+			["1","2","3","4"],
+			["1","2","3","4"],
+			["whole rest","half rest"]
+		],
+		[
+
+		]
+	];
+
 	//would never be able to see hardcoded answers on a mobile device
 	//should suck this in via json
 	var correct_m1 = [
@@ -112,7 +141,7 @@ $(document).ready(function(){
 		["b","d","b"],
 		["c","d","a"],
 		["b","a","a"]
-	]
+	];
 
 	//find way to create answers array dynamically.
 	var answers_m1 = [
@@ -121,7 +150,7 @@ $(document).ready(function(){
 		[],
 		[],
 		[]
-	]
+	];
 	/*
 	//dynamic in prep for json slurp (not working)
 	var answers_m1 = new Array(correct_m1.length);
@@ -136,54 +165,108 @@ $(document).ready(function(){
 	var questionIndex = 0;
 	var selectedAnswer = "";
 
+	function populateAnswers(lessonIndex, questionIndex){
+		$("#answerForm").html("");
+		console.log("Num of choices: "+vals_m1[lessonIndex][questionIndex].length);
+		for(var i = 0; i < vals_m1[lessonIndex][questionIndex].length; i++){
+			var opt = opts[i];
+			var val = vals_m1[lessonIndex][questionIndex][i];
+			console.log("option: "+opt + " has value: " + val);
+			injectMCOption(opt, val);
+		}
+	}
 
-	$("div.answerWrapper").click(function(){
+	function injectMCOption(opt, opt_val){
+		//<div class="answerWrapper">
+			//<label for="">a.</label>
+			//<option class="answer" value="a">A</option>
+		//</div>
+		//var opt = "a";
+		//var opt_val = "A";
+		var html = '<div class="answerWrapper">';
+		html += '<label for="">'+opt+'.</label> &nbsp;';
+		html += '<option class="answer" value="'+opt+'">'+opt_val+'</option>';
+		html += '</div>';
+
+		$("#answerForm").append(html);
+
+	}
+
+	$("#answerForm").on('click', 'div.answerWrapper',  function(){
 		$(this).siblings().css("background-color", "#e7d687");
 		$(this).css("background-color", "#ffc90e");
 		selectedAnswer = $(this).find("option").attr("value");
 		console.log("Selected:" + selectedAnswer);
+
+		/*
+		console.log($("#answerForm").css('border'));
+		console.log($("#answerForm").css('border') == '1px solid rgb(255, 0, 0)');
+		if($("#answerForm").css('border') == '1px solid rgb(255, 0, 0)'){
+			console.log("Red Border is on");
+			$("#answerForm").css("border", "0px solid red")
+		}*/
 	});
 
 	$("#checkQuestion").click(function(){
 		if(selectedAnswer == ""){
 			//do nothing right? 
 			console.log("User did not select an answer")
-			$("answerForm").css("border", "1px solid red");
+			//$("#answerForm").css("border", "1px solid red");
 
 		}else{
 			answers_m1[lessonIndex].push(selectedAnswer);//save in the users answer bank
 			console.log("answer:" + correct_m1[lessonIndex][questionIndex]);
 			console.log("selected:" + answers_m1[lessonIndex][questionIndex]);
+
 			if(answers_m1[lessonIndex][questionIndex] === correct_m1[lessonIndex][questionIndex]){
-				console.log("User got this answer correct");
-				$("#correctPop").show();
-				$("#popup").show();
+				showFeedBack("correct");
 			}else{
-				console.log("User got this answer incorrect");
+				showFeedBack("wrong")
 			}
 	
 			if(answers_m1[lessonIndex].length == correct_m1[lessonIndex].length){
 				//clear vars and set up for next lesson
 				console.log("finished this lesson (node)");
 				//handle the evaluation of the student, 1 star per correct answer I guess
+				//move back to moduel screen and display a congrats
 				questionIndex = 0;
 				lessonIndex++;
+				$("li.feedbackInd").css('background-color', '');
 			}
 			selectedAnswer = ""; //set this back to nothing
 		}
 	});
 
+	function showFeedBack(result){
+		console.log("User got this answer: " + result);
+		$("#"+result+"Pop").show();
+		$("#popup").show();
+		$("ul#feedbackIndicators > li.feedbackInd:nth-child("+(questionIndex+1)+")")
+			.css('background-color', (result == "correct") ? 'green' : 'red');
+	}
+
+	//NOTE: current correctPop and wrongPop click do the same thing. Will need to change on 
+	//		"show correct answer" click
 	$("#correctPop").click(function(){
 		questionIndex++;
 		$(".answerWrapper").css("background-color", "#e7d687");
 		$("#popup").hide();
 		$(this).hide();
-		//change the question background image
-		//$("#questionImage").attr("src", "pictures/level1/level1_q2.png");
-		//dynamic
+		
 		var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
 		$("#questionImage").attr("src", srcStr);
-	
+		populateAnswers(lessonIndex, questionIndex);
+	});
+
+	$("#wrongPop").click(function(){
+		questionIndex++;
+		$(".answerWrapper").css("background-color", "#e7d687");
+		$("#popup").hide();
+		$(this).hide();
+
+		var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
+		$("#questionImage").attr("src", srcStr);
+		populateAnswers(lessonIndex, questionIndex);
 	});
 
 
