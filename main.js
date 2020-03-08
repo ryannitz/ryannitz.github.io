@@ -109,27 +109,29 @@ $(document).ready(function(){
 
 	vals_m1 = [
 		[//lesson 1
-			["A","B","C","D"],//question 1 = vals_m1[0][0][2] == "C"
+			["A","B","C","D"],//q1 = vals_m1[0][0][2] == "C"
 			["A","B","C","D"],
 			["A","B","C","D"]
 		],
 		[//lesson 2
-			["2","4","8","10"],//question 1
+			["2","4","8","10"],//q1
 			["2","4","8","10"],
 			["2 quarter notes","2 half notes","1 whole note","2 whole notes"]
 		],
 		[//lesson 3
-			["1","2","3","4"],// question 2
+			["1","2","3","4"],//q1
 			["1","2","3","4"],
 			["half","one and half","two and half","not allowed"]
 		],
-		[
-			["1","2","3","4"],
+		[//lesson 4
+			["1","2","3","4"],//q1
 			["1","2","3","4"],
 			["whole rest","half rest"]
 		],
-		[
-
+		[//boss level
+			["A","B","C","D"],//q1
+			["4","6","8","10"],
+			["whole rest","half rest"]
 		]
 	];
 
@@ -157,9 +159,8 @@ $(document).ready(function(){
 	for(var i = 0; i < correct_m1.length; i++){
 		answers_m1[i].push([]);
 	}
-
-
 	*/
+
 	//will be overwritten many times
 	var lessonIndex = 0;
 	var questionIndex = 0;
@@ -171,7 +172,7 @@ $(document).ready(function(){
 		for(var i = 0; i < vals_m1[lessonIndex][questionIndex].length; i++){
 			var opt = opts[i];
 			var val = vals_m1[lessonIndex][questionIndex][i];
-			console.log("option: "+opt + " has value: " + val);
+			console.log("option: "+opt+" has value: "+val);
 			injectMCOption(opt, val);
 		}
 	}
@@ -197,6 +198,7 @@ $(document).ready(function(){
 		$(this).css("background-color", "#ffc90e");
 		selectedAnswer = $(this).find("option").attr("value");
 		console.log("Selected:" + selectedAnswer);
+		$("#checkQuestion").show();
 
 		/*
 		console.log($("#answerForm").css('border'));
@@ -209,29 +211,18 @@ $(document).ready(function(){
 
 	$("#checkQuestion").click(function(){
 		if(selectedAnswer == ""){
-			//do nothing right? 
+			//do nothing right? //will never hit here because we are hiding the button
 			console.log("User did not select an answer")
 			//$("#answerForm").css("border", "1px solid red");
 
 		}else{
 			answers_m1[lessonIndex].push(selectedAnswer);//save in the users answer bank
-			console.log("answer:" + correct_m1[lessonIndex][questionIndex]);
 			console.log("selected:" + answers_m1[lessonIndex][questionIndex]);
-
+			console.log("correct with [" +lessonIndex+ "][" +questionIndex+ "] ==" +correct_m1[lessonIndex][questionIndex]);
 			if(answers_m1[lessonIndex][questionIndex] === correct_m1[lessonIndex][questionIndex]){
 				showFeedBack("correct");
 			}else{
 				showFeedBack("wrong")
-			}
-	
-			if(answers_m1[lessonIndex].length == correct_m1[lessonIndex].length){
-				//clear vars and set up for next lesson
-				console.log("finished this lesson (node)");
-				//handle the evaluation of the student, 1 star per correct answer I guess
-				//move back to moduel screen and display a congrats
-				questionIndex = 0;
-				lessonIndex++;
-				$("li.feedbackInd").css('background-color', '');
 			}
 			selectedAnswer = ""; //set this back to nothing
 		}
@@ -241,39 +232,57 @@ $(document).ready(function(){
 		console.log("User got this answer: " + result);
 		$("#"+result+"Pop").show();
 		$("#popup").show();
+
 		$("ul#feedbackIndicators > li.feedbackInd:nth-child("+(questionIndex+1)+")")
 			.css('background-color', (result == "correct") ? 'green' : 'red');
+		
 	}
 
-	//NOTE: current correctPop and wrongPop click do the same thing. Will need to change on 
-	//		"show correct answer" click
-	$("#correctPop").click(function(){
+	function nextQuestion(){
 		questionIndex++;
+		if(answers_m1[lessonIndex].length == correct_m1[lessonIndex].length){
+			console.log("Finished this lesson (node)");
+			questionIndex = 0;
+			lessonIndex++;
+			$("li.feedbackInd").css('background-color', '');
+		}
+
+		//if completed the boss level -> correct_m1.length == 4
+		//bring back to module screen and calculate if they passed the boss, 
+		//if yes, show popup about unlocking new module or whatever. 
+		//if not, show the two module that they got wrong. 
+
 		$(".answerWrapper").css("background-color", "#e7d687");
 		$("#popup").hide();
-		$(this).hide();
+		$(".feedback").hide();
+
+		if(lessonIndex == 4){
+			var srcStr = "pictures/levelBoss/boss_q" + (questionIndex+1) + ".png";
+		}else{
+			var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
+		}
+		$("#questionImage").attr("src", srcStr);
 		
-		var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
-		$("#questionImage").attr("src", srcStr);
+		$("#checkQuestion").hide();
 		populateAnswers(lessonIndex, questionIndex);
+	}
+
+	$("#correctPop").click(function(){
+		nextQuestion();
 	});
 
-	$("#wrongPop").click(function(){
-		questionIndex++;
-		$(".answerWrapper").css("background-color", "#e7d687");
-		$("#popup").hide();
-		$(this).hide();
-
-		var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
-		$("#questionImage").attr("src", srcStr);
-		populateAnswers(lessonIndex, questionIndex);
+	$("#nextQuestion").click(function(){
+		nextQuestion();
+		$("div.popupContainer").css("background-color", "rgba(0, 0, 0, 0.7)");
 	});
 
+	$("#showCorrect").click(function(){
+		$("div.popupContainer").css("background-color", "rgba(0, 0, 0, 0.0)");
+		var correct = correct_m1[lessonIndex][questionIndex];
+		console.log("Correct answer was: " + correct);
 
+		answerIndex = opts.indexOf(correct);
+		$(".answerWrapper:nth-child("+(answerIndex+1)+")").css('background-color', 'green');
+	});
 
-
-	//next button on modal will bring to next page
-	//'see correct answer' will do something
-
-	//if back button is pressed on a question screen, just go back to node screen
 });
