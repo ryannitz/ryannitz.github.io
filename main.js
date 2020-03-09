@@ -245,6 +245,24 @@ $(document).ready(function(){
 			$(".feedbackInd").removeClass("indWrong");
 			$(".feedbackInd").removeClass("indCorrect");
 			console.log("Finished lesson " +lessonIndex+ " with " + correctCount + " correct answers");
+		
+			//if passed, increase the lessonIndex (index may need to be set depending on which node they click )
+			//bring to module screen 
+			//show congrats message
+			//award appropriate stars
+			//unlock the next node, 
+			if(correctCount > 1){
+				console.log("User can proceed to next lesson");
+			}else{
+			//not passed
+			//bring to module screen,
+			//show not good message
+			//do not unlock the next node,
+			//give no stars. 
+			//cry
+				console.log("User cannot proceed to next lesson");
+
+			}
 		}
 
 		//if all lessons/boss is complete
@@ -262,7 +280,7 @@ $(document).ready(function(){
 			populateAnswers(lessonIndex, questionIndex);
 		}
 
-
+		//do these regardless
 		$(".answerWrapper").css("background-color", "#e7d687");
 		$("#popup").hide();
 		$(".feedback").hide();
@@ -286,19 +304,11 @@ $(document).ready(function(){
 		$(".answerWrapper:nth-child("+(answerIndex+1)+")").css('background-color', 'green');
 	});
 
+	injectStars();
 	function injectStars(){
-
-		if(lessonIndex != 0){
-
-		}
-
-		html += '<div><img class="nodeStar" src="pictures/module1/module_level_comp2.png" alt="star 2"/>';
+		var html = '<div><img class="nodeStar" src="pictures/module1/module_level_comp2.png" alt="star 2"/>';
 		html += '<img class="nodeStar middleStar" src="pictures/module1/module_level_comp1.png" alt="star 1"/>';
 		html += '<img class="nodeStar" src="pictures/module1/module_level_comp3.png" alt="star 3"/></div>';
-		var lessonLength = $(".nodeBtn").length;
-		for(var i = 0; i < lessonLength; i++){
-			$(".nodeBtn").prepend(html);
-		}
-		
+		$(".nodeBtn").prepend(html);
 	}
 });
