@@ -141,7 +141,7 @@ $(document).ready(function(){
 		["c","d","a"],
 		["b","c","c"],
 		["b","d","b"],
-		["c","d","a"],
+		["a","c","b"],
 		["b","a","a"]
 	];
 
@@ -233,9 +233,13 @@ $(document).ready(function(){
 		$("#"+result+"Pop").show();
 		$("#popup").show();
 
-		$("ul#feedbackIndicators > li.feedbackInd:nth-child("+(questionIndex+1)+")")
-			.css('background-color', (result == "correct") ? 'green' : 'red');
-		
+		if(result == "correct"){
+			$("ul#feedbackIndicators > li.feedbackInd:nth-child("+(questionIndex+1)+")")
+			.addClass("indCorrect");
+		}else{
+			$("ul#feedbackIndicators > li.feedbackInd:nth-child("+(questionIndex+1)+")")
+			.addClass("indWrong");
+		}
 	}
 
 	function nextQuestion(){
@@ -244,7 +248,8 @@ $(document).ready(function(){
 			console.log("Finished this lesson (node)");
 			questionIndex = 0;
 			lessonIndex++;
-			$("li.feedbackInd").css('background-color', '');
+			$(".feedbackInd").removeClass("indWrong");
+			$(".feedbackInd").removeClass("indCorrect");
 		}
 
 		//if completed the boss level -> correct_m1.length == 4
@@ -285,4 +290,19 @@ $(document).ready(function(){
 		$(".answerWrapper:nth-child("+(answerIndex+1)+")").css('background-color', 'green');
 	});
 
+	function injectStars(){
+
+		if(lessonIndex != 0){
+
+		}
+
+		html += '<div><img class="nodeStar" src="pictures/module1/module_level_comp2.png" alt="star 2"/>';
+		html += '<img class="nodeStar middleStar" src="pictures/module1/module_level_comp1.png" alt="star 1"/>';
+		html += '<img class="nodeStar" src="pictures/module1/module_level_comp3.png" alt="star 3"/></div>';
+		var lessonLength = $(".nodeBtn").length;
+		for(var i = 0; i < lessonLength; i++){
+			$(".nodeBtn").prepend(html);
+		}
+		
+	}
 });

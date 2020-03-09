@@ -337,6 +337,11 @@ ul#moduleList > li:hover{
 	border-radius: 50%;
 	width:10%;
 }
+
+.nodeBtn > div {
+	width: 100%;
+    position: relative;
+}
 .nodeBtn > img{
 	height:100%;
 	width:100%;
@@ -345,6 +350,14 @@ ul#moduleList > li:hover{
 .unlockedNode{
 	height:6%;
 	width:10%;
+}
+
+.nodeStar{
+    float: left;
+    width: 33%;
+}
+.middleStar{
+	margin-top: -20%;
 }
 
 #n1{
