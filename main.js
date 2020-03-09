@@ -178,19 +178,11 @@ $(document).ready(function(){
 	}
 
 	function injectMCOption(opt, opt_val){
-		//<div class="answerWrapper">
-			//<label for="">a.</label>
-			//<option class="answer" value="a">A</option>
-		//</div>
-		//var opt = "a";
-		//var opt_val = "A";
 		var html = '<div class="answerWrapper">';
 		html += '<label for="">'+opt+'.</label> &nbsp;';
 		html += '<option class="answer" value="'+opt+'">'+opt_val+'</option>';
 		html += '</div>';
-
 		$("#answerForm").append(html);
-
 	}
 
 	$("#answerForm").on('click', 'div.answerWrapper',  function(){
@@ -225,6 +217,7 @@ $(document).ready(function(){
 				showFeedBack("wrong")
 			}
 			selectedAnswer = ""; //set this back to nothing
+			$("#checkQuestion").hide();
 		}
 	});
 
@@ -245,31 +238,34 @@ $(document).ready(function(){
 	function nextQuestion(){
 		questionIndex++;
 		if(answers_m1[lessonIndex].length == correct_m1[lessonIndex].length){
-			console.log("Finished this lesson (node)");
 			questionIndex = 0;
 			lessonIndex++;
+
+			var correctCount = $(".indCorrect").length;
 			$(".feedbackInd").removeClass("indWrong");
 			$(".feedbackInd").removeClass("indCorrect");
+			console.log("Finished lesson " +lessonIndex+ " with " + correctCount + " correct answers");
 		}
 
-		//if completed the boss level -> correct_m1.length == 4
-		//bring back to module screen and calculate if they passed the boss, 
-		//if yes, show popup about unlocking new module or whatever. 
-		//if not, show the two module that they got wrong. 
+		//if all lessons/boss is complete
+		if(lessonIndex == correct_m1.length){
+			console.log("Module complete, trigger the congrats message if they passed")
+
+		}else{//else, set up the next screen image etc..
+			if(lessonIndex == correct_m1.length-1){//boss level
+				$("#l1q1").css('right', '25%');
+				var srcStr = "pictures/levelBoss/boss_q" + (questionIndex+1) + ".png";
+			}else{
+				var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
+			}
+			$("#questionImage").attr("src", srcStr);
+			populateAnswers(lessonIndex, questionIndex);
+		}
+
 
 		$(".answerWrapper").css("background-color", "#e7d687");
 		$("#popup").hide();
 		$(".feedback").hide();
-
-		if(lessonIndex == 4){
-			var srcStr = "pictures/levelBoss/boss_q" + (questionIndex+1) + ".png";
-		}else{
-			var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
-		}
-		$("#questionImage").attr("src", srcStr);
-		
-		$("#checkQuestion").hide();
-		populateAnswers(lessonIndex, questionIndex);
 	}
 
 	$("#correctPop").click(function(){
