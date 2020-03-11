@@ -10,7 +10,10 @@ var readingNotesLesson1 = "div#readingNotesLesson1"
 var fromSettings = null;
 var previousScreen = null;
 
-var currentModule = 3;//for croll to functionality
+var currentModule = 3;//for scroll to functionality
+
+var lessonIndex = 0;
+var questionIndex = 0;
 
 $(document).ready(function(){
 	$(".screen").hide();//super hacky
@@ -87,24 +90,24 @@ $(document).ready(function(){
 		});
 	  });
 
-
-	$("a#n1").click(function(){
-		//go to the first lesson., start saving the sequence vars
-		$(readingNotesLesson1).show();
+	$(".nodeBtn").click(function(){
+		var nodeIndex = $(this).index();
+		if($(this).hasClass("unlockedNode")){
+			lessonIndex = nodeIndex;
+			questionIndex = 0;
+			populateAnswers(lessonIndex, questionIndex);
+			$(readingNotesLesson1).show();
+			changeQuestionImage(lessonIndex, questionIndex);
+		}else{
+			//highlight the previous node for completion maybe??
+			//complete nodeIndex-1
+		}
 	});
-	$("a#n2").click(function(){
-		//go to the first lesson., start saving the sequence vars
-		$(this).closest(".screen").hide();
-		$(readingNotesLesson1).show();
-	});
-
 
 
 ////////
 ///				LESSONS LOGIC
 /////
-
-
 	opts = ["a", "b", "c", "d", "e"]//could do this dynamically with charCodes but meh
 
 	vals_m1 = [
@@ -162,8 +165,6 @@ $(document).ready(function(){
 	*/
 
 	//will be overwritten many times
-	var lessonIndex = 0;
-	var questionIndex = 0;
 	var selectedAnswer = "";
 
 	function populateAnswers(lessonIndex, questionIndex){
@@ -191,21 +192,12 @@ $(document).ready(function(){
 		selectedAnswer = $(this).find("option").attr("value");
 		console.log("Selected:" + selectedAnswer);
 		$("#checkQuestion").show();
-
-		/*
-		console.log($("#answerForm").css('border'));
-		console.log($("#answerForm").css('border') == '1px solid rgb(255, 0, 0)');
-		if($("#answerForm").css('border') == '1px solid rgb(255, 0, 0)'){
-			console.log("Red Border is on");
-			$("#answerForm").css("border", "0px solid red")
-		}*/
 	});
 
 	$("#checkQuestion").click(function(){
 		if(selectedAnswer == ""){
 			//do nothing right? //will never hit here because we are hiding the button
 			console.log("User did not select an answer")
-			//$("#answerForm").css("border", "1px solid red");
 
 		}else{
 			answers_m1[lessonIndex].push(selectedAnswer);//save in the users answer bank
@@ -239,7 +231,7 @@ $(document).ready(function(){
 		questionIndex++;
 		if(answers_m1[lessonIndex].length == correct_m1[lessonIndex].length){
 			questionIndex = 0;
-			lessonIndex++;
+			lessonIndex++;//will remove this because the user will be clicking to set the lessonIndex
 
 			var correctCount = $(".indCorrect").length;
 			$(".feedbackInd").removeClass("indWrong");
@@ -253,6 +245,11 @@ $(document).ready(function(){
 			//unlock the next node, 
 			if(correctCount > 1){
 				console.log("User can proceed to next lesson");
+				$(readingNotesLesson1).hide();
+				$(readingNotesModule).show();
+				showLessonResult("fail");
+				awardStars(correctCount, lessonIndex);
+				//lessonIndex++;
 			}else{
 			//not passed
 			//bring to module screen,
@@ -261,7 +258,9 @@ $(document).ready(function(){
 			//give no stars. 
 			//cry
 				console.log("User cannot proceed to next lesson");
-
+				$(readingNotesLesson1).hide();
+				$(readingNotesModule).show();
+				showLessonResult("pass");
 			}
 		}
 
@@ -272,11 +271,8 @@ $(document).ready(function(){
 		}else{//else, set up the next screen image etc..
 			if(lessonIndex == correct_m1.length-1){//boss level
 				$("#l1q1").css('right', '25%');
-				var srcStr = "pictures/levelBoss/boss_q" + (questionIndex+1) + ".png";
-			}else{
-				var srcStr = "pictures/level" + (lessonIndex+1) + "/level" + (lessonIndex+1) + "_q" + (questionIndex+1) + ".png";
 			}
-			$("#questionImage").attr("src", srcStr);
+			changeQuestionImage(lessonIndex, questionIndex);
 			populateAnswers(lessonIndex, questionIndex);
 		}
 
@@ -306,9 +302,41 @@ $(document).ready(function(){
 
 	injectStars();
 	function injectStars(){
-		var html = '<div><img class="nodeStar" src="pictures/module1/module_level_comp2.png" alt="star 2"/>';
-		html += '<img class="nodeStar middleStar" src="pictures/module1/module_level_comp1.png" alt="star 1"/>';
-		html += '<img class="nodeStar" src="pictures/module1/module_level_comp3.png" alt="star 3"/></div>';
+		var html = '<div><img class="nodeStar lockedStar" src="pictures/module1/module_level_comp2.png" alt="star 2"/>';
+		html += '<img class="nodeStar lockedStar middleStar" src="pictures/module1/module_level_comp1.png" alt="star 1"/>';
+		html += '<img class="nodeStar lockedStar" src="pictures/module1/module_level_comp3.png" alt="star 3"/></div>';
 		$(".nodeBtn").prepend(html);
 	}
+
+	function awardStars(starCount, nodeIndex){
+		$(".nodeBtn:nth-child("+(nodeIndex)+") > div > img").removeClass("lockedStar");
+		if(starCount == 2){
+			$(".nodeBtn:nth-child("+(nodeIndex)+") > div > img:nth-child(3)").addClass("lockedStar");
+		}
+	}
+
+	function changeQuestionImage(lessonNum, questionNum){
+		if(lessonNum == correct_m1.length-1){//boss level
+			var srcStr = "pictures/levelBoss/boss_q" + (questionNum+1) + ".png";
+		}else{
+			var srcStr = "pictures/level" + (lessonNum+1) + "/level" + (lessonNum+1) + "_q" + (questionNum+1) + ".png";
+		}
+		$("#questionImage").attr("src", srcStr);
+	}
+
+	function showLessonResult(result){
+		if(result == "pass"){
+			var imgSrc = "pictures/level_objects/completing_level_all_answers_correct.png";
+		}else{
+			var imgSrc = "pictures/level_objects/completing_level_incorrect_answers.png";
+		}
+		$("#lessonResultPop > img").attr("src", imgSrc);
+		$("#lessonResultPop").show();
+		$("#popup").show();
+	}
+
+	$("lessonResultPop").click(function(){
+		$("#popup").hide();
+		$(this).hide();
+	});
 });

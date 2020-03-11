@@ -318,6 +318,14 @@ ul#moduleList > li:hover{
 	top: 80px;
 }
 
+#lessongResultPop{
+	
+}	
+
+#lessonResultPop > img{
+
+}
+
 
 /*
 	MODULE SCREEN
@@ -356,6 +364,11 @@ ul#moduleList > li:hover{
     float: left;
     width: 33%;
 }
+
+.lockedStar{
+	opacity: 0.4;
+}
+
 .middleStar{
 	margin-top: -20%;
 }
