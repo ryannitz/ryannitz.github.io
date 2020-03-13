@@ -102,6 +102,10 @@ $(document).ready(function(){
 			//highlight the previous node for completion maybe??
 			//complete nodeIndex-1
 		}
+
+		if(answers_m1[nodeIndex].length > 0){
+			answers_m1[nodeIndex] = [];
+		}
 	});
 
 
@@ -156,6 +160,9 @@ $(document).ready(function(){
 		[],
 		[]
 	];
+
+
+	//console.log(vals_m1[0][3].length);
 	/*
 	//dynamic in prep for json slurp (not working)
 	var answers_m1 = new Array(correct_m1.length);
@@ -169,11 +176,13 @@ $(document).ready(function(){
 
 	function populateAnswers(lessonIndex, questionIndex){
 		$("#answerForm").html("");
-		console.log("Num of choices: "+vals_m1[lessonIndex][questionIndex].length);
+		log("lessonIndex: " + lessonIndex);
+		log("questionIndex: " + questionIndex);
+		log("Num of choices on vals_m1["+lessonIndex+"]["+questionIndex+"]: "+vals_m1[lessonIndex][questionIndex].length);
 		for(var i = 0; i < vals_m1[lessonIndex][questionIndex].length; i++){
 			var opt = opts[i];
 			var val = vals_m1[lessonIndex][questionIndex][i];
-			console.log("option: "+opt+" has value: "+val);
+			log("option: "+opt+" has value: "+val);
 			injectMCOption(opt, val);
 		}
 	}
@@ -190,19 +199,19 @@ $(document).ready(function(){
 		$(this).siblings().css("background-color", "#e7d687");
 		$(this).css("background-color", "#ffc90e");
 		selectedAnswer = $(this).find("option").attr("value");
-		console.log("Selected:" + selectedAnswer);
+		log("Selected:" + selectedAnswer);
 		$("#checkQuestion").show();
 	});
 
 	$("#checkQuestion").click(function(){
 		if(selectedAnswer == ""){
 			//do nothing right? //will never hit here because we are hiding the button
-			console.log("User did not select an answer")
+			log("User did not select an answer")
 
 		}else{
 			answers_m1[lessonIndex].push(selectedAnswer);//save in the users answer bank
-			console.log("selected:" + answers_m1[lessonIndex][questionIndex]);
-			console.log("correct with [" +lessonIndex+ "][" +questionIndex+ "] ==" +correct_m1[lessonIndex][questionIndex]);
+			log("selected:" + answers_m1[lessonIndex][questionIndex]);
+			log("correct with [" +lessonIndex+ "][" +questionIndex+ "] ==" +correct_m1[lessonIndex][questionIndex]);
 			if(answers_m1[lessonIndex][questionIndex] === correct_m1[lessonIndex][questionIndex]){
 				showFeedBack("correct");
 			}else{
@@ -214,7 +223,7 @@ $(document).ready(function(){
 	});
 
 	function showFeedBack(result){
-		console.log("User got this answer: " + result);
+		log("User got this answer: " + result);
 		$("#"+result+"Pop").show();
 		$("#popup").show();
 
@@ -230,13 +239,14 @@ $(document).ready(function(){
 	function nextQuestion(){
 		questionIndex++;
 		if(answers_m1[lessonIndex].length == correct_m1[lessonIndex].length){
+			log("Resetting the question index to 0");
 			questionIndex = 0;
 			lessonIndex++;//will remove this because the user will be clicking to set the lessonIndex
 
 			var correctCount = $(".indCorrect").length;
 			$(".feedbackInd").removeClass("indWrong");
 			$(".feedbackInd").removeClass("indCorrect");
-			console.log("Finished lesson " +lessonIndex+ " with " + correctCount + " correct answers");
+			log("Finished lesson " +lessonIndex+ " with " + correctCount + " correct answers");
 		
 			//if passed, increase the lessonIndex (index may need to be set depending on which node they click )
 			//bring to module screen 
@@ -244,12 +254,10 @@ $(document).ready(function(){
 			//award appropriate stars
 			//unlock the next node, 
 			if(correctCount > 1){
-				console.log("User can proceed to next lesson");
-				$(readingNotesLesson1).hide();
-				$(readingNotesModule).show();
-				showLessonResult("fail");
+				log("User can proceed to next lesson");
+				showLessonResult("pass");
 				awardStars(correctCount, lessonIndex);
-				//lessonIndex++;
+				unlockNextLesson(lessonIndex);
 			}else{
 			//not passed
 			//bring to module screen,
@@ -257,29 +265,30 @@ $(document).ready(function(){
 			//do not unlock the next node,
 			//give no stars. 
 			//cry
-				console.log("User cannot proceed to next lesson");
-				$(readingNotesLesson1).hide();
-				$(readingNotesModule).show();
-				showLessonResult("pass");
+				log("User cannot proceed to next lesson");
+				showLessonResult("fail");
 			}
-		}
+			$(readingNotesLesson1).hide();
+			$(readingNotesModule).show();
+			$(".feedback").hide();
+		}else{
+			//if all lessons/boss is complete
+			if(lessonIndex == correct_m1.length){
+				log("Module complete, trigger the congrats message if they passed")
 
-		//if all lessons/boss is complete
-		if(lessonIndex == correct_m1.length){
-			console.log("Module complete, trigger the congrats message if they passed")
-
-		}else{//else, set up the next screen image etc..
-			if(lessonIndex == correct_m1.length-1){//boss level
-				$("#l1q1").css('right', '25%');
+			}else{//else, set up the next screen image etc..
+				if(lessonIndex == correct_m1.length-1){//boss level
+					$("#l1q1").css('right', '25%');
+				}
+				changeQuestionImage(lessonIndex, questionIndex);
+				populateAnswers(lessonIndex, questionIndex);
+				$(".feedback").hide();
 			}
-			changeQuestionImage(lessonIndex, questionIndex);
-			populateAnswers(lessonIndex, questionIndex);
-		}
 
-		//do these regardless
-		$(".answerWrapper").css("background-color", "#e7d687");
-		$("#popup").hide();
-		$(".feedback").hide();
+			//do these regardless
+			$(".answerWrapper").css("background-color", "#e7d687");
+			$("#popup").hide();
+		}
 	}
 
 	$("#correctPop").click(function(){
@@ -294,7 +303,7 @@ $(document).ready(function(){
 	$("#showCorrect").click(function(){
 		$("div.popupContainer").css("background-color", "rgba(0, 0, 0, 0.0)");
 		var correct = correct_m1[lessonIndex][questionIndex];
-		console.log("Correct answer was: " + correct);
+		log("Correct answer was: " + correct);
 
 		answerIndex = opts.indexOf(correct);
 		$(".answerWrapper:nth-child("+(answerIndex+1)+")").css('background-color', 'green');
@@ -309,6 +318,7 @@ $(document).ready(function(){
 	}
 
 	function awardStars(starCount, nodeIndex){
+		log("Awarding stars: "+ starCount);
 		$(".nodeBtn:nth-child("+(nodeIndex)+") > div > img").removeClass("lockedStar");
 		if(starCount == 2){
 			$(".nodeBtn:nth-child("+(nodeIndex)+") > div > img:nth-child(3)").addClass("lockedStar");
@@ -326,17 +336,39 @@ $(document).ready(function(){
 
 	function showLessonResult(result){
 		if(result == "pass"){
-			var imgSrc = "pictures/level_objects/completing_level_all_answers_correct.png";
+			log("showing passed popup");
+			var imgSrc = "pictures/level_objects/completing_level_all_answer_correct.png";
 		}else{
+			console.log("showing lost popup");
 			var imgSrc = "pictures/level_objects/completing_level_incorrect_answers.png";
 		}
+		log("showing....");
 		$("#lessonResultPop > img").attr("src", imgSrc);
-		$("#lessonResultPop").show();
+		$("#popup").show();
+		$("#lessonResultPop").removeClass("hide").show();
 		$("#popup").show();
 	}
 
-	$("lessonResultPop").click(function(){
+	$("#lessonResultPop").click(function(){
 		$("#popup").hide();
 		$(this).hide();
 	});
+
+	function unlockNextLesson(lessonIndex){
+		if($(".nodeBtn").length > lessonIndex){
+			var nextNode = $(".nodeBtn:nth-child("+(lessonIndex+1)+")");
+			nextNode.addClass("unlockedModule").addClass("navBtn");
+			$(".nodeBtn:nth-child("+(lessonIndex+1)+") > img").remove();
+			$(".nodeBtn:nth-child("+(lessonIndex+1)+") > div > img").removeClass()
+		}
+	}
+
+
+
+	var debug = true;
+	function log(message){
+		if(debug == true){
+			console.log(message);
+		}
+	}
 });

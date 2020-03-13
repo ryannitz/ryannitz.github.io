@@ -318,8 +318,11 @@ ul#moduleList > li:hover{
 	top: 80px;
 }
 
-#lessongResultPop{
-	
+#lessonResultPop{
+	position: relative;
+	margin: auto;
+	width: 50%;
+	top:calc(50% - 200px);
 }	
 
 #lessonResultPop > img{
