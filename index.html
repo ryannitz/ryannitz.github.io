@@ -66,37 +66,37 @@
 						<span class="show">Reading Notes</span>
 						<i class="fas fa-lock hide"></i>
 					</li>
-					<li id="readingNotesModuleBtn" class="navBtn unlockedModule">
-						<span class="show">Lorem Ipsum</span>
-						<i class="fas fa-lock hide"></i>
+					<li id="readingNotesModuleBtn" class="lockedModule">
+						<span class="hide">Lorem Ipsum</span>
+						<i class="fas fa-lock"></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock "></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock"></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock"></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock"></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock"></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock"></i>
 					</li>
 					<li id="readingNotesModuleBtn" class="lockedModule">
 						<span class="hide">Lorem Ipsum</span>
-						<i class="fas fa-lock show"></i>
+						<i class="fas fa-lock"></i>
 					</li>
 				</ul>
 			</div>
@@ -121,16 +121,16 @@
 					<!--Initial node is never locked-->
 					<!--Set injection method-->
 				</a>
-				<a id="n2" class="nodeBtn">
+				<a id="n2" class="navBtn nodeBtn unlockedNode">
 					<img src="pictures/module1/module1_level_lock.png"/>
 				</a>
-				<a id="n3" class="nodeBtn">
+				<a id="n3" class="navBtn nodeBtn unlockedNode">
 					<img src="pictures/module1/module1_level_lock.png"/>
 				</a>
-				<a id="n4" class="nodeBtn">
+				<a id="n4" class="navBtn nodeBtn unlockedNode">
 					<img src="pictures/module1/module1_level_lock.png"/>
 				</a>
-				<a id="n5" class="nodeBtn testNode"><!--Requires diff pic for boss level-->
+				<a id="n5" class="navBtn nodeBtn testNode unlockedNode"><!--Requires diff pic for boss level-->
 					<img src="pictures/module1/module1_boss_lock.png"/>
 				</a>
 			</div>
@@ -201,14 +201,14 @@
 					<div class="settingsItem">
 						<a class="toggleOption">
 							<span>Color Blind Mode</span>
-							<i class="far fa-check-circle"></i>
+							<i class="far fa-circle"></i>
 						</a>
 					</div>
 					<hr/>
 					<div class="settingsItem">
 						<a class="toggleOption">
 							<span>Mute</span>
-							<i class="far fa-check-circle"></i>
+							<i class="far fa-circle"></i>
 						</a>
 					</div>
 					<hr/>
@@ -222,6 +222,21 @@
 
 			<div id="lessonResultPop" class="hide">
 				<img src="" alt="Lesson result image">
+			</div>
+
+			<div id="moduleCompletePop" class="popupContent hide">
+				<div id="settingsContent">
+					<img src="pictures/congratzTitle.png" alt="Module Success image">
+					<div id="mcpText">
+						<p>You have completed module:</p>
+						<p>"Reading Notes"</p>
+						<p>You have unlocked the next module!</p>
+					</div>
+					<div id="mcpBackBtn">
+						<img id="mcpCloseImg" src="pictures/setting/setting_back_button.png" alt="">
+					</div>
+					<audio id="audioSuccess" src="snd_success.mp3"></audio>
+				</div>
 			</div>
 
 			<div id="correctPop" class="feedback hide">

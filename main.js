@@ -1,25 +1,29 @@
-	
+var debug = true;
+
+//screens
 var loginScreen = "div#loginScreen"
 var moduleSelectScreen = "div#moduleSelectScreen"
 var settingsScreen = "div#settingsScreen"
 
+//modules
 var readingNotesModule = "div#readingNotesModule"
 
+//lessons
 var readingNotesLesson1 = "div#readingNotesLesson1"
-	
-var fromSettings = null;
-var previousScreen = null;
 
-var currentModule = 3;//for scroll to functionality
-
+var currentModuleNum = 0;
+var selectedModule = 0;//not used anywhere but useful to have for when a user replays first module
+						//, this will fix the module complete popup text
 var lessonIndex = 0;
 var questionIndex = 0;
+
+var muted = false;
+
 
 $(document).ready(function(){
 	$(".screen").hide();//super hacky
 	$(".popupContainer").hide();
 	$(loginScreen).show();
-	previousScreen = "loginScreen"
 
 	var actUser = "user";
 	var actPass = "abc";
@@ -53,11 +57,21 @@ $(document).ready(function(){
 			elem.addClass("fa-circle")
 			elem.removeClass("fa-check-circle")
 		}
+		if($(this).find("span").text() == "Mute"){
+			muted = !muted;
+		}
 	});
 
+	//much better way to do this using the nodeBtns but whatever
 	$(".navBtn").click(function(){
 		if(allowEnter){
-			$(this).closest(".screen").hide();
+			if($(this).hasClass("nodeBtn")){
+				if($(this).hasClass("unlockedNode")){
+					$(this).closest(".screen").hide();
+				}
+			}else{
+				$(this).closest(".screen").hide();
+			}
 		}
 	});
 
@@ -68,6 +82,7 @@ $(document).ready(function(){
 	});
 	$("#readingNotesModuleBtn").click(function(){
 		$(readingNotesModule).show();
+		currentModuleNum = 0;
 	});
 
 	
@@ -86,7 +101,7 @@ $(document).ready(function(){
 	//scroll to module on title click
 	$('a#scrollToModule').click(function() {
 		$('html, body').animate({
-		  scrollTop: $("ul#moduleList > li:nth-child("+(currentModule-1)+")").offset().top
+		  scrollTop: $("ul#moduleList > li:nth-child("+(currentModuleNum+1)+")").offset().top
 		});
 	  });
 
@@ -101,6 +116,12 @@ $(document).ready(function(){
 		}else{
 			//highlight the previous node for completion maybe??
 			//complete nodeIndex-1
+		}
+
+		if($(this).hasClass("testNode")){
+			$("#l1q1").css('right', '25%');
+		}else{
+			$("#l1q1").css('right', '');
 		}
 
 		if(answers_m1[nodeIndex].length > 0){
@@ -149,10 +170,10 @@ $(document).ready(function(){
 		["b","c","c"],
 		["b","d","b"],
 		["a","c","b"],
-		["b","a","a"]
+		["b","a","a"]//boss
 	];
 
-	//find way to create answers array dynamically.
+	//find way to create answers array dynamically instead of pre-populated empty arrays.
 	var answers_m1 = [
 		[],
 		[],
@@ -160,7 +181,6 @@ $(document).ready(function(){
 		[],
 		[]
 	];
-
 
 	//console.log(vals_m1[0][3].length);
 	/*
@@ -249,42 +269,31 @@ $(document).ready(function(){
 			log("Finished lesson " +lessonIndex+ " with " + correctCount + " correct answers");
 		
 			//if passed, increase the lessonIndex (index may need to be set depending on which node they click )
-			//bring to module screen 
-			//show congrats message
-			//award appropriate stars
-			//unlock the next node, 
 			if(correctCount > 1){
-				log("User can proceed to next lesson");
-				showLessonResult("pass");
+				if(lessonIndex == correct_m1.length){
+					//then unlock next module
+					unlockNextModule();
+					$(moduleSelectScreen).show();
+				}else{
+					log("User can proceed to next lesson");
+					unlockNextLesson(lessonIndex);
+					showLessonResult("pass");
+					$(readingNotesModule).show();
+				}
 				awardStars(correctCount, lessonIndex);
-				unlockNextLesson(lessonIndex);
 			}else{
 			//not passed
-			//bring to module screen,
-			//show not good message
-			//do not unlock the next node,
-			//give no stars. 
-			//cry
 				log("User cannot proceed to next lesson");
 				showLessonResult("fail");
+				$(readingNotesModule).show();
 			}
 			$(readingNotesLesson1).hide();
-			$(readingNotesModule).show();
 			$(".feedback").hide();
 		}else{
-			//if all lessons/boss is complete
-			if(lessonIndex == correct_m1.length){
-				log("Module complete, trigger the congrats message if they passed")
-
-			}else{//else, set up the next screen image etc..
-				if(lessonIndex == correct_m1.length-1){//boss level
-					$("#l1q1").css('right', '25%');
-				}
-				changeQuestionImage(lessonIndex, questionIndex);
-				populateAnswers(lessonIndex, questionIndex);
-				$(".feedback").hide();
-			}
-
+			changeQuestionImage(lessonIndex, questionIndex);
+			populateAnswers(lessonIndex, questionIndex);
+			$(".feedback").hide();
+		
 			//do these regardless
 			$(".answerWrapper").css("background-color", "#e7d687");
 			$("#popup").hide();
@@ -318,7 +327,7 @@ $(document).ready(function(){
 	}
 
 	function awardStars(starCount, nodeIndex){
-		log("Awarding stars: "+ starCount);
+		log("Awarding stars: "+ starCount + "to node:" + nodeIndex);
 		$(".nodeBtn:nth-child("+(nodeIndex)+") > div > img").removeClass("lockedStar");
 		if(starCount == 2){
 			$(".nodeBtn:nth-child("+(nodeIndex)+") > div > img:nth-child(3)").addClass("lockedStar");
@@ -336,13 +345,10 @@ $(document).ready(function(){
 
 	function showLessonResult(result){
 		if(result == "pass"){
-			log("showing passed popup");
 			var imgSrc = "pictures/level_objects/completing_level_all_answer_correct.png";
-		}else{
-			console.log("showing lost popup");
+		}else{ 
 			var imgSrc = "pictures/level_objects/completing_level_incorrect_answers.png";
 		}
-		log("showing....");
 		$("#lessonResultPop > img").attr("src", imgSrc);
 		$("#popup").show();
 		$("#lessonResultPop").removeClass("hide").show();
@@ -357,15 +363,42 @@ $(document).ready(function(){
 	function unlockNextLesson(lessonIndex){
 		if($(".nodeBtn").length > lessonIndex){
 			var nextNode = $(".nodeBtn:nth-child("+(lessonIndex+1)+")");
-			nextNode.addClass("unlockedModule").addClass("navBtn");
+			nextNode.addClass("unlockedNode");
 			$(".nodeBtn:nth-child("+(lessonIndex+1)+") > img").remove();
-			$(".nodeBtn:nth-child("+(lessonIndex+1)+") > div > img").removeClass()
 		}
 	}
 
+	function unlockNextModule(){
+		
+		log("done displaying my shit");
+
+		showModuleComplete();
+		currentModuleNum++;
+		//refactor to use the one parent elem
+		$("#moduleList > li:nth-child("+(currentModuleNum+1)+")").removeClass().addClass("navBtn unlockedModule");
+		$("#moduleList > li:nth-child("+(currentModuleNum+1)+") > span").removeClass("hide");
+		$("#moduleList > li:nth-child("+(currentModuleNum+1)+") > i").addClass("hide");
+	}
+
+	function showModuleComplete(){
+		$("#mcpText > p:nth-child(2)")
+			.text($("#moduleList > li:nth-child("+(currentModuleNum+1)+") > span").text());
+		$("#moduleCompletePop").show();
+		$("#popup").show();
+		if(!muted){
+			$("#audioSuccess")[0].play();
+		}
+	}
+
+	$("#mcpCloseImg").click(function(){
+		$("#popup").hide();
+		$("#moduleCompletePop").hide();
+	});
+
+	
 
 
-	var debug = true;
+
 	function log(message){
 		if(debug == true){
 			console.log(message);

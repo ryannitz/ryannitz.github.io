@@ -232,6 +232,30 @@ ul#moduleList > li:hover{
 	
 }
 
+#mcpText{
+	margin-top:20%;
+	text-align: center;
+	font-size: 200%;
+	font-weight: bold;
+}
+
+#mcpBackBtn{
+	position:absolute;
+	bottom:0%;
+	margin:auto;
+	width:90%;
+}
+
+#mcpCloseImg{
+	display:block;
+	width:30%;
+	margin:auto;
+	margin-bottom: 10%;
+}
+#mcpCloseImg:hover{
+	cursor: pointer;
+}
+
 #settingsContent{
 	background-color: #f4d284;
 	position: inherit;
@@ -359,7 +383,7 @@ ul#moduleList > li:hover{
 }
 
 .unlockedNode{
-	height:6%;
+	height:8%;
 	width:10%;
 }
 
@@ -373,7 +397,7 @@ ul#moduleList > li:hover{
 }
 
 .middleStar{
-	margin-top: -20%;
+	margin-top: -24%;
 }
 
 #n1{
