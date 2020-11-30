@@ -19,8 +19,69 @@
 
         <link rel="stylesheet" href="site.css" />
         <script src="main.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#primesModal").modal('show');
+            });
+        </script>
     </head>
+    <!-- To add:
+        How much space would the largest known prime take up on a computer?
+        How long would it roughly take to find the largest known prime (in years). Can probably find that on gimps
+    -->
     <body>
+        <div class="modal fade" id="primesModal">
+            <div class="modal-dialog">
+                <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Prime calculator</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>
+                            Please load a number of primes in the javacscript virtual machine. 
+                            You can do this later if you like! The prime finder will not work past the 58th prime. 
+                            Max exponent for the default browser is 26 unless using firefox, which will do up to 28.
+                            This could be improved using server side languages but github.io is static. This was just for practice with the Seive. 
+                            For better performance and access up to largest known primes, there are websites that sote and query all of the known primes.
+                        </p>
+                       
+                      <form action="" class="mx-auto text-center">
+                            <div class="form-group">
+                                <label for="#maxPrime">2<sup>1</sup> up to 2<sup id="maxPrimeExp">26</sup></label>
+                                <input id="maxPrime" type="number" min="20" max="31" value="26"><br>
+                                <button id="calcPrimeRange" type="button" class="btn btn-danger mx-auto" data-dismiss="modal">Calculate</button>
+                            </div>
+                      </form>
+                      <p class="text-center">Total size for the prime check: <span id="primesSize">0.53</span>GB</p>
+                      
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="loading" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body">
+
+                    </div>
+
+                </div>
+            </div>
+        </div>
+
         <div class="container">
             <main role="main" class="pb-3">
                 <!--
@@ -99,18 +160,26 @@
                                         here <sup><i class="fa fa-external-link"></i></sup>
                                     </a>
                                 </p>
-
+                                <hr>
+                                <p class="text-center">Enter the index <span class="prime-index">n</span> for the desired prime:</p>
                                 <form id="primeNCalc" class="form-inline">
                                     <div class="input-group mx-auto">
-                                        <label class="mr-sm-2" for="primeN">n:</label>
+                                        
+                                        <label class="mr-sm-2" for="primeN"><span class="prime-index">n</span>:</label>
+                                        <div class="input-group-prepend" data-toggle="tooltip" title="Prime type">
+                                            <select name="" id="primeType" class="custom-select">
+                                                <option value="reg">Regular Prime</option>
+                                                <option value="mer">Mersenne Exp.</option>
+                                            </select>
+                                        </div>
                                         <input id="primeN" type="number" min="1" step="1" pattern="\d*" value="1" required/>
                                         <div class="input-group-append">
-                                            <input class="btn btn-outline-dark" type="submit" value="Get Prime"/>
+                                            <input id="getPrime" class="btn btn-outline-dark" type="submit" value="Get Prime"/>
                                         </div>
                                     </div>
                                 </form>
                                 <div class="text-center m-3">
-                                    <p>p<sub id="primeNIn">1</sub> is <span id="prineNOut">2</span></p>
+                                    <p><span class="prime-set">P</span><sub id="primeNIn">1</sub> is <span id="primeNOut">2</span></p>
                                 </div>
                             </div>
                         </div>
@@ -186,7 +255,7 @@
                                 <div class="pl-3 encapsulated-border">hello</div>
                             </li>
                         </ul>
-                        <p> Binary numbers with a prime number of digits will create a mersenne prime. <br>
+                        <p> Binary numbers with a prime number of only "1"s will create a mersenne prime. <br>
                             This is because 2<sup>n</sup> = "1" followed by n 0s <br>
                             When 1 is taken away from this term, the number becomes "1" n times. So the leading largest 1 is removed and replaced with n-1 "1"<br>
                             So 100000<sub>2</sub>-1 = 32<sub>10</sub>-1 <br>= 11111<sub>2</sub> = 31<sub>10</sub><br>
@@ -203,6 +272,8 @@
                     </div>
                 </div>
             </main>
-        </div>
+
+            
+        
     </body>
 </html>
