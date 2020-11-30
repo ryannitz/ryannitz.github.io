@@ -1,0 +1,11 @@
+.encapsulated-border{
+    border-left: 2px solid black;
+}
+
+.fa-external-link{
+    font-size: 75%;
+}
+
+.hover{
+    cursor: pointer;
+}
