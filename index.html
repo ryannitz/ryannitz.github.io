@@ -31,7 +31,7 @@
     -->
     <body>
         <div class="modal fade" id="primesModal">
-            <div class="modal-dialog">
+            <div class="modal-dialog modal-lg">
                 <div class="modal-content">
               
                     <!-- Modal Header -->
@@ -43,22 +43,34 @@
                     <!-- Modal body -->
                     <div class="modal-body">
                         <p>
-                            Please load a number of primes in the javacscript virtual machine. 
-                            You can do this later if you like! The prime finder will not work past the 58th prime. 
-                            Max exponent for the default browser is 26 unless using firefox, which will do up to 28.
-                            This could be improved using server side languages but github.io is static. This was just for practice with the Seive. 
-                            For better performance and access up to largest known primes, there are websites that sote and query all of the known primes.
+                            Please load a range of primes in the javacscript virtual machine. 
+                            You can do this later if you like! Skipping this means the n-th prime finder will not work past the 58th prime. 
                         </p>
-                       
-                      <form action="" class="mx-auto text-center">
-                            <div class="form-group">
-                                <label for="#maxPrime">2<sup>1</sup> up to 2<sup id="maxPrimeExp">26</sup></label>
-                                <input id="maxPrime" type="number" min="20" max="31" value="26"><br>
-                                <button id="calcPrimeRange" type="button" class="btn btn-danger mx-auto" data-dismiss="modal">Calculate</button>
-                            </div>
-                      </form>
-                      <p class="text-center">Total size for the prime check: <span id="primesSize">0.53</span>GB</p>
-                      
+                        <ul>
+                            <li>This could be improved using server side languages but github.io is static. This was just for practice with the 
+                                <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup></a>. 
+                            </li>
+                            <li>
+                                For better performance and access up to largest known primes, there are  
+                                <a href="https://primes.utm.edu/nthprime/">websites<sup> <i class="fa fa-external-link"></i></sup></a> 
+                                that store and query all of the known primes.
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <hr>
+                            <p>Max exponent for default browsers is 26 unless using firefox, which will do up to 28.</p>
+                            <form action="" class="mx-auto text-center">
+                                <div class="form-group">
+                                    <label for="#maxPrime">2<sup>1</sup> up to 2<sup class="maxPrimeExp">26</sup></label>
+                                    <input id="maxPrime" type="number" min="20" max="31" value="26"><br>
+                                    <p></p>
+                                    <button id="calcPrimeRange" type="button" class="btn btn-danger mx-auto" data-dismiss="modal">Calculate</button>
+                                </div>
+                            </form>
+                            <p>Range of primes: 2 to <span id="primeUpperBound">67108864</span></p>
+                            <p>Estimated number of primes to be found: &#960;(2<sup class="maxPrimeExp">26</sup>) = <span id="estimatedPrimeCount">3723754</span> (WIP)</p>
+                            <p>Total size to execute the prime check: <span id="primesSize">0.53</span>GB</p>
+                        </div>
                     </div>
 
                     <!-- Modal footer -->
@@ -74,10 +86,10 @@
             <div class="modal-dialog modal-dialog-centered modal-sm">
                 <div class="modal-content">
                     <!-- Modal body -->
-                    <div class="modal-body">
-
+                    <div class="modal-body text-center my-5">
+                        <i class="fas fa-4x fa-spinner fa-pulse"></i>
+                        <p class="mt-5">Calculating Primes...</p>
                     </div>
-
                 </div>
             </div>
         </div>
@@ -95,7 +107,6 @@
                 <div class="mb-3">
                     <h2 class="mt-5">Overview</h2>
                     <hr>
-
                     <div class="container border shadow-sm">
                         <div class="border-bottom">
                             <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set1">
@@ -149,7 +160,7 @@
                                 <hr>
                                 <p>
                                     This calculator will get the n-th prime number given n using the 
-                                    <a href="">
+                                    <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">
                                         Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup>
                                     </a> 
                                     credit: 
@@ -224,6 +235,7 @@
                                 </div>
                             </div>
                         </div>
+                        <!-- Here have a snippet of pseudocode and flip-image to my actual code. Then in right col, have a small write up on LL -->
                         <p>
                             The numbers created by 2n-1 are considered mersenne numbers while the prime numbers that are created using 2p-1 are considered mersenne primes.
                             2n-1 would create the value 2047. This is not a prime number so it would not be included in the mersenne primes set. 
@@ -241,6 +253,13 @@
 
                 <div class="mb-3">
                     <h2 class="mt-5">History <hr></h2>
+                    <div class="container">
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <h2 class="mt-5">Related work to 3093 <hr></h2>
                     <div class="container">
 
                     </div>

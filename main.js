@@ -9,13 +9,28 @@ var mer = "mer";
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
-    //load primes modal
+    for(var i = 0; i < mersenneE.length; i++)
+        $("#mersenneExponents").append(mersenneE[i]+", ");
+    $("#mersenneExponents").append("...");
+    for(var i = 0; i < mersenneN.length; i++)
+        $("#mersenneNumbers").append(mersenneN[i]+", ");
+    $("#mersenneNumbers").append("...");
+    for(var i = 0; i < mersenneP.length; i++)
+        $("#mersennePrimes").append(mersenneP[i]+", ");
+    $("#mersennePrimes").append("...");
+    for(var i = 0; i < primeN.length; i++)
+        $("#primeNumbers").append(primeN[i]+", ");
+    $("#primeNumbers").append("...");
+
 
     $("#maxPrime").change(function(){
         var exp = $("#maxPrime").val()
-        $("#maxPrimeExp").html(exp);
-        var num = ((2**exp)*8)/1000000000
+        $(".maxPrimeExp").html(exp);
+        var result = 2**exp;
+        $("#primeUpperBound").html(result)
+        var num = (result*8)/1000000000
         $("#primesSize").html((Math.round(num * 100) / 100).toFixed(2));
+        $("#estimatedPrimeCount").html(parseInt(result/Math.log(result)))
     })
     var primes = [];
     $("#calcPrimeRange").click(function(){
@@ -38,24 +53,24 @@ $(document).ready(function(){
                     primes.push(p);
                 }
             }
-            console.log(primes[primes.length-1])
             $("#loading").modal("hide");
+            showSnackbar(primes.length + " primes found", false, "success");
         }, 500);
     });
 
-    console.log(primeN.length);
-    for(var i = 0; i < mersenneE.length; i++)
-        $("#mersenneExponents").append(mersenneE[i]+", ");
-    $("#mersenneExponents").append("...");
-    for(var i = 0; i < mersenneN.length; i++)
-        $("#mersenneNumbers").append(mersenneN[i]+", ");
-    $("#mersenneNumbers").append("...");
-    for(var i = 0; i < mersenneP.length; i++)
-        $("#mersennePrimes").append(mersenneP[i]+", ");
-    $("#mersennePrimes").append("...");
-    for(var i = 0; i < primeN.length; i++)
-        $("#primeNumbers").append(primeN[i]+", ");
-    $("#primeNumbers").append("...");
+    function showSnackbar(text, keepAlive, alertType){
+        html = '<div id="primesFound" class="alert alert-'+alertType+' alert-dismissible fixed-top text-center w-50 mx-auto mt-5">'+
+                    '<button type="button" class="close" data-dismiss="alert">×</button>' +
+                    text +
+                '</div>';
+        $("body").append(html);
+        if(!keepAlive){
+            setTimeout(function(){
+                $("#primesFound").fadeOut(500);
+                $("#primesFound").alert("dispose");
+            }, 3000)
+        }
+    }
 
     $("#mersenneCalc").submit(function(event){
         var n = $("#mersenneN").val();
