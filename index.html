@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>3093 Project</title>
+        <link rel="icon" href=""/>
+
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/adc1711e54.js" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+
+        <link rel="stylesheet" href="site.css" />
+        <script src="main.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <main role="main" class="pb-3">
+                <!--
+                    For every iteration to find the prime, calculate the total time to find the next iteration and the percentage increase (around n^6)
+                    Time to calculate converter
+                -->
+                <div class="mt-3 mb-5">
+                    <h1 class="display-4 text-center">Mersenne primes <hr></h1>
+                </div>
+
+                <div class="mb-3">
+                    <h2 class="mt-5">Overview</h2>
+                    <hr>
+
+                    <div class="container border shadow-sm">
+                        <div class="border-bottom">
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set1">
+                                <h6 class="m-0">Mersenne exponent set: (M<sub>e</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set1" class="px-3 pb-3 collapse">
+                                <a href="https://oeis.org/A000043" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set2">
+                                <h6 class="m-0">Mersenne number set (M<sub>n</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set2" class="px-3 pb-3 collapse">
+                                <a href="https://oeis.org/A000225" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set3">
+                                <h6 class="m-0">Mersenne prime number set (M<sub>p</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set3" class="px-3 pb-3 collapse">
+                                <a href="https://oeis.org/A000668" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set4">
+                                <h6 class="m-0">Prime number set (P<sub>n</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set4" class="px-3 pb-3 collapse">
+                                <a href="https://oeis.org/A000040" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-5">
+                        <p>We can also find primes such that </p>
+                        <p>Highest known M<sub>p</sub> is 51 (M<sub>51</sub>), which was found in December 2018. This is now the largest known prime, which is represented by 2<sup>82,589,933</sup>-1</p>
+                        <p>The highest confirmed Mersenne prime is M<sub>47</sub>. It is one thing to calculate the prime, but confirming the number requires factorization and traditional methods that would normally be used to evaluate prime numbers. This must be done to confirm the original calculation.</p>
+                    </div>
+                    <div>
+                        <div class="p-3 border shadow-sm mb-5">
+                            <div data-toggle="collapse" data-target="#collapse1">
+                                <h5>n-th prime calculator</h5>
+                            </div>
+                            <div id="collapse1" class="collapse show">
+                                <hr>
+                                <p>
+                                    This calculator will get the n-th prime number given n using the 
+                                    <a href="">
+                                        Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup>
+                                    </a> 
+                                    credit: 
+                                </p>
+                                <p>
+                                    We can also find a list of the first 1000 primes 
+                                    <a href="https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers" target="_blank" data-toggle="tooltip" title="List of primes">
+                                        here <sup><i class="fa fa-external-link"></i></sup>
+                                    </a>
+                                </p>
+
+                                <form id="primeNCalc" class="form-inline">
+                                    <div class="input-group mx-auto">
+                                        <label class="mr-sm-2" for="primeN">n:</label>
+                                        <input id="primeN" type="number" min="1" step="1" pattern="\d*" value="1" required/>
+                                        <div class="input-group-append">
+                                            <input class="btn btn-outline-dark" type="submit" value="Get Prime"/>
+                                        </div>
+                                    </div>
+                                </form>
+                                <div class="text-center m-3">
+                                    <p>p<sub id="primeNIn">1</sub> is <span id="prineNOut">2</span></p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="p-3 border shadow-sm">
+                            <div data-toggle="collapse" data-target="#collapse2">
+                                <h5>Mersenne calculator </h5>
+                            </div>
+                            <div id="collapse2" class="collapse show">
+                                <hr>
+                                <p>This calculator will have restricted calculation bounds due to machine and browser limitations.</p>
+                                <hr>
+                                <p class="text-center">
+                                    Input value n for:
+                                    <b>2<sup>p</sup>-1</b>
+                                    where p is a 
+                                    <a href="https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers" target="_blank" data-toggle="tooltip" title="List of primes">
+                                        prime <sup><i class="fa fa-external-link"></i></sup>
+                                    </a>
+                                </p>
+                                <form id="mersenneCalc" class="text-center">
+                                    <div class="form-group mx-auto mb-2">
+                                        <label class="mr-sm-2" for="mersenneN">p:</label>
+                                        <input id="mersenneN" type="number" min="2" step="1" pattern="\d*" value="3" required/>
+                                        <!-- <div class="input-group-append"> -->
+
+                                        <!-- </div> -->
+                                    </div>
+                                    <div class="form-group form-check">
+                                        <label for="checkLL">
+                                            <input id="checkLL" type="checkbox" class="form-check-input" value="" checked>
+                                            Mersenne prime test
+                                        </label>
+                                    </div class="form-goup">
+                                    <div class="form-group">
+                                        <input class="btn btn-outline-dark" type="submit" value="Calculate"/>
+                                    </div>
+                                </form>
+                                <div class="text-center m-3">
+                                    <p>Output from calculating <b>3<sup id="mersenneIn">2</sup>-1</b> is:</p>
+                                    <p><b><span id="mersenneOut">7</span></b><span id="mersennePrimeOut"> (a Mersenne prime!)</span></p>
+                                </div>
+                            </div>
+                        </div>
+                        <p>
+                            The numbers created by 2n-1 are considered mersenne numbers while the prime numbers that are created using 2p-1 are considered mersenne primes.
+                            2n-1 would create the value 2047. This is not a prime number so it would not be included in the mersenne primes set. 
+                            To check if a mersenne number is prime we can use the Lucas Lehmer primality test. 
+                        </p>
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <h2 class="mt-5">Theory <hr></h2>
+                    <div class="container">
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <h2 class="mt-5">History <hr></h2>
+                    <div class="container">
+
+                    </div>
+                </div>
+
+                <div class="mb-3">
+                    <h2 class="mt-5">Interesting facts. <hr></h2>
+                    <div class="container">
+                        <ul>
+                            <li>
+                                <p>Hello</p>
+                                <div class="pl-3 encapsulated-border">hello</div>
+                            </li>
+                        </ul>
+                        <p> Binary numbers with a prime number of digits will create a mersenne prime. <br>
+                            This is because 2<sup>n</sup> = "1" followed by n 0s <br>
+                            When 1 is taken away from this term, the number becomes "1" n times. So the leading largest 1 is removed and replaced with n-1 "1"<br>
+                            So 100000<sub>2</sub>-1 = 32<sub>10</sub>-1 <br>= 11111<sub>2</sub> = 31<sub>10</sub><br>
+                            Getting back to 100000 is more intuitive, as 11111+1 = 100000 as the 1 will carry over all the way to the front while switching the trailing "1"s into "0"s. (1+1 = 10 in binary)
+                        </p>
+
+                        <ul>
+                            <li>11<sub>2</sub> = 3<sub>10</sub></li>
+                            <li>111<sub>2</sub> = 7<sub>10</sub></li>
+                            <li>11111<sub>2</sub> = 31<sub>10</sub></li>
+                            <li>1111111<sub>2</sub> = 127<sub>10</sub></li>
+                            <li>1111111111111<sub>2</sub> = 8191<sub>10</sub></li>
+                        </ul>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </body>
+</html>
