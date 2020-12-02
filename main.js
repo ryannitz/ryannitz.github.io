@@ -55,7 +55,6 @@ $(document).ready(function(){
                     primes.push(p);
                 }
             }
-            //this is how we would calculate the set of mersenne primes
             // for(var i = 0; i < primes.length; i++){
             //     //if primes[i] is in form 2^n -1, it is mersenne exponent
             //     if(lucasLehmerPrime(primes[i])){
@@ -181,5 +180,36 @@ $(document).ready(function(){
             return primes[n-1];
         }
     }
+
+
+    $("#binaryMersenneCalc").submit(function(event){
+        $("#binMersenneN").change();
+        event.preventDefault();
+    });
+
+    var curDigitCount = 3;
+    var binDecimalVal = 7;
+    $("#binMersenneN").change(function(){
+        var newDigitCount = $(this).val();
+        var diff = newDigitCount - curDigitCount;
+        if(diff > 0)
+            for(var i = curDigitCount; i < newDigitCount; i++)
+                binDecimalVal += 2**i;
+        else
+            for(var i = newDigitCount; i < curDigitCount; i++)
+                binDecimalVal -= 2**i;
+
+        var conversionTerms = "";
+        for(var i = newDigitCount-1; i > 0; i--)
+            conversionTerms += "(2<sup>"+i+"</sup>)+";
+        // if(mersenne prime){
+
+        // }
+        $("#conversionTerms").html(conversionTerms);
+        curDigitCount = newDigitCount;
+        $("#decimalVal").html(binDecimalVal);
+        $(".binaryValue").html("1".repeat(curDigitCount));
+    });
+
 
 });
