@@ -5,6 +5,8 @@ primeN = [2, 3, 5, 7, 11, 13, 17, 19, 23, 29, 31, 37, 41, 43, 47, 53, 59, 61, 67
 
 var reg = "reg";
 var mer = "mer";
+var primesCalculated = false;
+var primes = [];
 
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
@@ -32,8 +34,8 @@ $(document).ready(function(){
         $("#primesSize").html((Math.round(num * 100) / 100).toFixed(2));
         $("#estimatedPrimeCount").html(parseInt(result/Math.log(result)))
     })
-    var primes = [];
-    $("#calcPrimeRange").click(function(){
+
+    $(".calcPrimeRange").click(function(){
         var max = Math.pow(2, parseInt($("#maxPrime").val()));
         $("#loading").modal("show");
         setTimeout(function(){
@@ -53,22 +55,35 @@ $(document).ready(function(){
                     primes.push(p);
                 }
             }
+            //this is how we would calculate the set of mersenne primes
+            // for(var i = 0; i < primes.length; i++){
+            //     //if primes[i] is in form 2^n -1, it is mersenne exponent
+            //     if(lucasLehmerPrime(primes[i])){
+            //         mExponents.push(primes[i]);
+            //         console.log(primes[i]);
+            //     }
+            // }
+            // console.log(mExponents);
+
+            primesCalculated = true;
+            $("#primeCount").html(primes.length);
+            $("#primeN").attr("max", primes.length);
             $("#loading").modal("hide");
-            showSnackbar(primes.length + " primes found", false, "success");
+            showAlert(primes.length + " primes found", false,"success", 3000);
         }, 500);
     });
 
-    function showSnackbar(text, keepAlive, alertType){
-        html = '<div id="primesFound" class="alert alert-'+alertType+' alert-dismissible fixed-top text-center w-50 mx-auto mt-5">'+
+    function showAlert(text, keepAlive, alertType, millis){
+        html = '<div id="alert" class="alert alert-'+alertType+' alert-dismissible fixed-top text-center w-50 mx-auto mt-5">'+
                     '<button type="button" class="close" data-dismiss="alert">×</button>' +
                     text +
                 '</div>';
         $("body").append(html);
         if(!keepAlive){
             setTimeout(function(){
-                $("#primesFound").fadeOut(500);
-                $("#primesFound").alert("dispose");
-            }, 3000)
+                $("#alert").fadeOut(500);
+                $("#alert").alert("dispose");
+            }, millis)
         }
     }
 
@@ -132,35 +147,38 @@ $(document).ready(function(){
                 regPrimeSelected = false;
                 $(".prime-index").html("e");
                 $(".prime-set").html("M");
-                
+                $("#primeN").attr("max", mersenneE.length);
             }else if($(this).val() == reg){
-                regPrimeSelected = false;
+                regPrimeSelected = true;
                 $(".prime-index").html("n");
                 $(".prime-set").html("P");
+                $("#primeN").attr("max", primesCalculated? primes.length:primeN.length);
             }
+            $("#primeNOut").html(getPrime());
         });
     });
 
     $("#primeNCalc").submit(function(event){
-        var inputVal = parseInt($("#primeN").val());
-        $("#primeNOut").html(regPrimeSelected? getPrimeAt(inputVal):getMerExpAt(inputVal));
-
+        $("#primeNOut").html(getPrime());
         event.preventDefault();
     });
+
+    function getPrime(){
+        var inputVal = parseInt($("#primeN").val());
+        return regPrimeSelected? getRegPrimeAt(inputVal):getMerExpAt(inputVal)
+    }
 
     function getMerExpAt(n){
         if(n <= mersenneE.length){
             return mersenneE[n-1];
-        }else{
-            
         }
     }
 
-    function getPrimeAt(n){
+    function getRegPrimeAt(n){
         if(n <= primeN.length){
             return primeN[n-1];
         }else{
-            return primes[n];
+            return primes[n-1];
         }
     }
 
