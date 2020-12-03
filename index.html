@@ -329,7 +329,7 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <h3>
+                                    <h3 class="text-center">
                                         <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">
                                             Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup>
                                         </a> 
@@ -437,12 +437,11 @@
                                     </div>
                                 </div>
                                 <div class="col">
-                                    <h3>
+                                    <h3 class="text-center">
                                         <a href="https://en.wikipedia.org/wiki/Lucas%E2%80%93Lehmer_primality_test">
                                             Lucas–Lehmer primality test <sup><i class="fa fa-external-link"></i></sup>
                                         </a>
                                         <hr>
-
                                     </h3>
                                     <!--  Then in right col, have a small write up on LL -->
                                     <p>
@@ -479,10 +478,17 @@
                                     <p class="text-center">
                                         Input a number to generate of term of n digits of "1". This will binary number that will be a prime or a mersenne prime
                                     </p>
-                                    <p class="text-center">
-                                        Input "11", "89", and "127" to see examples of primes and Mersenne primes.
-                                        This will also demonstrate simplification of terms as the exponent grows larger.
-                                    </p>
+                                    <ul>
+                                        <li>
+                                            Input "11", "89", and "127" to see examples of primes and Mersenne primes.
+                                            This will also demonstrate simplification of terms as the exponent grows larger.
+                                        </li>
+                                        <li>
+                                            For fun, try higher values like the Mersenne exponent: 21701. It may take a short while to load... but it will.
+                                            The fact that this extremely large value can be confirmed by the LLPT (in a browser!) blew my mind.
+                                        </li>
+                                    </ul>
+                                    <hr>
                                     <form id="binaryMersenneCalc" class="text-center" onsubmit="">
                                         <div style="width: fit-content;" class="mx-auto">
                                             <div class="form-group mb-2">
@@ -495,7 +501,10 @@
                                         </div>
                                     </form>
                                     <div class="text-center m-3">
-                                        <p><span class="binaryValue">111</span><sub>2</sub> =  <span id="decimalVal">7</span><sub>10</sub><br><span id="binaryMersenne">(A mersenne prime!)</span></p>
+                                        <p>
+                                            <span class="binaryValue">111</span><sub>2</sub> =
+                                            <br><span id="decimalVal" style="word-break: break-all;">7</span><sub>10</sub><br><span id="binaryMersenne">(A mersenne prime!)</span>
+                                        </p>
                                         <p>Binary to Decimal Breakdown: <br><span id="conversionTerms">(2<sup>2</sup>)+(2<sup>1</sup>)+</span>(2<sup>0</sup>)</p>
                                         <p><b>Note:</b> Once the decimal value surpasses BigInt size, precision is lost and mersenne primes will not be checked correctly.</p>
                                     </div>
@@ -512,8 +521,9 @@
                                                         // Convert binary number n into its decimal representation
                                                         <br><b>BinaryToDecimal</b>(n)
                                                         <br>&nbsp;&nbsp;<b>var</b> decimal = 0
-                                                        <br>&nbsp;&nbsp;<b>from</b> 0 to n.length times:
-                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;decimal = decimal + 2<sup>n</sup>
+                                                        <br>&nbsp;&nbsp;<b>for i=0,</b> 0 to n.length times:
+                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;decimal = decimal + 2<sup>i</sup>
+                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;increment i</sup>
                                                         <br>&nbsp;&nbsp;<b>return</b> decimal
                                                     </code>
                                                 </div>
@@ -553,10 +563,8 @@
                                     </ul>
                                 </div>
                                 <div class="col">
-                                    <h3>
-                                        <a href="">
-                                            Binary something (link maybe) <sup><i class="fa fa-external-link"></i></sup>
-                                        </a>
+                                    <h3 class="text-center">
+                                        Binary to Decimal Conversion
                                         <hr>
                                     </h3>
                                     <p>
@@ -638,7 +646,12 @@
                                     <p>
                                         I learned new limitations of javascript with big integer calculations.
                                         I had to research BigInt variable declaration and the javascript runtime memory sizes.
-                                        BigInt allows us to calculate past 2^31, as 2^31 is a computers max integer 
+                                    </p>
+                                    <p>
+                                        BigInt allows us to calculate past 2^31, as 2<sup>31</sup> is a computers max integer. 
+                                        2<sup>31</sup> seems odd but they use the first bit to represent the +/- of the integer. 
+                                        This allows computer to have an integer range of -2<sup>31</sup> to +2<sup>31</sup>
+                                        for a total of 2<sup>32</sup> integer representations.
                                     </p>
                                 </div>
                             </li>
@@ -646,8 +659,7 @@
                         
                         <p>The moon is 384400km away. Which is 384400000000mm. Show some crazy comparison idk</p>
 
-                        <div>Make binary to mersenne prime calculator. Enter a prime number, than display the number of 1s. Then display the break multiplication break down. Then attempt to calculate it. This method is much easier than if you were forced to attempt at quessing mersenne exponents.</div>
-                    </div>
+                   </div>
                 </div>
 
                 <div id="references" class="mb-5">
