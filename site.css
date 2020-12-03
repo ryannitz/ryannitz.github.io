@@ -1,3 +1,7 @@
+h4,h3,h2{
+    word-break: break-all;
+}
+
 .encapsulating-ul {
     list-style-type: none;
     padding: 0;

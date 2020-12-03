@@ -217,7 +217,7 @@ $(document).ready(function(){
         $("#binaryMersenne").html(displayMersenne?"(A mersenne prime!)":"")
         $("#conversionTerms").html(conversionTerms);
         $("#decimalVal").html(binDecimalVal);
-        $(".binaryValue").html(newDigitCount>100n?"\"1\" x ("+newDigitCount+")":"1".repeat(Number(newDigitCount)));
+        $(".binaryValue").html(newDigitCount>100n?"(\"1\" x "+newDigitCount+")":"1".repeat(Number(newDigitCount)));
         curDigitCount = newDigitCount;
     });
 
