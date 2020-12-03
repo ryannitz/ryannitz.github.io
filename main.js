@@ -8,6 +8,7 @@ var mer = "mer";
 var primesCalculated = false;
 var primes = [];
 
+//init
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -28,7 +29,109 @@ $(document).ready(function(){
         $("#primeNumbers").append(primeN[i]+", ");
     $("#primeNumbers").append("...");
 
+    references = [
+        {
+            "link": "",
+            "text": ""
+        },
+        {
+            "link": "https://primes.utm.edu/nthprime/",
+            "text": "Website that provides query capabilities for nth-prime"
+        },
+        {
+            "link": "https://oeis.org/A000043",
+            "text": "Number sequence for Mersenne Exponents"
+        },
+        {
+            "link": "https://oeis.org/A000225",
+            "text": "Number sequence for Mersenne Numbers"
+        },
+        {
+            "link": "https://oeis.org/A000668",
+            "text": "Number sequence for Mersenne Primes"
+        },
+        {
+            "link": "https://oeis.org/A000040",
+            "text": "Number sequence for Primes"
+        },
+        {
+            "link": "https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes",
+            "text": "Sieve of Eratothenes - information and image"
+        },
+        {
+            "link": "https://www.geeksforgeeks.org/sieve-of-eratosthenes/",
+            "text": "Sieve of Eratothenes - code reference"
+        },
+        {
+            "link": "https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers",
+            "text": "List of primes"
+        },
+        {
+            "link": "https://en.wikipedia.org/wiki/Lucas%E2%80%93Lehmer_primality_test",
+            "text": "Lucas Lehmer information"
+        },
+        {
+            "link": "https://www.geeksforgeeks.org/primality-test-set-5using-lucas-lehmer-series/",
+            "text": "Lucas Lehmer primality test code reference"
+        },
+        {
+            "link": "https://rosettacode.org/wiki/Lucas-Lehmer_test#JavaScript",
+            "text": "BigInt javascript for Lucas-Lehmer code"
+        },
+        {
+            "link": "https://oeis.org/A003010",
+            "text": "Lucas Lehmer sequence"
+        },
+        {
+            "link": "https://www.mersenne.org/",
+            "text": "The great internet mersenne prime search"
+        },
+    ]
 
+    for(var i = 1; i < references.length; i++){
+        var parent = $("#references > div.container > ul");
+        var html = '<li><a style="word-break:break-all;" href="'+references[i].link+'">'+references[i].link+'</a><br><span style="word-break:break-all;"><pre>     '+references[i].text+'</pre></span></li>';
+        parent.append(html)
+    }
+});
+
+/*
+    helper functions
+*/
+function isPrime(n){
+    flag = true;
+    if(n == 2n){
+        return true;
+    }else{
+        for(i = 2n; i <= n/2n; i++){
+            if (n % i == 0) { 
+                flag = false; 
+                break; 
+            } 
+        }
+    }
+    return flag;        
+}
+
+function showAlert(parent, text, keepAlive, alertType, fixedPos, width, millis){
+    var id = Math.floor((Math.random() * 1000) + 1);
+    html = '<div id="alert-'+id+'" class="alert alert-'+alertType+' alert-dismissible '+(fixedPos!=null?('fixed-'+fixedPos):'')+' text-center w-'+(width!=null?(width):'50')+' mx-auto mt-5">'+
+                '<button type="button" class="close" data-dismiss="alert">×</button>' +
+                text +
+            '</div>';
+    $(parent).append(html);
+    if(!keepAlive){
+        setTimeout(function(){
+            $('#alert-'+id).fadeOut(500);
+            $('#alert-'+id).alert("dispose");
+        }, millis)
+    }
+}
+
+//calculators
+$(document).ready(function(){
+
+//form handler for Calculating Primes Popup
     $("#maxPrime").change(function(){
         var exp = $("#maxPrime").val()
         $(".maxPrimeExp").html(exp);
@@ -39,6 +142,7 @@ $(document).ready(function(){
         $("#estimatedPrimeCount").html(parseInt(result/Math.log(result)))
     })
 
+//Seive
     $(".calcPrimeRange").click(function(){
         var max = Math.pow(2, parseInt($("#maxPrime").val()));
         $("#loading").modal("show");
@@ -69,21 +173,49 @@ $(document).ready(function(){
         }, 500);
     });
 
-    function showAlert(parent, text, keepAlive, alertType, fixedPos, width, millis){
-        var id = Math.floor((Math.random() * 1000) + 1);
-        html = '<div id="alert-'+id+'" class="alert alert-'+alertType+' alert-dismissible '+(fixedPos!=null?('fixed-'+fixedPos):'')+' text-center w-'+(width!=null?(width):'50')+' mx-auto mt-5">'+
-                    '<button type="button" class="close" data-dismiss="alert">×</button>' +
-                    text +
-                '</div>';
-        $(parent).append(html);
-        if(!keepAlive){
-            setTimeout(function(){
-                $('#alert-'+id).fadeOut(500);
-                $('#alert-'+id).alert("dispose");
-            }, millis)
+//control for n-th prime and nth-mersenne exponent calculator
+    var regPrimeSelected = true;
+    $("#primeNCalc").submit(function(event){
+        $("#primeType").change();
+        event.preventDefault();
+    });
+    $("#primeType").change(function(){
+        $("#primeType > option:selected").each(function(){
+            if($(this).val() == mer){
+                regPrimeSelected = false;
+                $(".prime-index").html("e");
+                $(".prime-set").html("M");
+                $("#primeN").attr("max", mersenneE.length);
+            }else if($(this).val() == reg){
+                regPrimeSelected = true;
+                $(".prime-index").html("n");
+                $(".prime-set").html("P");
+                $("#primeN").attr("max", primesCalculated? primes.length:primeN.length);
+            }
+            $("#primeNOut").html(getPrime());
+        });
+    });
+
+    function getPrime(){
+        var inputVal = parseInt($("#primeN").val());
+        return regPrimeSelected? getRegPrimeAt(inputVal):getMerExpAt(inputVal)
+    }
+
+    function getMerExpAt(n){
+        if(n <= mersenneE.length){
+            return mersenneE[n-1];
         }
     }
 
+    function getRegPrimeAt(n){
+        if(n <= primeN.length){
+            return primeN[n-1];
+        }else{
+            return primes[n-1];
+        }
+    }
+
+//control for mersenne prime calculator/checker
     $("#mersenneCalc").submit(function(event){
         var n = BigInt($("#mersenneN").val());
         var calcLLPrime = $("#checkLL").prop("checked");
@@ -107,27 +239,13 @@ $(document).ready(function(){
         event.preventDefault();
     });
 
-    function isPrime(n){
-        flag = true;
-        if(n == 2n){
-            return true;
-        }else{
-            for(i = 2n; i <= n/2n; i++){
-                if (n % i == 0) { 
-                    flag = false; 
-                    break; 
-                } 
-            }
-        }
-        return flag;        
-    }
 
     //calculate the mersenne number
     function calcMersenne(n){
         return (2**n)-1;
     }
 
-    //calculate if mersenne number is prime
+    //calculate if mersenne number is prime (Lucas-Lehmer primality test)
     function lucasLehmerPrime(p){
         if (p == 2n) {
             return true;
@@ -141,49 +259,7 @@ $(document).ready(function(){
         }
     }
 
-    var regPrimeSelected = true;
-    $("#primeType").change(function(){
-        $("#primeType > option:selected").each(function(){
-            if($(this).val() == mer){
-                regPrimeSelected = false;
-                $(".prime-index").html("e");
-                $(".prime-set").html("M");
-                $("#primeN").attr("max", mersenneE.length);
-            }else if($(this).val() == reg){
-                regPrimeSelected = true;
-                $(".prime-index").html("n");
-                $(".prime-set").html("P");
-                $("#primeN").attr("max", primesCalculated? primes.length:primeN.length);
-            }
-            $("#primeNOut").html(getPrime());
-        });
-    });
-
-    $("#primeNCalc").submit(function(event){
-        $("#primeNOut").html(getPrime());
-        event.preventDefault();
-    });
-
-    function getPrime(){
-        var inputVal = parseInt($("#primeN").val());
-        return regPrimeSelected? getRegPrimeAt(inputVal):getMerExpAt(inputVal)
-    }
-
-    function getMerExpAt(n){
-        if(n <= mersenneE.length){
-            return mersenneE[n-1];
-        }
-    }
-
-    function getRegPrimeAt(n){
-        if(n <= primeN.length){
-            return primeN[n-1];
-        }else{
-            return primes[n-1];
-        }
-    }
-
-
+//control for binary to mersenne calculator
     $("#binaryMersenneCalc").submit(function(event){
         $("#binMersenneN").change();
         event.preventDefault();
@@ -221,5 +297,6 @@ $(document).ready(function(){
         curDigitCount = newDigitCount;
     });
 
-
 });
+
+
