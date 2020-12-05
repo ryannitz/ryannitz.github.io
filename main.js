@@ -8,7 +8,9 @@ var mer = "mer";
 var primesCalculated = false;
 var primes = [];
 
-//init
+/*
+    init
+*/
 $(document).ready(function(){
     $('[data-toggle="tooltip"]').tooltip();
 
@@ -63,7 +65,7 @@ $(document).ready(function(){
             "text": "Sieve of Eratothenes - code reference"
         },
         {
-            "link": "https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers",
+            "link": "https://primes.utm.edu/lists/small/1000.txt",
             "text": "List of primes"
         },
         {
@@ -86,6 +88,15 @@ $(document).ready(function(){
             "link": "https://www.mersenne.org/",
             "text": "The great internet mersenne prime search"
         },
+        {
+            "link": "https://mathshistory.st-andrews.ac.uk/Biographies/Eratosthenes/",
+            "text": "Biography of Eratosthenes of Cyrene"
+        },
+        {
+            "link": "https://mathshistory.st-andrews.ac.uk/Biographies/Lucas/",
+            "text": "Biography of Edouard Lucas"
+        },
+        
     ]
 
     for(var i = 1; i < references.length; i++){
@@ -93,10 +104,29 @@ $(document).ready(function(){
         var html = '<li><a style="word-break:break-all;" href="'+references[i].link+'">'+references[i].link+'</a><br><span style="word-break:break-all;"><pre>     '+references[i].text+'</pre></span></li>';
         parent.append(html)
     }
+
+
+    var pattern = "\/(?:.(?!\/))+$";
+    var url = window.location.href;
+     var href = url.match(pattern)
+     $("a[href*='" + href + "'].nav-link").parent().addClass("active");
+
+
+    $("a.navlink").click(function(){
+        $("a.navlink").removeClass("active");
+        $(this).addClass("active");
+    });
+
+    $('#calculatorMenu').on('hidden.bs.collapse', function () {
+        $("#layout-nav").addClass("shadow-sm")
+    }).on('show.bs.collapse', function(){
+        $("#layout-nav").removeClass("shadow-sm")
+    });
+
 });
 
 /*
-    helper functions
+    helper function
 */
 function isPrime(n){
     flag = true;
@@ -113,6 +143,9 @@ function isPrime(n){
     return flag;        
 }
 
+/*
+    helper function
+*/
 function showAlert(parent, text, keepAlive, alertType, fixedPos, width, millis){
     var id = Math.floor((Math.random() * 1000) + 1);
     html = '<div id="alert-'+id+'" class="alert alert-'+alertType+' alert-dismissible '+(fixedPos!=null?('fixed-'+fixedPos):'')+' text-center w-'+(width!=null?(width):'50')+' mx-auto mt-5">'+
@@ -128,10 +161,30 @@ function showAlert(parent, text, keepAlive, alertType, fixedPos, width, millis){
     }
 }
 
-//calculators
+//calculate the mersenne number
+function calcMersenne(n){
+    return (2n**n)-1n;
+}
+//calculate if mersenne number is prime (Lucas-Lehmer primality test)
+function lucasLehmerPrime(p){
+    if (p == 2n) {
+        return true;
+    } else {
+        var mersenneVal = (1n << p) - 1n;
+        var nextVal = 4n;
+        for (var i = 2n; i < p; i++) {
+            nextVal = (nextVal*nextVal-2n) % mersenneVal;
+        }
+        return nextVal === 0n;
+    }
+}
+
+/*
+    Calculators
+*/
 $(document).ready(function(){
 
-//form handler for Calculating Primes Popup
+    //form handler for "Calculating Primes" Popup
     $("#maxPrime").change(function(){
         var exp = $("#maxPrime").val()
         $(".maxPrimeExp").html(exp);
@@ -142,7 +195,7 @@ $(document).ready(function(){
         $("#estimatedPrimeCount").html(parseInt(result/Math.log(result)))
     })
 
-//Seive
+    //Seive
     $(".calcPrimeRange").click(function(){
         var max = Math.pow(2, parseInt($("#maxPrime").val()));
         $("#loading").modal("show");
@@ -173,10 +226,10 @@ $(document).ready(function(){
         }, 500);
     });
 
-//control for n-th prime and nth-mersenne exponent calculator
+    //control for n-th prime and nth-mersenne exponent calculator
     var regPrimeSelected = true;
     $("#primeNCalc").submit(function(event){
-        $("#primeType").change();
+        $("#primeNOut").html(getPrime());
         event.preventDefault();
     });
     $("#primeType").change(function(){
@@ -192,8 +245,8 @@ $(document).ready(function(){
                 $(".prime-set").html("P");
                 $("#primeN").attr("max", primesCalculated? primes.length:primeN.length);
             }
-            $("#primeNOut").html(getPrime());
         });
+        $("#primeNOut").html(getPrime());
     });
 
     function getPrime(){
@@ -215,7 +268,7 @@ $(document).ready(function(){
         }
     }
 
-//control for mersenne prime calculator/checker
+    //control for mersenne prime calculator/checker
     $("#mersenneCalc").submit(function(event){
         var n = BigInt($("#mersenneN").val());
         var calcLLPrime = $("#checkLL").prop("checked");
@@ -223,7 +276,7 @@ $(document).ready(function(){
         if(isPrime(n)){
             var val = calcMersenne(n)
             if(calcLLPrime){
-                if(lucasLehmerPrime(BigInt(n))){
+                if(mersenneE.includes(n) || lucasLehmerPrime(n)){
                     $("#mersennePrimeOut").html(" (a Mersenne prime!)");
                 }else{
                     $("#mersennePrimeOut").html(" (not a Mersenne prime.)");
@@ -239,27 +292,7 @@ $(document).ready(function(){
         event.preventDefault();
     });
 
-
-    //calculate the mersenne number
-    function calcMersenne(n){
-        return (2**n)-1;
-    }
-
-    //calculate if mersenne number is prime (Lucas-Lehmer primality test)
-    function lucasLehmerPrime(p){
-        if (p == 2n) {
-            return true;
-        } else {
-            var mersenneVal = (1n << p) - 1n;
-            var nextVal = 4n;
-            for (var i = 2n; i < p; i++) {
-                nextVal = (nextVal*nextVal-2n) % mersenneVal;
-            }
-            return nextVal === 0n;
-        }
-    }
-
-//control for binary to mersenne calculator
+    //control for binary to mersenne calculator
     $("#binaryMersenneCalc").submit(function(event){
         $("#binMersenneN").change();
         event.preventDefault();
@@ -270,17 +303,21 @@ $(document).ready(function(){
     $("#binMersenneN").change(function(){
         var newDigitCount = BigInt($(this).val());
         var diff = newDigitCount - curDigitCount;
-        if(diff > 0)
-            for(var i = curDigitCount; i < newDigitCount; i++)
+        if(diff > 0){
+            for(var i = curDigitCount; i < newDigitCount; i++){
                 binDecimalVal += 2n**i;
-        else
-            for(var i = newDigitCount; i < curDigitCount; i++)
+            }
+        }else{
+            for(var i = newDigitCount; i < curDigitCount; i++){
                 binDecimalVal -= 2n**i;
+            }
+        }
 
         var conversionTerms = "";
         if(newDigitCount <= 50){
-            for(var i = newDigitCount-1n; i > 0; i--)
+            for(var i = newDigitCount-1n; i > 0; i--){
                 conversionTerms += "(2<sup>"+i+"</sup>)+";
+            }
         }else{
             conversionTerms = "(2<sup>"+(newDigitCount-1n).toString()+"</sup>)"
             + "+(2<sup>"+(newDigitCount-2n).toString()+"</sup>)"
@@ -288,7 +325,7 @@ $(document).ready(function(){
             + "+ . . . +(2<sup>1</sup>)+"
         }
         //check for prime number of digits before large calculation
-        var displayMersenne = isPrime(newDigitCount) && lucasLehmerPrime(newDigitCount);
+        var displayMersenne = mersenneE.includes(newDigitCount) || (isPrime(newDigitCount) && lucasLehmerPrime(newDigitCount));
         //render outputs
         $("#binaryMersenne").html(displayMersenne?"(A mersenne prime!)":"")
         $("#conversionTerms").html(conversionTerms);
