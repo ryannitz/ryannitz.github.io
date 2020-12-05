@@ -105,16 +105,13 @@ $(document).ready(function(){
         parent.append(html)
     }
 
-
-    var pattern = "\/(?:.(?!\/))+$";
-    var url = window.location.href;
-     var href = url.match(pattern)
-     $("a[href*='" + href + "'].nav-link").parent().addClass("active");
-
-
     $("a.navlink").click(function(){
         $("a.navlink").removeClass("active");
         $(this).addClass("active");
+    });
+
+    $(".nav-link").click(function(){
+        $('#calculatorMenu').collapse('hide')
     });
 
     $('#calculatorMenu').on('hidden.bs.collapse', function () {
@@ -122,7 +119,14 @@ $(document).ready(function(){
     }).on('show.bs.collapse', function(){
         $("#layout-nav").removeClass("shadow-sm")
     });
+    
+    $('#calculatorMenu > div > button.close').click(function () {
+        $("#calculatorMenu").collapse('hide');
+    });
 
+    $(".calcMenuItem").click(function(){
+        $("#calculatorMenu").collapse('hide');
+    });
 });
 
 /*
