@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
+        <link rel="stylesheet" href="site.css" />
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
         <title>3093 Project - Ryan Nitz</title>
@@ -16,21 +17,64 @@
         <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
         <!-- Latest compiled JavaScript -->
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-
-        <link rel="stylesheet" href="site.css" />
         <script src="main.js"></script>
         <script>
             $(document).ready(function(){
                 $("#primesModal").modal('show');
             });
         </script>
+        <link rel="stylesheet" href="site.css"/>
     </head>
-    <!-- ToDo:
-        Complete references
-        Add a scroll-fix header (if time updated the tabs to scrollspy)
 
-    -->
-    <body>
+    <body data-spy="scroll" data-target=".navbar" data-offset="100">
+        <div id="title" class="text-center jumbotron bg-dark text-white" style="border-radius: 0%; margin-bottom: 0%;">
+            <h1 class="display-4">Mersenne primes</h1>
+        </div>
+        <header class="sticky-top">
+            <nav id="layout-nav" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white shadow-sm mb-3" style="padding:0;">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="layout-navitems" class="navbar-collapse collapse d-sm-inline-flex">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark active" href="#title">Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#calculators" data-toggle="collapse" data-target="#calculatorMenu">Calculators <i class="fas fa-caret-down"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#related">Related</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#facts">Interesting Facts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#references">References</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="calculatorMenu" class="collapse shadow-sm border-top bg-white">
+                <div class="container py-3">
+                    <ul>
+                        <li>
+                            <a href="">N-th Prime Calculator</a>
+                        </li>
+                        <li>
+                            <a href="">Mersenne calculator</a>
+                        </li>
+                        <li>
+                            <a href=""></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
         <div class="modal fade" id="primesModal">
             <div class="modal-dialog modal-lg">
                 <div class="modal-content">
@@ -100,9 +144,7 @@
 
         <div class="container">
             <main role="main" class="pb-3">
-                <div id="title" class="mt-3 mb-5">
-                    <h1 class="display-4 text-center">Mersenne primes <hr></h1>
-                </div>
+                
 
                 <div id="overview" class="mb-5">
                     <div id="headerAlert"></div>
@@ -173,7 +215,7 @@
                                 <p>
                                     Mersenne primes and Mersenne numbers are names after Marin Mersenne, a french scholar from the 1700s.
                                     Originally, Mersenne had the list of Mersenne Primes and Mersenne numbers incorrect. 
-                                    The set of primes contained composite numbers (ex: M<sub>67</sub>, M<sub>257</sub>) while the set of composite numbers contained some prime numbers (ex: M<sub>61</sub>, M<sub>281</sub>).
+                                    The set of primes contained composite numbers (Ex: M<sub>67</sub>, M<sub>257</sub>) while the set of composite numbers contained some prime numbers (Ex: M<sub>61</sub>, M<sub>281</sub>).
                                     Later, Edouard Lucas corrected for these smaller numbers using theories that we will show below.
                                 </p>
                                 <p>
@@ -192,7 +234,7 @@
                             <div class="pl-3 ml-5 encapsulated-li">
                                 <p>
                                     The star of the show, Mersenne numbers have a great spotlight in the prime number research space. 
-                                    A subset of the Mersenne numbers, these numbers are of the form 
+                                    A subset of the Mersenne numbers, these prime numbers are of the form 2<sup>p</sup>-1, where p is a prime.
                                 </p>
                                 <p>
                                     Highest known Mersenne Prime M<sub>p</sub> is 51 (M<sub>51</sub>), which was found in December 2018. 
@@ -223,7 +265,7 @@
                         <h2 class="mt-5">Prime Generator<hr></h2>
                             <div class="p-3 border shadow-sm mb-5">
                                 <div data-toggle="collapse" data-target="#collapse1">
-                                    <h5>n-th prime calculator</h5>
+                                    <h5>N-th Prime Calculator</h5>
                                 </div>
                                 <div id="collapse1" class="collapse show">
                                     <hr>
@@ -235,7 +277,7 @@
                                     </p>
                                     <p>
                                         We can also find a list of the first 1000 primes 
-                                        <a href="https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers" target="_blank" data-toggle="tooltip" title="List of primes">
+                                        <a href="https://primes.utm.edu/lists/small/1000.txt" target="_blank" data-toggle="tooltip" title="List of primes">
                                             here <sup><i class="fa fa-external-link"></i></sup>
                                         </a>
                                     </p>
@@ -338,7 +380,11 @@
                                     <!-- Write up on the sieve -->
                                     <p>
                                         The Sieve of Eratosthenes is an ancient algorithm that eliminates all composite numbers up to a given number.
-                                        It is thought that the Greek Mathmatician Eratosthenes of Cyrene is the one to have used it first. 
+                                        It is thought that the Greek Mathmatician 
+                                        <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Eratosthenes/" target="_blank">
+                                            Eratosthenes of Cyrene <sup><i class="fa fa-external-link"></i></sup>
+                                        </a> 
+                                         is the one to have used it first. 
                                     </p>
                                     <p>
                                        <b>Algorithm desc.</b> The algorithm works by creating a list of booleans from 2 to the upper bound. 
@@ -353,11 +399,12 @@
                                     </p>
                                 </div>
                             </div>
-                            <p class="mb-5 text-muted text-center">
-                                <i>
+                            <p class="mb-5 text-center">
+                                <i class="text-muted">
                                     "Sift the Two's and Sift the Three's, The Sieve of Eratosthenes.
                                     When the multiples sublime, The numbers that remain are Prime."
                                 </i>
+                                 - Anonymous
                             </p>
                     </div>
 
@@ -369,7 +416,7 @@
                                 </div>
                                 <div id="collapse2" class="collapse show">
                                     <hr>
-                                    <p>This calculator will have restricted calculation bounds due to machine and browser limitations.</p>
+                                    <p>This calculator will have restricted calculation bounds due to machine and browser limitations. (p &gt; 21701 will be taxing)</p>
                                     <hr>
                                     <p class="text-center">
                                         Input value n for: <b>2<sup>p</sup>-1</b> where p is a 
@@ -387,18 +434,18 @@
                                                 <input id="checkLL" type="checkbox" class="form-check-input" value="" checked>
                                                 Mersenne prime test
                                             </label>
-                                        </div class="form-goup">
+                                        </div>
                                         <div class="form-group">
                                             <input class="btn btn-outline-dark" type="submit" value="Calculate"/>
                                         </div>
                                     </form>
                                     <div class="text-center m-3">
                                         <p>Output from calculating <b>2<sup id="mersenneIn">3</sup>-1</b> is:</p>
-                                        <p><b><span id="mersenneOut">7</span></b><span id="mersennePrimeOut"> (a Mersenne prime!)</span></p>
+                                        <p><span id="mersennePrimeOut"> (a Mersenne prime!)</span><br><b><span id="mersenneOut" style="word-break: break-all;">7</span></b></p>
                                     </div>
                                 </div>
                             </div>
-                            <p class="text-center">To check if a mersenne number is prime we can use the Lucas Lehmer primality test as defined below.</p>
+                            <p class="text-center">To check if a Mersenne number is prime we can use the Lucas Lehmer primality test as defined below.</p>
                             <div class="row">
                                 <div class="col">
                                     <div class="flip-card" style="min-height:300px;">
@@ -445,8 +492,8 @@
                                     </h3>
                                     <!--  Then in right col, have a small write up on LL -->
                                     <p>
-                                        LLPT was developed by Edouard Lucas in 1896, and later improved by Lucas in 1878, lastly by Derrick Lehmer in the 1930s. 
-                                        Its most famous application is in GIMPS, the Greatest Internet Mersenne Prime Search. 
+                                        LLPT was developed by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Lucas/" target="_blank"> Edouard Lucas <sup><i class="fa fa-external-link"></i></sup></a> in 1856, and later improved by Lucas in 1878, lastly by Derrick Lehmer in the 1930s. 
+                                        Its most famous application is in GIMPS, the Great Internet Mersenne Prime Search. 
                                     </p>
                                     <p>
                                         The LLPT algorithm has an efficient time-complexity for computational execution.
@@ -473,7 +520,7 @@
                                 <div id="collapse3" class="collapse show">
                                     <hr>
                                     <p class="text-center">
-                                        Input a number to generate of term of n digits of "1". This will binary number that will be a prime or a mersenne prime
+                                        Input a number to generate of term of n digits of "1". This will binary number that will be a prime or a Mersenne prime
                                     </p>
                                     <ul>
                                         <li>
@@ -500,10 +547,10 @@
                                     <div class="text-center m-3">
                                         <p>
                                             <span class="binaryValue">111</span><sub>2</sub> =
-                                            <br><span id="decimalVal" style="word-break: break-all;">7</span><sub>10</sub><br><span id="binaryMersenne">(A mersenne prime!)</span>
+                                            <br><span id="decimalVal" style="word-break: break-all;">7</span><sub>10</sub><br><span id="binaryMersenne">(A Mersenne prime!)</span>
                                         </p>
                                         <p>Binary to Decimal Breakdown: <br><span id="conversionTerms">(2<sup>2</sup>)+(2<sup>1</sup>)+</span>(2<sup>0</sup>)</p>
-                                        <p><b>Note:</b> Once the decimal value surpasses BigInt size, precision is lost and mersenne primes will not be checked correctly.</p>
+                                        <p><b>Note:</b> Once the decimal value surpasses BigInt size, precision is lost and Mersenne primes will not be checked correctly.</p>
                                     </div>
                                 </div>
                             </div>
@@ -577,7 +624,7 @@
                                         When 1 is taken away from this term, the term becomes n-1 digits of "1". In other words, the leading 1 is removed and all the "0"s become "1"s<br>
                                     </p>
                                     <p>
-                                        EX: <br> 100000<sub>2</sub>-1 = 32<sub>10</sub>-1 <br>= 11111<sub>2</sub> = 31<sub>10</sub><br>
+                                        Ex: <br> (100000-1)<sub>2</sub> = (32-1)<sub>10</sub> <br>= 11111<sub>2</sub> = 31<sub>10</sub><br>
                                     </p>
                                     <p>
                                         Getting back to 100000 from 11111 is more intuitive when we apply carry-overs from the adding operation. 
@@ -611,7 +658,11 @@
                             <li>
                                 <h4>Cryptography</h4>
                                 <div class="ml-5 pl-3 encapsulated-li">
-                                    <p>Large primes are used in encryption algorithms for cyber-security. The RSA encryption system is a PRIME example, using two large prime numbers to create a product that then requires prime-factorization.</p>
+                                    <p>
+                                        Large primes are used in encryption algorithms for cyber-security.
+                                        The RSA encryption system is a PRIME example, using two large prime numbers to create a product that then requires prime-factorization.
+                                        Note: Mersenne primes are not ideal for RSA encryption because they are guessed easily.
+                                    </p>
                                 </div>
                             </li>
                             <li>
@@ -633,7 +684,7 @@
                                 <h4>The Great Internet Mersenne Prime Search (GIMPS)</h4>
                                 <div class="ml-5 pl-3 encapsulated-li">
                                     <p>
-                                        GIMPS is an ongoing initiative to identify the largest known primes using mersenne primes. 
+                                        GIMPS is an ongoing initiative to identify the largest known primes using Mersenne primes. 
                                         GIMPS has a free program for download that requests assignments and work loads to be ran on the host system. 
                                         If a computer finds a new prime that which is later confirmed through multiple checks and validations, the user and computer are documented and put in the record list. 
                                     </p>
@@ -666,6 +717,5 @@
                     Ryan Nitz. P.S: I much enjoyed developing this website and learning new frontend development techniques, all while applying number theory topics.
                 </div>
             </footer>
-        
     </body>
 </html>

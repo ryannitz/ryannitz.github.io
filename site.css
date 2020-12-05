@@ -1,3 +1,6 @@
+body {
+    position: relative; 
+}
 h4,h3,h2{
     word-break: break-all;
 }
@@ -21,10 +24,40 @@ h4,h3,h2{
 
 
 
+/*Navbar*/
+
+#layout-nav {
+    padding: 0;
+}
+
+a.nav-link {
+    padding: 1rem 2rem;
+    padding-left: 1rem!important;
+    padding-right: 1rem!important;
+}
 
 
+a.nav-link.active {
+    border-bottom: 2px solid #343a40;
+}
+
+a.navbar-brand {
+    white-space: normal;
+    text-align: center;
+    word-break: break-all;
+}
 
 
+.nav-pills .nav-link.active, .nav-pills .show > .nav-link {
+    color: #fff;
+    background-color: #1b6ec2;
+    border-color: #1861ac;
+}
+
+#calculatorMenu{
+    z-index: 10;
+    margin-top: -1rem!important;
+}
 
 /* The flip card container - set the width and height to whatever you want. We have added the border property to demonstrate that the flip itself goes out of the box on hover (remove perspective if you don't want the 3D effect */
 .flip-card {
