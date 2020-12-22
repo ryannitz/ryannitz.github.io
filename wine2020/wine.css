@@ -1,3 +1,8 @@
 html{
     background-color: rgb(32, 32, 32);
 }
+
+img{
+    height:100%;
+    width:100%;
+}
