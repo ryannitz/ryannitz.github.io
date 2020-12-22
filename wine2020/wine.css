@@ -1,5 +1,5 @@
 html{
-    background-color: rgb(32, 32, 32);
+    background-color: rgb(32, 32, 32)!important;
 }
 
 img{
@@ -8,5 +8,5 @@ img{
 }
 
 p{
-    color:black;
+    color:white!important;
 }
