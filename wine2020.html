@@ -26,9 +26,6 @@
                     document.getElementById("rick").play();
                     document.getElementById("rick").muted = false;
                 });
-                setTimeout(function(){
-                    document.getElementById("rick").muted = false;
-                },1000)
             });
         </script>
     </head>
@@ -42,6 +39,11 @@
             <!-- <iframe style="width: 100%; min-height: 650px;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
             <p class="text-light text-center">A personalized video from me, to you. (Until I figure out autoplay on mobile!)</p>
         </div>
+        <script>
+            setTimeout(function(){
+                    document.getElementById("rick").muted = false;
+                },1000)
+        </script>
         <div class="container text-light">
 
             <div class="text-center">
