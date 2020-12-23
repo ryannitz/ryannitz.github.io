@@ -21,8 +21,7 @@
         <link rel="stylesheet" href="/wine2020/wine.css"/>
         <script>
             $(document).load(function(){
-                $("#rick").trigger('play');      
-                document.getElementById("rick").play()
+                $("#rick").trigger('play');
             });
         </script>
     </head>
