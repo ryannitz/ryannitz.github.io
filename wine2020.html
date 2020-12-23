@@ -26,6 +26,9 @@
                     document.getElementById("rick").play();
                     document.getElementById("rick").muted = false;
                 });
+                setTimeout(function(){
+                    document.getElementById("rick").muted = false;
+                },1000)
             });
         </script>
     </head>
@@ -34,6 +37,7 @@
         <div id="yt-container" class="mx-auto mb-5">
             <video id="rick" style="width: 100%; min-height: 350px;" controls autoplay muted>
                 <source src="/wine2020/media/rick.mp4" type="video/mp4">
+                    This browser does not support this video.
             </video>
             <!-- <iframe style="width: 100%; min-height: 650px;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
             <p class="text-light text-center">A personalized video from me, to you. (Until I figure out autoplay on mobile!)</p>
