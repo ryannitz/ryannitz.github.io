@@ -19,13 +19,16 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <script src="/wine2020/wine.js"></script>
         <link rel="stylesheet" href="/wine2020/wine.css"/>
+        <script>
+            $(document).ready(function(){
+                $("#rick").trigger('play');
+            });
+        </script>
     </head>
 
     <body style="background-color: rgb(32, 32, 32)">
         <div id="yt-container" class="mx-auto mb-5">
-            <video src="/wine2020/media/rick.mp4" style="width: 100%; min-height: 650px;" controls>
-                <!-- <source src="/wine2020/media/rick.mp4">  -->
-            </video>
+            <video id="rick" src="/wine2020/media/rick.mp4" style="width: 100%; min-height: 650px;" controls></video>
             <!-- <iframe style="width: 100%; min-height: 650px;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
         </div>
         <div class="container text-light">
