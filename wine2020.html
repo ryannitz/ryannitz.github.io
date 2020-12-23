@@ -21,15 +21,16 @@
         <link rel="stylesheet" href="/wine2020/wine.css"/>
         <script>
             $(document).load(function(){
-                $("#rick").trigger('play');      
-                document.getElementById("rick").play()
+                $("#rick").load(function(){
+                    $(this).trigger('play');    
+                })
             });
         </script>
     </head>
 
     <body style="background-color: rgb(32, 32, 32)">
         <div id="yt-container" class="mx-auto mb-5">
-            <video id="rick" src="/wine2020/media/rick.mp4" style="width: 100%; min-height: 650px;" controls></video>
+            <video id="rick" src="/wine2020/media/rick.mp4" style="width: 100%; min-height: 350px;" controls></video>
             <!-- <iframe style="width: 100%; min-height: 650px;" src="https://www.youtube.com/embed/dQw4w9WgXcQ?autoplay=1" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe> -->
         </div>
         <div class="container text-light">
