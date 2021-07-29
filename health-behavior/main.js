@@ -1,3 +1,33 @@
+// GET REFERENCES
+// Header
+// --------------
+// pandemic intro (done)
+// --------------
+// pre-covid sleep (done)
+// --------------
+// covid sleep (downfall) (done)
+// --------------
+// covid sleep graph, add some bullets describing how napping is terrible (done)
+// --------------
+// graph with sleep-start and sleep-end covid sleep
+// --------------
+// change goals and methods to complete this
+// --------------
+// graph with naps during the behavior change
+// --------------
+// graph with sleep-start and sleep-end during behavior change. 
+// --------------
+// Describe the results etc
+// --------------
+// Conclusions
+// --------------
+// References
+// --------------
+// Help with: FontAwesome, Bootstrap, Vue.js
+// --------------
+// Footer
+
+
 var COL_DATE = 0;
 var COL_BEDTIME = 1;
 var COL_ASLEEPTIME = 2;
