@@ -39,84 +39,51 @@ var app = new Vue({
             "TUE",
             "WED",
             "THU",
-            "FRI",
-            "SAT",
-            "SUN"
+            "FRI"
         ],
 
         w1: [
             {
                 log: "Last night was the first day of my behavior change experiment. Due to this being the first night, I wasn't worried about when I went to bed, but when I wake up to kick of my tiredness schedule. Unfortunately I crumbled and had a midday nap.",
                 date : "2021-07-12",
-                timedata: []
             },
             {
                 log: "Last night I fell asleep late again but did not nap during the day. I was up late catching up on lectures from the class I had to miss Monday. Coffee kept me awake for the first hours of the day, hopefully I can fall asleep at a good time tonight.",
                 date: "2021-07-13",
-                timedata: []
             },
             {
                 log: "Last night I couldn't fall asleep when I wanted because of the heat. I forced myself to wake up at my goal time though.",
                 date: "2021-07-14",
-                timedata: []
             },
             {
                 log: "Last night was probably the closest I've gotten to my goal. Very happy, not much to say. Felt great all day.",
                 date: "2021-07-15",
-                timedata: []
             },
             {
                 log: "Last night I tried to get to bed early but the heat kept my tossing and turning. :( This is becoming a challenge with no A/C in my room.",
                 date: "2021-07-16",
-                timedata: []
-            },
-            {
-                log: "Weekend write off. ",
-                date: "2021-07-17",
-                timedata: []
-            },
-            {
-                log: "Weekend write off",
-                date: "2021-07-18",
-                timedata: []
             }
-           
        ],
         w2: [
             {
-                log: "Lorem",
+                log: "Today I ended up napping a few times because I was very hungover from the weekend. I showered really early in the morning after being dropped off from my camp.",
                 date: "2021-07-19",
-                timedata: []
             },
             {
-                log: "Lorem",
+                log: "This notes the first day of me staying up consistantly late to watch netflix with someone in Alberta. Even though this new trend took hold, I refused to nap or take showers at random times of the day.",
                 date: "2021-07-20",
-                timedata: []
             },
             {
-                log: "Lorem",
+                log: "Late night again watching netflix. Keeping consistant throughout the day still.",
                 date: "2021-07-21",
-                timedata: []
             },
             {
-                log: "Lorem",
+                log: "Today Alberta girl and myself were busy for the rest of the week so I did not stay up as late, but couldn't fall asleep until later anyway.",
                 date: "2021-07-22",
-                timedata: []
             },
             {
-                log: "Lorem",
+                log: "My last day of the behavior change. I felt more productive at work throughout the two weeks. I'm a little more tired than usual, on the same levels of taking in-person classes, so not too concerning.",
                 date: "2021-07-23",
-                timedata: []
-            },
-            {
-                log: "Lorem",
-                date: "2021-07-24",
-                timedata: []
-            },
-            {
-                log: "Lorem",
-                date: "2021-07-25",
-                timedata: []
             }
         ]
     },

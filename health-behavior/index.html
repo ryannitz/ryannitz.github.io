@@ -16,12 +16,13 @@
         <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
         <!-- Latest compiled HighCharts -->
         <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/xrange.js"></script>
         <!-- Latest compiled Vue.js dev build -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
 
         <title>Ryans Sleep</title>
     </head>
-    <body style="background-color: rgba(200,200,200,1);">
+    <body>
         <div id="app">
             <div class="modal" id="loading" data-backdrop="static">
                 <div class="modal-dialog modal-dialog-centered modal-sm">
@@ -75,23 +76,23 @@
 
                     <div class="section section-no-shadow" style="background-color: #ff6666;">
                         <div class="row">
-                            <div class="col-sm-3 m-auto">
+                            <div class="col-sm-4 m-auto">
                                 <p class="m-0 section-icon text-center"><i class="fas fa-virus fa-9x"></i></p>
                             </div>
-                            <div class="col-sm-9 section-text p-4">
+                            <div class="col-sm-8 section-text-shadow p-4">
                                 <h1 class="text-center">{{sections[0].title}}</h1>
-                                <h4 class="m-0 pr-4">{{sections[0].content}}</h4>
+                                <h3 class="section-content">{{sections[0].content}}</h3>
                             </div>
                         </div>
                     </div>
 
                     <div class="section section-shadow">
                         <div class="row">
-                            <div class="col-sm-9 p-4">
+                            <div class="col-sm-8 p-4">
                                 <h1 class="text-center">{{sections[1].title}}</h1>
-                                <h4 class="m-0 pl-4">{{sections[1].content}}</h4>
+                                <h3 class="section-content">{{sections[1].content}}</h3>
                             </div>
-                            <div class="col-sm-3 m-auto">
+                            <div class="col-sm-4 m-auto">
                                 <p class="m-0 text-center"><i class="fas fa-history fa-9x"></i></p>
                             </div>
                         </div>
@@ -100,52 +101,65 @@
 
                     <div class="section section-no-shadow" style="background-color: #6666ff;">
                         <div class="row">
-                            <div class="col-sm-3 m-auto">
+                            <div class="col-sm-4 m-auto">
                                 <p class="m-0 section-icon text-center"><i class="fas fa-brain fa-9x"></i></p>
                             </div>
-                            <div class="col-sm-9 section-text p-4">
+                            <div class="col-sm-8 section-text-shadow p-4">
                                 <h1 class="text-center">{{sections[2].title}}</h1>
-                                <h4 class="m-0 pr-4">{{sections[2].content}}</h4>
+                                <h3 class="section-content">{{sections[2].content}}</h3>
                             </div>
                         </div>
                     </div>
 
                     <div class="section section-shadow">
-                        <div class="row text-center">
-                            <div class="col-sm-9 mx-auto">
-                                <h1>GRAPHS BITCH</h1>
-                                <div id="highchart" style="width:100%; height:400px;"></div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="section section-no-shadow" style="background-color: #6666ff;">
                         <div class="row">
-                            <div class="col-sm-3 m-auto">
-                                <p class="m-0 section-icon text-center"><i class="fas fa-brain fa-9x"></i></p>
+                            <h1 class="text-center w-100">Total hours slept before bahavior change</h1>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="totalSleepHoursBefore" style="width:80%; height:400px;"></div>
                             </div>
-                            <div class="col-sm-9 section-text p-4">
-                                <h1 class="text-center">Sleep before behavior change goal</h1>
-                                <h4 class="m-0 pr-4">Talk about the graph that im gonna put in the section belowowowowwo</h4>
+                            <div class="col-sm-4 m-auto p-5">
+                                <ul class="graph-ul">
+                                    <li>NOTE: Weekends (red background) are not included in the following data</li>
+                                    <li>Average night of sleep excluding naps = 6.60hrs</li>
+                                    <li>Average night of sleep including naps = 7.34hrs</li>
+                                    <li>Excessive napping throughout the day (10% of total sleep), not good.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-no-shadow" style="background-color: #cc00cc">
+                        <div class="row">
+                            <h1 class="text-center w-100 section-text-shadow">Bed time and Wake time before behavior change</h1>
+                            <div class="col-sm-4 m-auto section-text-shadow p-5">
+                                <ul class="graph-ul">
+                                    <li>Test here plzx</li>
+                                    <li></li>
+                                    <li></li>
+                                    <li></li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="sleepAndWakeTimeBefore" style="width:80%; height:800px"></div>
                             </div>
                         </div>
                     </div>
 
                     <div class="section section-shadow">
                         <div class="row text-center">
-                            <div class="col-sm-9 mx-auto">
+                            <div class="col-sm-8 mx-auto">
                                 <h1>GRAPHS BITCH</h1>
                                 
                             </div>
                         </div>
                     </div>
 
-                    <div class="section section-no-shadow" style="background-color: #ff66ff;">
+                    <div class="section section-no-shadow" style="background-color: #99ff99;">
                         <div>hey</div>
                     </div>
 
                     <div class="section section-shadow">
-                        <h2>Daily log</h2>
+                        <h1 class="text-center mb-5">Daily log</h1>
                         <div class="row">
                             <div class="col">
                                 <div v-for="(day, index) in w1" class="row mb-3">
@@ -184,12 +198,12 @@
                     
                     <div class="section section-no-shadow" style="background-color: #66ffff;">
                         <div class="row text-center">
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <p class="m-0 section-icon"><i class="fas fa-virus fa-9x"></i></p>
                             </div>
-                            <div class="col-sm-9 section-text">
+                            <div class="col-sm-8 section-text">
                                 <h2>Sleep before behavior change goal</h2>
-                                <h4 class="m-0"><i class="fas fa-plane fa-5x"> + <i class="fas fa-building fa-5x"></i> = inside job</i></h4>
+                                <h4 class="section-text">Lorem</h4>
                             </div>
                         </div>
                     </div>
@@ -198,7 +212,7 @@
                         <div>hey</div>
                     </div>
 
-                    <div class="section section-no-shadow" style="background-color: #99ff99;">
+                    <div class="section section-no-shadow" style="background-color: #ff66ff;">
                         <div>hey</div>
                     </div>
 

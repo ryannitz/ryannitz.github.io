@@ -6,6 +6,8 @@ var COL_AWAKETIME = 4;
 var COL_NAPTIME = 5;
 var COL_TOTALSLEEPTIME = 6;
 
+var DEFAULT_DATE = "2021-07-10"
+
 var before = [
     //date       , bedtime  , fallAslpee,wakeup,    time awake, nap time, total slept
     ["2021-06-28","00:00:00","02:26:00","08:18:00","00:11:00","00:00:00","05:41:00"],
@@ -15,7 +17,7 @@ var before = [
     ["2021-07-02","00:00:00","03:04:00","09:58:00","00:54:00","01:29:00","07:29:00"],
     ["2021-07-03","00:00:00","02:25:00","06:15:00","00:14:00","02:36:00","06:12:00"],
     ["2021-07-04","00:00:00","02:27:00","11:54:00","00:41:00","00:00:00","08:46:00"],
-    ["2021-07-05","00:00:00","11:45:00","06:35:00","00:48:00","01:25:00","07:27:00"],
+    ["2021-07-05","00:00:00","00:00:00","06:35:00","00:48:00","01:25:00","07:27:00"],
     ["2021-07-06","00:00:00","02:08:00","09:01:00","00:38:00","01:07:00","07:22:00"],
     ["2021-07-07","00:00:00","01:41:00","08:57:00","00:35:00","00:00:00","06:41:00"],
     ["2021-07-08","00:00:00","01:37:00","09:08:00","00:36:00","01:00:00","07:55:00"],
@@ -58,79 +60,174 @@ $(document).ready(function(){
 
 
 
-  Highcharts.chart('highchart', {
-    chart: {
-        type: 'column'
-    },
-    title: {
-        text: 'Hours slept before behavior change'
-    },
-    xAxis: {
-        categories: getDateLabels(before),
-        plotBands: [// visualize the weekend
-            {
-                from: 4.5,
-                to: 6.5,
-                color: 'rgba(255, 0, 0, .2)'
-            },
-            {
-                from: 11.5,
-                to: 13.5,
-                color: 'rgba(255, 0, 0, .2)'
-            },
-        ]
-    },
-    yAxis: {
-        min: 0,
+    Highcharts.chart('totalSleepHoursBefore', {
+        chart: {
+            type: 'column'
+        },
         title: {
-            text: 'Total hours slept'
+            text: 'Hours slept before behavior change'
         },
-        stackLabels: {
-            enabled: true,
-            style: {
-                fontWeight: 'bold',
-                color: ( // theme
-                    Highcharts.defaultOptions.title.style &&
-                    Highcharts.defaultOptions.title.style.color
-                ) || 'gray'
-            }
-        }
-    },
-    legend: {
-        align: 'right',
-        x: -30,
-        verticalAlign: 'top',
-        y: 25,
-        floating: true,
-        backgroundColor:
-            Highcharts.defaultOptions.legend.backgroundColor || 'white',
-        borderColor: '#CCC',
-        borderWidth: 1,
-        shadow: false
-    },
-    tooltip: {
-        headerFormat: '<b>{point.x}</b><br/>',
-        pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
-    },
-    plotOptions: {
-        column: {
-            stacking: 'normal',
-            dataLabels: {
-                enabled: true
-            }
-        }
-    },
-    series: [
-        {
-            name: 'Nap',
-            data: getNapTimesInHours(before)
+        xAxis: {
+            categories: getDateLabels(before),
+            plotBands: [// visualize the weekend
+                {
+                    from: 4.5,
+                    to: 6.5,
+                    color: 'rgba(255, 0, 0, .2)'
+                },
+                {
+                    from: 11.5,
+                    to: 13.5,
+                    color: 'rgba(255, 0, 0, .2)'
+                },
+            ]
         },
-        {
-            name: 'Sleep',
-            data: getTotalSleepTimeWithoutNap(before)
-        }
-    ]
-});
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total hours slept'
+            },
+            stackLabels: {
+               enabled: true,
+            }
+        },
+        legend: {
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: [
+            {
+                name: 'Nap',
+                data: getNapTimesInHours(before)
+            },
+            {
+                name: 'Sleep',
+                data: getTotalSleepTimeWithoutNap(before)
+            }
+        ]
+    });
+
+    Highcharts.chart('sleepAndWakeTimeBefore', {
+        chart: {
+            type: 'xrange'
+        },
+        title: {
+            text: 'Sleep range before behavior change'
+        },
+        accessibility: {
+            point: {
+                descriptionFormatter: function (point) {
+                    var ix = point.index + 1,
+                        category = point.yCategory,
+                        from = new Date(point.x),
+                        to = new Date(point.x2);
+                    return ix + '. ' + category + ', ' + from.toDateString() +
+                        ' to ' + to.toDateString() + '.';
+                }
+            }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats:{
+                day: {
+                    main: "%H:%M",
+                    range: false
+                },
+                hour: {
+                    main: "%H:%M",
+                    range: true
+                }
+            },
+            plotBands: [// visualize the weekend
+                {
+                    from: 1.0,
+                    to: 6.5,
+                    color: 'rgba(255, 0, 0, .2)'
+                },
+            ]
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            categories: getDateLabels(before),
+            reversed: true,
+        },
+        tooltip:{
+            backgroundColor: '#fff',
+            borderColor: 'black',
+            borderRadius: 8,
+            borderWidth: 0,
+            zIndex: 11,
+            xDateFormat: '%H:%M',
+            formatter: function() {
+              let start = Highcharts.dateFormat('%H:%M', this.x),
+                end = Highcharts.dateFormat('%H:%M', this.x2),
+                range =  (this.x2 - this.x)/(60*60*1000) ;
+              return `${start} - ${end}<br>${range.toFixed(2)}hrs`
+            }
+        },
+        plotOptions: {
+            series:{
+                pointStart: Date.UTC(2021,7,10,0,1),
+                colors: ["#434348"]
+            }
+        },
+        series: [
+            {
+                pointStart: Date.UTC(2021,7,10,0,1),
+                name: 'Before behavior',
+                borderColor: 'gray',
+                pointWidth: 20,
+                data: getSleepRangeData(before),
+                dataLabels: [
+                    {
+                        enabled: true,
+                        align: "left",
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M', this.x);
+                        }
+                    },
+                    {
+                        enabled: true,
+                        align: "right",
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M', this.x2);
+                        }
+                    }
+                ]
+            },
+            // {//how to add a comparison if we can't emulate the column overlap chart...
+            //     name: 'Project 2',
+            //     pointPadding: 5,
+            //     groupPadding: 5,
+            //     borderColor: 'gray',
+            //     pointWidth: 20,
+            //     data: getSleepRangeData(before),
+            //     dataLabels: {
+            //         enabled: true
+            //     }
+            // }
+        ]
+    });
 
 
 
@@ -174,8 +271,10 @@ function convertToUTC(data){
 
 }
 
+//add name to day ex: mon,tue...
 function formatDate(value) {
     let date = new Date(value);
+    date.setDate(date.getDate()+1)
     const day = date.toLocaleString('default', { day: '2-digit' });
     const month = date.toLocaleString('default', { month: 'short' });
     const year = date.toLocaleString('default', { year: 'numeric' });
@@ -194,7 +293,7 @@ function getDateLabels(data){
 
 function getNapTimesInHours(data){
     var napTimes = getNapTimeCol(data);
-    var napTimesInHours = []
+    var napTimesInHours = [];
 
     napTimes.forEach(function(item, index){
         var date = new Date(("2021-07-10 " + item));
@@ -215,6 +314,41 @@ function getTotalSleepTimeWithoutNap(data){
         totalSleepWithoutNaps.push(parseFloat(num));
     });
     return totalSleepWithoutNaps;
+}
+
+function getSleepRangeData(data){
+    var ranges = [];
+    data.forEach(function(item, index){
+        var asleepDate = new Date(("2021-07-10 " + item[COL_ASLEEPTIME]));
+        var awakeDate = new Date(("2021-07-10 " + item[COL_WAKEUPTIME]));
+        // if(asleepDate.getHours() > 12){
+        //     asleepDate.setDate(asleepDate.getDay()-1)
+        // }
+        // if(awakeDate.getHours() > 12){
+        //     awakeDate.setDate(awakeDate.getDay()-1)
+        // }
+        var x_1 = Date.UTC(asleepDate.getFullYear(), asleepDate.getMonth(), asleepDate.getDay(), asleepDate.getHours(), asleepDate.getMinutes());
+        var x_2 = Date.UTC(awakeDate.getFullYear(), awakeDate.getMonth(), awakeDate.getDay(), awakeDate.getHours(), awakeDate.getMinutes())
+
+        range = {
+            x: x_1,
+            x2: x_2,
+            y: index,
+            //partialFill: 0.25
+        }
+
+        ranges.push(range);
+    });
+    asleepDate = new Date(("2021-07-10 00:00:00"))
+    awakeDate = new Date(("2021-07-10 08:00:00"))
+    var desiredTimeRange = {
+        x: Date.UTC(asleepDate.getFullYear(), asleepDate.getMonth(), asleepDate.getDay(), asleepDate.getHours(), asleepDate.getMinutes()),
+        x2: Date.UTC(awakeDate.getFullYear(), awakeDate.getMonth(), awakeDate.getDay(), awakeDate.getHours(), awakeDate.getMinutes()),
+        y: ranges.length,
+        color: "#f00"
+    }
+    ranges.push(desiredTimeRange);
+    return ranges;
 }
 
 });
