@@ -9,9 +9,9 @@
 // --------------
 // covid sleep graph, add some bullets describing how napping is terrible (done)
 // --------------
-// graph with sleep-start and sleep-end covid sleep
+// graph with sleep-start and sleep-end covid sleep (done)
 // --------------
-// change goals and methods to complete this
+// change goals and methods to complete this (done)
 // --------------
 // graph with naps during the behavior change
 // --------------
@@ -151,6 +151,71 @@ $(document).ready(function(){
             {
                 name: 'Sleep',
                 data: getTotalSleepTimeWithoutNap(before)
+            }
+        ]
+    });
+
+    Highcharts.chart('totalSleepHoursDuring', {
+        chart: {
+            type: 'column'
+        },
+        title: {
+            text: 'Hours slept during behavior change'
+        },
+        xAxis: {
+            categories: getDateLabels(before),
+            plotBands: [// visualize the weekend
+                {
+                    from: 4.5,
+                    to: 6.5,
+                    color: 'rgba(255, 0, 0, .2)'
+                },
+                {
+                    from: 11.5,
+                    to: 13.5,
+                    color: 'rgba(255, 0, 0, .2)'
+                },
+            ]
+        },
+        yAxis: {
+            min: 0,
+            title: {
+                text: 'Total hours slept'
+            },
+            stackLabels: {
+               enabled: true,
+            }
+        },
+        legend: {
+            align: 'right',
+            x: -30,
+            verticalAlign: 'top',
+            y: 25,
+            floating: true,
+            backgroundColor: Highcharts.defaultOptions.legend.backgroundColor || 'white',
+            borderColor: '#CCC',
+            borderWidth: 1,
+        },
+        tooltip: {
+            headerFormat: '<b>{point.x}</b><br/>',
+            pointFormat: '{series.name}: {point.y}<br/>Total: {point.stackTotal}'
+        },
+        plotOptions: {
+            column: {
+                stacking: 'normal',
+                dataLabels: {
+                    enabled: true
+                }
+            }
+        },
+        series: [
+            {
+                name: 'Nap',
+                data: getNapTimesInHours(during)
+            },
+            {
+                name: 'Sleep',
+                data: getTotalSleepTimeWithoutNap(during)
             }
         ]
     });

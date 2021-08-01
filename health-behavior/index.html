@@ -133,10 +133,10 @@
                             <h1 class="text-center w-100 section-text-shadow">Bed time and Wake time before behavior change</h1>
                             <div class="col-sm-4 m-auto section-text-shadow p-5">
                                 <ul class="graph-ul">
-                                    <li>Test here plzx</li>
-                                    <li></li>
-                                    <li></li>
-                                    <li></li>
+                                    <li>Here we can see when I would normally go to bed and most importantly when I wake up.</li>
+                                    <li>Before the behavior change I went to bed between 1:30am and 3:00am. When first thinking about my goals, I wanted to have my bedtime before 1am consistantly</li>
+                                    <li>During the weekdays I would wake up from 9am to 10am. 10am is/was the first meeting of the day for me. The biggest change I wanted to make was the time I woke up at.</li>
+                                    <li>The <b>red</b> bar marks the desired sleep range even before the behavior change experiment.</li>
                                 </ul>
                             </div>
                             <div class="col-sm-8 p-4">
@@ -146,16 +146,52 @@
                     </div>
 
                     <div class="section section-shadow">
-                        <div class="row text-center">
-                            <div class="col-sm-8 mx-auto">
-                                <h1>GRAPHS BITCH</h1>
-                                
+                        <div class="row">
+                            <div class="col-sm-8 p-4">
+                                <h1 class="text-center">{{sections[3].title}}</h1>
+                                <h3 class="section-content">{{sections[3].content}}</h3>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="text-center">Goals</h3>
+                                        <ul>
+                                            <li>Go to bed before 1am - This will allow me to get a plentiful night of sleep to reduce napping and furhter deterioration of my schedule.</li>
+                                            <li>Wake up at 9am or earlier - This will ensure I am ready for work in the morning and don't need to shift my schedule to accomodate morning activites</li>
+                                            <li>Reduce and elminate naps - This will prevent going to bed at later times from not being tired. It will also solidify a routine.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="text-center">Methods</h3>
+                                        <ul>
+                                            <li>Track actual sleeping stats through fitbit and software. This will be the primary feature.</li>
+                                            <li>Consume coffee and do other activities in place of naps</li>
+                                            <li>Go to bed at 1am latest. (Spoiler alert: This was not followed.)</li>
+                                            <li>Track a daily log to understand the conclusions in why I've succeeded or failed.</li>
+                                            <li>Understand urges and reasons for the behavior taking place.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 text-center"><i class="fas fa-exchange-alt fa-9x"></i></p>
                             </div>
                         </div>
                     </div>
 
                     <div class="section section-no-shadow" style="background-color: #99ff99;">
-                        <div>hey</div>
+                        <div class="row">
+                            <h1 class="text-center w-100 section-text-shadow">Bed time and Wake time during behavior change (ADD SECOND COLUMNS OF LAST GRAPH FOR COMP</h1>
+                            <div class="col-sm-4 m-auto section-text-shadow p-5">
+                                <ul class="graph-ul">
+                                    <li>NOTE: Weekends (red background) are not included in the following data</li>
+                                    <li>Average night of sleep excluding naps = xhrs</li>
+                                    <li>Average night of sleep including naps = xhrs</li>
+                                    <li>Excessive napping throughout the day (x% of total sleep), not good.</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="totalSleepHoursDuring" style="width:80%; height:400px;"></div>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="section section-shadow">
