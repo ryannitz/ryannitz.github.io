@@ -87,3 +87,17 @@ header{
     border-bottom-right-radius: 1em;
 }
 
+
+.cred-container{
+    width: fit-content;
+    border: 1px solid black;
+    padding: 2em;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
+    border-top-left-radius: 1em;
+    border-bottom-left-radius: 1em;
+}
+
+.cred-container > div > div:last-child{
+    margin-left: 2em;
+}

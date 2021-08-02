@@ -23,9 +23,8 @@
 // --------------
 // References
 // --------------
-// Help with: FontAwesome, Bootstrap, Vue.js
+// Footer Help with: FontAwesome, Bootstrap, Vue.js (done)
 // --------------
-// Footer
 
 
 var COL_DATE = 0;

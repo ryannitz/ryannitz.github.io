@@ -31,6 +31,18 @@ var app = new Vue({
             {
                 title: "Behavior Change Goals and Methods",
                 content: "When coming up with my behavior change goals, I needed to reflect on my life during covid and pre-covid. This would allow me to identify major life changes brought on by the pandemic which I could work towards fixing. The biggest change that stood out to me was my sleep schedule, so I decided to make a plan towards fixing it."
+            },
+            {
+                title: "Results and Findings",
+                content: ""
+            },
+            {
+                title: "Conclusions",
+                content: ""
+            },
+            {
+                title: "References",
+                content: ""
             }
         ],
 
