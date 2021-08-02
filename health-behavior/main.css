@@ -7,6 +7,10 @@ ul{
 
 }
 
+.section-nav-btn:hover{
+    cursor: pointer;
+}
+
 header{
     height: 60px; 
     display: block; 

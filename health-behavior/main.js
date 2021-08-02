@@ -17,7 +17,7 @@
 // --------------
 // graph with sleep-start and sleep-end during behavior change. (Done)
 // --------------
-// Describe the results etc
+// Describe the results etc (done)
 // --------------
 // Conclusions
 // --------------
@@ -75,17 +75,27 @@ var during = [
 
 
 $(document).ready(function(){
-  $('[data-toggle="tooltip"]').tooltip();
+    $('[data-toggle="tooltip"]').tooltip();
 
 
 
-  $(window).scroll(function(){
-    if(window.scrollY > ($("#header-mast").offset().top + $("#header-mast").height())){
-      $("#layout-nav").slideDown()
-    }else{
-      $("#layout-nav").slideUp()
-    }
-  });
+    $(window).scroll(function(){
+        if(window.scrollY > ($("#header-mast").offset().top + $("#header-mast").height())){
+            $("#layout-nav").slideDown()
+        }else{
+            $("#layout-nav").slideUp()
+        }
+    });
+
+    $(".section-nav-btn").click(function(){ 
+        var index = $(this).index()
+        $("html").animate(
+            {
+              scrollTop: $(".section:nth-child("+(index+1)+")").offset().top
+            },
+            400 //speed
+          );
+    });
 
 
 

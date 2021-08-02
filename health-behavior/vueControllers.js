@@ -29,8 +29,23 @@ var app = new Vue({
                 content: "Once the pandemic hit, suddenly there was no reason to wake up a few hours early to get ready for the day and make the required comute to school and work. The fact that I no longer needed to get up so early meant I could stay up later the night beforehand. Of course this bed time got later and later as my sleep schedule would adjust and the extra time to sleep turned into the minimal amount of sleep just like the pre-pandemic. It didn't stop there though... With school and work being remote, the gaps in my schedule and immediate amenties of my house meant that I could nap in my free time to make up for the sleep loss. With the extra napping, the problems continued to compound up to the point I began sleeping at inapropriate times. Eventually my entire schedule collapsed. Showering, eating, sleeping, all completely random now."
             },
             {
+                title: "Total Hours Slept Pre-Behavior Change",
+            },
+            {
+                title: "Bed time / Wake Time Before Behavior Change ",
+            },
+            {
                 title: "Behavior Change Goals and Methods",
                 content: "When coming up with my behavior change goals, I needed to reflect on my life during covid and pre-covid. This would allow me to identify major life changes brought on by the pandemic which I could work towards fixing. The biggest change that stood out to me was my sleep schedule, so I decided to make a plan towards fixing it."
+            },
+            {
+                title: "Sleep Range During Behavior Change",
+            },
+            {
+                title: "Bed Time / Wake Time During Behavior Change",
+            },
+            {
+                title: "Daily Log",
             },
             {
                 title: "Results and Findings",
