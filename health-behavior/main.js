@@ -13,9 +13,9 @@
 // --------------
 // change goals and methods to complete this (done)
 // --------------
-// graph with naps during the behavior change
+// graph with naps during the behavior change (done)
 // --------------
-// graph with sleep-start and sleep-end during behavior change. 
+// graph with sleep-start and sleep-end during behavior change. (Done)
 // --------------
 // Describe the results etc
 // --------------
@@ -63,7 +63,7 @@ var during = [
     ["2021-07-16","12:30:00","02:21:00","08:00:00","00:32:00","00:00:00","05:07:00"],
     ["2021-07-17","02:30:00","02:49:00","12:26:00","00:43:00","00:00:00","08:54:00"],
     ["2021-07-18","01:30:00","02:04:00","11:00:00","00:58:00","00:00:00","07:58:00"],
-    ["2021-07-19","23:00:00","23:34:00","06:29:00","00:54:00","01:31:00","07:32:00"],
+    ["2021-07-19","23:00:00","00:03:00","06:29:00","00:54:00","01:31:00","07:32:00"],
     ["2021-07-20","01:30:00","02:10:00","09:04:00","00:43:00","00:00:00","06:11:00"],
     ["2021-07-21","02:00:00","02:51:00","09:50:00","00:58:00","00:00:00","06:01:00"],
     ["2021-07-22","02:00:00","02:34:00","09:01:00","00:26:00","00:00:00","06:01:00"],
@@ -209,13 +209,30 @@ $(document).ready(function(){
             }
         },
         series: [
+            
             {
                 name: 'Nap',
-                data: getNapTimesInHours(during)
+                data: getNapTimesInHours(before),
+                stack: "Before",
+                opacity: 0.5,
             },
             {
                 name: 'Sleep',
-                data: getTotalSleepTimeWithoutNap(during)
+                data: getTotalSleepTimeWithoutNap(before),
+                stack: "Before",
+                opacity: 0.5,
+            },
+            {
+                name: 'Nap',
+                data: getNapTimesInHours(during),
+                stack: "During",
+                color: "#7cb5ec"
+            },
+            {
+                name: 'Sleep',
+                data: getTotalSleepTimeWithoutNap(during),
+                stack: "During",
+                color: "#434348"
             }
         ]
     });
@@ -309,18 +326,124 @@ $(document).ready(function(){
                         }
                     }
                 ]
+            }
+        ]
+    });
+
+    Highcharts.chart('sleepAndWakeTimeDuring', {
+        chart: {
+            type: 'xrange'
+        },
+        title: {
+            text: 'Sleep range during behavior change'
+        },
+        accessibility: {
+            point: {
+                descriptionFormatter: function (point) {
+                    var ix = point.index + 1,
+                        category = point.yCategory,
+                        from = new Date(point.x),
+                        to = new Date(point.x2);
+                    return ix + '. ' + category + ', ' + from.toDateString() +
+                        ' to ' + to.toDateString() + '.';
+                }
+            }
+        },
+        xAxis: {
+            type: 'datetime',
+            dateTimeLabelFormats:{
+                day: {
+                    main: "%H:%M",
+                    range: false
+                },
+                hour: {
+                    main: "%H:%M",
+                    range: true
+                }
             },
-            // {//how to add a comparison if we can't emulate the column overlap chart...
-            //     name: 'Project 2',
-            //     pointPadding: 5,
-            //     groupPadding: 5,
-            //     borderColor: 'gray',
-            //     pointWidth: 20,
-            //     data: getSleepRangeData(before),
-            //     dataLabels: {
-            //         enabled: true
-            //     }
-            // }
+            plotBands: [// visualize the weekend
+                {
+                    from: 1.0,
+                    to: 6.5,
+                    color: 'rgba(255, 0, 0, .2)'
+                },
+            ]
+        },
+        yAxis: {
+            title: {
+                text: ''
+            },
+            categories: getDateLabels(before),
+            reversed: true,
+        },
+        tooltip:{
+            backgroundColor: '#fff',
+            borderColor: 'black',
+            borderRadius: 8,
+            borderWidth: 0,
+            zIndex: 11,
+            xDateFormat: '%H:%M',
+            formatter: function() {
+              let start = Highcharts.dateFormat('%H:%M', this.x),
+                end = Highcharts.dateFormat('%H:%M', this.x2),
+                range =  (this.x2 - this.x)/(60*60*1000) ;
+              return `${start} - ${end}<br>${range.toFixed(2)}hrs`
+            }
+        },
+        plotOptions: {
+            series:{
+                pointStart: Date.UTC(2021,7,10,0,1),
+                colors: ["#434348"]
+            }
+        },
+        series: [
+            {
+                pointStart: Date.UTC(2021,7,10,0,1),
+                name: 'Before behavior',
+                borderColor: 'gray',
+                pointWidth: 20,
+                data: getSleepRangeData(before),
+                opacity: 0.5,
+                dataLabels: [
+                    {
+                        enabled: true,
+                        align: "left",
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M', this.x);
+                        }
+                    },
+                    {
+                        enabled: true,
+                        align: "right",
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M', this.x2);
+                        }
+                    }
+                ]
+            },
+            {
+                pointStart: Date.UTC(2021,7,10,0,1),
+                name: 'During change',
+                borderColor: 'gray',
+                pointWidth: 20,
+                data: getSleepRangeData(during),
+                dataLabels: [
+                    {
+                        enabled: true,
+                        align: "left",
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M', this.x);
+                        }
+                    },
+                    {
+                        enabled: true,
+                        align: "right",
+                        formatter: function() {
+                            return Highcharts.dateFormat('%H:%M', this.x2);
+                        }
+                    }
+                ]
+            }
         ]
     });
 
@@ -436,13 +559,16 @@ function getSleepRangeData(data){
     });
     asleepDate = new Date(("2021-07-10 00:00:00"))
     awakeDate = new Date(("2021-07-10 08:00:00"))
-    var desiredTimeRange = {
-        x: Date.UTC(asleepDate.getFullYear(), asleepDate.getMonth(), asleepDate.getDay(), asleepDate.getHours(), asleepDate.getMinutes()),
-        x2: Date.UTC(awakeDate.getFullYear(), awakeDate.getMonth(), awakeDate.getDay(), awakeDate.getHours(), awakeDate.getMinutes()),
-        y: ranges.length,
-        color: "#f00"
+    console.log(new Date(data[0][0]).getDate())
+    if(new Date(data[0][0]).getDate() == 27){
+        var desiredTimeRange = {
+            x: Date.UTC(asleepDate.getFullYear(), asleepDate.getMonth(), asleepDate.getDay(), asleepDate.getHours(), asleepDate.getMinutes()),
+            x2: Date.UTC(awakeDate.getFullYear(), awakeDate.getMonth(), awakeDate.getDay(), awakeDate.getHours(), awakeDate.getMinutes()),
+            y: ranges.length,
+            color: "#f00"
+        }
+        ranges.push(desiredTimeRange);
     }
-    ranges.push(desiredTimeRange);
     return ranges;
 }
 

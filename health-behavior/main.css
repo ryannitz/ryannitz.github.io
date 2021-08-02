@@ -83,5 +83,7 @@ header{
 .daily-log > div:last-child{
     overflow: hidden;
     width: inherit;
+    border-top-right-radius: 1em;
+    border-bottom-right-radius: 1em;
 }
 
