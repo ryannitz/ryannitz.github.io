@@ -90,7 +90,7 @@ header{
 
 .cred-container{
     width: fit-content;
-    border: 1px solid black;
+    border: 2px solid black;
     padding: 2em;
     border-top-right-radius: 1em;
     border-bottom-right-radius: 1em;

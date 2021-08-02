@@ -34,7 +34,7 @@ var app = new Vue({
             },
             {
                 title: "Results and Findings",
-                content: ""
+                content: "Overall the behavior change efforts increased my own feeling of productivity and self-efficacy. I was able to improve on 2 out of 3 of my goals. Reduced napping was successful. Waking up at 9am or earlier was also improved over the weeks prior to the change. Unfortunatly I did not get to bed at better times. I beleive failing the bedtime goal was due to online netflix dates with the girl from Alberta with the time zone disparity (Noted in the daily logs)."
             },
             {
                 title: "Conclusions",
