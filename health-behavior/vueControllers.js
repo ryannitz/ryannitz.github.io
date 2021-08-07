@@ -1,14 +1,4 @@
 
-//todo: Graph showing the bedtime pre-behavior change 
-//todo: Graph showing the total amount of sleep for the week pre-behavior change (without naps)
-
-//todo: Graph showing the bedtime and real bedtime post-behavior change
-//todo: Graph showing the total amount of sleep for the wee post-behavior change
-//todo: Grapgh showing how long it took to fall asleep
-
-//todo: Grapgh 
-
-
 var app = new Vue({
     el: "#app",
 
@@ -18,15 +8,15 @@ var app = new Vue({
         sections : [
             {
                 title: "The Pandemic",
-                content: "The covid-19 pandemic has changed lives around the globe. People have been forced to change their day-to-day behaviors and ingrained habits. Some behaviors have improved given the extra time during quaratine, other -less desireable- behaviors were able to grab hold with lessened routine and structure. My not-so-desirable behavior that got worse was sleep. This website will be a quick overview with graphs and logs documenting my what my sleep has deteriorated to, and where I'm trying to get it back to."
+                content: "The covid-19 pandemic has changed lives around the globe. People have been forced to change their day-to-day behaviors and ingrained habits. Some behaviors have improved given the extra time during quaratine, other -less desireable- behaviors were able to grab hold. My not-so-desirable behavior that got worse was sleep and my sleep schedule. This website will be a quick overview with graphs and logs documenting my what my sleep has deteriorated to, and where I'm trying to get it back to."
             },
             {
                 title: "Pre-Covid Sleep",
-                content: "Being in University there were obviously times I would stay up until 3am for assignments and studying. I would always stay up past 12 anyway no matter the circumstance. Occasionally I would pull all nighters or stay up extremely late while working on passionate computer science projects (sort of like this one). One thing that was always consistent though was the time I had to wake up (7:30am). My wake up time would keep me on schedule and make me tired enough to fix my sleep schedule the very same day. This obviously isn't the case with pandemic and remote work."
+                content: "Being in University there were obviously times I would stay up until 3am for assignments and studying. I would always stay up past 12 anyway no matter the circumstance. Occasionally I would pull all nighters or stay up extremely late while working on passionate computer science projects (sort of like this one). One thing that was consistent was the time I had to wake up (7:30am). My wake up time would keep me on schedule and make me tired enough to fix my sleep schedule the very same day. This obviously isn't the case with pandemic and remote work."
             },
             {
                 title: "Covid Sleep Downfall",
-                content: "Once the pandemic hit, suddenly there was no reason to wake up a few hours early to get ready for the day and make the required comute to school and work. The fact that I no longer needed to get up so early meant I could stay up later the night beforehand. Of course this bed time got later and later as my sleep schedule would adjust and the extra time to sleep turned into the minimal amount of sleep just like the pre-pandemic. It didn't stop there though... With school and work being remote, the gaps in my schedule and immediate amenties of my house meant that I could nap in my free time to make up for the sleep loss. With the extra napping, the problems continued to compound up to the point I began sleeping at inapropriate times. Eventually my entire schedule collapsed. Showering, eating, sleeping, all completely random now."
+                content: "Once the pandemic hit, suddenly there was no reason to wake up early to get ready for the day and make the required comutes. The fact that I no longer needed to get up so early meant I could stay up later the night before. Of course my bedtime got later and later as my sleep schedule would adjust and the extra time to sleep turned into the minimal amount of sleep, just like I did in the pre-pandemic. It didn't stop there though... With school and work being remote, the gaps in my schedule and the immediate amenties of my house meant that I could nap in my free time to make up for the sleep loss. With the extra napping, the problems continued to compound up to the point I began sleeping at inapropriate times. Eventually my entire schedule collapsed. Showering, eating, sleeping, all completely random now."
             },
             {
                 title: "Total Hours Slept Pre-Behavior Change",
@@ -53,11 +43,11 @@ var app = new Vue({
             },
             {
                 title: "Conclusions",
-                content: ""
+                content: "This health behavior exercise had perfect timing with our community lifting all pandemic restrictions the week after this assignment. This gives me a taste of what going back to normal life might be like. Although the timing were not similar, the amount of sleep surely is. I also came to the realization that the first sacrifice in my life is sleep. I will easily trade sleep for school, personal indulges, other people etc. Perhaps that is why I found it difficult to go to bed earlier, I simply sacrificed my total amount of sleep in order to complete this assignment. Continue to go to bed later but wake up sooner. Seems I could always find an excuse for staying up late. Maybe this is a good indicator that the primary behavior to be changed is my bedtime alone. In retrospect, the goals should have been fewer and more precise to focus the change and get more meaningful results. All in all, this was a great assignment. Soon it will be my everyday once things are back to normal."
             },
             {
                 title: "References",
-                content: ""
+                content: "References in PowerPoint."
             }
         ],
 
@@ -115,36 +105,5 @@ var app = new Vue({
         ]
     },
 
-  //------- methods --------
-    methods: {
-        
-    },
-
-    computed: {
-        // filteredUsers() {
-        //     return this.users.filter(user => {
-        //         return user.userName.toLowerCase().indexOf(this.searchUser.toLowerCase()) > -1
-        //     })
-        // }
-    },
-
-    mounted: function(){
-        
-    }
-
 });
 
-function createAlert(type, text, millis){
-    var id = Math.floor((Math.random() * 1000) + 1);
-    var alerthtml = '<div id="alert-'+id+'" class="alert alert-'+type+' alert-dismissible text-center fixed-bottom w-75 mx-auto mb-5">' +
-                    '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                    '<strong><i class="fas fa-info-circle"></i></strong> '+
-                    text+
-                '</div>'
-    $("body").append(alerthtml);
-    setTimeout(function(){
-        $('#alert-'+id).fadeOut(500, function(){
-            $('#alert-'+id).remove();
-        });
-    }, millis)
-  }

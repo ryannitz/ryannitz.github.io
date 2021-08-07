@@ -2,11 +2,6 @@ body{
     background-color: rgba(225,225,225,1);
 }
 
-
-ul{
-
-}
-
 .section-nav-btn:hover{
     cursor: pointer;
 }
@@ -53,11 +48,6 @@ header{
 
 .section-content{
     margin:2em 4em;
-}
-
-
-.graph-ul{
-
 }
 
 .graph-ul > li{
