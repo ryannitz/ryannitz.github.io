@@ -26,72 +26,64 @@
 // Footer Help with: FontAwesome, Bootstrap, Vue.js (done)
 // --------------
 
+const COL_DATE = 0
+const COL_BEDTIME = 1
+const COL_ASLEEPTIME = 2
+const COL_WAKEUPTIME = 3
+const COL_AWAKETIME = 4
+const COL_NAPTIME = 5
+const COL_TOTALSLEEPTIME = 6
 
-var COL_DATE = 0;
-var COL_BEDTIME = 1;
-var COL_ASLEEPTIME = 2;
-var COL_WAKEUPTIME = 3;
-var COL_AWAKETIME = 4;
-var COL_NAPTIME = 5;
-var COL_TOTALSLEEPTIME = 6;
-
-var DEFAULT_DATE = "2021-07-10"
-
-var before = [
-    //date       , bedtime  , fallAslpee,wakeup,    time awake, nap time, total slept
-    ["2021-06-28","00:00:00","02:26:00","08:18:00","00:11:00","00:00:00","05:41:00"],
-    ["2021-06-29","00:00:00","02:54:00","09:48:00","00:40:00","01:25:00","07:39:00"],
-    ["2021-06-30","00:00:00","01:51:00","10:00:00","00:46:00","01:06:00","08:29:00"],
-    ["2021-07-01","00:00:00","01:42:00","11:30:00","00:36:00","00:00:00","09:12:00"],
-    ["2021-07-02","00:00:00","03:04:00","09:58:00","00:54:00","01:29:00","07:29:00"],
-    ["2021-07-03","00:00:00","02:25:00","06:15:00","00:14:00","02:36:00","06:12:00"],
-    ["2021-07-04","00:00:00","02:27:00","11:54:00","00:41:00","00:00:00","08:46:00"],
-    ["2021-07-05","00:00:00","00:00:00","06:35:00","00:48:00","01:25:00","07:27:00"],
-    ["2021-07-06","00:00:00","02:08:00","09:01:00","00:38:00","01:07:00","07:22:00"],
-    ["2021-07-07","00:00:00","01:41:00","08:57:00","00:35:00","00:00:00","06:41:00"],
-    ["2021-07-08","00:00:00","01:37:00","09:08:00","00:36:00","01:00:00","07:55:00"],
-    ["2021-07-09","00:00:00","03:07:00","09:09:00","00:31:00","00:00:00","05:31:00"],
-    ["2021-07-10","00:00:00","04:55:00","13:02:00","00:35:00","00:00:00","07:32:00"],
-    ["2021-07-11","00:00:00","02:06:00","06:11:00","00:30:00","02:18:00","05:53:00"],
-]
-var during = [
-    ["2021-07-12","02:30:00","03:02:00","09:13:00","00:38:00","02:22:00","07:55:00"],
-    ["2021-07-13","02:00:00","02:25:00","09:13:00","00:40:00","00:00:00","06:08:00"],
-    ["2021-07-14","01:00:00","01:30:00","09:13:00","00:40:00","00:00:00","07:03:00"],
-    ["2021-07-15","12:45:00","02:10:00","08:00:00","00:33:00","00:00:00","05:17:00"],
-    ["2021-07-16","12:30:00","02:21:00","08:00:00","00:32:00","00:00:00","05:07:00"],
-    ["2021-07-17","02:30:00","02:49:00","12:26:00","00:43:00","00:00:00","08:54:00"],
-    ["2021-07-18","01:30:00","02:04:00","11:00:00","00:58:00","00:00:00","07:58:00"],
-    ["2021-07-19","23:00:00","00:03:00","06:29:00","00:54:00","01:31:00","07:32:00"],
-    ["2021-07-20","01:30:00","02:10:00","09:04:00","00:43:00","00:00:00","06:11:00"],
-    ["2021-07-21","02:00:00","02:51:00","09:50:00","00:58:00","00:00:00","06:01:00"],
-    ["2021-07-22","02:00:00","02:34:00","09:01:00","00:26:00","00:00:00","06:01:00"],
-    ["2021-07-23","03:00:00","03:26:00","09:00:00","00:34:00","00:00:00","05:58:00"],
-    ["2021-07-24","00:00:00","04:19:00","11:35:00","00:25:00","00:00:00","06:51:00"],
-    ["2021-07-25","00:00:00","03:32:00","11:17:00","00:43:00","00:00:00","07:01:00"]
+const before = [
+    ['2021-06-28', '00:00:00', '02:26:00', '08:18:00', '00:11:00', '00:00:00', '05:41:00'],
+    ['2021-06-29', '00:00:00', '02:54:00', '09:48:00', '00:40:00', '01:25:00', '07:39:00'],
+    ['2021-06-30', '00:00:00', '01:51:00', '10:00:00', '00:46:00', '01:06:00', '08:29:00'],
+    ['2021-07-01', '00:00:00', '01:42:00', '11:30:00', '00:36:00', '00:00:00', '09:12:00'],
+    ['2021-07-02', '00:00:00', '03:04:00', '09:58:00', '00:54:00', '01:29:00', '07:29:00'],
+    ['2021-07-03', '00:00:00', '02:25:00', '06:15:00', '00:14:00', '02:36:00', '06:12:00'],
+    ['2021-07-04', '00:00:00', '02:27:00', '11:54:00', '00:41:00', '00:00:00', '08:46:00'],
+    ['2021-07-05', '00:00:00', '00:00:00', '06:35:00', '00:48:00', '01:25:00', '07:27:00'],
+    ['2021-07-06', '00:00:00', '02:08:00', '09:01:00', '00:38:00', '01:07:00', '07:22:00'],
+    ['2021-07-07', '00:00:00', '01:41:00', '08:57:00', '00:35:00', '00:00:00', '06:41:00'],
+    ['2021-07-08', '00:00:00', '01:37:00', '09:08:00', '00:36:00', '01:00:00', '07:55:00'],
+    ['2021-07-09', '00:00:00', '03:07:00', '09:09:00', '00:31:00', '00:00:00', '05:31:00'],
+    ['2021-07-10', '00:00:00', '04:55:00', '13:02:00', '00:35:00', '00:00:00', '07:32:00'],
+    ['2021-07-11', '00:00:00', '02:06:00', '06:11:00', '00:30:00', '02:18:00', '05:53:00'],
 ]
 
+const during = [
+    ['2021-07-12', '02:30:00', '03:02:00', '09:13:00', '00:38:00', '02:22:00', '07:55:00'],
+    ['2021-07-13', '02:00:00', '02:25:00', '09:13:00', '00:40:00', '00:00:00', '06:08:00'],
+    ['2021-07-14', '01:00:00', '01:30:00', '09:13:00', '00:40:00', '00:00:00', '07:03:00'],
+    ['2021-07-15', '12:45:00', '02:10:00', '08:00:00', '00:33:00', '00:00:00', '05:17:00'],
+    ['2021-07-16', '12:30:00', '02:21:00', '08:00:00', '00:32:00', '00:00:00', '05:07:00'],
+    ['2021-07-17', '02:30:00', '02:49:00', '12:26:00', '00:43:00', '00:00:00', '08:54:00'],
+    ['2021-07-18', '01:30:00', '02:04:00', '11:00:00', '00:58:00', '00:00:00', '07:58:00'],
+    ['2021-07-19', '23:00:00', '00:03:00', '06:29:00', '00:54:00', '01:31:00', '07:32:00'],
+    ['2021-07-20', '01:30:00', '02:10:00', '09:04:00', '00:43:00', '00:00:00', '06:11:00'],
+    ['2021-07-21', '02:00:00', '02:51:00', '09:50:00', '00:58:00', '00:00:00', '06:01:00'],
+    ['2021-07-22', '02:00:00', '02:34:00', '09:01:00', '00:26:00', '00:00:00', '06:01:00'],
+    ['2021-07-23', '03:00:00', '03:26:00', '09:00:00', '00:34:00', '00:00:00', '05:58:00'],
+    ['2021-07-24', '00:00:00', '04:19:00', '11:35:00', '00:25:00', '00:00:00', '06:51:00'],
+    ['2021-07-25', '00:00:00', '03:32:00', '11:17:00', '00:43:00', '00:00:00', '07:01:00']
+]
 
-
-
-$(document).ready(function(){
+$(document).ready(function () {
     $('[data-toggle="tooltip"]').tooltip();
 
-
-
     $(window).scroll(function(){
-        if(window.scrollY > ($("#header-mast").offset().top + $("#header-mast").height())){
-            $("#layout-nav").slideDown()
+        if(window.scrollY > ($('#header-mast').offset().top + $('#header-mast').height())){
+            $('#layout-nav').slideDown()
         }else{
-            $("#layout-nav").slideUp()
+            $('#layout-nav').slideUp()
         }
     });
 
-    $(".section-nav-btn").click(function(){ 
+    $('.section-nav-btn').click(function(){ 
         var index = $(this).index()
-        $("html").animate(
+        $('html').animate(
             {
-              scrollTop: $(".section:nth-child("+(index+1)+")").offset().top
+              scrollTop: $('.section:nth-child('+(index+1)+')').offset().top
             },
             400 //speed
           );
@@ -222,26 +214,26 @@ $(document).ready(function(){
             {
                 name: 'Nap',
                 data: getNapTimesInHours(before),
-                stack: "Before",
+                stack: 'Before',
                 opacity: 0.5,
             },
             {
                 name: 'Sleep',
                 data: getTotalSleepTimeWithoutNap(before),
-                stack: "Before",
+                stack: 'Before',
                 opacity: 0.5,
             },
             {
                 name: 'Nap',
                 data: getNapTimesInHours(during),
-                stack: "During",
-                color: "#7cb5ec"
+                stack: 'During',
+                color: '#7cb5ec'
             },
             {
                 name: 'Sleep',
                 data: getTotalSleepTimeWithoutNap(during),
-                stack: "During",
-                color: "#434348"
+                stack: 'During',
+                color: '#434348'
             }
         ]
     });
@@ -269,11 +261,11 @@ $(document).ready(function(){
             type: 'datetime',
             dateTimeLabelFormats:{
                 day: {
-                    main: "%H:%M",
+                    main: '%H:%M',
                     range: false
                 },
                 hour: {
-                    main: "%H:%M",
+                    main: '%H:%M',
                     range: true
                 }
             },
@@ -309,7 +301,7 @@ $(document).ready(function(){
         plotOptions: {
             series:{
                 pointStart: Date.UTC(2021,7,10,0,1),
-                colors: ["#434348"]
+                colors: ['#434348']
             }
         },
         series: [
@@ -322,14 +314,14 @@ $(document).ready(function(){
                 dataLabels: [
                     {
                         enabled: true,
-                        align: "left",
+                        align: 'left',
                         formatter: function() {
                             return Highcharts.dateFormat('%H:%M', this.x);
                         }
                     },
                     {
                         enabled: true,
-                        align: "right",
+                        align: 'right',
                         formatter: function() {
                             return Highcharts.dateFormat('%H:%M', this.x2);
                         }
@@ -362,11 +354,11 @@ $(document).ready(function(){
             type: 'datetime',
             dateTimeLabelFormats:{
                 day: {
-                    main: "%H:%M",
+                    main: '%H:%M',
                     range: false
                 },
                 hour: {
-                    main: "%H:%M",
+                    main: '%H:%M',
                     range: true
                 }
             },
@@ -402,7 +394,7 @@ $(document).ready(function(){
         plotOptions: {
             series:{
                 pointStart: Date.UTC(2021,7,10,0,1),
-                colors: ["#434348"]
+                colors: ['#434348']
             }
         },
         series: [
@@ -416,14 +408,14 @@ $(document).ready(function(){
                 dataLabels: [
                     {
                         enabled: true,
-                        align: "left",
+                        align: 'left',
                         formatter: function() {
                             return Highcharts.dateFormat('%H:%M', this.x);
                         }
                     },
                     {
                         enabled: true,
-                        align: "right",
+                        align: 'right',
                         formatter: function() {
                             return Highcharts.dateFormat('%H:%M', this.x2);
                         }
@@ -439,14 +431,14 @@ $(document).ready(function(){
                 dataLabels: [
                     {
                         enabled: true,
-                        align: "left",
+                        align: 'left',
                         formatter: function() {
                             return Highcharts.dateFormat('%H:%M', this.x);
                         }
                     },
                     {
                         enabled: true,
-                        align: "right",
+                        align: 'right',
                         formatter: function() {
                             return Highcharts.dateFormat('%H:%M', this.x2);
                         }
@@ -523,7 +515,7 @@ function getNapTimesInHours(data){
     var napTimesInHours = [];
 
     napTimes.forEach(function(item, index){
-        var date = new Date(("2021-07-10 " + item));
+        var date = new Date(('2021-07-10 ' + item));
         var num  = (date.getHours() + date.getMinutes()/60).toFixed(2);
         napTimesInHours.push(parseFloat(num));
     });
@@ -536,7 +528,7 @@ function getTotalSleepTimeWithoutNap(data){
     var totalSleepWithoutNaps = [];
 
     totalSleep.forEach(function(item, index){
-        var date = new Date(("2021-07-10 " + item));
+        var date = new Date(('2021-07-10 ' + item));
         var num  = (date.getHours() + date.getMinutes()/60 - napTimesInHours[index]).toFixed(2);
         totalSleepWithoutNaps.push(parseFloat(num));
     });
@@ -546,8 +538,8 @@ function getTotalSleepTimeWithoutNap(data){
 function getSleepRangeData(data){
     var ranges = [];
     data.forEach(function(item, index){
-        var asleepDate = new Date(("2021-07-10 " + item[COL_ASLEEPTIME]));
-        var awakeDate = new Date(("2021-07-10 " + item[COL_WAKEUPTIME]));
+        var asleepDate = new Date(('2021-07-10 ' + item[COL_ASLEEPTIME]));
+        var awakeDate = new Date(('2021-07-10 ' + item[COL_WAKEUPTIME]));
         // if(asleepDate.getHours() > 12){
         //     asleepDate.setDate(asleepDate.getDay()-1)
         // }
@@ -566,15 +558,15 @@ function getSleepRangeData(data){
 
         ranges.push(range);
     });
-    asleepDate = new Date(("2021-07-10 00:00:00"))
-    awakeDate = new Date(("2021-07-10 08:00:00"))
+    asleepDate = new Date(('2021-07-10 00:00:00'))
+    awakeDate = new Date(('2021-07-10 08:00:00'))
     console.log(new Date(data[0][0]).getDate())
     if(new Date(data[0][0]).getDate() == 27){
         var desiredTimeRange = {
             x: Date.UTC(asleepDate.getFullYear(), asleepDate.getMonth(), asleepDate.getDay(), asleepDate.getHours(), asleepDate.getMinutes()),
             x2: Date.UTC(awakeDate.getFullYear(), awakeDate.getMonth(), awakeDate.getDay(), awakeDate.getHours(), awakeDate.getMinutes()),
             y: ranges.length,
-            color: "#f00"
+            color: '#f00'
         }
         ranges.push(desiredTimeRange);
     }

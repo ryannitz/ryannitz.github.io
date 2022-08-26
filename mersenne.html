@@ -1,0 +1,728 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <link rel="stylesheet" href="mersenne.css" />
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>3093 Project - Ryan Nitz</title>
+        <link rel="icon" href=""/>
+
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/adc1711e54.js" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <script src="mersenne.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#primesModal").modal('show');
+            });
+        </script>
+        <link rel="stylesheet" href="mersenne.css"/>
+
+        <!-- need to link any subfolder/sites we want github to load/access -->
+        <link rel="" href="wine2020.html"/>
+        <link rel="" href="jenna.html"/>
+        <link rel="" href="/wine2020/wine.css"/>
+        <link rel="" href="/wine2020/media/*"/>
+    </head>
+
+    <body data-spy="scroll" data-target=".navbar" data-offset="100">
+        <div id="title" class="text-center jumbotron bg-dark text-white" style="border-radius: 0%; margin-bottom: 0%;">
+            <h1 class="display-4">Mersenne primes</h1>
+        </div>
+        <header class="sticky-top">
+            <nav id="layout-nav" class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light bg-white shadow-sm mb-3" style="padding:0;">
+                <div class="container">
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                        <span class="navbar-toggler-icon"></span>
+                    </button>
+                    <div id="layout-navitems" class="navbar-collapse collapse d-sm-inline-flex">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a class="nav-link text-dark active" href="#title">Overview</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#calculators" data-toggle="collapse" data-target="#calculatorMenu">Calculators <i class="fas fa-caret-down"></i></a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#related">Related</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#facts">Interesting Facts</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link text-dark" href="#references">References</a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </nav>
+            <div id="calculatorMenu" class="collapse shadow-sm border-top bg-white">
+                <div class="container py-3">
+                    <button type="button" class="close">&times;</button>
+                    <ul>
+                        <li>
+                            <a class="calcMenuItem" href="#primeCalculator">N-th Prime Calculator</a>
+                        </li>
+                        <li>
+                            <a class="calcMenuItem" href="#mersenneCalculator">Mersenne calculator</a>
+                        </li>
+                        <li>
+                            <a class="calcMenuItem" href="#binaryMersenneCalculator">Mersenne Binary Calculator</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </header>
+
+        <div class="modal fade" id="primesModal">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+              
+                    <!-- Modal Header -->
+                    <div class="modal-header">
+                      <h4 class="modal-title">Prime calculator</h4>
+                      <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    </div>
+
+                    <!-- Modal body -->
+                    <div class="modal-body">
+                        <p>
+                            Please load a range of primes in the javacscript virtual machine. 
+                            You can do this later if you like! Skipping this means the n-th prime finder will not work past the 58th prime. 
+                        </p>
+                        <ul>
+                            <li>This could be improved using server side languages but github.io is static. This was just for practice implementing the 
+                                <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup></a>. 
+                            </li>
+                            <li>
+                                For better performance and access up to largest known primes, there are  
+                                <a href="https://primes.utm.edu/nthprime/">websites<sup> <i class="fa fa-external-link"></i></sup></a> 
+                                that store and query all of the known primes.
+                            </li>
+                        </ul>
+                        <div class="text-center">
+                            <hr>
+                            <p>
+                                Max exponent for default browsers is 26 unless using firefox, which will do up to 28. 
+                                <br>This is a memory issue more than a computational issue.
+                        </p>
+                            <form action="" class="mx-auto text-center">
+                                <div class="form-group">
+                                    <label for="#maxPrime">2<sup>1</sup> up to 2<sup class="maxPrimeExp">26</sup></label>
+                                    <input id="maxPrime" type="number" min="20" max="31" value="26"><br>
+                                    <p></p>
+                                    <a href="" type="button" class="btn btn-danger mx-auto calcPrimeRange" data-dismiss="modal">Calculate</a>
+                                </div>
+                            </form>
+                            <p>Range of primes: 2 to <span id="primeUpperBound">67108864</span></p>
+                            <p>Estimated number of primes to be found: &#960;(2<sup class="maxPrimeExp">26</sup>) = <span id="estimatedPrimeCount">3723754</span> (Work in progress!)</p>
+                            <p>Total size to execute the prime check: <span id="primesSize">0.53</span>GB</p>
+                        </div>
+                    </div>
+
+                    <!-- Modal footer -->
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+                    </div>
+                
+                </div>
+            </div>
+        </div>
+
+        <div class="modal" id="loading" data-backdrop="static">
+            <div class="modal-dialog modal-dialog-centered modal-sm">
+                <div class="modal-content">
+                    <!-- Modal body -->
+                    <div class="modal-body text-center my-5">
+                        <i class="fas fa-4x fa-spinner fa-pulse"></i>
+                        <p class="mt-5">Calculating Primes...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container">
+            <main role="main" class="pb-3">
+                
+
+                <div id="overview" class="mb-5">
+                    <div id="headerAlert"></div>
+                    <h2 class="mt-5">Overview<hr></h2>
+                    <div class="container border shadow-sm mb-5">
+                        <div class="border-bottom">
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set1">
+                                <h6 class="m-0">Mersenne exponent set: (M<sub>e</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set1" class="px-3 pb-3 collapse">
+                                <p>
+                                    A Mersenne exponent is an integer n such that 2<sup>n</sup>-1 is prime.
+                                    <a href="https://oeis.org/A000043" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a></p>
+                                <div id="mersenneExponents"></div>
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set2">
+                                <h6 class="m-0">Mersenne number set (M<sub>n</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set2" class="px-3 pb-3 collapse">
+                                <p>
+                                    A Mersenne number is an integer in the form 2<sup>n</sup>-1, where n is any positive integer. 
+                                    <a href="https://oeis.org/A000225" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                                </p>
+                                <div id="mersenneNumbers"></div>
+                            </div>
+                        </div>
+                        <div class="border-bottom">
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set3">
+                                <h6 class="m-0">Mersenne prime number set (M<sub>p</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set3" class="px-3 pb-3 collapse">
+                                <p>
+                                    A Mersenne prime is a prime number in the form 2<sup>p</sup>-1, where p is prime. 
+                                    <a href="https://oeis.org/A000668" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                                </p>
+                                <div id="mersennePrimes"></div>
+                                
+                            </div>
+                        </div>
+                        <div>
+                            <div class="hover p-3 clearfix" data-toggle="collapse" data-target="#set4">
+                                <h6 class="m-0">Prime number set (P<sub>n</sub>)<i class="fa fa-chevron-down float-right"></i></h6>
+                            </div>
+                            <div id="set4" class="px-3 pb-3 collapse">
+                                <p>
+                                    A prime number (or a prime) is a natural number greater than 1 that is not a product of two smaller natural numbers 
+                                    <a href="https://oeis.org/A000040" target="_blank">link<sup><i class="fa fa-external-link"></i></sup></a>
+                                </p>
+                                <div id="primeNumbers"></div>
+                            </div>
+                        </div>
+                    </div>
+                    <ul class="mb-5 encapsulating-ul">
+                        <li class="mb-3">
+                            <h4>Mersenne exponent</h4>
+                            <div class="pl-3 ml-5 encapsulated-li">
+                                <p>
+                                    The set of Mersenne exponents is a subset of the prime number set defined in the above headers. 
+                                    When these specific exponents, n, are plugged into the Mersenne number with form 2<sup>n</sup>-1, the result will be a Mersenne prime.
+                                </p>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <h4>Mersenne number</h4>
+                            <div class="pl-3 ml-5 encapsulated-li">
+                                <p>
+                                    Mersenne primes and Mersenne numbers are names after Marin Mersenne, a french scholar from the 1700s.
+                                    Originally, Mersenne had the list of Mersenne Primes and Mersenne numbers incorrect. 
+                                    The set of primes contained composite numbers (Ex: M<sub>67</sub>, M<sub>257</sub>) while the set of composite numbers contained some prime numbers (Ex: M<sub>61</sub>, M<sub>281</sub>).
+                                    Later, Edouard Lucas corrected for these smaller numbers using theories that we will show below.
+                                </p>
+                                <p>
+                                    The mersenne number set is eclipsed by its own subset the Mersenne Primes. 
+                                    Much research is being conducted to find the next largest prime (GIMPS).
+                                    Of course this would not be possible without Mersenne numbers.
+                                </p>
+                                <p>
+                                    Mersenne numbers that are not prime, are composite Mersenne numbers. 
+                                    These are commonly factored to down to a product of primes. Ex: 2<sup>11</sup>-1 = 2047 = 23x89
+                                </p>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <h4>Mersenne prime number</h4>
+                            <div class="pl-3 ml-5 encapsulated-li">
+                                <p>
+                                    The star of the show, Mersenne numbers have a great spotlight in the prime number research space. 
+                                    A subset of the Mersenne numbers, these prime numbers are of the form 2<sup>p</sup>-1, where p is a prime.
+                                </p>
+                                <p>
+                                    Highest known Mersenne Prime M<sub>p</sub> is 51 (M<sub>51</sub>), which was found in December 2018. 
+                                    This is now the largest known prime, which is represented by 2<sup>82,589,933</sup>-1. 
+                                    This new prime contains 24,862,048 digits. That looks like <a href="digits.html" target="_blank">this</a>.</p>
+                                <p>
+                                    The highest confirmed Mersenne prime is M<sub>47</sub>. 
+                                    It is one thing to calculate the prime, but confirming the number requires factorization and traditional methods that would normally be used to evaluate prime numbers. 
+                                    This must be done to confirm the original calculation.
+                                    Along with the traditional factorization and confirmation of the lower level exponents, a recalculation is done with shifted bits to validate 
+                                </p>
+                            </div>
+                        </li>
+                        <li class="mb-3">
+                            <h4>Prime number</h4>
+                            <div class="pl-3 ml-5 encapsulated-li">
+                                <p>
+                                    Using Mersenne primes, we are able to calculate the largest known primes.
+                                    Large primes have many uses in the real world and theoretical world.
+                                </p>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+
+                <div id="calculators" class="mb-5">
+                    <div id="primeCalculator" class="mb-5"> 
+                        <h2 class="mt-5">Prime Generator<hr></h2>
+                            <div class="p-3 border shadow-sm mb-5">
+                                <div data-toggle="collapse" data-target="#collapse1">
+                                    <h5>N-th Prime Calculator</h5>
+                                </div>
+                                <div id="collapse1" class="collapse show">
+                                    <hr>
+                                    <p>
+                                        This calculator will return the n-th prime from a set of primes calculated with the 
+                                        <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">
+                                            Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup>
+                                        </a> 
+                                    </p>
+                                    <p>
+                                        We can also find a list of the first 1000 primes 
+                                        <a href="https://primes.utm.edu/lists/small/1000.txt" target="_blank" data-toggle="tooltip" title="List of primes">
+                                            here <sup><i class="fa fa-external-link"></i></sup>
+                                        </a>
+                                    </p>
+                                
+                                    <ul>
+                                        <li>Total Mersenne Exponents: 47 (Found in the set at the top of the page)</li>
+                                        <li>Total regular primes calculated: <span id="primeCount">57</span>    
+                                            <a href="" data-target="primesModal">Calculate Primes</a>
+                                        </li>
+                                    </ul>
+                                    <hr>
+                                    <p class="text-center">Enter the index <span class="prime-index">n</span> for the desired prime:</p>
+                                    <form id="primeNCalc" class="form-inline">
+                                        <div class="input-group mx-auto">
+                                            
+                                            <label class="mr-sm-2" for="primeN"><span class="prime-index">n</span>:</label>
+                                            <div class="input-group-prepend" data-toggle="tooltip" title="Prime type">
+                                                <select name="" id="primeType" class="custom-select">
+                                                    <option value="reg">Regular Prime</option>
+                                                    <option value="mer">Mersenne Exp.</option>
+                                                </select>
+                                            </div>
+                                            <input id="primeN" type="number" min="1" max="58" step="1" pattern="\d*" value="1" required/>
+                                            <div class="input-group-append">
+                                                <input id="getPrime" class="btn btn-outline-dark" type="submit" value="Get Prime"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="text-center m-3">
+                                        <p><span class="prime-set">P</span><sub><span class="prime-index">n</span>(<span id="primeNIn">1</span>)</sub> is <b><span id="primeNOut">2</span></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                        
+                        
+                            <div class="row mb-3">
+                                <div class="col">
+                                    <div class="flip-card mb-5" style="min-height:475px;">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front border shadow rounded p-3" style="min-height:475px; height: fit-content;">
+                                                <h3 class="text-center">Pseudocode:<i class="float-right fas fa-reply"></i></h3>
+                                                <div style="width: fit-content;" class="mx-auto">
+                                                    <code style="color:black">
+                                                        //algorithm Sieve of Eratosthenes <b>is</b>
+                                                        <br><b>input</b>: an integer <i>n</i> &gt; 1.
+                                                        <br><b>output</b>: all prime numbers from 2 through <i>n</i>.
+                                                        <br>
+                                                        <br><b>let</b> <i>A</i> be an <b>array of Boolean</b> values,
+                                                        <br>indexed by <b>integer</b>s 2 to <i>n</i>, initially all <b>set</b> to <b>true</b>.
+                                                        <br>  
+                                                        <br><b>for</b> <i>i</i> = 2, 3, 4, ..., not exceeding <span class="texhtml"><i><span class="nowrap">√<span style="border-top:1px solid; padding:0 0.1em;">n</span></span></i></span> <b>do</b>
+                                                        <br>&nbsp;&nbsp;<b>if</b> <i>A</i>[<i>i</i>] <b>is</b> <b>true</b>
+                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;<b>for</b> <i>j</i> = <i>i</i><sup>2</sup>, <i>i</i><sup>2</sup>+<i>i</i>, <i>i</i><sup>2</sup>+2<i>i</i>, <i>i</i><sup>2</sup>+3<i>i</i>, ..., not exceeding <i>n</i> <b>do</b>
+                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<i>A</i>[<i>j</i>]&nbsp;:= <b>false</b>
+                                                        <br><b>return</b> all <i>i</i> such that <i>A</i>[<i>i</i>] <b>is</b> <b>true</b>.
+                                                        
+                                                    </code>
+                                                </div>
+                                                
+                                            </div>
+                                            <div class="flip-card-back border shadow rounded bg-dark p-3" style="min-height:475px; height: fit-content;">
+                                                <h3 class="text-center">Implementation (Js):</h3>
+                                                <div style="width:fit-content" class="mx-auto">
+                                                    <code style="color:white">
+                                                        //execute sieve given max as upperbound
+                                                        <br>function fn(max){
+                                                            <br>&nbsp;&nbsp;array = new Array(max);
+                                                            <br>&nbsp;&nbsp;for(var i = 0; i &lt; array.length; i++){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;array[i] = true;
+                                                            <br>&nbsp;&nbsp;for(var p = 2; p*p &lt; max; p++){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;if(array[p] == true){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;for(var i = p*p; i &lt; max; i+=p){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;array[i] = false;
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;}
+                                                            <br>&nbsp;&nbsp;}
+                                                            <br>&nbsp;&nbsp;for(var p = 2; p &lt; max; p++){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;if(array[p] == true){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;primes.push(p);
+                                                            <br>&nbsp;&nbsp;}
+                                                        <br>}
+                                                    </code>
+                                                </div>
+                                            </div>
+                                            
+                                        </div>
+                                    </div>
+                                    <div>
+                                        <a class="mx-auto" style="display:block;height: fit-content; width: fit-content" href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes#/media/File:Sieve_of_Eratosthenes_animation.gif">
+                                            <img style="width: 100%;" src="https://upload.wikimedia.org/wikipedia/commons/b/b9/Sieve_of_Eratosthenes_animation.gif" alt="Sieve gif">
+                                        </a>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3 class="text-center">
+                                        <a href="https://en.wikipedia.org/wiki/Sieve_of_Eratosthenes">
+                                            Sieve of Eratothenes <sup><i class="fa fa-external-link"></i></sup>
+                                        </a> 
+                                        <hr>
+                                    </h3>
+                                    <!-- Write up on the sieve -->
+                                    <p>
+                                        The Sieve of Eratosthenes is an ancient algorithm that eliminates all composite numbers up to a given number.
+                                        It is thought that the Greek Mathmatician 
+                                        <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Eratosthenes/" target="_blank">
+                                            Eratosthenes of Cyrene <sup><i class="fa fa-external-link"></i></sup>
+                                        </a> 
+                                         is the one to have used it first. 
+                                    </p>
+                                    <p>
+                                       <b>Algorithm desc.</b> The algorithm works by creating a list of booleans from 2 to the upper bound. 
+                                        It then does iterates to the upper bound, checking every element in the boolean array if it is true or false.
+                                        If it hits an element that is true, then it will iterates over every multiple of that number setting the respective index to false in the boolean list.
+                                        If it hits false, then another smaller integer was a multiple of that index and it was set to false, skipping to the next list element.
+                                        At the end, iterate through the boolean list, save all of the indexes of the "true" values. 
+                                        These indexes are the primes from 2 to the upper bound. 
+                                    </p>
+                                    <p>
+                                        Time complexity = O(n(log(logn)))
+                                    </p>
+                                </div>
+                            </div>
+                            <p class="mb-5 text-center">
+                                <i class="text-muted">
+                                    "Sift the Two's and Sift the Three's, The Sieve of Eratosthenes.
+                                    When the multiples sublime, The numbers that remain are Prime."
+                                </i>
+                                 - Anonymous
+                            </p>
+                    </div>
+
+                    <div id="mersenneCalculator" class="mb-5">
+                        <h2 class="mt-5">Mersenne Calculator<hr></h2>
+                            <div class="p-3 border shadow-sm mb-5">
+                                <div data-toggle="collapse" data-target="#collapse2">
+                                    <h5>Mersenne calculator </h5>
+                                </div>
+                                <div id="collapse2" class="collapse show">
+                                    <hr>
+                                    <p>This calculator will have restricted calculation bounds due to machine and browser limitations. (p &gt; 21701 will be taxing)</p>
+                                    <hr>
+                                    <p class="text-center">
+                                        Input value n for: <b>2<sup>p</sup>-1</b> where p is a 
+                                        <a href="https://en.wikipedia.org/wiki/List_of_prime_numbers#The_first_1000_prime_numbers" target="_blank" data-toggle="tooltip" title="List of primes">
+                                            prime <sup><i class="fa fa-external-link"></i></sup>
+                                        </a>
+                                    </p>
+                                    <form id="mersenneCalc" class="text-center">
+                                        <div class="form-group mx-auto mb-2">
+                                            <label class="mr-sm-2" for="mersenneN">p:</label>
+                                            <input id="mersenneN" type="number" min="2" step="1" pattern="\d*" value="3" required/>
+                                        </div>
+                                        <div class="form-group form-check">
+                                            <label for="checkLL">
+                                                <input id="checkLL" type="checkbox" class="form-check-input" value="" checked>
+                                                Mersenne prime test
+                                            </label>
+                                        </div>
+                                        <div class="form-group">
+                                            <input class="btn btn-outline-dark" type="submit" value="Calculate"/>
+                                        </div>
+                                    </form>
+                                    <div class="text-center m-3">
+                                        <p>Output from calculating <b>2<sup id="mersenneIn">3</sup>-1</b> is:</p>
+                                        <p><span id="mersennePrimeOut"> (a Mersenne prime!)</span><br><b><span id="mersenneOut" style="word-break: break-all;">7</span></b></p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-center">To check if a Mersenne number is prime we can use the Lucas Lehmer primality test as defined below.</p>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="flip-card" style="min-height:300px;">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front border shadow rounded p-3" style="min-height:300px; height: fit-content;">
+                                                <h3 class="text-center">Pseudocode:<i class="float-right fas fa-reply"></i></h3>
+                                                <div style="width: fit-content;" class="mx-auto">
+                                                    <code style="color:black">
+                                                        // Determine if <i>M</i><sub><i>p</i></sub> = 2<sup><i>p</i></sup> − 1 is prime for <i>p</i> &gt; 2
+                                                        <br><b>Lucas–Lehmer</b>(p)
+                                                        <br><b>var</b> s = 4
+                                                        <br><b>var</b> M = 2<sup><i>p</i></sup> − 1
+                                                        <br><b>repeat</b> p − 2 times:
+                                                        <br>&nbsp;&nbsp;s = ((s × s) − 2) mod M
+                                                        <br><b>if</b> s == 0 <b>return</b> PRIME <b>else</b> <b>return</b> COMPOSITE
+                                                    </code>
+                                                </div>
+                                            </div>
+                                            <div class="flip-card-back border shadow rounded bg-dark p-3" style="min-height:300px; height: fit-content;">
+                                                <h3 class="text-center">Implementation (Js):</h3>
+                                                <div style="width:fit-content" class="mx-auto">
+                                                    <code style="color:white">
+                                                        //Logic for the Mersenne Prime test given the prime <var>p</var>
+                                                        <br>function lucasLehmerPrime(p){
+                                                            <br>&nbsp;&nbsp;var mersenneVal = (2**p)-1;
+                                                            <br>&nbsp;&nbsp;var nextVal = 4 % mersenneVal
+                                                            <br>&nbsp;&nbsp;for(var i = 1; i &lt; p-1; i++){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;nextVal = (nextVal*nextVal-2) % mersenneVal;
+                                                            <br>&nbsp;&nbsp;}
+                                                            <br>&nbsp;&nbsp;return nextVal==0;
+                                                        <br>}
+                                                    </code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <h3 class="text-center">
+                                        <a href="https://en.wikipedia.org/wiki/Lucas%E2%80%93Lehmer_primality_test">
+                                            Lucas–Lehmer primality test <sup><i class="fa fa-external-link"></i></sup>
+                                        </a>
+                                        <hr>
+                                    </h3>
+                                    <!--  Then in right col, have a small write up on LL -->
+                                    <p>
+                                        LLPT was developed by <a href="https://mathshistory.st-andrews.ac.uk/Biographies/Lucas/" target="_blank"> Edouard Lucas <sup><i class="fa fa-external-link"></i></sup></a> in 1856, and later improved by Lucas in 1878, lastly by Derrick Lehmer in the 1930s. 
+                                        Its most famous application is in GIMPS, the Great Internet Mersenne Prime Search. 
+                                    </p>
+                                    <p>
+                                        The LLPT algorithm has an efficient time-complexity for computational execution.
+                                        Due to the fact that the iterations only execute up to p-2, the largest known prime would have taken 80 million execution cycles. 
+                                        This can be done relatively quickly on a modern computer. Where the algorithm is least efficient is in the mathmatical operation of 2<sup>p</sup>-1.
+                                        This exponent calculation is sort of a hidden algorithm, it is executed in the background by iteratively multiplying 2 together.
+                                        In applications like GIMP, other algorithms are implemented to square these huge numbers and divide related work loads.
+                                    </p>
+                                    <p>
+                                        <a href="https://oeis.org/A003010">Lucas-Lehmer sequence <sup><i class="fa fa-external-link"></i></sup></a>
+                                        can be seen here (s<sup>2</sup>-2): <b>4</b>, 4<sup>2</sup>-2=<b>14</b>, 14<sup>2</sup>-2=<b>194</b>, ...
+                                    </p>
+
+                                </div>
+                            </div>
+                    </div>
+
+                    <div id="binaryMersenneCalculator" class="mb-5">
+                        <h2 class="mt-5">Mersenne Binary Calculator<hr></h2>
+                            <div class="p-3 border shadow-sm mb-5">
+                                <div data-toggle="collapse" data-target="#collapse3">
+                                    <h5>Binary representation of Mersenne Primes and Mersenne Numbers </h5>
+                                </div>
+                                <div id="collapse3" class="collapse show">
+                                    <hr>
+                                    <p class="text-center">
+                                        Input a number to generate of term of n digits of "1". This will binary number that will be a prime or a Mersenne prime
+                                    </p>
+                                    <ul>
+                                        <li>
+                                            Input "11", "89", and "127" to see examples of primes and Mersenne primes.
+                                            This will also demonstrate simplification of terms as the exponent grows larger.
+                                        </li>
+                                        <li>
+                                            For fun, try higher values like the Mersenne exponent: 21701. It may take a short while to load... but it will.
+                                            The fact that this extremely large value can be confirmed by the LLPT (in a browser!) blew my mind.
+                                        </li>
+                                    </ul>
+                                    <hr>
+                                    <form id="binaryMersenneCalc" class="text-center" onsubmit="">
+                                        <div style="width: fit-content;" class="mx-auto">
+                                            <div class="form-group mb-2">
+                                                <label class="mr-sm-2" for="binMersenneN">n:</label>
+                                                <input id="binMersenneN" type="number" min="1" step="1" pattern="\d*" value="3" required/>
+                                            </div>
+                                            <div class="form-group">
+                                                <input class="btn btn-outline-dark" type="submit" value="Calculate"/>
+                                            </div>
+                                        </div>
+                                    </form>
+                                    <div class="text-center m-3">
+                                        <p>
+                                            <span class="binaryValue">111</span><sub>2</sub> =
+                                            <br><span id="decimalVal" style="word-break: break-all;">7</span><sub>10</sub><br><span id="binaryMersenne">(A Mersenne prime!)</span>
+                                        </p>
+                                        <p>Binary to Decimal Breakdown: <br><span id="conversionTerms">(2<sup>2</sup>)+(2<sup>1</sup>)+</span>(2<sup>0</sup>)</p>
+                                        <p><b>Note:</b> Once the decimal value surpasses BigInt size, precision is lost and Mersenne primes will not be checked correctly.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col">
+                                    <div class="flip-card mb-5" style="min-height:300px;">
+                                        <div class="flip-card-inner">
+                                            <div class="flip-card-front border shadow rounded p-3" style="min-height:325px; height: fit-content;">
+                                                <h3 class="text-center">Pseudocode:<i class="float-right fas fa-reply"></i></h3>
+                                                <div style="width: fit-content;" class="mx-auto">
+                                                    <code style="color:black">
+                                                        // Convert binary number n into its decimal representation
+                                                        <br><b>BinaryToDecimal</b>(n)
+                                                        <br>&nbsp;&nbsp;<b>var</b> decimal = 0
+                                                        <br>&nbsp;&nbsp;<b>for i=0,</b> 0 to n.length times:
+                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;decimal = decimal + 2<sup>i</sup>
+                                                        <br>&nbsp;&nbsp;&nbsp;&nbsp;increment i</sup>
+                                                        <br>&nbsp;&nbsp;<b>return</b> decimal
+                                                    </code>
+                                                </div>
+                                            </div>
+                                            <div class="flip-card-back border shadow rounded bg-dark p-3" style="min-height:325px; height: fit-content;">
+                                                <h3 class="text-center">Implementation (Js):</h3>
+                                                <div style="width:fit-content" class="mx-auto">
+                                                    <code style="color:white">
+                                                        //base<sub>2</sub> to base<sub>10</sub> conversion 
+                                                        <br>//given <var>b</var>, the number of binary digits
+                                                        <br>function fn(b){
+                                                            <br>&nbsp;&nbsp;var binDecimalVal = 0;
+                                                            <br>&nbsp;&nbsp;for(var i = 0; i &lt; b; i++){
+                                                            <br>&nbsp;&nbsp;&nbsp;&nbsp;binDecimalVal += 2n**i;
+                                                            <br>&nbsp;&nbsp;}
+                                                            <br>&nbsp;&nbsp;//update new variables
+                                                            <br>&nbsp;&nbsp;//update UI
+                                                        <br>}
+                                                    </code>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <ul class="encapsulating-ul">
+                                        <li>
+                                            <h4>Mersenne Prime representations in binary:</h4>
+                                            <div class="ml-5 pl-3 encapsulated-li">
+                                                <ul>
+                                                    <li>11<sub>2</sub> = 3<sub>10</sub></li>
+                                                    <li>111<sub>2</sub> = 7<sub>10</sub></li>
+                                                    <li>11111<sub>2</sub> = 31<sub>10</sub></li>
+                                                    <li>1111111<sub>2</sub> = 127<sub>10</sub></li>
+                                                    <li>1111111111111<sub>2</sub> = 8191<sub>10</sub></li>
+                                                    <li>. . .</li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div class="col">
+                                    <h3 class="text-center">
+                                        Binary to Decimal Conversion
+                                        <hr>
+                                    </h3>
+                                    <p>
+                                        The actual implementation for the calculator above has been optimized to only calculate the difference from the previous number instead of a complete recalculation.
+                                    </p>
+                                    <p>
+                                        The binary representation of 2<sup>n</sup>-1 is n repitions of the digit 1. 
+                                        This can be extended to Mersenne primes where 2<sup>p</sup>-1 is p repitions of the digit 1, p being a Mersenne exponent.
+                                    </p>
+                                    <p>
+                                        This is because 2<sup>n</sup> creates a term with single digit of "1" followed by n digits of "0" <br>
+                                        When 1 is taken away from this term, the term becomes n-1 digits of "1". In other words, the leading 1 is removed and all the "0"s become "1"s<br>
+                                    </p>
+                                    <p>
+                                        Ex: <br> (100000-1)<sub>2</sub> = (32-1)<sub>10</sub> <br>= 11111<sub>2</sub> = 31<sub>10</sub><br>
+                                    </p>
+                                    <p>
+                                        Getting back to 100000 from 11111 is more intuitive when we apply carry-overs from the adding operation. 
+                                        In base-2, the highest value is 1. Adding 1+1 would create a carry over. 
+                                        <br>Ex: 1+1 = 10
+                                    </p>
+                                    <p>Likewise, 11111+1 = 100000, as the 1 carries all the way to the front while switching the trailing "1"s into "0"s.</p>
+                                </div>
+                            </div>
+                    </div>
+                </div>
+
+                <div id="related" class="mb-5">
+                    <h2 class="mt-5">Related work to 3093 <hr></h2>
+                    <div class="container">
+                        <h5>These are just a few topics from 3093 that were immediately apparent.</h5>
+                        <ul>
+                            <li>We explored the Sieve of Eratosthenes for a reading. Looking into prime sieves I was able to discover many more methods which involved more complex algorithms.</li>
+                            <li>Residue classes and Modular exponentiation can be seen in the Lucas-Lehmer primality test.</li>
+                            <li>Binary and other base systems. Most terms that involve 2<sup>n</sup> will have some relationship with binary systems and their respective algorithms.</li>
+                            <li>Pi function to approximate number of primes within a certain range.</li>
+                            <li>Prime factorization. This is used by GIMPS and certain algorithms to simplify and divide work loads for primality testing.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="facts" class="mb-5">
+                    <h2 class="mt-5">Interesting facts. <hr></h2>
+                    <div class="container">
+                        <ul class="encapsulating-ul">
+                            <li>
+                                <h4>Cryptography</h4>
+                                <div class="ml-5 pl-3 encapsulated-li">
+                                    <p>
+                                        Large primes are used in encryption algorithms for cyber-security.
+                                        The RSA encryption system is a PRIME example, using two large prime numbers to create a product that then requires prime-factorization.
+                                        Note: Mersenne primes are not ideal for RSA encryption because they are guessed easily.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4>Javascript limiations</h4>
+                                <div class="ml-5 pl-3 encapsulated-li">
+                                    <p>
+                                        I learned new limitations of javascript with big integer calculations.
+                                        I had to research BigInt variable declaration and the javascript runtime memory sizes.
+                                    </p>
+                                    <p>
+                                        BigInt allows us to calculate past 2^31, as 2<sup>31</sup> is a computers max integer. 
+                                        2<sup>31</sup> seems odd but they use the first bit to represent the +/- of the integer. 
+                                        This allows computer to have an integer range of -2<sup>31</sup> to +2<sup>31</sup>
+                                        for a total of 2<sup>32</sup> integer representations.
+                                    </p>
+                                </div>
+                            </li>
+                            <li>
+                                <h4>The Great Internet Mersenne Prime Search (GIMPS)</h4>
+                                <div class="ml-5 pl-3 encapsulated-li">
+                                    <p>
+                                        GIMPS is an ongoing initiative to identify the largest known primes using Mersenne primes. 
+                                        GIMPS has a free program for download that requests assignments and work loads to be ran on the host system. 
+                                        If a computer finds a new prime that which is later confirmed through multiple checks and validations, the user and computer are documented and put in the record list. 
+                                    </p>
+                                    <p>
+                                        Many computer and hardware enthusiasts have probably heard of the GIMPS program "prime95", 
+                                        as it is heavily used for stress testing computers and processor voltage/power limits.
+                                    </p>
+                                    <p>
+                                        The latest information can be found on their homepage: <a href="https://www.mersenne.org/">mersenne.org</a>.
+                                        One of the latest updates is from a contributer, they found a way to eliminate the need for a second primality test to be done when a new prime is found.
+                                        This saves 95.5% of the workload that would have originally been required.
+                                    </p>
+                                </div>
+                            </li>
+                        </ul>
+                   </div>
+                </div>
+
+                <div id="references" class="mb-5">
+                    <h2 class="mt-5">References <hr></h2>
+                    <div class="container">
+                        <ul></ul>
+                    </div>
+                    <p>Many more readings and research to understand these concepts and the maths behind them</p>
+                </div>
+            </main>
+
+            <footer class="border-top footer text-muted">
+                <div class="p-3">
+                    Ryan Nitz. P.S: I much enjoyed developing this website and learning new frontend development techniques, all while applying number theory topics.
+                </div>
+            </footer>
+    </body>
+</html>
