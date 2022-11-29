@@ -21,16 +21,24 @@
         <script src="https://code.highcharts.com/modules/xrange.js"></script>
         <!-- Latest compiled Vue.js dev build -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
         
         
-        <script src="js/main.js"></script>
+        
         <script>
 
         </script>
-
     </head>
 
     <body>
-        Hello
+        <div id="app">
+
+            <div v-for="site in filteredSiteTree">
+                <a v-bind:href="site.path" target="_blank" rel="noopener noreferrer">{{site.path}}</a>
+            </div>
+
+        </div>
     </body>
+    <script src="js/main.js"></script>
 </html>

@@ -1,0 +1,344 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="icon" href=""/>
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/adc1711e54.js" crossorigin="anonymous"></script>
+        <!-- Latest compiled and minified Bootstrap CSS -->
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <!-- Popper JS -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+        <!-- Latest compiled Bootstrap JavaScript -->
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+        <!-- Latest compiled HighCharts -->
+        <script src="https://code.highcharts.com/highcharts.js"></script>
+        <script src="https://code.highcharts.com/modules/xrange.js"></script>
+        <!-- Latest compiled Vue.js dev build -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <title>Ryans Sleep</title>
+    </head>
+    <body>
+        <div id="app">
+
+            <header class="w-100">
+                <nav id="layout-nav" class="navbar navbar-expand-sm navbar-toggleable-sm box-shadow bg-dark navbar-dark fixed-top w-100">
+                    <div class="container">
+                        <div class="nav-item">
+                            <a class="navbar-brand nav-link nav-direct" href="#" data-toggle="tooltip" title="Refresh">
+                                <i class="fas fa-bed"></i>
+                                <span> Ryans Sleep</span>
+                            </a>
+                        </div>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span>
+                        </button>
+                        <div id="layout-navitems" class="navbar-collapse collapse d-sm-inline-flex">
+                            <ul class="nav navbar-nav mr-auto"></ul>
+                            <ul class="nav navbar-nav navbar-right">
+                                <li class="nav-item dropdown" id="navBarDrop">
+                                    <a class="nav-link dropdown-toggle" href="#" data-toggle="dropdown">
+                                        Sections
+                                    </a>
+                                    <div class="dropdown-menu dropdown-menu-left" style="text-overflow:clip">
+                                        <a v-for="section in sections" class="dropdown-item section-nav-btn">{{section.title}}</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </nav>
+            </header>
+
+            <div class="main">
+
+                <div id="header-mast">
+                    <div class="container-sm font-weight-bold p-5 text-dark" style="font-size: 5em;">
+                        <p class="text-left" style="position:relative;margin-bottom:-1em; margin-left: 1.8em;text-shadow: 0 0 10px white;z-index: 1;">Ryans</p>
+                        <p class="text-center"><i class="fas fa-bed fa-2x"></i></p>
+                        <p class="text-right" style="margin-top:-1em; margin-right: 2em;text-shadow: 0 0 10px white;">Sleep</p>
+                    </div>
+                </div>
+
+                <div class="containers">
+
+                    <div class="section section-no-shadow" style="background-color: #ff6666;">
+                        <div class="row">
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 section-icon text-center"><i class="fas fa-virus fa-9x"></i></p>
+                            </div>
+                            <div class="col-sm-8 section-text-shadow p-4">
+                                <h1 class="text-center">{{sections[0].title}}</h1>
+                                <h3 class="section-content">{{sections[0].content}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-shadow">
+                        <div class="row">
+                            <div class="col-sm-8 p-4">
+                                <h1 class="text-center">{{sections[1].title}}</h1>
+                                <h3 class="section-content">{{sections[1].content}}</h3>
+                            </div>
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 text-center"><i class="fas fa-history fa-9x"></i></p>
+                            </div>
+                        </div>
+                    </div>
+
+
+                    <div class="section section-no-shadow" style="background-color: #6666ff;">
+                        <div class="row">
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 section-icon text-center"><i class="fas fa-brain fa-9x"></i></p>
+                            </div>
+                            <div class="col-sm-8 section-text-shadow p-4">
+                                <h1 class="text-center">{{sections[2].title}}</h1>
+                                <h3 class="section-content">{{sections[2].content}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-shadow">
+                        <div class="row">
+                            <h1 class="text-center w-100">{{sections[3].title}}</h1>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="totalSleepHoursBefore" style="width:80%; height:400px;"></div>
+                            </div>
+                            <div class="col-sm-4 m-auto p-5">
+                                <ul class="graph-ul">
+                                    <li>NOTE: Weekends (red background) are not included in the following data</li>
+                                    <li>Average night of sleep excluding naps = 6.60hrs</li>
+                                    <li>Average night of sleep including naps = 7.34hrs</li>
+                                    <li>Excessive napping throughout the day (10% of total sleep), not good.</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-no-shadow" style="background-color: #cc00cc">
+                        <div class="row">
+                            <h1 class="text-center w-100 section-text-shadow">{{sections[4].title}}</h1>
+                            <div class="col-sm-4 m-auto section-text-shadow p-5">
+                                <ul class="graph-ul">
+                                    <li>Here we can see when I would normally go to bed and most importantly when I wake up.</li>
+                                    <li>Before the behavior change I went to bed between 1:30am and 3:00am. When first thinking about my goals, I wanted to have my bedtime before 1am consistantly</li>
+                                    <li>During the weekdays I would wake up from 9am to 10am. 10am is/was the first meeting of the day for me. The biggest change I wanted to make was the time I woke up at.</li>
+                                    <li>The <b>red</b> bar marks the desired sleep range, even before the behavior change experiment.</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="sleepAndWakeTimeBefore" style="width:80%; height:800px"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-shadow">
+                        <div class="row">
+                            <div class="col-sm-8 p-4">
+                                <h1 class="text-center">{{sections[5].title}}</h1>
+                                <h3 class="section-content">{{sections[5].content}}</h3>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="text-center">Goals</h3>
+                                        <ul>
+                                            <li>Go to bed before 1am - This will allow me to get a plentiful night of sleep to reduce napping and furhter deterioration of my schedule.</li>
+                                            <li>Wake up at 9am or earlier - This will ensure I am ready for work in the morning and don't need to shift my schedule to accomodate morning activites</li>
+                                            <li>Reduce and elminate naps - This will prevent going to bed at later times from not being tired. It will also solidify a routine.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="text-center">Methods</h3>
+                                        <ul>
+                                            <li>Track actual sleeping stats through fitbit and software. This will be the primary feature.</li>
+                                            <li>Consume coffee and do other activities in place of naps</li>
+                                            <li>Go to bed at 1am latest. (Spoiler alert: This was not followed.)</li>
+                                            <li>Track a daily log to understand the conclusions in why I've succeeded or failed.</li>
+                                            <li>Understand urges and reasons for the behavior taking place.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 text-center"><i class="fas fa-exchange-alt fa-9x"></i></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-no-shadow" style="background-color: #29a329">
+                        <div class="row">
+                            <h1 class="text-center w-100 section-text-shadow">{{sections[6].title}}</i></h1>
+                            <div class="col-sm-4 m-auto section-text-shadow p-5">
+                                <ul class="graph-ul">
+                                    <li>NOTE: Weekends (red background) are not included in the following data</li>
+                                    <li>Average night of sleep excluding naps = 5.93hrs</li>
+                                    <li>Average night of sleep including naps = 6.32hrs</li>
+                                    <li>Excessive napping throughout the day (6% of total sleep). Cut in half compared to pre-behavior change :)).</li>
+                                    <li>Compared to the sleep timings before the behavior change, I slept much less but also much more consitantly. Far less naps occured as well.</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="totalSleepHoursDuring" style="width:80%; height:400px;"></div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-shadow">
+                        <div class="row">
+                            <h1 class="text-center w-100">{{sections[7].title}}</h1>
+                            <div class="col-sm-4 m-auto p-5">
+                                <ul class="graph-ul">
+                                    <li>Comparing my sleep timings, it seems my sleep ranges didn't change all that much. In fact, they stayed fairly similar but with a net decrease in time slept.</li>
+                                    <li>One improvement is the wake up times in the first week of behavior change. I consider this to be the most important for work reasons.</li>
+                                    <li>Half of the days I went to bed earlier than before, this is insignificant.</li>
+                                    <li>9 out of 14 days I woke up earlier than before, this is exceptional improvement.</li>
+                                    <li>The <b>red</b> bar marks the desired sleep range, even before the behavior change experiment.</li>
+                                </ul>
+                            </div>
+                            <div class="col-sm-8 p-4">
+                                <div class="m-auto" id="sleepAndWakeTimeDuring" style="width:80%; height:800px"></div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="section section-no-shadow" style="background-color: #00cccc; color:#212529">
+                        <h1 class="text-center mb-5">{{sections[8].title}}</h1>
+                        <div class="row">
+                            <div class="col">
+                                <div v-for="(day, index) in w1" class="row mb-3">
+                                    <div class="daily-log border shadow d-flex align-items-stretch">
+                                        <div class="p-4 border-right bg-dark text-white text-center">
+                                            <div class="my-auto">
+                                                <h2>{{week_enum[index]}}</h2>
+                                                <span>{{day.date}}</span>
+                                                <span></span>
+                                            </div>
+                                        </div>
+                                        <div class="p-4 bg-light">
+                                            {{day.log}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div v-for="(day, index) in w2" class="row mb-3">
+                                    <div class="daily-log border shadow d-flex align-items-stretch">
+                                        <div class="p-4 border-right bg-dark text-white text-center">
+                                            <h2>{{week_enum[index]}}</h2>
+                                            <span>{{day.date}}</span>
+                                            <span></span>
+                                        </div>
+                                        <div class="p-4 bg-light">
+                                            {{day.log}}
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-shadow">
+                        <div class="row">
+                            <div class="col-sm-8 p-4">
+                                <h1 class="text-center">{{sections[9].title}}</h1>
+                                <h3 class="section-content">{{sections[9].content}}</h3>
+                                <div class="row">
+                                    <div class="col">
+                                        <h3 class="text-center">Results</h3>
+                                        <ul>
+                                            <li>Reduced napping: <b>Achieved</b> and satisfied.</li>
+                                            <li>Earlier bedtime: <b>Unsuccessful</b> but still satisfied.</li>
+                                            <li>Earlier wake time: <b>Achieved</b> and satisfied.</li>
+                                        </ul>
+                                    </div>
+                                    <div class="col">
+                                        <h3 class="text-center">Findings</h3>
+                                        <ul>
+                                            <li>Seems that I can always justify staying up later. Wether it be for someone or something. When not up with friends across the country, I was up working on projects.</li>
+                                            <li>Naps can be easily reduced when I replace the urge with another activity like walking around drinking coffee.</li>
+                                            <li>I beleive a project like this with some sort of accountability makes behavior changes easy to adhere to.</li>
+                                            <li>This behavior change was probably easier than other because it was something I've done before the pandemic. Trying to change a lifelong behavior would be substantially harder.</li>
+                                        </ul>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 text-center"><i class="fas fa-search fa-9x"></i></p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-no-shadow" style="background-color: #cc00cc;">
+                        <div class="row">
+                            <div class="col-sm-4 m-auto">
+                                <p class="m-0 section-icon text-center"><i class="fas fa-check-circle fa-9x"></i></p>
+                            </div>
+                            <div class="col-sm-8 section-text-shadow p-4">
+                                <h1 class="text-center">{{sections[10].title}}</h1>
+                                <h3 class="section-content">{{sections[10].content}}</h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="section section-shadow">
+                        <div class="p-4">
+                            <h1 class="text-center">{{sections[11].title}}</h1>
+                            <h3 class="section-content text-center">{{sections[11].content}}</h3>
+                            <hr>
+                        </div>
+                        <div id="footer">
+                            <p class="text-center">Made with:</p>
+                            <div class="row">
+                                <div class="col m-auto">
+                                    <div class="cred-container m-auto">
+                                        <div class="d-flex align-items-center">
+                                            <div><i class="fab fa-vuejs fa-5x"></i></div>
+                                            <div>
+                                                <h3>
+                                                    Vue.js
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="cred-container m-auto">
+                                        <div class="d-flex align-items-center">
+                                            <div><i class="fab fa-bootstrap fa-5x"></i></div>
+                                            <div>
+                                                <h3>
+                                                    BootStrap
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col">
+                                    <div class="cred-container m-auto">
+                                        <div class="d-flex align-items-center">
+                                            <div><i class="fas fa-chart-line fa-5x"></i></div>
+                                            <div>
+                                                <h3>
+                                                    HighCharts
+                                                </h3>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+
+                </div>
+            </div>
+        </div>
+        <link rel="stylesheet" href="css/sleep.css"/>
+        <script type="text/javascript" src="js/sleep.js"></script>
+        <script type="text/javascript" src="js/sleepVueController.js"></script>
+    </body>
+</html>

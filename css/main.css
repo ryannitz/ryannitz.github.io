@@ -1,0 +1,10 @@
+.tile-icon{
+
+}
+
+.tile-icon > div {
+    width: 100px;
+    height: 100px;
+    line-height:90px;
+    text-align: center;
+}
