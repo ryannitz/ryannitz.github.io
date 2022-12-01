@@ -1,10 +1,52 @@
-.tile-icon{
-
+html, body {
+    margin: 0!important;
+    padding: 0!important;
+    background-color: rgba(35, 35, 35, 1)!important;
+    
 }
 
-.tile-icon > div {
-    width: 100px;
-    height: 100px;
-    line-height:90px;
-    text-align: center;
+div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:active {
+    font-family: 'Cascadia Code';
+    font-style: normal;
+    font-weight: 400;
+    color:rgba(230, 230, 230, 1)!important;
+    text-decoration: none!important;
 }
+
+
+.level1{
+    display: none;
+}
+
+.level1 > div{
+    display: none;
+}
+
+
+#topbar {
+    background-color: rgba(20, 20, 20, 1)!important;
+}
+#options:hover{
+    background-color: rgba(30, 30, 30, 1)
+}
+#close:hover{
+    background-color: rgb(230, 46, 0);
+}
+
+
+.nav:hover{
+    cursor: pointer;
+}
+
+.navarrow{
+    display: none!important;
+    line-height: 25px!important;
+    padding-left: 10px;
+}
+
+.focused > .navarrow{
+    display: block!important;
+}
+
+
+
