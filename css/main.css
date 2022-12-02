@@ -2,6 +2,8 @@ html, body {
     margin: 0!important;
     padding: 0!important;
     background-color: rgba(35, 35, 35, 1)!important;
+    height: 100%;
+    width: 100%;
     
 }
 
@@ -13,15 +15,10 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     text-decoration: none!important;
 }
 
-
-.level1{
-    display: none;
+#app{
+    position: relative;
+    height: 100%;
 }
-
-.level1 > div{
-    display: none;
-}
-
 
 #topbar {
     background-color: rgba(20, 20, 20, 1)!important;
@@ -31,21 +28,47 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 }
 #close:hover{
     background-color: rgb(230, 46, 0);
+
+
 }
 
 
-.nav:hover{
+
+
+.page {
+    display:none;
+}
+/*
+#root {
+    display: block!important;
+}
+*/
+#back {
+    display: none;
+} 
+
+.item{
+    padding-left: 10px;
+    display: block;
+    height: 25px;
+}
+.item:hover{
     cursor: pointer;
 }
-
 .navarrow{
     display: none!important;
     line-height: 25px!important;
     padding-left: 10px;
 }
-
 .focused > .navarrow{
-    display: block!important;
+    display: inline-block!important;
+}
+
+
+
+
+.preview {
+    display: none;
 }
 
 

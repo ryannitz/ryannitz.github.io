@@ -43,10 +43,8 @@ var app = new Vue({
 
          //test data:
         siteTree: [{"path":"digits.html","mode":"100644","type":"blob","sha":"7317f565bb1de2637f38af81d7d5c3b2ac4d9841","size":554,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/7317f565bb1de2637f38af81d7d5c3b2ac4d9841"},{"path":"mersenne.html","mode":"100644","type":"blob","sha":"76114e4f29573dc3b1bce3a10fe18308f69e4b16","size":52999,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/76114e4f29573dc3b1bce3a10fe18308f69e4b16"},{"path":"sleep.html","mode":"100644","type":"blob","sha":"435535357f62628d6a7e1c910e6f95ea0b02c589","size":21585,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/435535357f62628d6a7e1c910e6f95ea0b02c589"},{"path":"wine2020.html","mode":"100644","type":"blob","sha":"4facdb1c2ce6900c8461ab36215327915350ced0","size":3815,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/4facdb1c2ce6900c8461ab36215327915350ced0"}],
-        //*/
-        /*
-        siteTree: [],
-        //*/
+        
+        //siteTree: [],
     },
 
   //------- methods --------
@@ -155,28 +153,74 @@ $(document).ready(function(){
       }, millis)
   }
 
+  var elementStack = [];
+  elementStack.push("#rnitz");
+  
+  var focusIcon = '<i class="fa-solid fa-angle-left navarrow"></i>';
+  $(".item").append(focusIcon);
+  var linkIcon = '<i class="fa-solid fa-link"></i> ';
+  $(".link").prepend(linkIcon);
+  var dirIcon = '<i class="fa-solid fa-folder"></i> ';
+  $(".dir").prepend(dirIcon);
+  var writeupIcon = '<i class="fa-solid fa-file"></i> ';
+  $(".writeup").prepend(writeupIcon);
 
-  $(".nav").hover(function(){
-    $(".nav").removeClass("focused");
+
+  $(".item").hover(function(){
+    $(".item").removeClass("focused");
     $(this).addClass("focused");
   });
 
-
-  //this can be made dynamic with element attributes or naming conventions
-  $("#dirWebsites").click(function(){
-    $(this).parent().hide();
-    $(".level1").show();
-    $("#websites").show();
-    $(".back").show();
+  $(".writeup").click(function() {
+    var toShow = $(this).attr("preview");
+    $(".preview").removeClass("d-block");
+    $(toShow).addClass("d-block");
   });
 
-  $(".back").click(function(){
-    $(this).parent().hide();
-    $(".level1").show();
-    $("#websites").show();
-    $(".back").show();
+  $(".navigable").click(function(){
+    $("#back").addClass("d-block");
+    var toHide = elementStack[elementStack.length-1];
+    $(toHide).removeClass("d-block");
+    var toShow = $(this).attr("page");
+    $(toShow).addClass("d-block");
+    elementStack.push(toShow);
+
+    updatePath();
   });
 
+  function updatePath() {
+    var path = 'C:\\Users';
+    elementStack.forEach(element => {
+      path += "\\" + element.replace("#", "");
+    });
+    path += ">";
+
+    $("#path").html(path);
+  }
+
+  $("#back").click(function(){
+    var toHide = elementStack.pop();
+    console.log("Trying to hide: " + toHide);
+    $(toHide).removeClass("d-block");
+    if(elementStack.length == 1) {//we have return to root
+      $(this).removeClass("d-block");
+    }
+    $(elementStack[elementStack.length-1]).addClass("d-block");
+    updatePath();
+  });
+
+
+  $('.link').click(function() {
+    return false;
+  }).dblclick(function() {
+    window.open(this.href,'_blank');
+    return false;
+  })
+
+
+  // $("#close").click(function() {
+  //   close();
+  // })
 });
 
 

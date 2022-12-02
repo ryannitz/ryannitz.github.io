@@ -25,46 +25,96 @@
     </head>
 
     <body>
-        <div id="app">
+        <div id="app" class="border border-white">
             <!-- Can either increase/decrease z-index in stack structure or set up a tracking system to navigation -->
-            <div id="mainTerminal">
+            <div id="mainTerminal" class="h-50">
                 
                 <div id="topbar" class="clearfix">
                     <div class="float-start">
-                        <h3 class="p-2 m-0"><i class="fa-sharp fa-solid fa-terminal"></i> Main Terminal</h3>
+                        <h3 class="p-2 m-0"><i class="fa-sharp fa-solid fa-terminal ps-2"></i> Main Terminal (active WIP)</h3>
                     </div>
                     <div class="float-end">
-                        <a href=""><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
-                        <a href=""><i id="close" class="fa-solid fa-xmark fa-2x p-2 px-4"></i></a>
-                        
-                        
+                        <a><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
+                        <a><i id="close" class="fa-solid fa-xmark fa-2x p-2 px-4"></i></a>
                     </div>
                 </div>
-                
 
-                <div class="root page">
-                    <a class="nav focused" id="dirGithub" target="_blank" rel="noopener noreferrer" href="https://github.com/ryannitz/ryannitz.github.io">github_repository <i class="fa-solid fa-angle-left navarrow"></i></a>
-                    <a class="nav" id="dirWebsites" action="websites">static_websites <i class="fa-solid fa-angle-left navarrow"></i></a>
-                    <a class="nav" id="dirSocials">socials <i class="fa-solid fa-angle-left navarrow"></i></a>
-                    <a class="nav" id="dirResume">resume <i class="fa-solid fa-angle-left navarrow"></i></a>
+                <span id="path">C:\Users\rnitz></span>
+                
+                <div class="page d-block" id="rnitz">
+                    <a class="item writeup focused" preview="#instructions"> instructions </a>
+                    <a class="item navigable dir" page="#about_me"> about_me </a>
+                    <a class="item link" href="https://github.com/ryannitz/ryannitz.github.io">github_repository </a>
+                    <a class="item navigable dir" page="#static_websites"> static_websites </a>
+                    <a class="item navigable dir" page="#socials_contacts"> socials_contacts </a>
+                    <a class="item writeup" preview="#resume"> resume (WIP, please access resume in: socials_contacts/indeed) </a>
+                    <a class="item writeup" preview="#todo"> todo </a>
                 </div>
     
-                <div class="level1 page">
-                    <div id="github"></div>
-                    <div id="websites">
-                        <div v-for="site in siteTree">
-                            <a class="nav" v-bind:href="site.path" target="_blank" rel="noopener noreferrer">{{site.path}} <i class="fa-solid fa-angle-left navarrow"></i></a>
-                        </div>
-                        <a class="nav back" target="#root">back.. <i class="fa-solid fa-angle-left navarrow"></i></div>
+                <div id="subpages">
+                    <div class="page" id="about_me">
+                        <a class="item writeup focused" preview="#personal">personal </a>
+                        <a class="item writeup" preview="#professional">professional </a>
                     </div>
-                    <div id="socials"></div>
-                    <div id="resume"></div>
+                    <div class="page" id="static_websites">
+                        <div v-for="site in siteTree">
+                            <a class="item link" v-bind:href="site.path" >{{site.path}} <i class="fa-solid fa-angle-left navarrow"></i></a>
+                        </div>
+                    </div>
+                    <div class="page" id="socials_contacts">
+                        <a class="item link focused" href="https://github.com/ryannitz"> github </a>
+                        <a class="item link" href="https://www.linkedin.com/in/ryan-nitz/"> linkedin </a>
+                        <a class="item link" href="https://my.indeed.com/p/ryann-st5yl46"> indeed </a>
+                    </div>
+                </div>
 
+                <a id="back" class="item"><i class="fa-solid fa-arrow-left"></i> return </a>
+            </div>
+
+            <div id="contextScreen" class="border-top border-white">
+                <div id="topbar" class="clearfix">
+                    <div class="float-start">
+                        <h3 class="p-2 m-0"><i class="fa-solid fa-magnifying-glass ps-2"></i> Content Preview/Summary</h3>
+                    </div>
+                    <div class="float-end">
+                        <a><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
+                    </div>
+                </div>
+
+                <span id="contentPreviewPath">C:\Users\rnitz\instructions></span>
+
+                <div id="content">
+                    <div class="preview" id="defaultPreview">
+                        nothing to preview
+                    </div>
+                    <div class="preview" id="backPreview">
+                        Hope you enjoyed your stay! 
+                    </div>
+                    <div class="preview d-block" id="instructions">
+                        <ul>
+                            <li>Links require a double click to open. Single clicking a link will enable content preview/summary if enabled. This will allow me to pull the readme or display a summary of any webpages I have listed</li>
+                            <li>Files will always have a preview</li>
+                        </ul>
+                    </div>
+                    <div class="preview" id="personal">
+                        WIP
+                    </div>
+                    <div class="preview" id="professional">
+                        WIP
+                    </div>
+                    <div class="preview" id="resume">
+                        WIP
+                    </div>
+                    <div class="preview" id="todo">
+                        <ul>
+                            <li>Add text animation on focus</li>
+                            <li>Add config to change css styles for both terminal and content viewer</li>
+                            <li>Add modal to confirm exit of website</li>
+                            <li>Perhaps only load stuff from git when that specific page is requested</li>
+                        </ul>
+                    </div>  
                 </div>
             </div>
-            
-
-            
 
         </div>
     </body>
