@@ -42,9 +42,9 @@ var app = new Vue({
         repos: null,
 
          //test data:
-        siteTree: [{"path":"digits.html","mode":"100644","type":"blob","sha":"7317f565bb1de2637f38af81d7d5c3b2ac4d9841","size":554,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/7317f565bb1de2637f38af81d7d5c3b2ac4d9841"},{"path":"mersenne.html","mode":"100644","type":"blob","sha":"76114e4f29573dc3b1bce3a10fe18308f69e4b16","size":52999,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/76114e4f29573dc3b1bce3a10fe18308f69e4b16"},{"path":"sleep.html","mode":"100644","type":"blob","sha":"435535357f62628d6a7e1c910e6f95ea0b02c589","size":21585,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/435535357f62628d6a7e1c910e6f95ea0b02c589"},{"path":"wine2020.html","mode":"100644","type":"blob","sha":"4facdb1c2ce6900c8461ab36215327915350ced0","size":3815,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/4facdb1c2ce6900c8461ab36215327915350ced0"}],
+        //siteTree: [{"path":"digits.html","mode":"100644","type":"blob","sha":"7317f565bb1de2637f38af81d7d5c3b2ac4d9841","size":554,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/7317f565bb1de2637f38af81d7d5c3b2ac4d9841"},{"path":"mersenne.html","mode":"100644","type":"blob","sha":"76114e4f29573dc3b1bce3a10fe18308f69e4b16","size":52999,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/76114e4f29573dc3b1bce3a10fe18308f69e4b16"},{"path":"sleep.html","mode":"100644","type":"blob","sha":"435535357f62628d6a7e1c910e6f95ea0b02c589","size":21585,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/435535357f62628d6a7e1c910e6f95ea0b02c589"},{"path":"wine2020.html","mode":"100644","type":"blob","sha":"4facdb1c2ce6900c8461ab36215327915350ced0","size":3815,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/4facdb1c2ce6900c8461ab36215327915350ced0"}],
         
-        //siteTree: [],
+        siteTree: [],
     },
 
   //------- methods --------
@@ -52,7 +52,7 @@ var app = new Vue({
 
         init() {
           //this.loadAPIBase();
-          //this.loadSiteTree();
+          this.loadSiteTree();
         },
 
         loadAPIBase() {
@@ -111,6 +111,13 @@ var app = new Vue({
             return treeBranch.path.includes(".html") && !treeBranch.path.includes("index.html");
           })
         },
+
+        toggleFocused(event) {
+          document.querySelectorAll('.item').forEach(function(element, index) {
+            element.classList.remove("focused");
+        });
+          event.target.classList.add("focused");
+        }
     },
 
 
@@ -118,7 +125,6 @@ var app = new Vue({
 
     beforeMount(){
         this.init();
-
     },
 
     computed: {
@@ -134,6 +140,19 @@ var app = new Vue({
       // },
     }
 });
+
+
+// var static_websites = new Vue({
+//   el: '#static_websites',
+//   data: {
+//       //focused: false
+//   },
+//   methods: {
+//       // mouseOver: function(){
+//       //     this.focused = !this.focused;   
+//       // }
+//   }
+// });
 
 
 $(document).ready(function(){
@@ -171,11 +190,7 @@ $(document).ready(function(){
     $(this).addClass("focused");
   });
 
-  $(".writeup").click(function() {
-    var toShow = $(this).attr("preview");
-    $(".preview").removeClass("d-block");
-    $(toShow).addClass("d-block");
-  });
+
 
   $(".navigable").click(function(){
     $("#back").addClass("d-block");
@@ -185,17 +200,27 @@ $(document).ready(function(){
     $(toShow).addClass("d-block");
     elementStack.push(toShow);
 
-    updatePath();
+    updateTerminalPath();
   });
 
-  function updatePath() {
+  function updateTerminalPath() {
     var path = 'C:\\Users';
     elementStack.forEach(element => {
       path += "\\" + element.replace("#", "");
     });
     path += ">";
 
-    $("#path").html(path);
+    $("#terminalPath").html(path);
+  }
+
+  function updatePreviewPath(content) {
+    var path = 'C:\\Users';
+    elementStack.forEach(element => {
+      path += "\\" + element.replace("#", "");
+    });
+    path += "> " + content;
+
+    $("#previewPath").html(path);
   }
 
   $("#back").click(function(){
@@ -206,16 +231,30 @@ $(document).ready(function(){
       $(this).removeClass("d-block");
     }
     $(elementStack[elementStack.length-1]).addClass("d-block");
-    updatePath();
+    updateTerminalPath();
   });
 
 
-  $('.link').click(function() {
+
+  //This is REALLY bad code because I'm using half vue, half vanilla. Will need to transition everything to vue.
+  $(document)
+  .on("click", ".link", function() {
     return false;
-  }).dblclick(function() {
+  })
+  .on("dblclick", ".link", function(){
     window.open(this.href,'_blank');
     return false;
   })
+  .on("click", ".item", function() {
+    var toShow = $(this).attr("preview");
+    console.log(toShow);
+    if(toShow){
+      updatePreviewPath(toShow.replace("#", ""));
+      $(".preview").removeClass("d-block");
+      $(toShow).addClass("d-block");
+    }
+  })
+
 
 
   // $("#close").click(function() {

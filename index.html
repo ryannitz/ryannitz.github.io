@@ -25,6 +25,8 @@
     </head>
 
     <body>
+        
+
         <div id="app" class="border border-white">
             <!-- Can either increase/decrease z-index in stack structure or set up a tracking system to navigation -->
             <div id="mainTerminal" class="h-50">
@@ -39,7 +41,7 @@
                     </div>
                 </div>
 
-                <span id="path">C:\Users\rnitz></span>
+                <span id="terminalPath">C:\Users\rnitz></span>
                 
                 <div class="page d-block" id="rnitz">
                     <a class="item writeup focused" preview="#instructions"> instructions </a>
@@ -57,9 +59,7 @@
                         <a class="item writeup" preview="#professional">professional </a>
                     </div>
                     <div class="page" id="static_websites">
-                        <div v-for="site in siteTree">
-                            <a class="item link" v-bind:href="site.path" >{{site.path}} <i class="fa-solid fa-angle-left navarrow"></i></a>
-                        </div>
+                        <a v-for="site in siteTree" @mouseenter="toggleFocused" class="item link" v-bind:href="site.path" v-bind:preview="'#'+site.path.replace('.html', '')">{{site.path}} <i class="fa-solid fa-angle-left navarrow"></i></a>
                     </div>
                     <div class="page" id="socials_contacts">
                         <a class="item link focused" href="https://github.com/ryannitz"> github </a>
@@ -81,7 +81,7 @@
                     </div>
                 </div>
 
-                <span id="contentPreviewPath">C:\Users\rnitz\instructions></span>
+                <span id="previewPath">C:\Users\rnitz\instructions></span>
 
                 <div id="content">
                     <div class="preview" id="defaultPreview">
@@ -112,7 +112,14 @@
                             <li>Add modal to confirm exit of website</li>
                             <li>Perhaps only load stuff from git when that specific page is requested</li>
                         </ul>
-                    </div>  
+                    </div> 
+                    <div>
+                        <div class="preview" id="digits">This is an external link for mersenne.html. It loads and displays an INSANE amount of digits on the screen and should be clicked with caution. It takes a strong computer to compute and render.</div>
+                        <div class="preview" id="mersenne">Created as the final project for the elemental number theory course. The spelling and grammar is questionable. I'm very content with the formatting and general style of the website. Looking back at the website now, I would change the formatting within the calculators to be easier to read and a tad more compact.</div>
+                        <div class="preview" id="sleep">Created as the final project for one of my psychology courses. </div>
+                        <div class="preview" id="text_unscramble">text_unscramble</div>
+                        <div class="preview" id="wine2020">wine2020</div>
+                    </div> 
                 </div>
             </div>
 
