@@ -14,7 +14,6 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
-        
     </head>
     <body>
 
@@ -169,6 +168,37 @@
                 </div>
             </div>
         </div>
+        <script>
+            // Example showing how to initialize with vanilla js
+
+            var largeExample = document.getElementById("largeExample");
+            largeExample.addEventListener("click", function() {
+                unscramble(1000, 25, this, this);
+            });
+            
+            //Without jQuery, you would need to loop through each element provided by getElementsByClass
+            $(document).ready(function(){
+                $(".list-example").mouseenter(function() {
+                    unscramble(1000, 25, this, this);
+                });
+            
+                $("#textToScramble").on("input", function() {
+                    //need to move input value to a text-holding element.
+                    $("#scrambleTestResult").text($(this).val());
+                });
+                //Example showing how to use the trigger from a different event/element.
+                $("#scrambleTestSubmit").click(function() {
+                    var element = document.getElementById("scrambleTestResult");
+                    unscramble($("#unscrambleSpeed").val(), $("#randomizerSpeed").val(), element, element);
+                })
+            
+                $("#targetSourceSubmit").click(function() {
+                    var sourceElement = document.getElementById("sourceExample");
+                    var targetElement = document.getElementById("targetExample");
+                    unscramble(2000, 25, sourceElement, targetElement);
+                })
+            });
+        </script>
         <script src="js/text_unscramble.js"></script>
     </body>
 </html>
