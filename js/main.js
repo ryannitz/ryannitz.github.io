@@ -52,7 +52,7 @@ var app = new Vue({
 
         init() {
           //this.loadAPIBase();
-          this.loadSiteTree();
+          //this.loadSiteTree();
         },
 
         loadAPIBase() {
@@ -77,7 +77,6 @@ var app = new Vue({
           .get("https://api.github.com/repos/ryannitz/ryannitz.github.io/git/trees/main")
           .then(response => {
               this.siteTree = this.filteredSiteTree(response.data);
-              console.log("This:::::" + JSON.stringify(this.siteTree));
           })
           .catch(e => {
               //change this to be perma message banner

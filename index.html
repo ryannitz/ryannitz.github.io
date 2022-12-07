@@ -47,7 +47,7 @@
                     <a class="item writeup focused" preview="#instructions"> instructions </a>
                     <a class="item navigable dir" page="#about_me"> about_me </a>
                     <a class="item link" href="https://github.com/ryannitz/ryannitz.github.io">github_repository </a>
-                    <a class="item navigable dir" page="#static_websites"> static_websites </a>
+                    <a class="item navigable dir" page="#static_websites" @click="loadSiteTree"> static_websites </a>
                     <a class="item navigable dir" page="#socials_contacts"> socials_contacts </a>
                     <a class="item writeup" preview="#resume"> resume (WIP, please access resume in: socials_contacts/indeed) </a>
                     <a class="item writeup" preview="#todo"> todo </a>
@@ -106,19 +106,40 @@
                         WIP
                     </div>
                     <div class="preview" id="todo">
-                        <ul>
-                            <li>Add text animation on focus</li>
-                            <li>Add config to change css styles for both terminal and content viewer</li>
-                            <li>Add modal to confirm exit of website</li>
-                            <li>Perhaps only load stuff from git when that specific page is requested</li>
-                        </ul>
+                        <div>
+                            <span>Not done:</span>
+                            <ul>
+                                <li>Add text animation on focus</li>
+                                <li>Add config to change css styles for both terminal and content viewer. Consider storing css strings in the options/values elements so they can be extracted and applied via JS VERY easily</li>
+                                <li>Add modal to confirm exit of website</li>
+                                <li>Add complete keyboard navigation. (Arrows, enter, return, esc, tab,...)</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <span>Done:</span>
+                            <ul>
+                                <li>Perhaps only load stuff from git when that specific page is requested</li>
+                                <li>Add path to content preview window</li>
+                                <li>Add content preview window to give more context to the user</li>
+                                <li>Add path to the main terminal to </li>
+                            </ul>
+                        </div>
                     </div> 
                     <div>
-                        <div class="preview" id="digits">This is an external link for mersenne.html. It loads and displays an INSANE amount of digits on the screen and should be clicked with caution. It takes a strong computer to compute and render.</div>
-                        <div class="preview" id="mersenne">Created as the final project for the elemental number theory course. The spelling and grammar is questionable. I'm very content with the formatting and general style of the website. Looking back at the website now, I would change the formatting within the calculators to be easier to read and a tad more compact.</div>
-                        <div class="preview" id="sleep">Created as the final project for one of my psychology courses. </div>
-                        <div class="preview" id="text_unscramble">text_unscramble</div>
-                        <div class="preview" id="wine2020">wine2020</div>
+                        <div class="preview" id="digits">This is an external link from mersenne.html. It loads and displays an INSANE amount of digits on the screen and should be clicked with caution. It takes a strong computer to compute and render.</div>
+                        <div class="preview" id="mersenne">Created as the final project for an elemental number theory course. The spelling and grammar is questionable. I'm very content with the formatting and general style of the website. Looking back at the website now, I would change the formatting within the calculators to be easier to read and a tad more compact.</div>
+                        <div class="preview" id="sleep">
+                            <p>
+                                Created as the final project for one of my psychology courses. I had a few goals while creating this webite:
+                            </p>
+                            <ul>
+                                <li>To use a different style compared to other websites I have created. Avoid the topnav and basic bootstrap template.</li>
+                                <li>Create various intricate graphs with highcharts to display different chart types and highchart feratures.</li>
+                                <li>Design and complete a brand new static website within 2-3 weeks.</li>
+                            </ul>
+                        </div>
+                        <div class="preview" id="text_unscramble">Upcoming website that will host the main js tool and it's configurations that are to be used in the terminal text animations.</div>
+                        <div class="preview" id="wine2020">This was an interesting project. I typically produce cases of wine every christmas as a mother-son tradition. For the 2020 year, the custom labels for my wine included a barcode linking to this website. Ideally, I wanted the user to get rick-rolled but many browsers prevent autoplay of youtube videos without first intercepting some sort of event from the user.  </div>
                     </div> 
                 </div>
             </div>
