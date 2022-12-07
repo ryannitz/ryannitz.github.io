@@ -8,7 +8,7 @@ function unscramble(unscrambleSpeed, randomizerSpeed, sourceElement, targetEleme
         var charactersLength = characters.length;
 
         var textsrc = sourceElement
-        var text = sourceElement.innerText;
+        var text = sourceElement.textContent;
 
         var resolvedText = "";
         var unresolvedCharCount = text.length;
@@ -31,7 +31,7 @@ function unscramble(unscrambleSpeed, randomizerSpeed, sourceElement, targetEleme
                             */
                             unresolved += characters.charAt(Math.floor(Math.random() * charactersLength));
                         }
-                        targetElement.innerText = resolvedText + unresolved;
+                        targetElement.textContent = resolvedText + unresolved;
                     }, randomizerSpeed)
                     print();
                     setTimeout(function() {

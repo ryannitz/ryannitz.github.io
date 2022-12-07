@@ -44,31 +44,31 @@
                 <span id="terminalPath">C:\Users\rnitz></span>
                 
                 <div class="page d-block" id="rnitz">
-                    <a class="item writeup focused" preview="#instructions"> instructions </a>
-                    <a class="item navigable dir" page="#about_me"> about_me </a>
-                    <a class="item link" href="https://github.com/ryannitz/ryannitz.github.io">github_repository </a>
-                    <a class="item navigable dir" page="#static_websites" @click="loadSiteTree"> static_websites </a>
-                    <a class="item navigable dir" page="#socials_contacts"> socials_contacts </a>
-                    <a class="item writeup" preview="#resume"> resume (WIP, please access resume in: socials_contacts/indeed) </a>
-                    <a class="item writeup" preview="#todo"> todo </a>
+                    <a class="item writeup focused" preview="#instructions"> <span>instructions</span> </a>
+                    <a class="item navigable dir" page="#about_me"> <span>about_me</span> </a>
+                    <a class="item link" href="https://github.com/ryannitz/ryannitz.github.io"> <span>github_repository</span> </a>
+                    <a class="item navigable dir" page="#static_websites" @click="loadSiteTree"> <span>static_websites</span> </a>
+                    <a class="item navigable dir" page="#socials_contacts"> <span>socials_contacts</span> </a>
+                    <a class="item writeup" preview="#resume"> <span>resume (WIP, please access resume in: socials_contacts/indeed)</span> </a>
+                    <a class="item writeup" preview="#todo"> <span>todo</span> </a>
                 </div>
     
                 <div id="subpages">
                     <div class="page" id="about_me">
-                        <a class="item writeup focused" preview="#personal">personal </a>
-                        <a class="item writeup" preview="#professional">professional </a>
+                        <a class="item writeup focused" preview="#personal"> <span>personal</span> </a>
+                        <a class="item writeup" preview="#professional"> <span>professional</span> </a>
                     </div>
                     <div class="page" id="static_websites">
-                        <a v-for="site in siteTree" @mouseenter="toggleFocused" class="item link" v-bind:href="site.path" v-bind:preview="'#'+site.path.replace('.html', '')">{{site.path}} <i class="fa-solid fa-angle-left navarrow"></i></a>
+                        <a v-for="site in siteTree" @mouseenter="toggleFocused" class="item link" v-bind:href="site.path" v-bind:preview="'#'+site.path.replace('.html', '')"><i class="fa-solid fa-link"></i>  <span>{{site.path}}</span> <i class="fa-solid fa-angle-left navarrow"></i></a>
                     </div>
                     <div class="page" id="socials_contacts">
-                        <a class="item link focused" href="https://github.com/ryannitz"> github </a>
-                        <a class="item link" href="https://www.linkedin.com/in/ryan-nitz/"> linkedin </a>
-                        <a class="item link" href="https://my.indeed.com/p/ryann-st5yl46"> indeed </a>
+                        <a class="item link focused" href="https://github.com/ryannitz"> <span>github</span> </a>
+                        <a class="item link" href="https://www.linkedin.com/in/ryan-nitz/"> <span>linkedin</span> </a>
+                        <a class="item link" href="https://my.indeed.com/p/ryann-st5yl46"> <span>indeed</span> </a>
                     </div>
                 </div>
 
-                <a id="back" class="item"><i class="fa-solid fa-arrow-left"></i> return </a>
+                <a id="back" class="item"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
             </div>
 
             <div id="contextScreen" class="border-top border-white">
@@ -113,7 +113,6 @@
                                     </ul>
                                 </li>
                                 <li>Add option to include/exclude spaces from the scambler</li>
-                                <li>Add text animation on focus</li>
                                 <li>Add config to change css styles for both terminal and content viewer. Consider storing css strings in the options/values elements so they can be extracted and applied via JS VERY easily</li>
                                 <li>Add complete keyboard navigation. (Arrows, enter, return, esc, tab,...)</li>
                             </ul>
@@ -121,6 +120,7 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Add text animation on focus</li>
                                 <li>Add modal to confirm exit of website</li>
                                 <li>Perhaps only load stuff from git when that specific page is requested</li>
                                 <li>Add path to content preview window</li>
@@ -152,25 +152,26 @@
         
             <div class="modal fade text-body" id="closeModal" tabindex="-1" role="dialog" aria-hidden="true">
                 <div class="modal-dialog modal-dialog-centered" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header ">
-                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
-                        <span class="text-body" aria-hidden="true">&times;</span>
-                      </button>
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="text-body" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <p class="text-body">Are you sure you would like to exit the website?</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-success" onclick="window.close()">Confirm</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                      <p class="text-body">Are you sure you would like to exit the website?</p>
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-success" onclick="window.close()">Confirm</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
 
     
         </div>
+        <script src="js/text_unscramble.js"></script>
         <script src="js/main.js"></script>
     </body>
     

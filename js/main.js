@@ -138,8 +138,8 @@ $(document).ready(function(){
   $(".item").hover(function(){
     $(".item").removeClass("focused");
     $(this).addClass("focused");
+    
   });
-
 
 
   $(".navigable").click(function(){
@@ -201,6 +201,9 @@ $(document).ready(function(){
       $(".preview").removeClass("d-block");
       $(toShow).addClass("d-block");
     }
+  })
+  .on("mouseenter", ".item > span", function() {
+    unscramble(750, 25, this, this)
   })
 
 
