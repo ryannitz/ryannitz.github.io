@@ -37,7 +37,7 @@
                     </div>
                     <div class="float-end">
                         <a><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
-                        <a><i id="close" class="fa-solid fa-xmark fa-2x p-2 px-4"></i></a>
+                        <a><i id="close" class="fa-solid fa-xmark fa-2x p-2 px-4" data-bs-toggle="modal" data-bs-target="#closeModal"></i></a>
                     </div>
                 </div>
 
@@ -83,17 +83,13 @@
 
                 <span id="previewPath">C:\Users\rnitz\instructions></span>
 
-                <div id="content">
+                <div id="content" class="p-4">
                     <div class="preview" id="defaultPreview">
                         nothing to preview
-                    </div>
-                    <div class="preview" id="backPreview">
-                        Hope you enjoyed your stay! 
                     </div>
                     <div class="preview d-block" id="instructions">
                         <ul>
                             <li>Links require a double click to open. Single clicking a link will enable content preview/summary if enabled. This will allow me to pull the readme or display a summary of any webpages I have listed</li>
-                            <li>Files will always have a preview</li>
                         </ul>
                     </div>
                     <div class="preview" id="personal">
@@ -109,6 +105,13 @@
                         <div>
                             <span>Not done:</span>
                             <ul>
+                                <li>
+                                    Make responsive. (Probably should've started with this.)
+                                    <ul>
+                                        <li>Headers and their elements</li>
+                                        <li>Listed items in main terminal. (They don't overflow nicely: Text/Icons)</li>
+                                    </ul>
+                                </li>
                                 <li>Add text animation on focus</li>
                                 <li>Add config to change css styles for both terminal and content viewer. Consider storing css strings in the options/values elements so they can be extracted and applied via JS VERY easily</li>
                                 <li>Add modal to confirm exit of website</li>
@@ -144,6 +147,28 @@
                 </div>
             </div>
 
+
+        
+            <div class="modal fade text-body" id="closeModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                  <div class="modal-content">
+                    <div class="modal-header ">
+                      <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                        <span class="text-body" aria-hidden="true">&times;</span>
+                      </button>
+                    </div>
+                    <div class="modal-body">
+                      <p class="text-body">Are you sure you would like to exit the website?</p>
+                    </div>
+                    <div class="modal-footer">
+                      <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                      <button type="button" class="btn btn-success" onclick="window.close()">Confirm</button>
+                    </div>
+                  </div>
+                </div>
+              </div>
+
+    
         </div>
     </body>
     <script src="js/main.js"></script>

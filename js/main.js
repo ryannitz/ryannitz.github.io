@@ -6,10 +6,6 @@ var app = new Vue({
         API_BASE_URL: "https://api.github.com/users/ryannitz",
         api_base_object : {
           "login": "ryannitz",
-          "id": 46801728,
-          "node_id": "MDQ6VXNlcjQ2ODAxNzI4",
-          "avatar_url": "https://avatars.githubusercontent.com/u/46801728?v=4",
-          "gravatar_id": "",
           "url": "https://api.github.com/users/ryannitz",
           "html_url": "https://github.com/ryannitz",
           "followers_url": "https://api.github.com/users/ryannitz/followers",
@@ -21,29 +17,10 @@ var app = new Vue({
           "repos_url": "https://api.github.com/users/ryannitz/repos",
           "events_url": "https://api.github.com/users/ryannitz/events{/privacy}",
           "received_events_url": "https://api.github.com/users/ryannitz/received_events",
-          "type": "User",
-          "site_admin": false,
-          "name": null,
-          "company": null,
-          "blog": "",
-          "location": null,
-          "email": null,
-          "hireable": null,
-          "bio": null,
-          "twitter_username": null,
-          "public_repos": 17,
-          "public_gists": 0,
-          "followers": 4,
-          "following": 2,
-          "created_at": "2019-01-18T01:29:44Z",
-          "updated_at": "2022-08-26T14:13:54Z"
         },
 
-        repos: null,
+        repos: [],
 
-         //test data:
-        //siteTree: [{"path":"digits.html","mode":"100644","type":"blob","sha":"7317f565bb1de2637f38af81d7d5c3b2ac4d9841","size":554,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/7317f565bb1de2637f38af81d7d5c3b2ac4d9841"},{"path":"mersenne.html","mode":"100644","type":"blob","sha":"76114e4f29573dc3b1bce3a10fe18308f69e4b16","size":52999,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/76114e4f29573dc3b1bce3a10fe18308f69e4b16"},{"path":"sleep.html","mode":"100644","type":"blob","sha":"435535357f62628d6a7e1c910e6f95ea0b02c589","size":21585,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/435535357f62628d6a7e1c910e6f95ea0b02c589"},{"path":"wine2020.html","mode":"100644","type":"blob","sha":"4facdb1c2ce6900c8461ab36215327915350ced0","size":3815,"url":"https://api.github.com/repos/ryannitz/ryannitz.github.io/git/blobs/4facdb1c2ce6900c8461ab36215327915350ced0"}],
-        
         siteTree: [],
     },
 
@@ -114,13 +91,10 @@ var app = new Vue({
         toggleFocused(event) {
           document.querySelectorAll('.item').forEach(function(element, index) {
             element.classList.remove("focused");
-        });
+          });
           event.target.classList.add("focused");
         }
     },
-
-
-
 
     beforeMount(){
         this.init();
@@ -128,30 +102,8 @@ var app = new Vue({
 
     computed: {
 
-      
-      // filteredSiteTree(){
-      //   console.log("computerd")
-      //   if(this.siteTree.length > 0) {
-      //     return this.siteTree.tree.filter(treeBranch => {
-      //       return treeBranch.path.includes(".html") && !treeBranch.path.includes("index.html");
-      //     })
-      //   }
-      // },
     }
 });
-
-
-// var static_websites = new Vue({
-//   el: '#static_websites',
-//   data: {
-//       //focused: false
-//   },
-//   methods: {
-//       // mouseOver: function(){
-//       //     this.focused = !this.focused;   
-//       // }
-//   }
-// });
 
 
 $(document).ready(function(){

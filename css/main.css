@@ -7,12 +7,12 @@ html, body {
     
 }
 
-div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:active {
+div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:active, .item, .item:hover {
     font-family: 'Cascadia Code';
     font-style: normal;
     font-weight: 400;
-    color:rgba(230, 230, 230, 1)!important;
-    text-decoration: none!important;
+    color:rgba(230, 230, 230, 1);
+    text-decoration: none;
 }
 
 #app{
@@ -31,6 +31,7 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 
 
 }
+
 
 
 
