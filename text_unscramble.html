@@ -24,8 +24,32 @@
                 <hr>
             </div>
             <div class="section mt-5 pb-5">
-                <h3>Dynamic exmaple with custom configurations</h3>
-                <form onsubmit="event.preventDefault();">
+                <h3>Dynamic example with custom configurations</h3>
+                <ul class="my-5">
+                    <li>
+                        <span class="fw-bold">Unscramble Speed: </span>
+                        <p>Total time (ms) for the entire string to unscramble. Every char will take: (unscrambleSpeed/text.length)</p>
+                    </li>
+                    <li>
+                        <span class="fw-bold">Randomizer Speed: </span>
+                        <p>Time interval (ms) for the random characters to regenerate and display.</p>
+                        <p>If the value entered is greater than the time it takes for every char to unscramble, the new value will be calculated as: (unscrambleSpeed/text.length/1.01). This will guarantee that the animation executes.</p>
+
+                        <code>
+                            var charResolveSpeed =  unscrambleSpeed/text.length;<br>
+                            &emsp; if(charResolveSpeed <= randomizerSpeed) {<br>
+                            &emsp; randomizerSpeed = charResolveSpeed/1.01;<br>
+                            }
+                        </code>
+                    </li>
+                    <li>
+                        <span class="fw-bold">Notes: </span>
+                        <ul>
+                            <li>Text getting/setting is done with <code>.innerHTML</code>.</li>
+                        </ul>
+                    </li>
+                </ul>
+                <form class="border border-dark border-2 rounded p-5 my-5" onsubmit="event.preventDefault();">
                     <div class="input-group">
                         <div class="form-floating mb-3 mt-3">
                             <input type="number" class="form-control" id="unscrambleSpeed" placeholder="2000" name="unscrambleSpeed" value="2000">
@@ -46,13 +70,56 @@
 
                     <div class="input-group mb-3">
                         <span class="input-group-text">Result:</span>
-                        <p id="scrambleTestResult" type="text" class="form-control m-0" placeholder="Text To Scramble">Text To Scramble</p>
+                        <p id="scrambleTestResult" type="text" class="form-control m-0">Text To Scramble</p>
                     </div>
-                    
+                    <div class="mb-3 mt-5">
+                        <h6>Code:</h6>
+                        <code>
+                            $("#textToScramble").on("input", function() {<br>
+                                &emsp; //need to move input value to a text-holding element.<br>
+                                &emsp; $("#scrambleTestResult").text($(this).val());<br>
+                            });<br>
+                            //Example showing how to use the trigger from a different event/element.<br>
+                            $("#scrambleTestSubmit").click(function() {<br>
+                                &emsp; var element = document.getElementById("scrambleTestResult");<br>
+                                &emsp; unscramble($("#unscrambleSpeed").val(), $("#randomizerSpeed").val(), element, element);<br>
+                            })
+                        </code>
+                    </div>
                 </form>
 
                 
                 <!-- <span id="scramble" class="border">helloworld</span> -->
+            </div>
+
+            <div class="section mt-5 pb-5">
+                <hr>
+                <h3>An example showing the source text element and target text element being different</h3>
+                
+                <form class="border border-dark border-2 rounded p-5 my-5" onsubmit="event.preventDefault();">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Input:</span>
+                        <p id="sourceExample" type="text" class="form-control m-0">Pass this along to some other place!</p>
+                    </div>
+                    <div class="text-center mb-3">
+                        <button id="targetSourceSubmit" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Result:</span>
+                        <p id="targetExample" type="text" class="form-control m-0"></p>
+                    </div>
+                    <div class="mb-3 mt-5">
+                        <h6>Code:</h6>
+                        <code>
+                            $("#targetSourceSubmit").click(function() {<br>
+                                &emsp; var sourceElement = document.getElementById("sourceExample");<br>
+                                &emsp; var targetElement = document.getElementById("targetExample");<br>
+                                &emsp; unscramble(2000, 25, sourceElement, targetElement);<br>
+                            })
+                        </code>
+                    </div>
+                </form>
             </div>
             
             <div class="section mt-5 pb-5">
@@ -67,21 +134,39 @@
                 </ul>
                 <p>There is an element class modifier to inhibit element-unique re-triggers. Multiple mouseenters will not create adverse effects. May consider making this an optional flag.</p>
                 <p>Must fix the bold replacement issue. Workaround: Add class modifier as found in bootstrap</p>
+                <div class="mb-3 mt-3">
+                    <h6>Code:</h6>
+                    <code>
+                        //With vanilla js: would need to iterated over all elements returned by .getElementsByClass()<br>
+                        $(".list-example").mouseenter(function() {<br>
+                            &emsp; unscramble(1000, 25, this, this);<br>
+                        });
+                    </code>
+                </div>
             </div>
 
             <div class="section mt-5 pb-5">
                 <hr>
-                <h3>An example using a large section of text. (Click to activate)</h3>
+                <h3>An example using a large section of text. (Click text to activate)</h3>
                 <p id="largeExample">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
                 <ul>
                     <li>
-                        <p>This does not work properly. This type of animation should not be used on text larger than one line.</p>
+                        <p>This does not work properly. This type of animation should not be used on text longer than one line.</p>
                     </li>
                     <li>
                         <p>I may consider implementing an algorithm to bin similarly sized chars together so that the randomizer can choose chars that won't create large scale displacements</p>
                     </li>
                 </ul>
-                
+                <div class="mb-3 mt-3">
+                    <h6>Code:</h6>
+                    <code>
+                        //Example with vanilla js eventListener<br>
+                        var largeExample = document.getElementById("largeExample");<br>
+                        largeExample.addEventListener("click", function() {<br>
+                            &emsp; unscramble(1000, 25, this, this);<br>
+                        });
+                    </code>
+                </div>
             </div>
         </div>
         <script src="js/text_unscramble.js"></script>
