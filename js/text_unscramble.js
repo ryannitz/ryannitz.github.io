@@ -1,26 +1,28 @@
-// var scramble = document.getElementById("scramble");
-// scramble.addEventListener("click", function() {
-//     unscramble(1000, 25, this);
-// });
+
+
+// Example showing how to initialize with vanilla js
 
 var largeExample = document.getElementById("largeExample");
 largeExample.addEventListener("click", function() {
     unscramble(1000, 25, this);
 });
 
-//used jquery to avoid looping through class elements.
+//Without jQuery, you would need to loop through each element provided by getElementsByClass
 $(document).ready(function(){
     $(".list-example").mouseenter(function() {
         unscramble(1000, 25, this);
     });
 
-    $("#textToScramble").on("input", function(){
+    $("#textToScramble").on("input", function() {
+        //need to move input to text-holding element.
+        //may consider implementing a source/target for the algorithm
         $("#scrambleTestResult").text($(this).val());
     });
 
+    //Example showing how to use the trigger from a different event/element.
     $("#scrambleTestSubmit").click(function() {
         var element = document.getElementById("scrambleTestResult");
-        unscramble($("#unscrambleSpeed").val(),$("#randomizerSpeed").val(),element);
+        unscramble($("#unscrambleSpeed").val(), $("#randomizerSpeed").val(), element);
     })
 });
 
@@ -65,13 +67,10 @@ function unscramble(unscrambleSpeed, randomizerSpeed, element) {
                     setTimeout(function() {
                         clearInterval(innerInterval);
                     }, charResolveSpeed);
-
                 }else {
-                    console.log("Done");
                     element.classList.remove("unscrambling");
                 }
                 unresolvedCharCount--;
-
             }, charResolveSpeed);
         }
         print();
