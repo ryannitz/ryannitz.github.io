@@ -48,7 +48,6 @@ var app = new Vue({
             });
         },
 
-        //we need to hit this URL with the most recent SHA: https://api.github.com/repos/ryannitz/ryannitz.github.io/git/trees/8601819f53fe222a42c0ea1188bac4f332d94c76
         loadSiteTree() {
           axios
           .get("https://api.github.com/repos/ryannitz/ryannitz.github.io/git/trees/main")
@@ -176,7 +175,6 @@ $(document).ready(function(){
 
   $("#back").click(function(){
     var toHide = elementStack.pop();
-    console.log("Trying to hide: " + toHide);
     $(toHide).removeClass("d-block");
     if(elementStack.length == 1) {//we have return to root
       $(this).removeClass("d-block");
@@ -198,7 +196,6 @@ $(document).ready(function(){
   })
   .on("click", ".item", function() {
     var toShow = $(this).attr("preview");
-    console.log(toShow);
     if(toShow){
       updatePreviewPath(toShow.replace("#", ""));
       $(".preview").removeClass("d-block");
@@ -207,10 +204,6 @@ $(document).ready(function(){
   })
 
 
-
-  // $("#close").click(function() {
-  //   close();
-  // })
 });
 
 

@@ -14,8 +14,76 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+        
     </head>
     <body>
-        
+
+        <div class="container">
+            <div>
+                <h1 class="text-center p-5">JS text unscramble animator</h1>
+                <hr>
+            </div>
+            <div class="section mt-5 pb-5">
+                <h3>Dynamic exmaple with custom configurations</h3>
+                <form onsubmit="event.preventDefault();">
+                    <div class="input-group">
+                        <div class="form-floating mb-3 mt-3">
+                            <input type="number" class="form-control" id="unscrambleSpeed" placeholder="2000" name="unscrambleSpeed" value="2000">
+                            <label for="randomizerSpeed">Unscramble Speed (ms)</label>
+                        </div>
+                        <div class="form-floating mt-3 mb-3">
+                            <input type="number" class="form-control" id="randomizerSpeed" placeholder="50" name="randomizerSpeed" value="25">
+                            <label for="randomizerSpeed">Randomizer Speed (ms)</label>
+                        </div>
+                    </div>
+                    <div class="form-floating mt-3 mb-3">
+                        <input type="text" class="form-control" id="textToScramble" placeholder="Text To Scramble" name="textToScramble">
+                        <label for="textToScramble">Text To Scramble</label>
+                    </div>
+                    <div class="text-center mb-3">
+                        <button id="scrambleTestSubmit" type="submit" class="btn btn-primary">Submit</button>
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">Result:</span>
+                        <p id="scrambleTestResult" type="text" class="form-control m-0" placeholder="Text To Scramble">Text To Scramble</p>
+                    </div>
+                    
+                </form>
+
+                
+                <!-- <span id="scramble" class="border">helloworld</span> -->
+            </div>
+            
+            <div class="section mt-5 pb-5">
+                <hr>
+                <h3>An example using a list all sharing the same class with an attached event listener (Hover to activate)</h3>
+                
+                <ul>
+                    <li class="list-example">Here is some initial text</li>
+                    <li class="list-example">Some text with   odd spacing     in the    source html</li>
+                    <li class="list-example"><b>BOLD TEXT with 'b' tag</b></li>
+                    <li class="list-example fw-bold">BOLD TEXT with class modifier</li>
+                </ul>
+                <p>There is an element class modifier to inhibit element-unique re-triggers. Multiple mouseenters will not create adverse effects. May consider making this an optional flag.</p>
+                <p>Must fix the bold replacement issue. Workaround: Add class modifier as found in bootstrap</p>
+            </div>
+
+            <div class="section mt-5 pb-5">
+                <hr>
+                <h3>An example using a large section of text. (Click to activate)</h3>
+                <p id="largeExample">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                <ul>
+                    <li>
+                        <p>This does not work properly. This type of animation should not be used on text larger than one line.</p>
+                    </li>
+                    <li>
+                        <p>I may consider implementing an algorithm to bin similarly sized chars together so that the randomizer can choose chars that won't create large scale displacements</p>
+                    </li>
+                </ul>
+                
+            </div>
+        </div>
+        <script src="js/text_unscramble.js"></script>
     </body>
 </html>
