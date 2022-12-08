@@ -396,9 +396,6 @@ $(document).ready(function(){
 	});
 
 	
-
-
-
 	function log(message){
 		if(debug == true){
 			console.log(message);
