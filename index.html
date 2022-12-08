@@ -24,12 +24,12 @@
         <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
     </head>
 
-    <body>
+    <body>  
         
 
-        <div id="app" class="border border-white">
+        <div id="app">
             <!-- Can either increase/decrease z-index in stack structure or set up a tracking system to navigation -->
-            <div id="mainTerminal" class="h-50">
+            <div id="mainTerminal" class="h-50 border-top border-white">
                 
                 <div id="topbar" class="clearfix">
                     <div class="float-start">
@@ -47,7 +47,7 @@
                     <a class="item writeup focused" preview="#instructions"> <span>instructions</span> </a>
                     <a class="item navigable dir" page="#about_me"> <span>about_me</span> </a>
                     <a class="item link" href="https://github.com/ryannitz/ryannitz.github.io"> <span>github_repository</span> </a>
-                    <a class="item navigable dir" page="#static_websites" @click="loadSiteTree"> <span>static_websites</span> </a>
+                    <a id="vueStaticWebpageTrigger" class="item navigable dir" page="#static_websites" @click="loadSiteTree"> <span>static_websites</span> </a>
                     <a class="item navigable dir" page="#socials_contacts"> <span>socials_contacts</span> </a>
                     <a class="item writeup" preview="#resume"> <span>resume (WIP, please access resume in: socials_contacts/indeed)</span> </a>
                     <a class="item writeup" preview="#todo"> <span>todo</span> </a>
@@ -57,28 +57,30 @@
                     <div class="page" id="about_me">
                         <a class="item writeup focused" preview="#personal"> <span>personal</span> </a>
                         <a class="item writeup" preview="#professional"> <span>professional</span> </a>
+                        <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                     <div class="page" id="static_websites">
                         <a v-for="site in siteTree" @mouseenter="toggleFocused" class="item link" v-bind:href="site.path" v-bind:preview="'#'+site.path.replace('.html', '')"><i class="fa-solid fa-link"></i>  <span>{{site.path}}</span> <i class="fa-solid fa-angle-left navarrow"></i></a>
+                        <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                     <div class="page" id="socials_contacts">
                         <a class="item link focused" href="https://github.com/ryannitz"> <span>github</span> </a>
                         <a class="item link" href="https://www.linkedin.com/in/ryan-nitz/"> <span>linkedin</span> </a>
                         <a class="item link" href="https://my.indeed.com/p/ryann-st5yl46"> <span>indeed</span> </a>
+                        <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                 </div>
-
-                <a id="back" class="item"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
             </div>
 
-            <div id="contextScreen" class="border-top border-white">
-                <div id="topbar" class="clearfix">
+            <div id="contextScreen" class="h-50 border-top border-white overflow-scroll">
+                <div id="topbar" class="clearfix fixed-position">
                     <div class="float-start">
                         <h3 class="p-2 m-0"><i class="fa-solid fa-magnifying-glass ps-2"></i> Content Preview/Summary</h3>
                     </div>
                     <div class="float-end">
                         <a><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
                     </div>
+                    
                 </div>
 
                 <span id="previewPath">C:\Users\rnitz\instructions></span>
@@ -90,6 +92,9 @@
                     <div class="preview d-block" id="instructions">
                         <ul>
                             <li>Links require a double click to open. Single clicking a link will enable content preview/summary if enabled. This will allow me to pull the readme or display a summary of any webpages I have listed</li>
+                            <li>Up/Down keys will navigate through the items in the terminal. </li>
+                            <li>Pressing enter will act as a single click for all items, but will also open links. Double pressing enter would be... odd.</li>
+                            <li>Tab/Space/Esc have no functionality.</li>
                         </ul>
                     </div>
                     <div class="preview" id="personal">
@@ -120,18 +125,19 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Add complete keyboard navigation. (Arrows, enter)</li>
                                 <li>Add text animation on focus</li>
                                 <li>Add modal to confirm exit of website</li>
                                 <li>Perhaps only load stuff from git when that specific page is requested</li>
                                 <li>Add path to content preview window</li>
                                 <li>Add content preview window to give more context to the user</li>
-                                <li>Add path to the main terminal to </li>
+                                <li>Add path to the main terminal too </li>
                             </ul>
                         </div>
                     </div> 
                     <div>
                         <div class="preview" id="digits">This is an external link from mersenne.html. It loads and displays an INSANE amount of digits on the screen and should be clicked with caution. It takes a strong computer to compute and render.</div>
-                        <div class="preview" id="mersenne">Created as the final project for an elemental number theory course. The spelling and grammar is questionable. I'm very content with the formatting and general style of the website. Looking back at the website now, I would change the formatting within the calculators to be easier to read and a tad more compact.</div>
+                        <div class="preview" id="mersenne">Created as the final project for an elemental number theory course. The spelling and grammar is questionable. I'm very content with the formatting and general style of the website. Looking back at the website now, I would change the formatting within the calculators to be increase readability and be a tad more compact.</div>
                         <div class="preview" id="sleep">
                             <p>
                                 Created as the final project for one of my psychology courses. I had a few goals while creating this webite:

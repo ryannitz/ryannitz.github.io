@@ -18,10 +18,13 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 #app{
     position: relative;
     height: 100%;
+    
 }
 
 #topbar {
     background-color: rgba(20, 20, 20, 1)!important;
+    position: sticky;
+    top: 0;
 }
 #options:hover{
     background-color: rgba(30, 30, 30, 1)
@@ -44,9 +47,9 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     display: block!important;
 }
 */
-#back {
+/* #back {
     display: none;
-} 
+}  */
 
 .item{
     padding-left: 10px;
@@ -70,6 +73,7 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 
 .preview {
     display: none;
+    font-size: large;
 }
 
 

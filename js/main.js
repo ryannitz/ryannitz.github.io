@@ -49,18 +49,20 @@ var app = new Vue({
         },
 
         loadSiteTree() {
-          axios
-          .get("https://api.github.com/repos/ryannitz/ryannitz.github.io/git/trees/main")
-          .then(response => {
-              this.siteTree = this.filteredSiteTree(response.data);
-          })
-          .catch(e => {
-              //change this to be perma message banner
-              if(e.response){
-                  console.log(e);
-                  createAlert("danger", "Could not fetch site tree", 3000);
-              }
-          });
+          if(this.siteTree.length == 0) {
+            axios
+            .get("https://api.github.com/repos/ryannitz/ryannitz.github.io/git/trees/main")
+            .then(response => {
+                this.siteTree = this.filteredSiteTree(response.data);
+            })
+            .catch(e => {
+                //change this to be perma message banner
+                if(e.response){
+                    console.log(e);
+                    createAlert("danger", "Could not fetch site tree", 3000);
+                }
+            });
+          }
         },
 
         loadRepos() {
@@ -99,6 +101,15 @@ var app = new Vue({
         this.init();
     },
 
+    created() {
+      window.addEventListener('keydown', (e) => {
+        var static_websites_focused = document.getElementById("vueStaticWebpageTrigger").classList.contains('focused');
+        if (e.key == 'Enter' && static_websites_focused) {
+          this.loadSiteTree();
+        }
+      });
+    },
+
     computed: {
 
     }
@@ -122,6 +133,8 @@ $(document).ready(function(){
       }, millis)
   }
 
+
+
   var elementStack = [];
   elementStack.push("#rnitz");
   
@@ -133,7 +146,6 @@ $(document).ready(function(){
   $(".dir").prepend(dirIcon);
   var writeupIcon = '<i class="fa-solid fa-file"></i> ';
   $(".writeup").prepend(writeupIcon);
-
 
   $(".item").hover(function(){
     $(".item").removeClass("focused");
@@ -173,12 +185,9 @@ $(document).ready(function(){
     $("#previewPath").html(path);
   }
 
-  $("#back").click(function(){
+  $(".back").click(function(){
     var toHide = elementStack.pop();
     $(toHide).removeClass("d-block");
-    if(elementStack.length == 1) {//we have return to root
-      $(this).removeClass("d-block");
-    }
     $(elementStack[elementStack.length-1]).addClass("d-block");
     updateTerminalPath();
   });
@@ -204,7 +213,38 @@ $(document).ready(function(){
   })
   .on("mouseenter", ".item > span", function() {
     unscramble(750, 25, this, this)
-  })
+  })    
+  .on('keydown', function(e) { 
+    var keyCode = e.keyCode || e.which; 
+  
+    if(keyCode == 40 || keyCode == 38) {
+      var focused = $(".page.d-block > .focused");
+      if (keyCode == 40) { 
+        var nextFocus = focused.next();
+        if(nextFocus.length == 0) {
+          nextFocus = $(".page.d-block > .item").first();
+        }
+      } 
+      if (keyCode == 38) {
+        var nextFocus = focused.prev();
+        if(nextFocus.length == 0) {
+          nextFocus = $(".page.d-block > .item").last();
+        }
+      }
+      $(".item").removeClass("focused");
+      nextFocus.addClass("focused");
+      nextFocus.find("span").trigger("mouseenter")
+    }
+
+    if(keyCode == 13) {
+      $(".focused").trigger("click");
+      if($(".focused").hasClass("link")) {
+        $(".focused").trigger("dblclick");
+      }
+    }
+    
+    //return false;
+  });
 
 
 });
