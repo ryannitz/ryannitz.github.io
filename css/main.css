@@ -21,7 +21,12 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     
 }
 
-#topbar {
+.panel {
+    height: 50%;
+    overflow-y: scroll;
+}
+
+.topbar {
     background-color: rgba(20, 20, 20, 1)!important;
     position: sticky;
     top: 0;
@@ -31,8 +36,10 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 }
 #close:hover{
     background-color: rgb(230, 46, 0);
+}
 
-
+#contentScreenTitleBar:hover {
+    cursor: row-resize;
 }
 
 

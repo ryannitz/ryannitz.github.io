@@ -134,6 +134,38 @@ $(document).ready(function(){
   }
 
 
+  //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
+  var resizing = false;
+  $("#contentScreenTitleBar").mousedown(function(e) {
+    resizing = true;
+  });
+  $(document).mousemove(function(e) {
+    if(resizing) {
+      $("body").css("cursor", "row-resize");
+      var releasePosY = e.pageY;
+
+      var upperBound = $("#mainTerminalTitleBar").height();
+      if(releasePosY < upperBound) {
+        releasePosY = upperBound;
+      }
+      var lowerBound = window.innerHeight - $("#contentScreenTitleBar").height();
+      if(releasePosY > lowerBound) {
+        releasePosY = lowerBound;
+      }
+      var percentagePosY = (releasePosY / window.innerHeight) * 100;
+      var newTerminalHeight = percentagePosY;
+      var newContextHeight = 100 - percentagePosY;
+
+      $("#mainTerminal").css("height", newTerminalHeight + "%");
+      $("#contextScreen").css("height", newContextHeight + "%");
+    }
+  })
+  $(document).mouseup(function(e) {
+    resizing = false;
+    $("body").css("cursor", "inherit");
+  })
+
+
 
   var elementStack = [];
   elementStack.push("#rnitz");
