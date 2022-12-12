@@ -44,7 +44,7 @@
                 <div class="page d-block" id="rnitz">
                     <a class="item writeup focused" preview="#instructions"> <span>instructions</span> </a>
                     <a class="item navigable dir" page="#about_me"> <span>about_me</span> </a>
-                    <a class="item link" href="https://github.com/ryannitz/ryannitz.github.io"> <span>github_repository</span> </a>
+                    <a class="item link" preview="#link" href="https://github.com/ryannitz/ryannitz.github.io"> <span>github_repository</span> </a>
                     <a id="vueStaticWebpageTrigger" class="item navigable dir" page="#static_websites" @click="loadSiteTree"> <span>static_websites</span> </a>
                     <a class="item navigable dir" page="#socials_contacts"> <span>socials_contacts</span> </a>
                     <a class="item writeup" preview="#resume"> <span>resume (WIP, please access resume in: socials_contacts/indeed)</span> </a>
@@ -62,9 +62,9 @@
                         <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                     <div class="page" id="socials_contacts">
-                        <a class="item link focused" href="https://github.com/ryannitz"> <span>github</span> </a>
-                        <a class="item link" href="https://www.linkedin.com/in/ryan-nitz/"> <span>linkedin</span> </a>
-                        <a class="item link" href="https://my.indeed.com/p/ryann-st5yl46"> <span>indeed</span> </a>
+                        <a class="item link focused" preview="#link" href="https://github.com/ryannitz"> <span>github</span> </a>
+                        <a class="item link" preview="#link" href="https://www.linkedin.com/in/ryan-nitz/"> <span>linkedin</span> </a>
+                        <a class="item link" preview="#link" href="https://my.indeed.com/p/ryann-st5yl46"> <span>indeed</span> </a>
                         <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                 </div>
@@ -86,6 +86,9 @@
                 <div id="content" class="p-4">
                     <div class="preview" id="defaultPreview">
                         nothing to preview
+                    </div>
+                    <div class="preview d-block" id="link">
+                        <p>Please double-click links :) (Or press enter/return on a focused link)</p>
                     </div>
                     <div class="preview d-block" id="instructions">
                         <ul>
