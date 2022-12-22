@@ -61,7 +61,10 @@ var app = new Vue({
                          + "Being able to sit down and pump out work and results is satisfying and felt like I had purpose and impact while working. "
                          + "The team leads kept re-iterating how awesome it was to have the test suites up and running so that they could actively test and monitor their area of responsibility. "
                          + "While working to fix the test suites, we actually discovered and even fixed a few bugs, proving the importance of having automated tests. This drove home the feeling of doing good and meaningful work. "
-                         + "Overall I loved working at Cvent. They have an amazing culture and work atmosphere. The people I worked with were some of the coolest people I have been able to meet."
+                         + "Overall I loved working at Cvent. They have an amazing culture and work atmosphere. The people I worked with were some of the coolest people I have been able to meet.",
+            employer_review_files: [
+
+            ]
           },
           {
             company: "Cvent",
@@ -100,6 +103,16 @@ var app = new Vue({
               {name: "AWS nodes", desc: ""}
             ],
             reflection: "",
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-cvent1.pdf"
+              },
+              {
+                name: "Employer Review 2",
+                url: "documents/main/ryannitz-final-evaluation-cvent2.pdf"
+              }
+            ]
           },
           {
             company: "LuminUltra",
@@ -136,6 +149,9 @@ var app = new Vue({
               {name: "iOS", desc: ""}
             ],
             reflection: "",
+            employer_review_files: [
+              
+            ]
           },
           {
             company: "IBM",
@@ -170,6 +186,13 @@ var app = new Vue({
               {name: "python", desc:""}
             ],
             reflection: "",
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-ibm1.pdf"
+              }
+              
+            ]
           },
           {
             company: "LuminUltra",
@@ -206,6 +229,12 @@ var app = new Vue({
               {name: "iOS", desc: ""}
             ],
             reflection: "",
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-LU2.pdf"
+              }
+            ]
           },
           {
             company: "LuminUltra",
@@ -229,6 +258,12 @@ var app = new Vue({
               {name: "iOS", desc: ""}
             ],
             reflection: "",
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-LU1.pdf"
+              }
+            ]
           }
         ]
     },
