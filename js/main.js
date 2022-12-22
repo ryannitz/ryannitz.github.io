@@ -1,3 +1,5 @@
+
+
 var app = new Vue({
     el: "#app",
 
@@ -22,6 +24,213 @@ var app = new Vue({
         repos: [],
 
         siteTree: [],
+
+        itJobs : [
+          {
+            company : "Cvent",
+            title : "Software Development Engineer in Test Contract",
+            duration: "",
+            summary: "My most recent work with Cvent was a contract to update a UI testing framework to be compatible with a newly implemented UI framework that was being adopted across the frontend stack. "
+                      + "I worked alongside one other contractor who was also a previous intern, and the project lead who was a lead SDET. "
+                      + "The goal was to take the team's folder in a large cucumber repo and update its steps, logic, selector dependencies, and environments so that the tests suites could be used again.",
+            takeaways : [
+              "Very profound understanding of enterprise level automation frameworks using in-house dependencies for pulling up-to-date environments/properties/components/etc.",
+              "Extensive use of git. At the end of the project, the team branch and master branch couldn't be merged due to unrelated conflicting changes. This was an issue because the teams expected the entire branch to easily be accepted into master, but it was very very far from acceptance. The last few days I conjured up a bash script to pull all of our commits into a separate branch which could be accepted into master. I made sure this branch containing only our work would not create a diff with our dev branch, ensuring that if the dev branch would ever merge into master there would be no conflicts.",
+              "How to work independently and/or with one other person on a shared project.",
+              "How to balance work hours and priority when working across different timezones."
+            ],
+            stack : [
+              {name: "Cucumber", desc: "Java/Groovy/GEB/Selenium"},
+              {name: "DataDog", desc: ""},
+              {name: "Git/BitBucket", desc: " See point 2 in Takeaways"},
+              {name: "JIRA", desc: ""},
+              {name: "JSON", desc: ""},
+              {name: "Jenkins", desc: " Running our private branches for validation. Running nightlies linked to the team slack with our dev branch to share visibility and progress with our stakeholders. "},
+              {name: "MacOS", desc: " My work environment"},
+              {name: "RDBMS", desc: " Validating test environments/data/flags"},
+              {name: "Agile", desc: ""},
+              {name: "Slack", desc: ""},
+              {name: "Splunk", desc: ""},
+              {name: "Trello", desc: ""},
+              {name: "IntelliJ", desc: ""},
+              {name: "VSCode", desc: ""},
+              {name: "AWS nodes", desc: ""}
+            ],
+            reflection: "This contract felt almost like an extension of my internship, only this time the entire duration was concentrated on one project rather than multiple concurrent projects/tasks. "
+                         + "Admittedly, I enjoyed working in an isolated team on my own hours. Working independently on a project using tools/languages/frameworks that I'm familiar with is very zen and rewarding. "
+                         + "Being able to sit down and pump out work and results is satisfying and felt like I had purpose and impact while working. "
+                         + "The team leads kept re-iterating how awesome it was to have the test suites up and running so that they could actively test and monitor their area of responsibility. "
+                         + "While working to fix the test suites, we actually discovered and even fixed a few bugs, proving the importance of having automated tests. This drove home the feeling of doing a good and meaningful job. "
+                         + "Overall I loved working at Cvent. They have an amazing culture and work atmosphere. The people I worked with were some of the coolest people I have been able to meet."
+          },
+          {
+            company: "Cvent",
+            title : "Software Development Engineer in Test Intern",
+            duration: "",
+            summary: "",
+            takeaways : [
+
+            ],
+            stack : [
+              {name: "Cucumber", desc: " Java/Groovy/GEB/Selenium"},
+              {name: "DataDog", desc: ""},
+              {name: "Git/BitBucket", desc: ""},
+              {name: "Gradle", desc: ""},
+              {name: "JIRA", desc: ""},
+              {name: "JSON", desc: ""},
+              {name: "JUnit", desc: ""},
+              {name: "Jasmine", desc: ""},
+              {name: "JavaScript", desc: ""},
+              {name: "Jenkins", desc: ""},
+              {name: "MacOS", desc: " My work environment"},
+              {name: "Maven", desc: ""},
+              {name: "Mockito", desc: ""},
+              {name: "Postman", desc: ""},
+              {name: "RDBMS", desc: ""},
+              {name: "SCRUM/Agile", desc: ""},
+              {name: "Slack", desc: ""},
+              {name: "Splunk", desc: ""},
+              {name: "Trello", desc: ""},
+              {name: "TypeScript", desc: ""},
+              {name: "npm", desc: ""},
+              {name: "wdio", desc: ""},
+              {name: "yarn", desc: ""},
+              {name: "IntelliJ", desc: ""},
+              {name: "VSCode", desc: ""},
+              {name: "AWS nodes", desc: ""}
+            ],
+            reflection: "",
+          },
+          {
+            company: "LuminUltra",
+            title : "Software Developer Contract",
+            duration: "",
+            summary: "",
+            takeaways : [
+
+            ],
+            stack : [
+              {name: "Android", desc: ""},
+              {name: "Eclipse EE", desc: ""},
+              {name: "Hibernate", desc: ""},
+              {name: "Highcharts.js", desc: ""},
+              {name: "JSON", desc: ""},
+              {name: "JUnit", desc: ""},
+              {name: "JWT", desc: ""},
+              {name: "Java/Java EE", desc: ""},
+              {name: "Jira", desc: ""},
+              {name: "Linux", desc: ", Server environments"},
+              {name: "MagicDraw", desc: ""},
+              {name: "Maven", desc: ""},
+              {name: "Microsoft SQL Server/Workbench", desc: ""},
+              {name: "Mockito", desc: ""},
+              {name: "Postman", desc: ""},
+              {name: "RDBMS", desc: ""},
+              {name: "REST Api/Architecture", desc: ""},
+              {name: "SVN/Tortoise SVN", desc: ""},
+              {name: "Scrum/Agile", desc: ""},
+              {name: "Sharepoint", desc: ""},
+              {name: "Spring/SpringBoot", desc: ""},
+              {name: "Tomcat", desc: ""},
+              {name: "Windows", desc: ", My work environment"},
+              {name: "iOS", desc: ""}
+            ],
+            reflection: "",
+          },
+          {
+            company: "IBM",
+            title : "Software Developer / Quality Assurance Engineer Intern",
+            duration: "",
+            summary: "",
+            takeaways : [
+
+            ],
+            stack : [
+              {name: "Docker", desc:""},
+              {name: "Git/GitLab", desc:""},
+              {name: "Gradle", desc:""},
+              {name: "Groovy", desc:""},
+              {name: "IntelliJ", desc:""},
+              {name: "JSON", desc:""},
+              {name: "JUnit", desc:""},
+              {name: "JavaScript", desc:""},
+              {name: "Java", desc:""},
+              {name: "Jenkins", desc:""},
+              {name: "Jira", desc:""},
+              {name: "Linux", desc:" Product shipped with linux distro"},
+              {name: "Lua", desc:""},
+              {name: "MacOS", desc:" My work environment"},
+              {name: "Maven", desc:""},
+              {name: "Rust", desc:""},
+              {name: "Scrum/Agile", desc:""},
+              {name: "Spock", desc:""},
+              {name: "VSCode", desc:""},
+              {name: "VSphere", desc:""},
+              {name: "bash", desc:""},
+              {name: "python", desc:""}
+            ],
+            reflection: "",
+          },
+          {
+            company: "LuminUltra",
+            title : "Software Developer Intern",
+            duration: "",
+            summary: "",
+            takeaways : [
+
+            ],
+            stack : [
+              {name: "Android", desc: ""},
+              {name: "Eclipse EE", desc: ""},
+              {name: "Hibernate", desc: ""},
+              {name: "Highcharts.js", desc: ""},
+              {name: "JSON", desc: ""},
+              {name: "JUnit", desc: ""},
+              {name: "JWT", desc: ""},
+              {name: "Java/Java EE", desc: ""},
+              {name: "Jira", desc: ""},
+              {name: "Linux", desc: " Server environments"},
+              {name: "MagicDraw", desc: ""},
+              {name: "Maven", desc: ""},
+              {name: "Microsoft SQL Server/Workbench", desc: ""},
+              {name: "Mockito", desc: ""},
+              {name: "Postman", desc: ""},
+              {name: "RDBMS", desc: ""},
+              {name: "REST Api/Architecture", desc: ""},
+              {name: "SVN/Tortoise SVN", desc: ""},
+              {name: "Scrum/Agile", desc: ""},
+              {name: "Sharepoint", desc: ""},
+              {name: "Spring/SpringBoot", desc: ""},
+              {name: "Tomcat", desc: ""},
+              {name: "Windows", desc: " My work environment"},
+              {name: "iOS", desc: ""}
+            ],
+            reflection: "",
+          },
+          {
+            company: "LuminUltra",
+            title : "Quality Assurance Intern",
+            duration: "",
+            summary: "",
+            takeaways : [
+
+            ],
+            stack : [
+              {name: "Android", desc: ""},
+              {name: "Appium", desc: ""},
+              {name: "Cucumber", desc: " Java/Groovy/GEB/Selenium"},
+              {name: "IntelliJ", desc: ""},
+              {name: "Jira", desc: ""},
+              {name: "Linux", desc: ""},
+              {name: "MacOS", desc: ""},
+              {name: "Microsoft SQL Server/Workbench", desc: ""},
+              {name: "Scrum/Agile", desc: ""},
+              {name: "Windows", desc: ""},
+              {name: "iOS", desc: ""}
+            ],
+            reflection: "",
+          }
+        ]
     },
 
   //------- methods --------
