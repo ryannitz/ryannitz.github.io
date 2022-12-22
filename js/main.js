@@ -60,7 +60,7 @@ var app = new Vue({
                          + "Admittedly, I enjoyed working in an isolated team on my own hours. Working independently on a project using tools/languages/frameworks that I'm familiar with is very zen and rewarding. "
                          + "Being able to sit down and pump out work and results is satisfying and felt like I had purpose and impact while working. "
                          + "The team leads kept re-iterating how awesome it was to have the test suites up and running so that they could actively test and monitor their area of responsibility. "
-                         + "While working to fix the test suites, we actually discovered and even fixed a few bugs, proving the importance of having automated tests. This drove home the feeling of doing a good and meaningful job. "
+                         + "While working to fix the test suites, we actually discovered and even fixed a few bugs, proving the importance of having automated tests. This drove home the feeling of doing good and meaningful work. "
                          + "Overall I loved working at Cvent. They have an amazing culture and work atmosphere. The people I worked with were some of the coolest people I have been able to meet."
           },
           {

@@ -243,8 +243,15 @@
                         <div id="section" class="mb-5">
                             <h2>Work experiences and overall reflections</h2>
                             <hr>
+                            <h4>Navigate to the following:</h4>
                             <ul>
-                                <li v-for="job in itJobs" class="mt-5">
+                                <li v-for="(job, index) in itJobs">
+                                    <a :href="'#' + job.company + index">{{job.company}} - {{job.title}}</a>
+                                </li>
+                                <li><a href="#nonIT">Non-IT related jobs</a></li>
+                            </ul>
+                            <ul>
+                                <li v-for="(job, index) in itJobs" class="mt-5" :id="job.company + index">
                                     <h4>{{job.company}}</h4>
                                     <div class="border-start border-white ps-5">
                                         <div class="mt-3">
@@ -266,10 +273,10 @@
                                             <li v-for="item in job.stack">[{{item.name}}] {{item.desc}}</li>
                                         </ul>
                                         <h5 class="mt-3"><u>Reflection:</u></h5>
-                                        <p>{{job.Reflection}}</p>
+                                        <p>{{job.reflection}}</p>
                                     </div>
                                 </li>
-                                <li class="mt-5">
+                                <li class="mt-5" id="nonIT">
                                     <h4>PSP</h4>
                                     <div class="border-start border-white ps-5">
                                         <p>
@@ -293,6 +300,7 @@
                         <div>
                             <span>Not done:</span>
                             <ul>
+                                <li>Add job reviews to my professional experience page</li>
                                 <li>Allow user to disable text scramble</li>
                                 <li>Fix the focus issue when preview pane is large enough to create scroll on main terminal. When focus changes the mouse moves making focus change elements :/. Will be fixed when toggle between keyboard and mouse nav is enabled</li>
                                 <li>
@@ -310,6 +318,7 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Add nav links to the top of professional experience</li>
                                 <li>Make content preview pane resizable</li>
                                 <li>Add complete keyboard navigation. (Arrows, enter)</li>
                                 <li>Add text animation on focus</li>
