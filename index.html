@@ -74,10 +74,11 @@
 
                 <div id="contentScreenTitleBar" class="topbar clearfix fixed-position">
                     <div class="float-start">
-                        <h3 class="p-2 m-0"><i class="fa-solid fa-magnifying-glass ps-2"></i> Content Preview/Summary</h3>
+                        <h3 class="p-2 m-0 no-select"><i class="fa-solid fa-magnifying-glass ps-2"></i> Content Preview/Summary</h3>
                     </div>
-                    <div class="float-end d-none">
-                        <a><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
+                    <div class="float-end">
+                        <i class="fa-solid fa-up-down fa-2x p-2 px-3"></i>
+                        <a><i id="options" class="d-none fa-solid fa-gears fa-2x p-2 px-3"></i></a>
                     </div>
                 </div>
 
@@ -309,7 +310,6 @@
                         <div>
                             <span>Not done:</span>
                             <ul>
-                                <li>Add symbol on content preview to show that it can be resized</li>
                                 <li>Add scroll-to-top button on content preview screen (When overflow creates scroll)</li>
                                 <li>Fix the focus issue when preview pane is large enough to create scroll on main terminal. When focus changes the mouse moves making focus change elements :/. Will be fixed when toggle between keyboard and mouse nav is enabled</li>
                                 <li>
@@ -327,6 +327,7 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Add symbol on content preview to show that it can be resized</li>
                                 <li>Allow user to disable text scramble</li>
                                 <li>Add job reviews to my professional experience page</li>
                                 <li>Add nav links to the top of professional experience</li>
@@ -395,8 +396,8 @@
                                 <ul id="settingsList" class="border border-bottom-0 border-dark">
                                     <li id="scrambleToggle" class="border-bottom border-dark p-2">
                                         <span class="text-body no-select">Text Animation</span>
-                                        <i class="settings-icon float-end text-body fa-regular fa-square-check pe-1"></i>
-                                        <i class="settings-icon float-end text-body fa-regular fa-square pe-1"></i>
+                                        <i class="settings-icon float-end text-body fa-regular fa-2x fa-square-check"></i>
+                                        <i class="settings-icon float-end text-body fa-regular fa-2x fa-square"></i>
                                     </li>
                                 </ul>
                             </div>

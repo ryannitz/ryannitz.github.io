@@ -472,6 +472,7 @@ $(document).ready(function(){
   var unscramble_on = true;
   $("#scrambleToggle").click(function(){
     $(this).find("i").toggle();
+    $(this).toggleClass("setting-disabled");
     unscramble_on = !unscramble_on;
   })
 

@@ -92,11 +92,15 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 
 #settingsList > li:hover {
     cursor: pointer;
-    background-color: rgba(1,1,1,.10);
+    background-color: rgba(1,1,1,.15);
 }
 
 .settings-icon {
-    line-height: 1.5!important;
+    line-height: .75!important;
+}
+
+.setting-disabled { 
+    background-color: rgba(1,1,1,.15);
 }
 
 
