@@ -29,7 +29,7 @@ var app = new Vue({
           {
             company : "Cvent",
             title : "Software Development Engineer in Test Contract",
-            duration: "",
+            duration: "Feb. 2022 - Jul. 2022 (6 month)",
             summary: "My most recent work with Cvent was a contract to update a UI testing framework to be compatible with a newly implemented UI framework that was being adopted across the frontend stack. "
                       + "I worked alongside one other contractor who was also a previous intern, and the project lead who was a lead SDET. "
                       + "The goal was to take the team's folder in a large cucumber repo and update its steps, logic, selector dependencies, and environments so that the tests suites could be used again.",
@@ -69,7 +69,7 @@ var app = new Vue({
           {
             company: "Cvent",
             title : "Software Development Engineer in Test Intern",
-            duration: "",
+            duration: "May 2021 - Dec. 2021 (8 month)",
             summary: "",
             takeaways : [
 
@@ -117,7 +117,7 @@ var app = new Vue({
           {
             company: "LuminUltra",
             title : "Software Developer Contract",
-            duration: "",
+            duration: "Feb 2021 - Mar. 2021 (3 month)",
             summary: "",
             takeaways : [
 
@@ -156,7 +156,7 @@ var app = new Vue({
           {
             company: "IBM",
             title : "Software Developer / Quality Assurance Engineer Intern",
-            duration: "",
+            duration: "Apr. 2020 - Aug. 2020 (4 month)",
             summary: "",
             takeaways : [
 
@@ -197,7 +197,7 @@ var app = new Vue({
           {
             company: "LuminUltra",
             title : "Software Developer Intern",
-            duration: "",
+            duration: "Sep. 2019 - Dec. 2019 (4 month)",
             summary: "",
             takeaways : [
 
@@ -238,8 +238,8 @@ var app = new Vue({
           },
           {
             company: "LuminUltra",
-            title : "Quality Assurance Intern",
-            duration: "",
+            title : "Quality Assurance Engineer Intern",
+            duration: "Sep. 2018 - Dec. 2018 (4 month)",
             summary: "",
             takeaways : [
 
@@ -263,6 +263,100 @@ var app = new Vue({
                 name: "Employer Review 1",
                 url: "documents/main/ryannitz-final-evaluation-LU1.pdf"
               }
+            ]
+          }
+        ],
+
+        resumeJobs : [
+          {
+            title: "Software Development Engineer in Test (Contract)",
+            company: "Cvent",
+            location: "Fredericton, NB",
+            duration: "February 2022 to July 2022",
+            highlights: [
+              "Project contract to update a Cucumber testing framework to be compatible with a new UI framework that was being adopted.",
+              "Reported directly to the Lead SDET as one of two contractors working on the refactor.",
+              "Developed great 1-1-1 communication skills while working in parallel on a monolithic project. Task assignments and coordination were key while making large scale changes across multiple linked repositories.",
+              "Gained a much deeper understanding of enterprise custom built automation frameworks.",
+              "Monitored nightly builds to gauge progress and stability.",
+              "Worked with multiple teams, leads, architects, and deployments to validate tests, and acceptance criteria.",
+              "Guided and assisted my colleague when blocked.",
+              "Participated in regular meetings with stakeholders to align ongoing goals and expectations.",
+              "Saw the project to completion before the scheduled deadline and had additional time to validate and ensure the project was stable to merge into production."
+            ]
+          },
+          {
+            title: "Software Development Engineer in Test Intern",
+            company: "Cvent",
+            location: "Fredericton, NB",
+            duration: "May 2021 to December 2021",
+            highlights: [
+              "Worked on internet scale applications, where performance, reliability and scalability, were critical design goals.",
+              "Tested and supported mobile applications on a wide range of platforms including iOS, Android, and web.",
+              "Was a member of the main SDET team. A team that was comprised entirely of SDETs that would onboard company-wide initiatives, support other teams when needed, and took on SDET projects that were not team specific.",
+              "Excelled rapidly and was trusted to ramp up new frameworks and convert old frameworks to implement technologies congruent with industry standards.",
+              "Lead, taught, and assisted a small group of peers to increase code coverage on a backend repository using Mockito unit testing.",
+              "Took lead on an initiatives that saw our supported teams adopt a nightly error dashboards which implemented log queries, error scrubbing, and one-on-one meetings with team leads.",
+              "Developed, modified, and reviewed test automation/backend code written with multiple languages, frameworks, and tools, increasing my effectiveness in the QE and development space."
+            ]
+          },
+          {
+            title: "Software Developer (Contract)",
+            company: "LuminUltra Technologies Ltd",
+            location: "Fredericton, NB",
+            duration: "February 2021 to March 2021",
+            highlights: [
+              "Two month contract as a Java backend developer.",
+              "Tasked with clearing out the bug backlog which was encroaching critical levels.",
+              "Used my previous framework and systems knowledge at the company to quickly and effectively eliminate over 19 bugs for the development team. This allowed the main development team to continue implementing features and achieve intended goals within their deadlines.",
+              "Increased my experience working alone as a separate, individual entity. Maintaining my own tasks, timelines, builds, deployments, and QA requests."
+            ]
+          },
+          {
+            title: "Software Developer / Quality Assurance Engineer Intern",
+            company: "IBM Canada",
+            location: "Fredericton, NB",
+            duration: "April 2020 to August 2020",
+            highlights: [
+              "Executed test cases and recorded the test results using test case management tools.",
+              "Reported and verified defects using defect tracking tools.",
+              "Wrote and updated test cases for specific areas, based on functional specifications. Including both manual and automated test cases.",
+              "Reviewed customer documentation and requests.",
+              "Participated in reviews of design and test documents.",
+              "Set up, configured, and maintained test lab configurations to support various test scenarios and environments.",
+              "Gained my first professional experience using individually deployed test environments and Jenkins builds at an enterprise level (CI/CD)."
+            ]
+          },
+          {
+            title: "Software Developer Intern",
+            company: "LuminUltra Technologies Ltd",
+            location: "Fredericton, NB",
+            duration: "September 2019 to December 2019",
+            highlights: [
+              "Wrote effective Unit Tests for new and existing logic on backend systems.",
+              "Created backend services and integrated changes effectively with existing code.",
+              "Contributed to the development, maintenance, and deployment of Software applications.",
+              "Wrote efficient code following best practices and code reviews.",
+              "Troubleshot and debugged applications running on the entire development stack.",
+              "Participated in SCRUM to provide updates to all the stakeholders and communicate with teams.",
+              "Aided in architect design for new backend implementations."
+            ]
+          },
+          {
+            title: "Quality Assurance Engineer Intern",
+            company: "LuminUltra Technologies Ltd",
+            location: "Fredericton, NB",
+            duration: "September 2019 to December 2019",
+            highlights: [
+              "Wrote and executed functional/automated testing on mobile, web, and web data services products.",
+              "Executed and evaluated manual or automated test cases and reported test results.",
+              "Isolated, replicated, and reported defects and verified defect fixes.",
+              "Developed, documented, and maintained automated test scripts and other artifacts like test data and functional test cases.",
+              "Reviewed functional and design specifications to ensure full understanding of individual deliverables.",
+              "Identified test requirements from specifications, mapped test case requirements and managed test coverage plan.",
+              "Identified any potential quality issues per defined processes and escalated potential quality issues immediately to management.",
+              "Ensured that validated deliverables met functional and design specifications and requirements.",
+              "Trained and helped onboarding of new team members regarding related projects and software workflows, freeing the time and resources of the experienced leads."
             ]
           }
         ]
