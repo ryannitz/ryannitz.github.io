@@ -21,6 +21,10 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     
 }
 
+.no-select {
+    user-select: none;
+}
+
 .panel {
     height: 50%;
     overflow-y: scroll;
@@ -32,9 +36,11 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     top: 0;
 }
 #options:hover{
+    cursor: pointer;
     background-color: rgba(30, 30, 30, 1)
 }
 #close:hover{
+    cursor: pointer;
     background-color: rgb(230, 46, 0);
 }
 
@@ -74,12 +80,23 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     display: inline-block!important;
 }
 
-
-
-
 .preview {
     display: none;
     font-size: large;
+}
+
+#settingsList {
+    padding: 0;
+    list-style-type: none;
+}
+
+#settingsList > li:hover {
+    cursor: pointer;
+    background-color: rgba(1,1,1,.10);
+}
+
+.settings-icon {
+    line-height: 1.5!important;
 }
 
 

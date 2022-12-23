@@ -377,6 +377,7 @@ $(document).ready(function(){
       }, millis)
   }
 
+  $(".settings-icon.fa-square").toggle();
 
   //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
   var resizing = false;
@@ -468,6 +469,12 @@ $(document).ready(function(){
     updateTerminalPath();
   });
 
+  var unscramble_on = true;
+  $("#scrambleToggle").click(function(){
+    $(this).find("i").toggle();
+    unscramble_on = !unscramble_on;
+  })
+
 
 
   //This is REALLY bad code because I'm using half vue, half vanilla. Will need to transition everything to vue.
@@ -488,7 +495,9 @@ $(document).ready(function(){
     }
   })
   .on("mouseenter", ".item > span", function() {
-    unscramble(750, 25, this, this)
+    if(unscramble_on) {
+      unscramble(750, 25, this, this)
+    }
   })    
   .on('keydown', function(e) { 
     var keyCode = e.keyCode || e.which; 

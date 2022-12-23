@@ -34,7 +34,7 @@
                         <h3 class="p-2 m-0"><i class="fa-sharp fa-solid fa-terminal ps-2"></i> Main Terminal (active WIP)</h3>
                     </div>
                     <div class="float-end">
-                        <a class="d-none"><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3"></i></a>
+                        <a><i id="options" class="fa-solid fa-gears fa-2x p-2 px-3" data-bs-toggle="modal" data-bs-target="#optionsModal"></i></a>
                         <a><i id="close" class="fa-solid fa-xmark fa-2x p-2 px-4" data-bs-toggle="modal" data-bs-target="#closeModal"></i></a>
                     </div>
                 </div>
@@ -87,7 +87,7 @@
                     <div class="preview" id="defaultPreview">
                         nothing to preview
                     </div>
-                    <div class="preview d-block" id="link">
+                    <div class="preview" id="link">
                         <p>Please double-click links :) (Or press enter/return on a focused link)</p>
                     </div>
                     <div class="preview d-block" id="instructions">
@@ -105,7 +105,7 @@
                             <hr>
                         </div>
                         <div id="section" class="mb-5">
-                            <h2>Interests</h2>
+                            <h3>Interests</h3>
                             <hr>
                             <ul>
                                 <li class="mt-5">
@@ -241,7 +241,7 @@
                     </div>
                     <div class="preview" id="professional">
                         <div id="section" class="mb-5">
-                            <h2>Work experiences and overall reflections</h2>
+                            <h2>Work Experiences and Reflections</h2>
                             <hr>
                             <h4>Navigate to the following:</h4>
                             <ul>
@@ -311,7 +311,6 @@
                             <ul>
                                 <li>Add symbol on content preview to show that it can be resized</li>
                                 <li>Add scroll-to-top button on content preview screen (When overflow creates scroll)</li>
-                                <li>Allow user to disable text scramble</li>
                                 <li>Fix the focus issue when preview pane is large enough to create scroll on main terminal. When focus changes the mouse moves making focus change elements :/. Will be fixed when toggle between keyboard and mouse nav is enabled</li>
                                 <li>
                                     Make responsive. (Probably should've started with this.)
@@ -328,6 +327,7 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Allow user to disable text scramble</li>
                                 <li>Add job reviews to my professional experience page</li>
                                 <li>Add nav links to the top of professional experience</li>
                                 <li>Make content preview pane resizable</li>
@@ -376,6 +376,33 @@
                         <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                             <button type="button" class="btn btn-success" onclick="window.close()">Confirm</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade text-body" id="optionsModal" tabindex="-1" role="dialog" aria-hidden="true">
+                <div class="modal-dialog modal-dialog-centered" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header ">
+                            <h4 class="modal-title text-body">Settings</h4>
+                            <button type="button" class="close" data-bs-dismiss="modal" aria-label="Close">
+                                <span class="text-body" aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <div class="container">
+                                <ul id="settingsList" class="border border-bottom-0 border-dark">
+                                    <li id="scrambleToggle" class="border-bottom border-dark p-2">
+                                        <span class="text-body no-select">Text Animation</span>
+                                        <i class="settings-icon float-end text-body fa-regular fa-square-check pe-1"></i>
+                                        <i class="settings-icon float-end text-body fa-regular fa-square pe-1"></i>
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                         </div>
                     </div>
                 </div>
