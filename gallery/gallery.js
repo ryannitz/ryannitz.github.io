@@ -4,16 +4,6 @@ var app = new Vue({
     el: "#app",
 
   //------- data --------
-    // data: {
-
-    //     imageObj : {
-    //           src: ""gallery/media/images/aviation/art/20221225_155027.jpg",
-    //         name: "",
-    //         desc: "",
-    //         date: "", //can be pulled from filename
-    //         rotate: "",
-    //     }
-    //         },
 
     data : {
       selectedImage : null,
