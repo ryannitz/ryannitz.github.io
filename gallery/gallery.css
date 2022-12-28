@@ -1,0 +1,60 @@
+html, body {
+    margin: 0!important;
+    padding: 0!important;
+}
+
+#title {
+   padding: 4rem 2rem;
+}
+
+#menuIcon {
+    line-height: 75%;
+}
+
+#menuToggle:hover {
+    cursor: pointer;
+}
+
+.gallery-toggle:hover {
+    cursor: pointer;
+    color: red;
+}
+.gallery-toggle:hover > span {
+    background-color: red!important;
+}
+
+.gallery-set {
+    display: none;
+}
+
+.img-container {
+    width: 22vw;
+    height: 22vw;
+}
+
+.img-default {
+    display: block;
+    max-width: 100%;
+    max-height: 100%;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+    margin: auto;
+}
+
+.img-default:hover {
+    -webkit-box-shadow: 0 0 20px #fff;
+        box-shadow: 0 0 20px #fff;
+    cursor: pointer;
+}
+
+#selectedImage {
+    display: block;
+    max-width: 80vw;
+    max-height: 80vh;
+    margin: auto;
+}
+
+#art {
+    display: block;
+}
