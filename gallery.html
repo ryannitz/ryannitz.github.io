@@ -55,7 +55,7 @@
                     <div v-for="(value, index) in aviation" :id="index" class="gallery-set">
                         <h2 class="text-white text-capitalize text-center mb-4">Aviation / {{index}}</h2>
                         <div class="d-flex flex-wrap justify-content-around">
-                            <div class="img-container mb-3" v-for="image in aviation[index]" :style="image.rotate ? rotate(image.rotate) : ''" @click="previewImage(image)">
+                            <div class="img-container mb-3" v-for="(image, index2) in aviation[index]" :style="image.rotate ? rotate(image.rotate) : ''" @click="previewImage(image, index2)">
                                 <img class="img-default " :src="image.src" alt="">
                             </div>
                         </div>

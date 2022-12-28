@@ -17,6 +17,8 @@ var app = new Vue({
 
     data : {
       selectedImage : null,
+      prevImage : null,
+      nextImage : null,
       aviation: {
         art : [
             {
@@ -706,7 +708,10 @@ var app = new Vue({
 
   //------- methods --------
     methods: {
-      previewImage(image) {
+      previewImage(image, index) {
+        
+        this.prevImage = (index==0? index-1: 0);
+        this.nextImage = index+1;//validate this somehow
         this.selectedImage = image;
         $('#previewImageModal').modal('show')
       },
@@ -735,30 +740,6 @@ var app = new Vue({
 });
 
 
-$(document).ready(function(){
-  $("a.navlink").click(function(){
-    $("a.navlink").removeClass("active");
-    $(this).addClass("active");
-  });
-
-  $(".nav-link").click(function(){
-      $('#calculatorMenu').collapse('hide')
-  });
-
-  $('#calculatorMenu').on('hidden.bs.collapse', function () {
-      $("#layout-nav").addClass("shadow-sm")
-  }).on('show.bs.collapse', function(){
-      $("#layout-nav").removeClass("shadow-sm")
-  });
-
-  $('#calculatorMenu > div > button.close').click(function () {
-      $("#calculatorMenu").collapse('hide');
-  });
-
-  $(".calcMenuItem").click(function(){
-      $("#calculatorMenu").collapse('hide');
-  });
-
-});
+//Add carousel function when an image is clicked. That way the preview doesn't need to be opened and closed every time
 
 

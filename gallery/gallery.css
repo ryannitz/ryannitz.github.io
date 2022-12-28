@@ -50,8 +50,8 @@ html, body {
 
 #selectedImage {
     display: block;
-    max-width: 80vw;
-    max-height: 80vh;
+    max-width: 90vw;
+    max-height: 90vh;
     margin: auto;
 }
 
