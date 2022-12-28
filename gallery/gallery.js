@@ -700,7 +700,7 @@ var app = new Vue({
     methods: {
       previewImage(image, index) {
         
-        this.prevImage = (index==0? index-1: 0);
+        this.prevImage = (index==0? 0: index-1);
         this.nextImage = index+1;//validate this somehow
         this.selectedImage = image;
         $('#previewImageModal').modal('show')
