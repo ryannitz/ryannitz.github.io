@@ -10,32 +10,32 @@ var app = new Vue({
         art : [
             {
               src: "gallery/media/images/aviation/art/20221225_155027.jpg",
-              name: "",
-              desc: "",
+              name: "Two RCAF Snowbirds",
+              desc: "Two RCAF Snowbird planes flying with the western rockies in the background. This acrylic on canvas print is 2/300 and has been signed by both pilots pictured in the painting. Purchased as gift in B.C.",
               date: ""
             },
             {
               src: "gallery/media/images/aviation/art/20221227_200507.jpg",
-              name: "",
-              desc: "",
+              name: "Lockheed Electra L-188",
+              desc: "Black and white watercolor painting of a Pacific Western Lockheed Electra L-188 in flight. Purchased as gift in B.C.",
               date: ""
             },
             {
               src: "gallery/media/images/aviation/art/20221227_200547.jpg",
-              name: "",
-              desc: "",
+              name: "Lockheed Hercules 382",
+              desc: "Black and white watercolor painting of a Pacific Western Lockheed Hercules 382 being marshalled on the ground. Purchased as gift in B.C.",
               date: ""
             },
             {
               src: "gallery/media/images/aviation/art/20221227_200557.jpg",
-              name: "",
-              desc: "",
+              name: "Boeing 707",
+              desc: "Black and white watercolor painting of a Pacific Western Boeing 707 in flight. Purchased as gift in B.C.",
               date: ""
             },
             {
-              src: "gallery/media/images/aviation/artifacts/20221227_200714.jpg",
-              name: "",
-              desc: "",
+              src: "gallery/media/images/aviation/art/20221227_200714.jpg",
+              name: "Consolidated Vultee Canso - Banks",
+              desc: "Watercolor painting of a Canadian Pacific Consolidated Vultee Canso in white, red, and blue. Artist is 'BANKS'. The tail number is CF-CRV, this allows us to determine its lifespan and eventual fate: https://aviation-safety.net/database/record.php?id=19530511-1. Purchased as gift in B.C.",
               date: "",
             },
         ],
@@ -618,7 +618,7 @@ var app = new Vue({
       previousImage(imageObj) {
         this.selectedImageIndex--
         if(this.selectedImageIndex < 0) {
-          this.selectedImageIndex = 0;
+          this.selectedImageIndex = this.selectedGallery.length-1;
         }
         this.selectedImage = this.selectedGallery[this.selectedImageIndex];
       },
@@ -627,7 +627,7 @@ var app = new Vue({
         //get parent of the image
         this.selectedImageIndex++
         if(this.selectedImageIndex >= this.selectedGallery.length) {
-          this.selectedImageIndex = this.selectedGallery.length-1;
+          this.selectedImageIndex = 0;
         }
         this.selectedImage = this.selectedGallery[this.selectedImageIndex];
       },

@@ -42,18 +42,22 @@ html, body {
     margin: auto;
 }
 
-.img-default:hover {
+.picture-hover:hover {
     -webkit-box-shadow: 0 0 20px #fff;
         box-shadow: 0 0 20px #fff;
     cursor: pointer;
 }
 
 #previewImageContainer {
+    max-width: 60vw;
     width: 60vw;
+    max-height: 90vh;
     height: 100%;
+    background-color: black;
 }
 
 #previewControls {
+    width: 50%;
     margin: auto;
 }
 
@@ -69,8 +73,7 @@ html, body {
 }
 
 #previewImageDetails {
-    vertical-align: top;
-    margin: auto;
+    width: 100%;
 }
 
 #art {
