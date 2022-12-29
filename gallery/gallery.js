@@ -6,9 +6,6 @@ var app = new Vue({
   //------- data --------
 
     data : {
-      selectedImage : null,
-      prevImage : null,
-      nextImage : null,
       aviation: {
         art : [
             {
@@ -692,18 +689,42 @@ var app = new Vue({
               rotate: ""
             }
         ]
-      }
+      },
+      selectedGallery :  [],
+      selectedImage : {
+        src: "gallery/media/images/aviation/art/20221225_155027.jpg",
+        name: "",
+        desc: "",
+        date: "",
+        rotate: ""
+      },
+      selectedImageIndex : 0,
     },
   
 
   //------- methods --------
     methods: {
       previewImage(image, index) {
-        
-        this.prevImage = (index==0? 0: index-1);
-        this.nextImage = index+1;//validate this somehow
+        this.selectedImageIndex = index;
         this.selectedImage = image;
         $('#previewImageModal').modal('show')
+      },
+
+      previousImage(imageObj) {
+        this.selectedImageIndex--
+        if(this.selectedImageIndex < 0) {
+          this.selectedImageIndex = 0;
+        }
+        this.selectedImage = this.selectedGallery[this.selectedImageIndex];
+      },
+
+      nextImage(imageObj) {
+        //get parent of the image
+        this.selectedImageIndex++
+        if(this.selectedImageIndex >= this.selectedGallery.length) {
+          this.selectedImageIndex = this.selectedGallery.length-1;
+        }
+        this.selectedImage = this.selectedGallery[this.selectedImageIndex];
       },
 
       toggleGallery(gallerySet) {
@@ -715,13 +736,15 @@ var app = new Vue({
         return {
           'transform' : 'rotate('+deg+')',
         }
-      }
+      },
+
     },
 
     beforeMount(){
     },
 
     created() {
+      this.selectedGallery = this.aviation.art
     },
 
     computed: {
