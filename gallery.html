@@ -22,6 +22,7 @@
 
     <body class="bg-dark">  
         <div id="app">
+
             <div id="header">
                 <div id="title" class="text-center text-white" style="border-radius: 0%; margin-bottom: 0%;">
                     <h1 class="display-4">Gallery</h1>
@@ -33,29 +34,28 @@
                     <button type="button" class="close float-end m-3" data-bs-toggle="collapse" data-bs-target="#galleryMenu">&times;</button>
                     <div class="container p-3">
                         <div class="row">
-                            <div class="col">
-                                <h3>
-                                    Aviation
+                            <div v-for="(gallery, galleryName) in galleries" class="col">
+                                <h3 class="text-capitalize">
+                                    {{galleryName}}
                                 </h3>
                                 <ul class="list-group list-group-flush">
-                                    <li v-for="(value, index) in aviation" class="text-capitalize gallery-toggle list-group-item d-flex justify-content-between align-items-center ps-0 me-5" @click="toggleGallery(index); selectedGallery = value;">
-                                        {{index}}
-                                        <span class="badge bg-dark rounded-pill">{{value.length}}</span>
+                                    <li v-for="(catagory, catagoryName) in gallery" class="text-capitalize gallery-toggle list-group-item d-flex justify-content-between align-items-center ps-0 me-5" @click="toggleGallery(catagoryName); selectedGallery = catagory;">
+                                        {{catagoryName}}
+                                        <span class="badge bg-dark rounded-pill">{{catagory.length}}</span>
                                     </li>
                                 </ul>
                             </div>
-                            <div class="col"></div>
-                            <div class="col"></div>
                         </div>
                     </div>
                 </div>
             </div>
+
             <div id="galleries" class="mt-5">
-                <div id="aviation">
-                    <div v-for="(value, index) in aviation" :id="index" class="gallery-set">
-                        <h2 class="text-white text-capitalize text-center mb-4">Aviation / {{index}}</h2>
+                <div v-for="(gallery, galleryName) in galleries" :id="galleryName">
+                    <div v-for="(catagory, catagoryName) in gallery" :id="catagoryName" class="gallery-set">
+                        <h2 class="text-white text-capitalize text-center mb-4">{{galleryName}} / {{catagoryName}}</h2>
                         <div class="d-flex flex-wrap justify-content-around">
-                            <div class="img-container mb-3" v-for="(image, index2) in aviation[index]" @click="previewImage(image, index2)">
+                            <div class="img-container mb-3" v-for="(image, index) in catagory" @click="previewImage(image, index)">
                                 <img class="img-default picture-hover" :src="image.src" alt="">
                             </div>
                         </div>
@@ -74,11 +74,11 @@
                                 </div>
                             </div>
                             <div class="col-sm-4">
-                                <div class="d-inline-block" id="previewImageDetails">
-                                    <p><span class="fw-bolder">Name:</span> {{selectedImage.name}}</p>
-                                    <p><span class="fw-bolder">Raw source file:</span> <a :href="selectedImage.src" target="_blank">{{selectedImage.src}}</a></p>
-                                    <!-- <p><span class="fw-bolder">Date:</span> {{getDate(selectedImage)}}</p> -->
-                                    <p><span class="fw-bolder">Description:</span> {{selectedImage.desc}}</p>
+                                <div class="d-inline-block mt-4" id="previewImageDetails">
+                                    <p v-if="selectedImage.name"><span class="fw-bolder">Name:</span> {{selectedImage.name}}</p>
+                                    <p><span class="fw-bolder">Raw source file:</span> <a :href="selectedImage.src" class="text-break" target="_blank">{{selectedImage.src}}</a></p>
+                                    <p><span class="fw-bolder">Date of picture:</span> {{getImageDate(selectedImage)}}</p>
+                                    <p v-if="selectedImage.desc"><span class="fw-bolder">Description:</span> {{selectedImage.desc}}</p>
                                 </div>
                             </div>
                         </div>
@@ -91,10 +91,10 @@
                         </div>
                       <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
                     </div>
-              
                   </div>
                 </div>
-              </div>
+            </div>
+            
         </div>
         <script src="gallery/gallery.js"></script>
     </body>

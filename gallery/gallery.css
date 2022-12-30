@@ -43,6 +43,7 @@ html, body {
 }
 
 .picture-hover:hover {
+    transition: 200ms;
     -webkit-box-shadow: 0 0 20px #fff;
         box-shadow: 0 0 20px #fff;
     cursor: pointer;
