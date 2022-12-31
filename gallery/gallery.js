@@ -551,6 +551,25 @@ var app = new Vue({
                 desc: ""
               }
           ]
+        },
+        lego : {
+          nasa : [
+
+          ],
+          city : [
+
+          ],
+          martian : [
+
+          ],
+          spongebob : [
+
+          ]
+        },
+        military : {
+          miscellaneous : [
+
+          ]
         }
       },
       

@@ -23,6 +23,10 @@ html, body {
     background-color: red!important;
 }
 
+.catagory-list {
+    border-top: 2px solid black;
+}
+
 .gallery-set {
     display: none;
 }
