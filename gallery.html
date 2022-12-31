@@ -59,7 +59,7 @@
                     <div v-for="(catagory, catagoryName) in gallery" :id="catagoryName" class="gallery-set">
                         <h2 class="text-white text-capitalize text-center mb-4">{{galleryName}} / {{catagoryName}}</h2>
                         <div class="d-flex flex-wrap justify-content-around">
-                            <div class="img-container mb-3" v-for="(image, index) in catagory" @click="previewImage(image, index)">
+                            <div class="img-container mb-4" v-for="(image, index) in catagory" @click="previewImage(image, index)">
                                 <img class="img-default picture-hover" :src="image.src" alt="">
                             </div>
                         </div>

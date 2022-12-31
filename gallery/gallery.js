@@ -602,7 +602,6 @@ var app = new Vue({
       },
 
       nextImage(imageObj) {
-        //get parent of the image
         this.selectedImageIndex++
         if(this.selectedImageIndex >= this.selectedGallery.length) {
           this.selectedImageIndex = 0;
@@ -612,7 +611,6 @@ var app = new Vue({
 
       toggleGallery(gallerySet) {
         $(".gallery-set").hide();
-        console.log(gallerySet)
         $("#"+gallerySet).show();
       },
 
