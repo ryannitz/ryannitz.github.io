@@ -58,9 +58,9 @@
                             <option v-for="(value, key) in alertLocation" :value="value">{{value}}</option>
                         </select>
                     </div>
-                    <div class="form-floating mt-3 mb-3">
+                    <div class="input-group mt-3 mb-3">
+                        <span class="input-group-text">Alert Duration (ms)</span> 
                         <input type="number" class="form-control" id="alertDuration" placeholder="2000" name="alertDuration" value="2000">
-                        <label for="alertDuration">Alert Duration (ms)</label>
                     </div>
                     <div class="form-floating mt-3 mb-3">
                         <input type="text" class="form-control" id="alertText" placeholder="Text to be displayed in the alert" name="alertText" value="Text to be displayed in the alert">
