@@ -1,5 +1,3 @@
-
-
 var app = new Vue({
     el: "#app",
 
@@ -381,8 +379,7 @@ var app = new Vue({
               {
                 src: "gallery/media/images/aviation/civilian/20220811_083442.jpg",
                 name: "Air Canada A330-343",
-                desc: "",
-                date: "Tail# C-GEFA. A330 is one of my favorite planes."
+                desc: "Tail# C-GEFA. A330 is one of my favorite planes.",
               },
               {
                 src: "gallery/media/images/aviation/civilian/IMG_20210731_184345_213.jpg",
@@ -487,11 +484,10 @@ var app = new Vue({
                 desc: ""
               },
               {
-                  src: "gallery/media/images/aviation/ottawa/received_1607212872996735.jpeg",
-                  name: "",
-                  desc: "",
-                    rotate: ""
-                }
+                src: "gallery/media/images/aviation/ottawa/received_1607212872996735.jpeg",
+                name: "",
+                desc: "",
+              }
           ],
           trenton: [
             {
@@ -631,6 +627,8 @@ var app = new Vue({
           ]
         }
       },
+
+      galleries : {},
       
       selectedGallery :  [],
       selectedImage : {
@@ -646,6 +644,30 @@ var app = new Vue({
 
   //------- methods --------
     methods: {
+      // getImagesFromJson() {
+      //   $.getJSON('gallery/images.json', function(data) {
+      //     this.galleries = JSON.parse(data);
+      //   });
+      // },
+      loadImages() {
+        var relativeURL = window.location.href;
+        relativeURL = relativeURL.substring(0, relativeURL.lastIndexOf("/")+1);
+        var dataURL = relativeURL + "gallery/images.json";
+        console.log(dataURL);
+        axios
+        .get(dataURL)
+        .then(response => {
+            this.galleries = response.data;
+        })
+        .catch(e => {
+            //change this to be perma message banner
+            if(e.response){
+                console.log(e);
+                createAlert("danger", "Could not iamge data", 3000);
+            }
+        });
+      },
+
       previewImage(image, index) {
         this.selectedImageIndex = index;
         this.selectedImage = image;
@@ -695,10 +717,16 @@ var app = new Vue({
 
     },
 
-    beforeMount(){
+    beforeMount() {
+      this.loadImages();
+    },
+
+    mounted() {
+
     },
 
     created() {
+      // this.getImagesFromJson();
       this.selectedGallery = this.galleries.aviation.art
     },
 
@@ -717,6 +745,10 @@ $(document).ready(function(){
     }
   })
   $("#galleryMenu > button").click(function(){
+    $("#menuIcon").removeClass("fa-xmark")
+    $("#menuIcon").addClass("fa-bars")
+  })
+  $(".catagory-list > li").click(function(){
     $("#menuIcon").removeClass("fa-xmark")
     $("#menuIcon").addClass("fa-bars")
   })
