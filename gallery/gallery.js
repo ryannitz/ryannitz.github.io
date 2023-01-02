@@ -27,6 +27,9 @@ var app = new Vue({
         var relativeURL = window.location.href;
         relativeURL = relativeURL.substring(0, relativeURL.lastIndexOf("/")+1);
         var dataURL = relativeURL + "gallery/images.json";
+        if(dataURL.startsWith("file")) {//for localhost
+          dataURL = 'https://ryannitz.github.io/gallery/images.json'
+        }
         axios
         .get(dataURL)
         .then(response => {
@@ -107,6 +110,7 @@ var app = new Vue({
 
     }
 });
+
 $(document).ready(function(){
   $("#menuToggle").click(function(){
     if($(this).hasClass("collapsed")) {

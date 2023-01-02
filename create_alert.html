@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Create Alert</title>
+        <link rel="icon" href=""/>
+
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/f5b3d1b329.js" crossorigin="anonymous"></script>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+        <!-- Bootstrap CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx" crossorigin="anonymous">
+        <!-- Bootstrap JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa" crossorigin="anonymous"></script>
+        <!-- Latest compiled Vue.js dev build -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    </head>
+    <body>
+
+        <div id="app" class="container">
+            <div>
+                <h1 class="text-center p-5">JS Create Boostrap Alert utility</h1>
+                <hr>
+            </div>
+            <div class="section mt-5 pb-5">
+                <h3>Dynamic alert creation with custom configuration</h3>
+                <ul class="my-5">
+                    <li>
+                        <span class="fw-bold">type &lt;string&gt;: </span>
+                        <p>The type of alert to be displayed as defined by bootstrap design. <a target="_blank" href="https://www.w3schools.com/bootstrap5/bootstrap_colors.php">w3Schools BS color guide.</a></p>
+                    </li>
+                    <li>
+                        <span class="fw-bold">location &lt;string&gt;: </span>
+                        <p>The fixed location for the alert to be displayed. (top/bottom)</p>
+                    </li>
+                    <li>
+                        <span class="fw-bold">duration &lt;int&gt;: </span>
+                        <p class="m-0">Time interval (ms) for the alert to display before fading out.</p>
+                        <p>If the duration is 0 or less, the alert will persist until it is manually dismissed.</p>
+                    </li>
+                    <li>
+                        <span class="fw-bold">text &lt;string&gt;: </span>
+                        <p>The text to be displayed inside the alert box.</p>
+                    </li>
+                </ul>
+                <form class="border border-dark border-2 rounded p-5 my-5" onsubmit="event.preventDefault();">
+                    <div class="input-group mb-3 mt-3">
+                        <span class="input-group-text">Alert Type:</span>
+                        <select class="form-select text-capitalize" id="alertType" name="alertType">
+                            <option v-for="(value, key) in alertType" :value="value">{{value}}</option>
+                        </select>
+                    </div>
+                    <div class="input-group mb-3 mt-3">
+                        <span class="input-group-text">Alert Location:</span>
+                        <select class="form-select text-capitalize" id="alertLocation" name="alertLocation">
+                            <option v-for="(value, key) in alertLocation" :value="value">{{value}}</option>
+                        </select>
+                    </div>
+                    <div class="form-floating mt-3 mb-3">
+                        <input type="number" class="form-control" id="alertDuration" placeholder="2000" name="alertDuration" value="2000">
+                        <label for="alertDuration">Alert Duration (ms)</label>
+                    </div>
+                    <div class="form-floating mt-3 mb-3">
+                        <input type="text" class="form-control" id="alertText" placeholder="Text to be displayed in the alert" name="alertText" value="Text to be displayed in the alert">
+                        <label for="alertText">Text to be displayed in the alert</label>
+                    </div>
+                    <div class="text-center mb-3">
+                        <button id="createAlertSubmit" type="submit" class="btn btn-primary">Create Alert</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <script src="create_alert/create_alert.js"></script>
+        <script src="create_alert/create_alert_controller.js"></script>
+        <script>
+            $(document).ready(function(){
+                $("#createAlertSubmit").click(function() {
+                    var alertType = $("#alertType").val();
+                    var alertLocation = $("#alertLocation").val();
+                    var alertDuration = $("#alertDuration").val();
+                    var alertText = $("#alertText").val();
+                    console.log(alertType)
+                    console.log(alertLocation)
+                    console.log(alertDuration)
+                    console.log(alertText)
+                    createAlert(alertType, alertLocation, alertDuration, alertText);
+                })
+            });
+        </script>
+    </body>
+</html>
