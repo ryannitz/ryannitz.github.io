@@ -121,6 +121,65 @@ var app = new Vue({
                   "https://en.wikipedia.org/wiki/Douglas_DC-3",
                   "https://en.wikipedia.org/wiki/Ice_Pilots_NWT"
                 ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_150549.jpg",
+                name: "Royal Canadian Mint Snowbirds Coin - Cover",
+                desc: "Royal Canadian Mint Snowbirds Coin released for the 50th anniversary of the RCAF snowbirds demonstration team.",
+                related : [
+                  "https://www.mint.ca/en/shop/coins/2021/14-oz-pure-silver-coin-moments-to-hold-the-snowbirds",
+                  "https://en.wikipedia.org/wiki/Snowbirds"
+                ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_150559.jpg",
+                name: "Royal Canadian Mint Snowbirds Coin - Interior",
+                desc: "Royal Canadian Mint Snowbirds Coin released for the 50th anniversary of the RCAF snowbirds demonstration team.",
+                related : [
+                  "https://www.mint.ca/en/shop/coins/2021/14-oz-pure-silver-coin-moments-to-hold-the-snowbirds",
+                  "https://en.wikipedia.org/wiki/Snowbirds"
+                ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_150608.jpg",
+                name: "Royal Canadian Mint Snowbirds Coin - Coin",
+                desc: "Royal Canadian Mint Snowbirds Coin released for the 50th anniversary of the RCAF snowbirds demonstration team.",
+                related : [
+                  "https://www.mint.ca/en/shop/coins/2021/14-oz-pure-silver-coin-moments-to-hold-the-snowbirds",
+                  "https://en.wikipedia.org/wiki/Snowbirds"
+                ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_150701.jpg",
+                name: "Royal Canadian Mint Alexander Graham Bell Coin - Cover",
+                desc: "Royal Canadian Mint Alexander Graham Bell Coin released for the 175th anniversary of Alexander Graham Bell. Purchased for myself due to the focus on aviation.",
+                related : [
+                  "https://www.mint.ca/en/shop/coins/2022/2022-commemorative-collector-keepsake-card-175th-anniversary-of-the-birth-of-alexander-graham-bell",
+                  "https://en.wikipedia.org/wiki/Alexander_Graham_Bell#Aeronautics"
+                ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_150758.jpg",
+                name: "Royal Canadian Mint Alexander Graham Bell Coin - Coins",
+                desc: "Royal Canadian Mint Alexander Graham Bell Coin released for the 175th anniversary of Alexander Graham Bell. Purchased for myself due to the focus on aviation.",
+                related : [
+                  "https://www.mint.ca/en/shop/coins/2022/2022-commemorative-collector-keepsake-card-175th-anniversary-of-the-birth-of-alexander-graham-bell",
+                  "https://en.wikipedia.org/wiki/Alexander_Graham_Bell#Aeronautics"
+                ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_150938.jpg",
+                name: "Royal Canadian Mint Alexander Graham Bell Coin - Coin in color",
+                desc: "Royal Canadian Mint Alexander Graham Bell Coin released for the 175th anniversary of Alexander Graham Bell. Purchased for myself due to the focus on aviation.",
+                related : [
+                  "https://www.mint.ca/en/shop/coins/2022/2022-commemorative-collector-keepsake-card-175th-anniversary-of-the-birth-of-alexander-graham-bell",
+                  "https://en.wikipedia.org/wiki/Alexander_Graham_Bell#Aeronautics"
+                ]
+              },
+              {
+                src: "gallery/media/images/aviation/artifacts/20230102_151101.jpg",
+                name: "$0.25 coin from 1999",
+                desc: "$0.25 coin from 1999 depicting a G.A. tricycle plane with skis. Likely showcasing the frigid arctic conditions of northern Canada."
               }
           ],
           civilian: [
@@ -622,7 +681,6 @@ var app = new Vue({
           //20221225_155027.jpg
           //received_1607212872996735
           //IMG_20210731_184345_217
-          date = "Could not extract the date dynamically";
           var line = imageObj.src
           var filename = line.substring(line.lastIndexOf("/")+1, line.lastIndexOf("."));
           var dateStart = filename.search("([0-9]{8})(_+)");
