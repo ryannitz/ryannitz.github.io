@@ -15,14 +15,22 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
     text-decoration: none;
 }
 
+.no-select {
+    user-select: none;
+}
+
+.list-style-none {
+    list-style-type: none;
+}
+
 #app{
     position: relative;
     height: 100%;
     
 }
 
-.no-select {
-    user-select: none;
+.sup-link {
+    font-size: smaller;
 }
 
 .panel {
@@ -46,6 +54,10 @@ div, p, span, h1, h2, h3, h4, h5, h6, a, a:link, a:visited, a:focus, a:hover, a:
 
 #contentScreenTitleBar:hover {
     cursor: row-resize;
+}
+
+.skill-item {
+    width: 15%;
 }
 
 

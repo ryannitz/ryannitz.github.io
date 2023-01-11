@@ -283,6 +283,9 @@ var app = new Vue({
               "Guided and assisted my colleague when blocked.",
               "Participated in regular meetings with stakeholders to align ongoing goals and expectations.",
               "Saw the project to completion before the scheduled deadline and had additional time to validate and ensure the project was stable to merge into production."
+            ],
+            employer_review_files: [
+              
             ]
           },
           {
@@ -298,6 +301,16 @@ var app = new Vue({
               "Lead, taught, and assisted a small group of peers to increase code coverage on a backend repository using Mockito unit testing.",
               "Took lead on an initiatives that saw our supported teams adopt a nightly error dashboards which implemented log queries, error scrubbing, and one-on-one meetings with team leads.",
               "Developed, modified, and reviewed test automation/backend code written with multiple languages, frameworks, and tools, increasing my effectiveness in the QE and development space."
+            ],
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-cvent1.pdf"
+              },
+              {
+                name: "Employer Review 2",
+                url: "documents/main/ryannitz-final-evaluation-cvent2.pdf"
+              }
             ]
           },
           {
@@ -310,6 +323,9 @@ var app = new Vue({
               "Tasked with clearing out the bug backlog which was encroaching critical levels.",
               "Used my previous framework and systems knowledge at the company to quickly and effectively eliminate over 19 bugs for the development team. This allowed the main development team to continue implementing features and achieve intended goals within their deadlines.",
               "Increased my experience working alone as a separate, individual entity. Maintaining my own tasks, timelines, builds, deployments, and QA requests."
+            ],
+            employer_review_files: [
+
             ]
           },
           {
@@ -325,6 +341,12 @@ var app = new Vue({
               "Participated in reviews of design and test documents.",
               "Set up, configured, and maintained test lab configurations to support various test scenarios and environments.",
               "Gained my first professional experience using individually deployed test environments and Jenkins builds at an enterprise level (CI/CD)."
+            ],
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-ibm1.pdf"
+              }
             ]
           },
           {
@@ -340,6 +362,12 @@ var app = new Vue({
               "Troubleshot and debugged applications running on the entire development stack.",
               "Participated in SCRUM to provide updates to all the stakeholders and communicate with teams.",
               "Aided in architect design for new backend implementations."
+            ],
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-LU2.pdf"
+              }
             ]
           },
           {
@@ -357,9 +385,92 @@ var app = new Vue({
               "Identified any potential quality issues per defined processes and escalated potential quality issues immediately to management.",
               "Ensured that validated deliverables met functional and design specifications and requirements.",
               "Trained and helped onboarding of new team members regarding related projects and software workflows, freeing the time and resources of the experienced leads."
+            ],
+            employer_review_files: [
+              {
+                name: "Employer Review 1",
+                url: "documents/main/ryannitz-final-evaluation-LU1.pdf"
+              }
             ]
           }
-        ]
+        ],
+
+        resumeTechSkills : {
+          languages : [
+            "Java",
+            "C",
+            "C#",
+            "Python",
+            "HTML",
+            "CSS",
+            "JavaScript",
+            "SQL",
+            "JSON",
+            "XMLs",
+            "Bash",
+            "jQuery",
+            "JSX",
+            "MatLab",
+            "Racket",
+            "Groovy",
+            "TypeScript"
+          ],
+          frameworks : [
+            "Selenium",
+            "Cucumber",
+            "GEB",
+            "Hibernate",
+            "Spring",
+            "Mockito",
+            "Gradle",
+            "Maven",
+            "JWT",
+            "RESTful webservices",
+            "FitBit Studio",
+            "Spock",
+            "JUnit",
+            "pytest",
+            "WebdriverIO",
+            "Jasmine",
+            "jest",
+            "Bootstrap5",
+            "npm",
+            "yarn",
+          ],
+          tools : [
+            "Jira",
+            "Postman",
+            "Microsoft SQL Server Management",
+            "Oracle RDBMS",
+            "Appium",
+            "XCode",
+            "Unity",
+            "Android Studio",
+            "IntelliJ",
+            "Eclipse",
+            "SVN",
+            "Git",
+            "GitHub",
+            "GitLab",
+            "BitBucket",
+            "vSphere",
+            "Jenkins",
+            "DataDog",
+            "Splunk"
+          ],
+          platforms : [
+            "Windows",
+            "MacOS",
+            "Linux",
+            "Android",
+            "iOS",
+            "FitBit"
+          ]
+        },
+
+        resumeSoftSkills : {
+          
+        }
     },
 
   //------- methods --------
@@ -427,6 +538,10 @@ var app = new Vue({
           })
         },
 
+        alphanumericSortList(list) {
+          return list;
+        },
+
         toggleFocused(event) {
           document.querySelectorAll('.item').forEach(function(element, index) {
             element.classList.remove("focused");
@@ -472,6 +587,8 @@ $(document).ready(function(){
   }
 
   $(".settings-icon.fa-square").toggle();
+
+  $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
 
   //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
   var resizing = false;

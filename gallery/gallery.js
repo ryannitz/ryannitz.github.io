@@ -2,7 +2,6 @@ var app = new Vue({
     el: "#app",
 
   //------- data --------
-  //add royal canadian mint coins to artifacts
   //add plane texts from my collection of books.
 
     data : {

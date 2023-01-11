@@ -304,7 +304,89 @@
                         </div>
                     </div>
                     <div class="preview" id="resume">
-                        WIP. For now: <u><a href="https://my.indeed.com/p/ryann-st5yl46" target="_blank">Indeed resume (https://my.indeed.com/p/ryann-st5yl46)</a></u>
+                        <!-- WIP. For now: <u><a href="https://my.indeed.com/p/ryann-st5yl46" target="_blank">Indeed resume (https://my.indeed.com/p/ryann-st5yl46)</a></u> -->
+                        <div id="section" class="mb-5">
+                            <div class="mb-5 container">
+                                <h4>Navigate the resume:</h4>
+                                <ul>
+                                    <li>
+                                        <a href="#resumeExperience">Experience</a>
+                                        <ul>
+                                            <li v-for="(job, index) in resumeJobs">
+                                                <a :href="'#' + job.company + index">{{job.title}} - {{job.company}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                    <li>
+                                        <a href="#resumeTechSkills">Skills and Abilities</a>
+                                        <ul>
+                                            <li v-for="(skillList, skillCatagory) in resumeTechSkills">
+                                                <a class="text-capitalize" :href="'#' + skillCatagory">{{skillCatagory}}</a>
+                                            </li>
+                                        </ul>
+                                        <a href="#resumeSoftSkills">Skills and Abilities</a>
+                                        <ul>
+                                            <li v-for="(skillList, skillCatagory) in resumeSoftSkills">
+                                                <a class="text-capitalize" :href="'#' + skillCatagory">{{skillCatagory}}</a>
+                                            </li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </div>
+                            <div id="resumeContent" class="container border border-white p-5">
+                                <h2>Ryan Nitz</h2>
+                                <hr>
+                                <div id="resumeExperience">
+                                    <h3>Work Experience</h3>
+                                    <hr>
+                                    <ul class="list-style-none p-0">
+                                        <li v-for="(job, index) in resumeJobs" class="mb-5" :id="job.company + index">
+                                            <h5 class="m-0 fw-bold">{{job.title}}</h5>
+                                            <p class="m-0 fst-italic text-secondary">{{job.company}} - {{job.location}}<br/>{{job.duration}}</p>
+                                            <ul>
+                                                <li class="mt-2" v-for="highlight in job.highlights">{{highlight}}</li>
+                                            </ul>
+                                            <div v-if="job.employer_review_files.length > 0">
+                                                <p class="m-0 mt-3">Internship Employer Review</p>
+                                                <ul>
+                                                    <li v-for="file in job.employer_review_files">
+                                                        <a :href="file.url" target="_blank">{{file.name}}</a>
+                                                    </li>
+                                                </ul>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="resumeTechSkills">
+                                    <h3>Skills and Abilities</h3>
+                                    <hr>
+                                    <ul class="list-style-none">
+                                        <li v-for="(skillList, skillCatagory) in resumeSkills" class="mb-5">
+                                            <h4 :id="skillCatagory" class="text-capitalize"><u>{{skillCatagory}}</u></h4>
+                                            <div class="row">
+                                                <div class="col-6" v-for="(skill, index) in skillList">
+                                                    {{skill}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="resumeSoftSkills">
+                                    <h3>Skills and Abilities</h3>
+                                    <hr>
+                                    <ul class="list-style-none">
+                                        <li v-for="(skillList, skillCatagory) in resumeSoftSkills" class="mb-5">
+                                            <h4 :id="skillCatagory" class="text-capitalize"><u>{{skillCatagory}}</u></h4>
+                                            <div class="row">
+                                                <div class="col-6" v-for="(skill, index) in skillList">
+                                                    {{skill}}
+                                                </div>
+                                            </div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                     <div class="preview" id="todo">
                         <div>
