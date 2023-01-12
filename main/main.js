@@ -692,7 +692,9 @@ $(document).ready(function(){
   })
 
   function displayContext(contextId) {
-    
+    updatePreviewPath(contextId.replace("#", ""));
+    $(".preview").removeClass("d-block");
+    $(contextId).addClass("d-block");
   }
 
 
@@ -751,6 +753,10 @@ $(document).ready(function(){
     //return false;
   });
 
+  var url = window.location.href
+  urlContext = url.substring(url.lastIndexOf("#"), url.length);
+  displayContext(urlContext);
+  
   //ensure that any dynamic content does not overlap the titleBar
   $("#contentScreenTitleBar").css("z-index","999");
 });
