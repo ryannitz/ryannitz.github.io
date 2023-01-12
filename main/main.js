@@ -395,7 +395,7 @@ var app = new Vue({
           }
         ],
 
-        resumeTechSkills : {
+        resumeSkills : {
           languages : [
             "Java",
             "C",
@@ -468,9 +468,28 @@ var app = new Vue({
           ]
         },
 
-        resumeSoftSkills : {
-          
-        }
+        resumeTech : [
+          "Web debugging and analysis.",
+          "Manual and automated performance/stress testing.",
+          "Writing test cases for web and mobile applications.",
+          "Writing effective and efficient automation scripts.",
+          "Writing effective and efficient backend code with appropriate unit tests.",
+          "Manual and automated testing for web and mobile applications, including applications that interface with custom hardware/software.",
+          "Deploying builds to local and remote servers.",
+          "Manual testing for vulnerabilities and exploitations, both for discovery and fix assurance.",
+          "Front-end development interfacing standardized UI/UX elements with external data/databases/systems.",
+          "Data tracking via Excel and data piping/analysis tools.",
+          "Data mining and web scraping."
+        ],
+
+        resumeSoft : [
+          "Friendly and personable in both communication and work style.",
+          "Ability to manage independent and externally assigned tasks.",
+          "Ability to manage priorities on multiple levels and time frames.",
+          "Accountable, honest, and trustworthy with work tasks, data, company assets, and people.",
+          "Adaptable to different types of work with interchanging roles and responsibilities.",
+          "Coaching, training, and supporting of new or existing team members."
+        ]
     },
 
   //------- methods --------
@@ -538,8 +557,8 @@ var app = new Vue({
           })
         },
 
-        alphanumericSortList(list) {
-          return list;
+        sortList(list) {
+          return list.sort();
         },
 
         toggleFocused(event) {
@@ -570,21 +589,6 @@ var app = new Vue({
 
 
 $(document).ready(function(){
-
-  function createAlert(type, text, millis) {
-      var id = Math.floor((Math.random() * 1000) + 1);
-      var alerthtml = '<div id="alert-'+id+'" class="alert alert-'+type+' alert-dismissible text-center fixed-bottom w-75 mx-auto mb-5">' +
-                      '<button type="button" class="close" data-dismiss="alert">&times;</button>' +
-                      '<strong><i class="fas fa-info-circle"></i></strong> '+
-                      text+
-                  '</div>'
-      $("body").append(alerthtml);
-      setTimeout(function(){
-          $('#alert-'+id).fadeOut(500, function(){
-              $('#alert-'+id).remove();
-          });
-      }, millis)
-  }
 
   $(".settings-icon.fa-square").toggle();
 
@@ -687,6 +691,10 @@ $(document).ready(function(){
     unscramble_on = !unscramble_on;
   })
 
+  function displayContext(contextId) {
+    
+  }
+
 
 
   //This is REALLY bad code because I'm using half vue, half vanilla. Will need to transition everything to vue.
@@ -743,7 +751,8 @@ $(document).ready(function(){
     //return false;
   });
 
-
+  //ensure that any dynamic content does not overlap the titleBar
+  $("#contentScreenTitleBar").css("z-index","999");
 });
 
 

@@ -47,7 +47,7 @@
                     <a class="item link" preview="#link" href="https://github.com/ryannitz/ryannitz.github.io"> <span>github_repository</span> </a>
                     <a id="vueStaticWebpageTrigger" class="item navigable dir" page="#static_websites" @click="loadSiteTree"> <span>static_websites</span> </a>
                     <a class="item navigable dir" page="#socials_contacts"> <span>socials_contacts</span> </a>
-                    <a class="item writeup" preview="#resume"> <span>resume (WIP, please access resume in: socials_contacts/indeed)</span> </a>
+                    <a class="item writeup" preview="#resume" href="#resume"> <span>resume (WIP)</span> </a>
                     <a class="item writeup" preview="#todo"> <span>todo</span> </a>
                 </div>
     
@@ -318,19 +318,17 @@
                                         </ul>
                                     </li>
                                     <li>
-                                        <a href="#resumeTechSkills">Skills and Abilities</a>
+                                        <a href="#resumeSkills">Skills and Abilities</a>
                                         <ul>
-                                            <li v-for="(skillList, skillCatagory) in resumeTechSkills">
+                                            <li v-for="(skillList, skillCatagory) in resumeSkills">
                                                 <a class="text-capitalize" :href="'#' + skillCatagory">{{skillCatagory}}</a>
                                             </li>
-                                        </ul>
-                                        <a href="#resumeSoftSkills">Skills and Abilities</a>
-                                        <ul>
-                                            <li v-for="(skillList, skillCatagory) in resumeSoftSkills">
-                                                <a class="text-capitalize" :href="'#' + skillCatagory">{{skillCatagory}}</a>
-                                            </li>
+                                            <li><a class="text-capitalize" href="#resumeTech">Technical Skills</a></li>
+                                            <li><a class="text-capitalize" href="#resumeSoft">Soft Skills</a></li>
                                         </ul>
                                     </li>
+                                    <li><a class="text-capitalize" href="#resumeEducation">Education</a></li>
+                                    <li><a class="text-capitalize" href="#resumeCommunication">Communication</a></li>
                                 </ul>
                             </div>
                             <div id="resumeContent" class="container border border-white p-5">
@@ -357,32 +355,46 @@
                                         </li>
                                     </ul>
                                 </div>
-                                <div id="resumeTechSkills">
+                                <div id="resumeSkills" class="mb-5">
                                     <h3>Skills and Abilities</h3>
                                     <hr>
                                     <ul class="list-style-none">
                                         <li v-for="(skillList, skillCatagory) in resumeSkills" class="mb-5">
                                             <h4 :id="skillCatagory" class="text-capitalize"><u>{{skillCatagory}}</u></h4>
                                             <div class="row">
-                                                <div class="col-6" v-for="(skill, index) in skillList">
+                                                <div class="col-6" v-for="(skill, index) in skillList.sort()">
                                                     {{skill}}
                                                 </div>
                                             </div>
                                         </li>
                                     </ul>
-                                </div>
-                                <div id="resumeSoftSkills">
-                                    <h3>Skills and Abilities</h3>
-                                    <hr>
-                                    <ul class="list-style-none">
-                                        <li v-for="(skillList, skillCatagory) in resumeSoftSkills" class="mb-5">
-                                            <h4 :id="skillCatagory" class="text-capitalize"><u>{{skillCatagory}}</u></h4>
-                                            <div class="row">
-                                                <div class="col-6" v-for="(skill, index) in skillList">
-                                                    {{skill}}
-                                                </div>
-                                            </div>
+                                    <ul class="mb-5">
+                                        <h4 id="resumeTech" class="text-capitalize"><u>Technical Skills</u></h4>
+                                        <li v-for="(ability, index) in resumeTech" class="mt-2">
+                                            {{ability}}
                                         </li>
+                                    </ul>
+                                    <ul>
+                                        <h4 id="resumeSoft" class="text-capitalize"><u>Soft Skills</u></h4>
+                                        <li v-for="(ability, index) in resumeSoft" class="mt-2">
+                                            {{ability}}
+                                        </li>
+                                    </ul>
+                                </div>
+                                <div id="resumeEducation" class="mb-5">
+                                    <h3>Education</h3>
+                                    <hr>
+                                    <ul>
+                                        <li class="mt-2">2013-2017 - High School Diploma, <i>Oromocto High School</i>, Oromocto, New Brunswick.</li>
+                                        <li class="mt-2">2017-2022 - BCs Undergraduate Degree 3.4 GPA, <i>University of New Brunswick</i>.</li>
+                                    </ul>
+                                </div>
+                                <div id="resumeCommunication" class="mb-5">
+                                    <h3>Communication</h3>
+                                    <hr>
+                                    <ul>
+                                        <li class="mt-2">French immersion with a certification of intermediate+.</li>
+                                        <li class="mt-2">Proficient in written and conversational French.</li>
                                     </ul>
                                 </div>
                             </div>
@@ -457,7 +469,7 @@
                             <p class="text-body">Are you sure you would like to exit the website?</p>
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                             <button type="button" class="btn btn-success" onclick="window.close()">Confirm</button>
                         </div>
                     </div>
