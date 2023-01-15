@@ -47,7 +47,7 @@
                     <a class="item link" preview="#link" href="https://github.com/ryannitz/ryannitz.github.io"> <span>github_repository</span> </a>
                     <a id="vueStaticWebpageTrigger" class="item navigable dir" page="#static_websites" @click="loadSiteTree"> <span>static_websites</span> </a>
                     <a class="item navigable dir" page="#socials_contacts"> <span>socials_contacts</span> </a>
-                    <a class="item writeup" preview="#resume" href="#resume"> <span>resume (WIP)</span> </a>
+                    <a class="item writeup" preview="#resume"> <span>resume (WIP)</span> </a>
                     <a class="item writeup" preview="#todo"> <span>todo</span> </a>
                 </div>
     
@@ -58,7 +58,7 @@
                         <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                     <div class="page" id="static_websites">
-                        <a v-for="site in siteTree" @mouseenter="toggleFocused" class="item link" v-bind:href="site.path" v-bind:preview="'#'+site.path.replace('.html', '')"><i class="fa-solid fa-link"></i> <span>{{site.path}}</span> <i class="fa-solid fa-angle-left navarrow"></i></a>
+                        <a v-for="site in siteTree" @mouseenter="toggleFocused" class="item link" v-bind:href="site.path" v-bind:preview="'#'+site.path.replace('.html', '')"> <span>{{site.path}}</span></a>
                         <a class="item back"><i class="fa-solid fa-arrow-left"></i> <span>return</span> </a>
                     </div>
                     <div class="page" id="socials_contacts">

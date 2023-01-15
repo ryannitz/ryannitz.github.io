@@ -436,6 +436,7 @@ var app = new Vue({
             "Bootstrap5",
             "npm",
             "yarn",
+            "WebDriver"
           ],
           tools : [
             "Jira",
@@ -497,7 +498,7 @@ var app = new Vue({
 
         init() {
           //this.loadAPIBase();
-          //this.loadSiteTree();
+          this.loadSiteTree();
         },
 
         loadAPIBase() {
@@ -574,12 +575,12 @@ var app = new Vue({
     },
 
     created() {
-      window.addEventListener('keydown', (e) => {
-        var static_websites_focused = document.getElementById("vueStaticWebpageTrigger").classList.contains('focused');
-        if (e.key == 'Enter' && static_websites_focused) {
-          this.loadSiteTree();
-        }
-      });
+      // window.addEventListener('keydown', (e) => {
+      //   var static_websites_focused = document.getElementById("vueStaticWebpageTrigger").classList.contains('focused');
+      //   if (e.key == 'Enter' && static_websites_focused) {
+      //     this.loadSiteTree();
+      //   }
+      // });
     },
 
     computed: {
@@ -590,12 +591,17 @@ var app = new Vue({
 
 $(document).ready(function(){
 
+  const PATH_URL_PARAM = "path";
+  const CONTEXT_URL_PARAM = "context";
+  const CONTEXT_HEIGHT_URL_PARAM = "contextHeight";
+
   $(".settings-icon.fa-square").toggle();
 
   $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
 
   //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
   var resizing = false;
+  var contextHeight = 50.0;
   $("#contentScreenTitleBar").mousedown(function(e) {
     resizing = true;
   });
@@ -613,16 +619,16 @@ $(document).ready(function(){
         releasePosY = lowerBound;
       }
       var percentagePosY = (releasePosY / window.innerHeight) * 100;
-      var newTerminalHeight = percentagePosY;
       var newContextHeight = 100 - percentagePosY;
-
-      $("#mainTerminal").css("height", newTerminalHeight + "%");
-      $("#contextScreen").css("height", newContextHeight + "%");
+      setContextHeight(newContextHeight);
     }
   })
   $(document).mouseup(function(e) {
+    if (resizing) {
+      insertUrlParam(CONTEXT_HEIGHT_URL_PARAM, contextHeight);
+      $("body").css("cursor", "inherit");
+    }
     resizing = false;
-    $("body").css("cursor", "inherit");
   })
 
 
@@ -642,7 +648,6 @@ $(document).ready(function(){
   $(".item").hover(function(){
     $(".item").removeClass("focused");
     $(this).addClass("focused");
-    
   });
 
 
@@ -653,9 +658,82 @@ $(document).ready(function(){
     var toShow = $(this).attr("page");
     $(toShow).addClass("d-block");
     elementStack.push(toShow);
-
-    updateTerminalPath();
   });
+
+  function updateUrlPath(contextId) {
+    if(elementStack.length > 1) {
+      var searchPath = "";
+      elementStack.forEach(element => {
+        searchPath += element.replace("#", "") + "/";
+      })
+      insertUrlParam(PATH_URL_PARAM, searchPath)
+    }else {
+      removeUrlParameter(PATH_URL_PARAM);
+    }
+    if(contextId) {
+      insertUrlParam(CONTEXT_URL_PARAM, contextId)
+    }
+  }
+
+  function setContextHeight(newContextHeight) {
+      contextHeight = Number(newContextHeight).toFixed(2);
+      var newTerminalHeight = 100- newContextHeight;
+      $("#mainTerminal").css("height", newTerminalHeight + "%");
+      $("#contextScreen").css("height", newContextHeight + "%");
+  }
+
+  function evaluateState() {
+    //we are not on the root page
+    if(elementStack.length > 1) {
+      for (var i = 0; i < elementStack.length; i++) {
+        $(elementStack[i]).removeClass("d-block");
+      }
+      $(elementStack[elementStack.length-1]).addClass("d-block");
+      $("#back").addClass("d-block");
+    }
+    updateTerminalPath();
+  }
+
+  function decodeUrlPath() {
+    let searchParams = new URLSearchParams(window.location.search);
+    //handle terminal path and stack
+    var pathFromUrl = searchParams.get(PATH_URL_PARAM);
+    if(pathFromUrl) {
+      elementStack = pathFromUrl.split("/")
+      elementStack.pop()
+      elementStack = elementStack.map(element => ("#"+element));
+      evaluateState();
+    }
+    
+    //handle context height
+    var contextHeightFromUrl = searchParams.get(CONTEXT_HEIGHT_URL_PARAM) || contextHeight;
+    setContextHeight(contextHeightFromUrl)
+
+    //handle context view
+    var contextFromUrl = searchParams.get(CONTEXT_URL_PARAM);
+    if(contextFromUrl) {
+      displayContext(searchParams.get(CONTEXT_URL_PARAM))
+    }
+  }
+
+  //stolen from: https://stackoverflow.com/questions/10970078/modifying-a-query-string-without-reloading-the-page
+  function insertUrlParam(key, value) {
+    if (history.pushState) {
+        let searchParams = new URLSearchParams(window.location.search);
+        searchParams.set(key, value);
+        let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
+        window.history.pushState({path: newurl}, '', newurl);
+    }
+  }
+  // to remove the specific key
+  function removeUrlParameter(paramKey) {
+    const url = window.location.href
+    var r = new URL(url)
+    r.searchParams.delete(paramKey)
+    const newUrl = r.href
+    window.history.pushState({ path: newUrl }, '', newUrl)
+  }
+
 
   function updateTerminalPath() {
     var path = 'C:\\Users';
@@ -682,6 +760,7 @@ $(document).ready(function(){
     $(toHide).removeClass("d-block");
     $(elementStack[elementStack.length-1]).addClass("d-block");
     updateTerminalPath();
+    updateUrlPath()
   });
 
   var unscramble_on = true;
@@ -711,10 +790,10 @@ $(document).ready(function(){
   .on("click", ".item", function() {
     var toShow = $(this).attr("preview");
     if(toShow){
-      updatePreviewPath(toShow.replace("#", ""));
-      $(".preview").removeClass("d-block");
-      $(toShow).addClass("d-block");
+      displayContext(toShow);
     }
+    updateTerminalPath();
+    updateUrlPath(toShow)
   })
   .on("mouseenter", ".item > span", function() {
     if(unscramble_on) {
@@ -753,10 +832,9 @@ $(document).ready(function(){
     //return false;
   });
 
-  var url = window.location.href
-  urlContext = url.substring(url.lastIndexOf("#"), url.length);
-  displayContext(urlContext);
-  
+
+  decodeUrlPath()
+
   //ensure that any dynamic content does not overlap the titleBar
   $("#contentScreenTitleBar").css("z-index","999");
 });
