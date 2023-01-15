@@ -120,15 +120,12 @@ $(document).ready(function(){
       $("#menuIcon").addClass("fa-xmark")
     }
   })
-  $("#galleryMenu > button").click(function(){
-    $("#menuIcon").removeClass("fa-xmark")
-    $("#menuIcon").addClass("fa-bars")
-  })
-  $(".catagory-list > li").click(function(){
-    $("#menuIcon").removeClass("fa-xmark")
-    $("#menuIcon").addClass("fa-bars")
-  })
 });
+
+$(document).on("click", ".category-list > li", function() {
+  $("#menuIcon").removeClass("fa-xmark")
+  $("#menuIcon").addClass("fa-bars")
+})
 
 
 
