@@ -696,7 +696,7 @@ $(document).ready(function(){
 
   function decodeUrlPath() {
     if(window.location.href == "https://ryannitz.github.io/#resume"){ //backwards compatible with old links 
-      window.location.href = "file:///D:/Personal/Projects/webpages/github.io/index.html?context=%23resume&contextHeight=72.67"
+      window.location.href = "https://ryannitz.github.io/?context=%23resume&contextHeight=72.99"
     }
     let searchParams = new URLSearchParams(window.location.search);
     //handle terminal path and stack
