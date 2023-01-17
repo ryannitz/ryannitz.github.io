@@ -591,14 +591,6 @@ var app = new Vue({
 
 $(document).ready(function(){
 
-  const PATH_URL_PARAM = "path";
-  const CONTEXT_URL_PARAM = "context";
-  const CONTEXT_HEIGHT_URL_PARAM = "contextHeight";
-
-  $(".settings-icon.fa-square").toggle();
-
-  $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
-
   //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
   var resizing = false;
   var contextHeight = 50.0;
@@ -631,11 +623,6 @@ $(document).ready(function(){
     resizing = false;
   })
 
-
-
-  var elementStack = [];
-  elementStack.push("#rnitz");
-  
   var focusIcon = '<i class="fa-solid fa-angle-left navarrow"></i>';
   $(".item").append(focusIcon);
   var linkIcon = '<i class="fa-solid fa-link"></i> ';
@@ -650,7 +637,6 @@ $(document).ready(function(){
     $(this).addClass("focused");
   });
 
-
   $(".navigable").click(function(){
     $("#back").addClass("d-block");
     var toHide = elementStack[elementStack.length-1];
@@ -659,104 +645,6 @@ $(document).ready(function(){
     $(toShow).addClass("d-block");
     elementStack.push(toShow);
   });
-
-  function updateUrlPath(contextId) {
-    if(elementStack.length > 1) {
-      var searchPath = "";
-      elementStack.forEach(element => {
-        searchPath += element.replace("#", "") + "/";
-      })
-      insertUrlParam(PATH_URL_PARAM, searchPath)
-    }else {
-      removeUrlParameter(PATH_URL_PARAM);
-    }
-    if(contextId) {
-      insertUrlParam(CONTEXT_URL_PARAM, contextId)
-    }
-  }
-
-  function setContextHeight(newContextHeight) {
-      contextHeight = Number(newContextHeight).toFixed(2);
-      var newTerminalHeight = 100- newContextHeight;
-      $("#mainTerminal").css("height", newTerminalHeight + "%");
-      $("#contextScreen").css("height", newContextHeight + "%");
-  }
-
-  function evaluateState() {
-    //we are not on the root page
-    if(elementStack.length > 1) {
-      for (var i = 0; i < elementStack.length; i++) {
-        $(elementStack[i]).removeClass("d-block");
-      }
-      $(elementStack[elementStack.length-1]).addClass("d-block");
-      $("#back").addClass("d-block");
-    }
-    updateTerminalPath();
-  }
-
-  function decodeUrlPath() {
-    if(window.location.href == "https://ryannitz.github.io/#resume"){ //backwards compatible with old links 
-      window.location.href = "https://ryannitz.github.io/?context=%23resume&contextHeight=72.99"
-    }
-    let searchParams = new URLSearchParams(window.location.search);
-    //handle terminal path and stack
-    var pathFromUrl = searchParams.get(PATH_URL_PARAM);
-    if(pathFromUrl) {
-      elementStack = pathFromUrl.split("/")
-      elementStack.pop()
-      elementStack = elementStack.map(element => ("#"+element));
-      evaluateState();
-    }
-    
-    //handle context height
-    var contextHeightFromUrl = searchParams.get(CONTEXT_HEIGHT_URL_PARAM) || contextHeight;
-    setContextHeight(contextHeightFromUrl)
-
-    //handle context view
-    var contextFromUrl = searchParams.get(CONTEXT_URL_PARAM);
-    if(contextFromUrl) {
-      displayContext(searchParams.get(CONTEXT_URL_PARAM))
-    }
-  }
-
-  //stolen from: https://stackoverflow.com/questions/10970078/modifying-a-query-string-without-reloading-the-page
-  function insertUrlParam(key, value) {
-    if (history.pushState) {
-        let searchParams = new URLSearchParams(window.location.search);
-        searchParams.set(key, value);
-        let newurl = window.location.protocol + "//" + window.location.host + window.location.pathname + '?' + searchParams.toString();
-        window.history.pushState({path: newurl}, '', newurl);
-    }
-  }
-  // to remove the specific key
-  function removeUrlParameter(paramKey) {
-    const url = window.location.href
-    var r = new URL(url)
-    r.searchParams.delete(paramKey)
-    const newUrl = r.href
-    window.history.pushState({ path: newUrl }, '', newUrl)
-  }
-
-
-  function updateTerminalPath() {
-    var path = 'C:\\Users';
-    elementStack.forEach(element => {
-      path += "\\" + element.replace("#", "");
-    });
-    path += ">";
-
-    $("#terminalPath").html(path);
-  }
-
-  function updatePreviewPath(content) {
-    var path = 'C:\\Users';
-    elementStack.forEach(element => {
-      path += "\\" + element.replace("#", "");
-    });
-    path += "> " + content;
-
-    $("#previewPath").html(path);
-  }
 
   $(".back").click(function(){
     var toHide = elementStack.pop();
@@ -773,71 +661,65 @@ $(document).ready(function(){
     unscramble_on = !unscramble_on;
   })
 
-  function displayContext(contextId) {
-    updatePreviewPath(contextId.replace("#", ""));
-    $(".preview").removeClass("d-block");
-    $(contextId).addClass("d-block");
-  }
-
-
 
   //This is REALLY bad code because I'm using half vue, half vanilla. Will need to transition everything to vue.
   $(document)
-  .on("click", ".link", function() {
-    return false;
-  })
-  .on("dblclick", ".link", function(){
-    window.open(this.href,'_blank');
-    return false;
-  })
-  .on("click", ".item", function() {
-    var toShow = $(this).attr("preview");
-    if(toShow){
-      displayContext(toShow);
-    }
-    updateTerminalPath();
-    updateUrlPath(toShow)
-  })
-  .on("mouseenter", ".item > span", function() {
-    if(unscramble_on) {
-      unscramble(750, 25, this, this)
-    }
-  })    
-  .on('keydown', function(e) { 
-    var keyCode = e.keyCode || e.which; 
-  
-    if(keyCode == 40 || keyCode == 38) {
-      var focused = $(".page.d-block > .focused");
-      if (keyCode == 40) { 
-        var nextFocus = focused.next();
-        if(nextFocus.length == 0) {
-          nextFocus = $(".page.d-block > .item").first();
-        }
-      } 
-      if (keyCode == 38) {
-        var nextFocus = focused.prev();
-        if(nextFocus.length == 0) {
-          nextFocus = $(".page.d-block > .item").last();
-        }
+    .on("click", ".link", function() {
+      return false;
+    })
+    .on("dblclick", ".link", function(){
+      window.open(this.href,'_blank');
+      return false;
+    })
+    .on("click", ".item", function() {
+      var toShow = $(this).attr("preview");
+      if(toShow){
+        displayContext(toShow);
       }
-      $(".item").removeClass("focused");
-      nextFocus.addClass("focused");
-      nextFocus.find("span").trigger("mouseenter")
-    }
+      updateTerminalPath();
+      updateUrlPath(toShow)
+    })
+    .on("mouseenter", ".item > span", function() {
+      if(unscramble_on) {
+        unscramble(750, 25, this, this)
+      }
+    })
+    .on('keydown', function(e) { 
+      var keyCode = e.keyCode || e.which; 
+    
+      if(keyCode == 40 || keyCode == 38) {
+        var focused = $(".page.d-block > .focused");
+        if (keyCode == 40) { 
+          var nextFocus = focused.next();
+          if(nextFocus.length == 0) {
+            nextFocus = $(".page.d-block > .item").first();
+          }
+        } 
+        if (keyCode == 38) {
+          var nextFocus = focused.prev();
+          if(nextFocus.length == 0) {
+            nextFocus = $(".page.d-block > .item").last();
+          }
+        }
+        $(".item").removeClass("focused");
+        nextFocus.addClass("focused");
+        nextFocus.find("span").trigger("mouseenter")
+      }
 
-    if(keyCode == 13) {
-      $(".focused").trigger("click");
-      if($(".focused").hasClass("link")) {
-        $(".focused").trigger("dblclick");
+      if(keyCode == 13) {
+        $(".focused").trigger("click");
+        if($(".focused").hasClass("link")) {
+          $(".focused").trigger("dblclick");
+        }
       }
-    }
     
     //return false;
-  });
-
+    });
 
   decodeUrlPath()
-
+  
+  $(".settings-icon.fa-square").toggle();
+  $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
   //ensure that any dynamic content does not overlap the titleBar
   $("#contentScreenTitleBar").css("z-index","999");
 });
