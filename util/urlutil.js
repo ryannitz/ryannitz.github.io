@@ -8,7 +8,7 @@
     }
   }
   // to remove the specific key
-  function removeUrlParameter(paramKey) {
+  function removeUrlParam(paramKey) {
     const url = window.location.href
     var r = new URL(url)
     r.searchParams.delete(paramKey)

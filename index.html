@@ -417,7 +417,8 @@
                         <div>
                             <span>Not done:</span>
                             <ul>
-                                <li>Extract the website state and url functionality into separate js file</li>
+                                <li>Add image links once gallery context paths are implemented</li>
+                                <li>Add data warning for image links</li>
                                 <li>Fix vue error regarding possible infinite loop in the component renderer</li>
                                 <li>Add scroll-to-top button on content preview screen (When overflow creates scroll)</li>
                                 <li>Fix the focus issue when preview pane is large enough to create scroll on main terminal. When focus changes the mouse moves making focus change elements :/. Will be fixed when toggle between keyboard and mouse nav is enabled</li>
@@ -436,6 +437,7 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Extract the website state and url functionality into separate js file</li>
                                 <li>Add ability to completely save the website state based on url search params.</li>
                                 <li>Ensured dynamically rendered content did not overlay certain elements on the z-index</li>
                                 <li>Add symbol on content preview to show that it can be resized</li>
@@ -519,12 +521,11 @@
                     </div>
                 </div>
             </div>
-
-    
         </div>
+        <script src="util/urlutil.js"></script>
+        <script src="util/text_unscramble.js"></script>
+        <script src="util/create_alert.js"></script>
         <script src="main/state_manager.js"></script>
-        <script src="main/urlutil.js"></script>
-        <script src="text_unscramble/text_unscramble.js"></script>
         <script src="main/main.js"></script>
     </body>
     

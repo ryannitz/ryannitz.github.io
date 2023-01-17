@@ -588,12 +588,12 @@ var app = new Vue({
     }
 });
 
+var resizing = false;
+var contextHeight = 50.0;
 
 $(document).ready(function(){
 
   //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
-  var resizing = false;
-  var contextHeight = 50.0;
   $("#contentScreenTitleBar").mousedown(function(e) {
     resizing = true;
   });
@@ -717,7 +717,7 @@ $(document).ready(function(){
     });
 
   decodeUrlPath()
-  
+
   $(".settings-icon.fa-square").toggle();
   $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
   //ensure that any dynamic content does not overlap the titleBar

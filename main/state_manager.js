@@ -46,7 +46,7 @@ function updateUrlPath(contextId) {
       })
       insertUrlParam(PATH_URL_PARAM, searchPath)
     }else {
-      removeUrlParameter(PATH_URL_PARAM);
+      removeUrlParam(PATH_URL_PARAM);
     }
     if(contextId) {
       insertUrlParam(CONTEXT_URL_PARAM, contextId)
