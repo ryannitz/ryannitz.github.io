@@ -5,6 +5,7 @@ var app = new Vue({
 
   //------- data --------
     data: {
+      
         API_BASE_URL: "https://api.github.com/users/ryannitz",
         api_base_object : {
           "login": "ryannitz",
@@ -717,7 +718,7 @@ $(document).ready(function(){
     });
 
   decodeUrlPath()
-
+  createAlert(alertType.danger, alertLocation.bottom, 0, "Do not click image links or gallery.html link when using mobile data. The gallery webpage will load 500MB at once.")  
   $(".settings-icon.fa-square").toggle();
   $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
   //ensure that any dynamic content does not overlap the titleBar
