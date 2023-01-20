@@ -589,10 +589,13 @@ var app = new Vue({
     }
 });
 
+const COOKIE_GALLERY_ALERT_DISMISSED = "gallery_alert";
+
 var resizing = false;
 var contextHeight = 50.0;
 
 $(document).ready(function(){
+  setCookie(COOKIE_GALLERY_ALERT_DISMISSED, "false", 365);
 
   //resizing code used loosely from: https://stackoverflow.com/questions/6219031/how-can-i-resize-a-div-by-dragging-just-one-side-of-it
   $("#contentScreenTitleBar").mousedown(function(e) {
@@ -723,7 +726,15 @@ $(document).ready(function(){
     });
 
   decodeUrlPath()
-  createAlert(alertType.danger, alertLocation.bottom, 0, "Do not click image links or gallery.html link when using mobile data. The gallery webpage will load 500MB at once.")  
+
+  var gallery_alert_dismissed = getCookie(COOKIE_GALLERY_ALERT_DISMISSED);
+  if(gallery_alert_dismissed == "" || gallery_alert_dismissed == "false") {
+    var alert_element = createAlert(alertType.danger, alertLocation.bottom, 0, "Do not click image links or gallery.html link when using mobile data. The gallery webpage will load 500MB at once. This alert will not be displayed again after being closed.")  
+  }
+  $("#"+alert_element).find('button').click(function(){
+    setCookie(COOKIE_GALLERY_ALERT_DISMISSED, "true", 365);
+  })
+  
   $(".settings-icon.fa-square").toggle();
   $("#content").find("a").append(' <sup><i class="fa-solid fa-arrow-up-right-from-square sup-link"></i></sup>')
   //ensure that any dynamic content does not overlap the titleBar
