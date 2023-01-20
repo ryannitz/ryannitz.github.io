@@ -633,6 +633,11 @@ $(document).ready(function(){
   var writeupIcon = '<i class="fa-solid fa-file"></i> ';
   $(".writeup").prepend(writeupIcon);
 
+  $("#bday").text(function() {
+    var thisYear = new Date().getFullYear();
+    return thisYear - 2000;
+  })
+
   $(".item").hover(function(){
     $(".item").removeClass("focused");
     $(this).addClass("focused");

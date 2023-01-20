@@ -100,10 +100,32 @@
                             <li>Tab/Space/Esc have no special functionality. (yet)</li>
                         </ul>
                     </div>
-                    <div class="preview" id="personal">
-                        <div id="section" class="mb-5">
+                    <div class="preview container" id="personal">
+                        <div id="section" class="mb-5 d-block w-100">
                             <h3>Summary</h3>
                             <hr>
+                            <div class="mt-5">
+                                <p>
+                                    <img id="personalPfp" class="d-block float-start pe-5 pb-4" src="main/media/pfp.jpg" alt="Profile Picture">
+                                    Hello, Hello! My name is Ryan Nitz. I'm (insert JS to calculate date)...<span id="bday">0</span> years old! I was born in Fredericton, NB, Canada, and raised in a small town in the surrounding area. 
+                                    Many say it is the perfect sized city. Big enough to have activities and enjoy life, but not large enough to induce stress and chaos. (Cough cough.. Toronto).
+                                    Fredericton is a growing atlantic hub for technology, home to a large university/student population, and contains an incredible amount of craft breweries. I love it here!
+                                </p>
+                                <p>
+                                    I have been interested in development and coding for a very long time. My father encouraged me to explore my early interest after I bragged to him about changing website designs through the element inspector. 
+                                    In highschool, my homeroom period just happened to be the BBT (Broad Based Technology) classroom with 100+ computers. Every day I would play around creating small, fun, and downright weird websites.
+                                    In my grade 11 and 12 computer science class, I mopped the floor with the other students and even the teacher! Those courses sparked my long-lasting love for Java (Sorry Microsoft).
+                                </p>
+                                <p>
+                                    During my final year of highschool, the UNB Computer Science faculty gave a presentation that opened a career path for me to consider.
+                                    With a few weeks left of my summer vacation, I decided to enroll in the BCs program knowing I would at least be doing something I enjoy.
+                                    This turned into one of the best choices I have ever made. The accredited co-op program enabled me to pay for my degree in full and then some. 
+                                    More importantly, it gave me priceless industry experience. 
+                                </p>
+                                <p>
+                                    Please see below for more personal interests!
+                                </p>
+                            </div>
                         </div>
                         <div id="section" class="mb-5">
                             <h3>Interests</h3>
@@ -240,7 +262,7 @@
                             <hr>
                         </div>
                     </div>
-                    <div class="preview" id="professional">
+                    <div class="preview container" id="professional">
                         <div id="section" class="mb-5">
                             <h2>Work Experiences and Reflections</h2>
                             <hr>
@@ -417,10 +439,10 @@
                         <div>
                             <span>Not done:</span>
                             <ul>
+                                <li>Fix the "i" icon in alerts to be a consistent size and line-height</li>
                                 <li>Don't display alert again based on cookies</li>
                                 <li>Get gallery bar to be sticky-top (bs5 not working)</li>
                                 <li>Fix alert icon to not require font-awesome AND to be sized based on the div, not the text</li>
-                                <li>Add image links once gallery context paths are implemented</li>
                                 <li>Fix vue error regarding possible infinite loop in the component renderer</li>
                                 <li>Add scroll-to-top button on content preview screen (When overflow creates scroll)</li>
                                 <li>Fix the focus issue when preview pane is large enough to create scroll on main terminal. When focus changes the mouse moves making focus change elements :/. Will be fixed when toggle between keyboard and mouse nav is enabled</li>
@@ -431,7 +453,7 @@
                                         <li>Listed items in main terminal. (They don't overflow nicely: Text/Icons)</li>
                                     </ul>
                                 </li>
-                                <li>Add option to include/exclude spaces from the scambler</li>
+                                <li>Add option to include/exclude spaces from the scrambler</li>
                                 <li>Add config to change css styles for both terminal and content viewer. Consider storing css strings in the options/values elements so they can be extracted and applied via JS VERY easily</li>
                                 <li>Add more content :)</li>
                             </ul>
@@ -439,6 +461,7 @@
                         <div>
                             <span>Done:</span>
                             <ul>
+                                <li>Add image links once gallery context paths are implemented</li>
                                 <li>Add data warning for image links</li>
                                 <li>Extract the website state and url functionality into separate js file</li>
                                 <li>Add ability to completely save the website state based on url search params.</li>
