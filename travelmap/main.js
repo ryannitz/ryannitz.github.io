@@ -139,17 +139,21 @@ function importLocationData() {
 }
 
 async function loadLocations() {
-    await fetch("travelmap/locations.json")
+    axios
+    .get("https://ryannitz.github.io/travelmap/locations.json")
     .then(response => {
-        if (!response.ok) {
-            throw new Error(`HTTP error ${response.status}`);
-        }
-        locations = response.json();
+        locations = response.data;
         placeLocationMarkers();
     })
-    .catch(error => {
-        // ...report the error, then:
-        return [];
+    .catch(e => {
+        if(e.response){
+            console.log(e);
+            if(e.response.status == 404){
+                
+            }else{
+                //createAlert(, alertLocation, alertDuration, alertText);
+            }
+        }
     });
 }
 
@@ -157,13 +161,17 @@ function placeLocationMarkers(){
     locationsLayer.clearLayers();
     map.closePopup(); 
     locations.forEach(location => {
-        const newLocationMarker = L.geoJSON(location, {
+        tempLocation = location
+        const newLocationMarker = L.geoJSON(tempLocation, {
 	    	pointToLayer(feature, latlng) {
 	    		return L.marker(latlng);
 	    	},
 	    	onEachFeature
 	    }).addTo(locationsLayer);
     });
+    locationMarkers.push(newLocationMarker)
+    map.flyTo(getLatLngFromGeoJSON(tempLocation), 18)
+    tempLocation = {}
 }
 
 function toggleLocations() {
