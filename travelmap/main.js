@@ -168,10 +168,8 @@ function placeLocationMarkers(){
 	    	},
 	    	onEachFeature
 	    }).addTo(locationsLayer);
+        locationMarkers.push(newLocationMarker)
     });
-    locationMarkers.push(newLocationMarker)
-    map.flyTo(getLatLngFromGeoJSON(tempLocation), 18)
-    tempLocation = {}
 }
 
 function toggleLocations() {
