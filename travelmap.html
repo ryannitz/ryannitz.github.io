@@ -32,27 +32,65 @@
             <div id="mapContainer" class="col-md-9 p-0">
                 <div id="map"></div>
             </div>
-            <div class="col-md-3 p-3 pe-4 bg-light">
+            <div class="col-md-3 p-3 pb-0 bg-light">
                 <div id="app">
                     <div class="row mb-3">
                         <div class="col">
-                            <button class="btn btn-primary w-100" type="button" onclick="importLocationData()">Import Data</button>
+                            <button class="btn btn-primary w-100 mb-3" type="button" onclick="importLocationData()">Import Data</button>
+                            <div class="form-check form-switch pt-2 mx-auto">
+                                <label class="form-check-label toggle-switch" for="toggleLocations">Toggle Markers</label>
+                                <input class="form-check-input toggle-switch" onclick="toggleLocations()" type="checkbox" id="toggleLocations" name="toggleLocations" checked>
+                            </div>
                         </div>
                         <div class="col">
-                            <button class="btn btn-primary w-100" type="button" onclick="downloadLocationData()">Download Data</button>
+                            <button class="btn btn-primary w-100 mb-3" type="button" onclick="downloadLocationData()">Download Data</button>
+                            <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#clearLocations">Clear Markers</button>
                         </div>
                     </div>
-                    <div class="row">
-                        <form action="">
-                            <div class="input-group mb-3">
+                    <div id="searchArea" class="border border-dark rounded m-0 p-2">
+                        <div class="form-check form-switch mb-2">
+                            <label class="form-check-label toggle-switch" for="toggleMarkerSearch">Search Existing Markers</label>
+                            <input class="form-check-input toggle-switch" onclick="toggleMarkerSearch()" type="checkbox" id="toggleMarkerSearch" name="toggleMarkerSearch">
+                        </div>
+                        <div id="mapSearch" class="p-0 search-container">
+                            <div class="input-group mb-2">
                                 <input id="locationSearchInput" type="text" class="form-control" name="locationSearchInput" placeholder="Search Location...">
                                 <button id="locationSearchBtn" type="submit" class="btn btn-primary">Search</button>
                             </div>
-                        </form>
-                        <ul id="locationSearchResults" class="list-group p-3"></ul>
+                            <div class="result-list-wrapper">
+                                <ul id="locationSearchResults" class="list-group result-list"></ul>
+                            </div>
+                        </div>
+                        <div id="markerSearch" class="p-0 search-container">
+                            <div class="input-group mb-2">
+                                <input id="markerSearchInput" type="text" class="form-control" name="markerSearchInput" oninput="filterMarkerList()" placeholder="Search Markers...">
+                            </div>
+                            <div class="result-list-wrapper">
+                                <ul id="markerSearchResults" class="list-group result-list"></ul>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
+        </div>
+
+        <!-- Clear marker confirm Modal -->
+        <div class="modal fade" id="clearLocations">
+            <div class="modal-dialog modal-md modal-dialog-centered">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h4 class="modal-title">Clear Location Markers</h4>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                    </div>
+                    <div class="input-group my-3 px-5">
+                        <p>Are you sure you would like to clear all location markers?</p>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                        <button type="submit" class="btn btn-primary" data-bs-dismiss="modal" onclick="clearLocations()">Clear</button>
+                    </div>
+                </div>
+            </div> 
         </div>
 
         <!-- jQuery library -->

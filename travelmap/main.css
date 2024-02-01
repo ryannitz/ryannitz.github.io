@@ -1,5 +1,30 @@
+
 #map {
     position: relative;
     height: 100%;
     width: 100%;  
+}
+
+.toggle-switch {
+    cursor: pointer;
+}
+
+#searchArea{
+    height:84%;
+}
+
+#markerSearch {
+    display: none;
+}
+
+.search-container{
+    height: 85%;
+}
+
+.result-list-wrapper{
+    overflow-y: scroll;
+    height: 100%;
+}
+
+.result-list{
 }

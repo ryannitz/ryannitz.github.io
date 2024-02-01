@@ -52,6 +52,8 @@ var locations = []
 var locationMarkers = []
 var tempLocation = {}
 
+var searchQuery = ""
+var markerFilterQuery = ""
 var locationSearchResults = []
 
 function getLatLngFromGeoJSON(geoJSON){
@@ -88,6 +90,7 @@ function addLocation(){
     locationMarkers.push(newLocationMarker)
     map.flyTo(getLatLngFromGeoJSON(tempLocation), 18)
     tempLocation = {}
+    filterMarkerList()
 }
 
 function keepClickLatLong(lat, lng) {
@@ -123,6 +126,11 @@ function selectMarkerAddress(lat, lng){
     });
 }
 
+function gotoMarker(lat, lng, idx){
+    var latLng = getLatLngFromGeoJSON(locationMarkers[idx])
+    map.flyTo(latLng, 16, {duration:1.5})
+}
+
 function downloadLocationData() {
     const a = document.createElement('a');
     const file = new Blob([JSON.stringify(this.locations)], {type: "application/json"});
@@ -144,6 +152,7 @@ async function loadLocations() {
     .then(response => {
         locations = response.data;
         placeLocationMarkers();
+        filterMarkerList()
     })
     .catch(e => {
         if(e.response){
@@ -173,18 +182,26 @@ function placeLocationMarkers(){
 }
 
 function toggleLocations() {
-
+    if($("#toggleLocations").is(':checked')){
+        locationsLayer.addTo(map) 
+    }else{
+        map.removeLayer(locationsLayer)
+    }
 }
 
 function clearLocations() {
     locationsLayer.clearLayers();
+    locations = [];
 }
 
 function getLocationSearchResults() {
+    if($("#locationSearchInput").val() === searchQuery){
+        return;
+    }
     $("#locationSearchResults").empty()
-    var query = $("#locationSearchInput").val()
-    if(query) {
-        var searchGeoQuery = `https://nominatim.openstreetmap.org/search?q=${query}&accept-language=en&limit=10&format=geojson`
+    searchQuery = $("#locationSearchInput").val()
+    if(searchQuery) {
+        var searchGeoQuery = `https://nominatim.openstreetmap.org/search?q=${searchQuery}&accept-language=en&limit=10&format=geojson`
         $.get(searchGeoQuery, function(data){
             locationSearchResults = data.features
             locationSearchResults.forEach(location => {
@@ -220,15 +237,51 @@ function onMapClick(e) {
     .openOn(map);
 }
 
-$("#locationSearchBtn").click(function(){
-    getLocationSearchResults();
-})
-$("#locationSearchBtn").submit(function(){
-    getLocationSearchResults();
-})
+function toggleMarkerSearch(){
+    if($("#toggleMarkerSearch").is(':checked')){
+        $("#mapSearch").hide()
+        $("#markerSearch").show()
+    }else{
+        $("#markerSearch").hide()
+        $("#mapSearch").show()
+    }
+}
+
+function filterMarkerList(){
+    var filteredLocations = locations;
+    var newMarkerFilterQuery = $("#markerSearchInput").val()
+    if(newMarkerFilterQuery != "" && newMarkerFilterQuery === markerFilterQuery){
+        return;
+    }
+    markerFilterQuery = newMarkerFilterQuery
+    $("#markerSearchResults").empty()
+    if(markerFilterQuery){
+        filteredLocations = locations.filter( (location, idx) => { 
+            var locationData = location.properties.type + location.properties.catagory + location.properties.display_name;
+            return locationData.toLowerCase().includes(markerFilterQuery.toLowerCase())
+        })
+    }
+    filteredLocations.forEach((location, idx) => {
+        var latlng = getLatLngFromGeoJSON(location)
+        var listItemHtml = `
+            <li class="list-group-item" onclick="gotoMarker(${latlng.lat},${latlng.lng}, ${idx})">${location.properties.display_name}</li>
+        `
+        $("#markerSearchResults").append(listItemHtml);
+    })
+}
+
+$("#locationSearchBtn").click(getLocationSearchResults())
+$("#locationSearchBtn").submit(getLocationSearchResults())
 
 $(document).ready(function(){
     loadLocations()
+
+    // $("#myInput").on("keyup", function() {
+    //     var value = $(this).val().toLowerCase();
+    //     $("#myTable tr").filter(function() {
+    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+    //     });
+    // });
 
     $("form").submit(function(e){
         e.preventDefault();
