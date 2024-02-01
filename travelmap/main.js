@@ -165,7 +165,10 @@ function downloadLocationData() {
 }
 
 function uploadLocationData() {
-    alert("Not implemented yet!")
+    const fileElem = $("#uploadedFile")
+    if (fileElem) {
+      fileElem.click();
+    }
 }
 
 async function loadLocations() {
@@ -316,6 +319,14 @@ $("#locationSearchBtn").click(function(){
 })
 $("#locationSearchBtn").submit(function(){
     getLocationSearchResults()
+})
+
+$("#uploadedFile").change( async function(){
+    const uploadedFile = $(this).prop('files')[0];
+    const fileContents = await uploadedFile.text();
+    locations = JSON.parse(fileContents);
+    placeLocationMarkers();
+    filterMarkerList()
 })
 
 $(document).ready(function(){

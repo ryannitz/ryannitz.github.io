@@ -65,13 +65,16 @@
                 </div>
 
                 <div id="searchContent" class="flyout-content p-3">
+                    <div id="latLngSearch">
+                        
+                    </div>
                     <div id="mapSearch" class="p-0 search-container">
-                        <div class="input-group mb-2">
-                            <form>
+                        <form>
+                            <div class="input-group mb-2">
                                 <input id="locationSearchInput" type="text" class="form-control" name="locationSearchInput" placeholder="Search Location...">
                                 <button id="locationSearchBtn" type="submit" class="btn btn-secondary">Search</button>
-                            </form>
-                        </div>
+                            </div>
+                        </form>
                         <div class="result-list-wrapper">
                             <div id="locationSearchResults" class="list-group result-list"></div>
                         </div>
@@ -81,6 +84,7 @@
                 <div id="dataContent" class="flyout-content p-3">
                     <div class="row p-0">
                         <div class="col p-0 mx-3 mb-3">
+                            <input class="d-none" type="file" id="uploadedFile" accept="application/json"/>
                             <button class="btn btn-secondary w-100 mb-3" type="button" onclick="uploadLocationData()">Upload Data</button>
                         </div>
                         <div class="col p-0 mx-3 mb-3">
