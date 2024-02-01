@@ -28,46 +28,61 @@
         <link rel="stylesheet" href="travelmap/main.css" />
     </head>
     <body>
-        <div class="row h-100">
-            <div id="mapContainer" class="col-md-9 p-0">
+        <div class="h-100 row m-0">
+            <div id="mapContainer" class="col-9 p-0">
                 <div id="map"></div>
             </div>
-            <div class="col-md-3 p-3 pb-0 bg-light">
-                <div id="app">
-                    <div class="row mb-3">
-                        <div class="col">
-                            <button class="btn btn-primary w-100 mb-3" type="button" onclick="importLocationData()">Import Data</button>
-                            <div class="form-check form-switch pt-2 mx-auto">
-                                <label class="form-check-label toggle-switch" for="toggleLocations">Toggle Markers</label>
-                                <input class="form-check-input toggle-switch" onclick="toggleLocations()" type="checkbox" id="toggleLocations" name="toggleLocations" checked>
-                            </div>
+            <div class="col-3 p-0 bg-light">
+                <div id="flyoutMenu" class="row p-0 m-0 text-center text-light bg-secondary">
+                    <div id="locationsMenuItem" data-target="#locationsContent" class="col p-2 menu-item text-dark bg-light">
+                        <i class="fa-solid fa-location-dot"></i>
+                    </div>
+                    <div id="searchMenuItem" data-target="#searchContent" class="col p-2 menu-item">
+                        <i class="fa-solid fa-magnifying-glass"></i>
+                    </div>
+                    <div id="dataMenuItem" data-target="#dataContent" class="col p-2 menu-item">
+                        <i class="fa-solid fa-cloud-arrow-up"></i>
+                    </div>
+                </div>
+
+                <div id="locationsContent" class="flyout-content p-3">
+                    <div class="row p-0">
+                        <div class="col p-0 mx-3 mb-3">
+                            <button class="btn btn-secondary w-100" id="toggleMarkers" type="button" onclick="toggleMarkers()">Hide Markers</button>
                         </div>
-                        <div class="col">
-                            <button class="btn btn-primary w-100 mb-3" type="button" onclick="downloadLocationData()">Download Data</button>
-                            <button class="btn btn-primary w-100" type="button" data-bs-toggle="modal" data-bs-target="#clearLocations">Clear Markers</button>
+                        <div class="col p-0 mx-3 mb-3">
+                            <button class="btn btn-secondary w-100" type="button" data-bs-toggle="modal" data-bs-target="#clearLocations">Clear Markers</button>
                         </div>
                     </div>
-                    <div id="searchArea" class="border border-dark rounded m-0 p-2">
-                        <div class="form-check form-switch mb-2">
-                            <label class="form-check-label toggle-switch" for="toggleMarkerSearch">Search Existing Markers</label>
-                            <input class="form-check-input toggle-switch" onclick="toggleMarkerSearch()" type="checkbox" id="toggleMarkerSearch" name="toggleMarkerSearch">
+                    <div id="markerSearch" class="search-container">
+                        <div class="input-group mb-3">
+                            <input id="markerSearchInput" type="text" class="form-control" name="markerSearchInput" oninput="filterMarkerList()" placeholder="Filter Existing Markers...">
                         </div>
-                        <div id="mapSearch" class="p-0 search-container">
-                            <div class="input-group mb-2">
-                                <input id="locationSearchInput" type="text" class="form-control" name="locationSearchInput" placeholder="Search Location...">
-                                <button id="locationSearchBtn" type="submit" class="btn btn-primary">Search</button>
-                            </div>
-                            <div class="result-list-wrapper">
-                                <ul id="locationSearchResults" class="list-group result-list"></ul>
-                            </div>
+                        <div class="result-list-wrapper">
+                            <div id="markerSearchResults" class="list-group result-list"></div>
                         </div>
-                        <div id="markerSearch" class="p-0 search-container">
-                            <div class="input-group mb-2">
-                                <input id="markerSearchInput" type="text" class="form-control" name="markerSearchInput" oninput="filterMarkerList()" placeholder="Search Markers...">
-                            </div>
-                            <div class="result-list-wrapper">
-                                <ul id="markerSearchResults" class="list-group result-list"></ul>
-                            </div>
+                    </div>
+                </div>
+
+                <div id="searchContent" class="flyout-content p-3">
+                    <div id="mapSearch" class="p-0 search-container">
+                        <div class="input-group mb-2">
+                            <input id="locationSearchInput" type="text" class="form-control" name="locationSearchInput" placeholder="Search Location...">
+                            <button id="locationSearchBtn" type="submit" class="btn btn-secondary">Search</button>
+                        </div>
+                        <div class="result-list-wrapper">
+                            <div id="locationSearchResults" class="list-group result-list"></div>
+                        </div>
+                    </div>
+                </div>
+
+                <div id="dataContent" class="flyout-content p-3">
+                    <div class="row p-0">
+                        <div class="col p-0 mx-3 mb-3">
+                            <button class="btn btn-secondary w-100 mb-3" type="button" onclick="uploadLocationData()">Upload Data</button>
+                        </div>
+                        <div class="col p-0 mx-3 mb-3">
+                            <button class="btn btn-secondary w-100 mb-3" type="button" onclick="downloadLocationData()">Download Data</button>
                         </div>
                     </div>
                 </div>

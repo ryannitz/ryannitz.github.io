@@ -64,7 +64,15 @@ function onEachFeature(feature, layer) {
     var latlng = getLatLngFromGeoJSON(tempLocation)
     let popupContent = `
     <p>${feature.properties.display_name}</p>
-    <button type="button" class="btn btn-primary w-100 delete-location-btn" onclick="deleteLocation(${latlng.lat},${latlng.lng},${locationMarkers.length})">Delete Marker</button>
+    <div class="row p-0">
+        <div class="col p-0 mx-3 mb-3">
+            <button type="button" class="btn btn-secondary w-100 delete-location-btn" onclick="zoomHere(${latlng.lat},${latlng.lng})">Zoom In</button>
+        </div>
+        <div class="col p-0 mx-3 mb-3">
+            <button type="button" class="btn btn-secondary w-100 delete-location-btn" onclick="deleteLocation(${latlng.lat},${latlng.lng},${locationMarkers.length})">Delete Marker</button>
+        </div>
+    
+    
     `;
     layer.bindPopup(popupContent);
 }
@@ -79,6 +87,12 @@ function deleteLocation(lat, lng, idx){
 
 function addLocation(){
     //stop it from adding markers in the exact same spot...
+    var tempLocationLatLng = getLatLngFromGeoJSON(tempLocation)
+    if(isLatLngAlreadyMarked(tempLocationLatLng.lat, tempLocationLatLng.lng)){
+        console.log("Location already marked")
+        tempLocation = {}
+        return;
+    }
     map.closePopup(); 
     locations.push(tempLocation)
     const newLocationMarker = L.geoJSON(tempLocation, {
@@ -88,7 +102,7 @@ function addLocation(){
 		onEachFeature
 	}).addTo(locationsLayer);
     locationMarkers.push(newLocationMarker)
-    map.flyTo(getLatLngFromGeoJSON(tempLocation), 18)
+    map.flyTo(tempLocationLatLng, 18)
     tempLocation = {}
     filterMarkerList()
 }
@@ -126,8 +140,16 @@ function selectMarkerAddress(lat, lng){
     });
 }
 
+function isLatLngAlreadyMarked(lat, lng){
+    var matches = filteredLocations = locations.filter( (location, idx) => { 
+        var locationLatLng = getLatLngFromGeoJSON(location)
+        return locationLatLng.lat == lat && locationLatLng.lng == lng
+    })
+    return matches.length > 0
+}
+
 function gotoMarker(lat, lng, idx){
-    var latLng = getLatLngFromGeoJSON(locationMarkers[idx])
+    var latLng = getLatLngFromGeoJSON(locations[idx])
     map.flyTo(latLng, 16, {duration:1.5})
 }
 
@@ -142,8 +164,8 @@ function downloadLocationData() {
     URL.revokeObjectURL(a.href);
 }
 
-function importLocationData() {
-    console.log("Import")
+function uploadLocationData() {
+    alert("Not implemented yet!")
 }
 
 async function loadLocations() {
@@ -180,39 +202,51 @@ function placeLocationMarkers(){
         locationMarkers.push(newLocationMarker)
     });
 }
-
-function toggleLocations() {
-    if($("#toggleLocations").is(':checked')){
-        locationsLayer.addTo(map) 
-    }else{
+var locationsMarkers = true
+function toggleMarkers() {
+    const toggleButton = $("#toggleMarkers")
+    if(locationsMarkers){
         map.removeLayer(locationsLayer)
+        locationsMarkers = false
+        toggleButton.html("Show Markers")
+    }else{
+        locationsLayer.addTo(map) 
+        locationsMarkers = true
+        toggleButton.html("Hide Markers")
     }
 }
 
 function clearLocations() {
     locationsLayer.clearLayers();
     locations = [];
+    locationMarkers = []
+    filterMarkerList()
 }
 
 function getLocationSearchResults() {
-    if($("#locationSearchInput").val() === searchQuery){
-        return;
+    var newSearchQuery = $("#locationSearchInput").val()
+    if(newSearchQuery){
+        if(newSearchQuery.length > 0 && newSearchQuery === searchQuery){
+            console.log("Query is same same")
+            return;
+        }
+        searchQuery = newSearchQuery
+        $("#locationSearchResults").empty()
+        if(searchQuery) {
+            var searchGeoQuery = `https://nominatim.openstreetmap.org/search?q=${searchQuery}&accept-language=en&limit=10&format=geojson`
+            $.get(searchGeoQuery, function(data){
+                locationSearchResults = data.features
+                locationSearchResults.forEach(location => {
+                    var latlng = getLatLngFromGeoJSON(location)
+                    var listItemHtml = `
+                        <a href="#" class="list-group-item list-group-item-action" onclick="selectMarkerAddress(${latlng.lat},${latlng.lng})">${location.properties.display_name}</a>
+                    `
+                    $("#locationSearchResults").append(listItemHtml);
+                })
+            });
+        }
     }
-    $("#locationSearchResults").empty()
-    searchQuery = $("#locationSearchInput").val()
-    if(searchQuery) {
-        var searchGeoQuery = `https://nominatim.openstreetmap.org/search?q=${searchQuery}&accept-language=en&limit=10&format=geojson`
-        $.get(searchGeoQuery, function(data){
-            locationSearchResults = data.features
-            locationSearchResults.forEach(location => {
-                var latlng = getLatLngFromGeoJSON(location)
-                var listItemHtml = `
-                    <li class="list-group-item" onclick="selectMarkerAddress(${latlng.lat},${latlng.lng})">${location.properties.display_name}</li>
-                `
-                $("#locationSearchResults").append(listItemHtml);
-            })
-        });
-    }
+    
 }
 
 function centerHere(lat, lng){
@@ -237,14 +271,9 @@ function onMapClick(e) {
     .openOn(map);
 }
 
-function toggleMarkerSearch(){
-    if($("#toggleMarkerSearch").is(':checked')){
-        $("#mapSearch").hide()
-        $("#markerSearch").show()
-    }else{
-        $("#markerSearch").hide()
-        $("#mapSearch").show()
-    }
+function hoverMarker(idx){
+    map.closePopup();
+    locationMarkers[idx].getLayers()[0].openPopup()
 }
 
 function filterMarkerList(){
@@ -264,24 +293,34 @@ function filterMarkerList(){
     filteredLocations.forEach((location, idx) => {
         var latlng = getLatLngFromGeoJSON(location)
         var listItemHtml = `
-            <li class="list-group-item" onclick="gotoMarker(${latlng.lat},${latlng.lng}, ${idx})">${location.properties.display_name}</li>
+        
+            <a href="#" class="list-group-item list-group-item-action filtered-marker" onmouseover="hoverMarker(${idx})" onclick="gotoMarker(${latlng.lat},${latlng.lng}, ${idx})">
+                <i class="fa-solid fa-2x fa-location-dot float-start mt-1 ms-2"></i> 
+                <p class="p-0 m-0 ms-5">${location.properties.display_name}</p>
+            </a>
         `
         $("#markerSearchResults").append(listItemHtml);
     })
 }
 
-$("#locationSearchBtn").click(getLocationSearchResults())
-$("#locationSearchBtn").submit(getLocationSearchResults())
+$(".menu-item").click(function(){
+    var activeClass = "text-dark bg-light"
+    $(".menu-item").removeClass(activeClass)
+    $(this).addClass(activeClass)
+    $(".flyout-content").hide()
+    $($(this).data("target")).show()
+})
+
+$("#locationSearchBtn").click(function(){
+    getLocationSearchResults()
+})
+$("#locationSearchBtn").submit(function(){
+    getLocationSearchResults()
+})
 
 $(document).ready(function(){
     loadLocations()
-
-    // $("#myInput").on("keyup", function() {
-    //     var value = $(this).val().toLowerCase();
-    //     $("#myTable tr").filter(function() {
-    //         $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
-    //     });
-    // });
+    $("#locationsContent").show();
 
     $("form").submit(function(e){
         e.preventDefault();

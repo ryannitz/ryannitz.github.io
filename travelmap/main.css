@@ -5,6 +5,26 @@
     width: 100%;  
 }
 
+#flyoutMenu{
+    height:5%
+}
+
+.flyout-content{
+    height: 95%;
+}
+
+.menu-item{
+    cursor: pointer;
+}
+
+.menu-item > i {
+    font-size: 3vh;
+}
+
+.flyout-content{
+    display:none
+}
+
 .toggle-switch {
     cursor: pointer;
 }
@@ -14,7 +34,7 @@
 }
 
 #markerSearch {
-    display: none;
+
 }
 
 .search-container{
@@ -27,4 +47,13 @@
 }
 
 .result-list{
+
+}
+
+.filtered-marker{
+    font-size: small;
+}
+
+.filtered-marker > i{
+    
 }
