@@ -1,8 +1,16 @@
 
+.no-results, .flyout-content, .loading{
+    display: none;
+}
+
 #map {
     position: relative;
     height: 100%;
     width: 100%;  
+}
+
+.marker-default{
+    text-shadow: 0 0 2px #fff;
 }
 
 #flyoutMenu{
@@ -21,10 +29,6 @@
     font-size: 3vh;
 }
 
-.flyout-content{
-    display:none
-}
-
 .toggle-switch {
     cursor: pointer;
 }
@@ -37,7 +41,11 @@
 
 }
 
-.search-container{
+#mapSearch{
+    height: 75%;
+}
+
+#markerSearch{
     height: 85%;
 }
 
@@ -46,14 +54,20 @@
     height: 100%;
 }
 
+#locationSearchResultsWrapper{
+    overflow-y: scroll;
+    height: 89%;
+}
+
 .result-list{
 
 }
 
 .filtered-marker{
     font-size: small;
+    color: var(--bs-secondary)
 }
 
-.filtered-marker > i{
-    
+.filtered-marker:hover{
+    color: var(--bs-danger)!important;
 }

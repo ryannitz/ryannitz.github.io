@@ -34,7 +34,7 @@
             </div>
             <div class="col-3 p-0 bg-light">
                 <div id="flyoutMenu" class="row p-0 m-0 text-center text-light bg-secondary">
-                    <div id="locationsMenuItem" data-target="#locationsContent" class="col p-2 menu-item text-dark bg-light">
+                    <div id="locationsMenuItem" data-target="#locationsContent" class="col p-2 menu-item text-secondary bg-light">
                         <i class="fa-solid fa-location-dot"></i>
                     </div>
                     <div id="searchMenuItem" data-target="#searchContent" class="col p-2 menu-item">
@@ -58,6 +58,8 @@
                         <div class="input-group mb-3">
                             <input id="markerSearchInput" type="text" class="form-control" name="markerSearchInput" oninput="filterMarkerList()" placeholder="Filter Existing Markers...">
                         </div>
+                        <p class="no-results text-center text-muted">No results match</p>
+                        <p class="loading text-center text-secondary"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i></p>
                         <div class="result-list-wrapper">
                             <div id="markerSearchResults" class="list-group result-list"></div>
                         </div>
@@ -65,17 +67,37 @@
                 </div>
 
                 <div id="searchContent" class="flyout-content p-3">
-                    <div id="latLngSearch">
-                        
-                    </div>
+                    <form id="latLngSearch">
+                        <div class="form-floating mb-2">
+                            <input type="number" class="form-control" id="latitudeSearchInput" oninput="drawLatitudeLine(this)" placeholder="Latitude" name="latitudeSearchInput" min="-90" max="90" required>
+                            <label for="latitudeSearchInput">Latitude</label>
+                        </div>
+                          <div class="form-floating my-2">
+                            <input type="number" class="form-control" id="longitudeSearchInput" oninput="drawLongitudeLine(this)" placeholder="Longitude" name="longitudeSearchInput" min="-180" max="180" required>
+                            <label for="longitudeSearchInput">Longitude</label>
+                        </div>
+                        <div class="row p-0">
+                            <!-- <div class="col p-0 mx-3">
+                                <button id="gotoCoordinatesBtn" type="submit" class="btn btn-secondary w-100 mb-3">Go To Coordinates</button>
+                            </div> -->
+                            <div class="col p-0 mx-3">
+                                <button id="markCoordinatesBtn" type="submit" class="btn btn-secondary w-100 mb-3">Add Location at Coordinates</button>
+                            </div>
+                        </div>
+                    </form>
                     <div id="mapSearch" class="p-0 search-container">
                         <form>
-                            <div class="input-group mb-2">
-                                <input id="locationSearchInput" type="text" class="form-control" name="locationSearchInput" placeholder="Search Location...">
+                            <div class="input-group mb-2" style="flex-wrap: inherit;">
+                                <div class="form-floating" style="width:inherit">
+                                    <input id="locationSearchInput" type="text" class="form-control" name="locationSearchInput" placeholder="Type Location or Address...">
+                                    <label for="locationSearchInput">Location or Address</label>
+                                </div>
                                 <button id="locationSearchBtn" type="submit" class="btn btn-secondary">Search</button>
                             </div>
                         </form>
-                        <div class="result-list-wrapper">
+                        <div class="no-results text-center text-muted">No results found</div>
+                        <p class="loading text-center text-secondary"><i class="fa-solid fa-circle-notch fa-spin fa-2x"></i></p>
+                        <div id="locationSearchResultsWrapper">
                             <div id="locationSearchResults" class="list-group result-list"></div>
                         </div>
                     </div>
