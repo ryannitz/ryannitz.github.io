@@ -254,34 +254,36 @@ function clearLocations() {
 
 function getLocationSearchResults() {
     var newSearchQuery = $("#locationSearchInput").val()
-    if(newSearchQuery){
-        if(newSearchQuery.length > 0 && newSearchQuery === searchQuery){
-            console.log("Query is same same")
-            return;
-        }
-        searchQuery = newSearchQuery
-        $("#locationSearchResults").empty()
-        $("#mapSearch > .loading").show()
-        if(searchQuery) {
-            var searchGeoQuery = `https://nominatim.openstreetmap.org/search?q=${searchQuery}&accept-language=en&limit=10&format=geojson`
-            $.get(searchGeoQuery, function(data){
-                locationSearchResults = data.features
-                $("#mapSearch > .loading").hide()
-                if(locationSearchResults.length == 0){
-                    $("#mapSearch > .no-results").show()
-                }else{
-                    $("#markerSearch > .no-results").hide()
-                    locationSearchResults.forEach(location => {
-                        var latlng = getLatLngFromGeoJSON(location)
-                        var listItemHtml = `
-                            <a href="#" class="list-group-item list-group-item-action" onclick="selectMarkerAddress(${latlng.lat},${latlng.lng})">${location.properties.display_name}</a>
-                        `
-                        $("#locationSearchResults").append(listItemHtml);
-                    })
-                }
-            });
-        }
+    if(!newSearchQuery){
+        return;
     }
+
+    if(newSearchQuery.length > 0 && newSearchQuery === searchQuery){
+        console.log("Query is same same")
+        return;
+    }
+
+    searchQuery = newSearchQuery
+    $("#locationSearchResults").empty()
+    $("#mapSearch > .loading").show()
+    
+    var searchGeoQuery = `https://nominatim.openstreetmap.org/search?q=${searchQuery}&accept-language=en&limit=10&format=geojson`
+    $.get(searchGeoQuery, function(data){
+        locationSearchResults = data.features
+        $("#mapSearch > .loading").hide()
+        if(locationSearchResults.length == 0){
+            $("#mapSearch > .no-results").show()
+        }else{
+            $("#markerSearch > .no-results").hide()
+            locationSearchResults.forEach(location => {
+                var latlng = getLatLngFromGeoJSON(location)
+                var listItemHtml = `
+                    <a href="#" class="list-group-item list-group-item-action" onclick="selectMarkerAddress(${latlng.lat},${latlng.lng})">${location.properties.display_name}</a>
+                `
+                $("#locationSearchResults").append(listItemHtml);
+            })
+        }
+    });
     
 }
 
