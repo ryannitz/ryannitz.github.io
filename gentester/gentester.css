@@ -1,0 +1,29 @@
+
+
+/* #creator-page, #test, #restartTest, #results {
+    display: none;
+} */
+
+#creator-page, #restartTest, #results, #test, .question, .test-footer {
+    display: none;
+}
+
+li, ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.prompt {
+    white-space: pre-line;
+    white-space: pre-wrap;
+}
+
+
+.incorrect {
+    background-color: rgba(255,0,0, .5);
+}
+
+.correct {
+    background-color: rgba(0,255,0, .5);
+}

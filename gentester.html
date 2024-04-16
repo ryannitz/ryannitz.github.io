@@ -1,0 +1,162 @@
+
+<html>
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gen Tester</title>
+        <!-- <link rel="icon" href=""/> -->
+
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/f5b3d1b329.js" crossorigin="anonymous"></script>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- Bootstrap CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+        <!-- Bootstrap JavaScript Bundle with Popper -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+        <!-- Latest compiled HighCharts -->
+        <!-- Latest compiled Vue.js dev build -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+        <!-- axios build -->
+        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
+        <!-- Mapping -->
+        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
+        <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
+        <!-- Make sure you put this AFTER leaflet.js -->
+        <script src="https://cdn.jsdelivr.net/npm/leaflet.geodesic"></script>
+
+
+
+        <link rel="stylesheet" href="gentester/gentester.css" />
+    </head>
+    <body>
+
+        <!-- TODO:
+            Load gen
+
+            Rerun gen
+
+            Create questions and expor them
+        -->
+        <div id="app" class="container">
+            <div id="header" class="mx-auto">
+                <div id="notes" class="w-75 my-4 p-4 mx-auto border">
+                    <ul>
+                        <li><p>This website is static and does not save or store any information that is entered. Every visit will require you to re-enter gen. </p></li>
+                        <li><p>I've provided a gen creation tool and templates for ease of use! Formatting is the same as the old gen tester to support interchangeability.</p></li>
+                        <li><p>I made this for fun and to allow for a more accessible tool to gen test.</p></li>
+                        <li><p>Currently no support for file upload. SOON!</p></li>
+                        <li><p>Currently no support for writing gen tests. SOON!</p></li>
+                        <li><p>Currently no support for multi-answer responses. SOON!</p></li>
+                        <li><p>Will fix screen jumping up and down from different length questions. SOON!</p></li>
+                        <li><p>Made in a few hours... don't judge</p></li>
+                    </ul>
+                </div>
+
+                <div id="instructions" class="w-75 my-4 p-4 mx-auto border">
+                    <ul>
+                        <li><p>Sometimes random \ that are at the end of a line in the python questions will cause an error. I've only seen this in one file so far. </p></li>
+                        <li><p>As of right now, not handling commented out questions.</p></li>
+                        <li><p>Paste everything from the .txt files found between the checklist object. See highlighted example below:</p></li>
+                        <li>
+                            <code>
+                                checklist = {<br>
+                                    <br><div style="background-color: rgba(8,8,255,0.2);">
+                                    'exmaple': 'here',<br>
+                                    'exmaple': 'here',<br>
+                                    'exmaple': 'here',<br></div>
+                                    <br>
+                                }<br>
+                            </code>
+                        </li>
+                        <li><p>Using the 'Load Example Gen' just shows two filler questions and will likely break the website. Just refresh</p></li>
+                        <li><p>Feel free to restart the test as much as you like, the questions get scrambled.</p></li>
+                    </ul>
+                    
+                    
+                    
+                    
+                    <p></p>
+                </div>
+                <div class="page-buttons text-center">
+                    <button type="button" class="btn btn-primary mx-4" disabled>Take a Test</button>
+                    <button type="button" class="btn btn-primary mx-4">Write a Test</button>
+                </div>
+            
+            </div>
+            <div v-if="onTestPage" id="test-page" class="page p-4 ">
+
+
+                <!-- Actually enable when questions are loaded correctly and without error -->
+                <div id="control-container" class="border w-75 mx-auto my-4">
+                    <div class="upload-buttons text-center my-4">
+                        <button id="loadCustomGen" type="button" class="btn btn-primary mx-4">Upload Custom Gen</button>
+                        <button id="loadExampleGen" type="button" class="btn btn-primary mx-4" @click="loadExampleGen();">Load Example Gen</button>
+                    </div>
+    
+                    <div class="text-center">
+                        <h3 >OR</h3>
+                        <p>Paste Gen in the below textfield and click "Submit"</p>
+                        <textarea id="textfield" class="form-control w-75 mx-auto" rows="5" name="textfield"></textarea>
+                        <button id="loadTextFieldGen" type="button" class="btn btn-primary my-4" @click="loadTextGen();">Submit</button>
+                    </div>
+                </div>
+        
+        
+                <div id="test-container" class="w-75 mx-auto row">
+                    <h3 class="text-center my-3"><u>TEST</u></h3>
+                    <p id="notest" class="text-center py-5">Load Gen to Start Test...</p>
+                    <div id="test" class="border p-4 m-4 col">
+                        <div class="test-body">
+                            <ul id="questions">
+                                <li v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="index" class="question">
+                                    <h3 class="text-center">{{index+1}}/{{Object.keys(questions).length}}</h3>
+                                    <p class="prompt fw-bolder">{{questionPrompt}}</p>
+                                    <form>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" :id="index + 'a'" :name="index" value="a">
+                                            <label class="form-check-label" :for="index + 'a'">a</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" :id="index + 'b'" :name="index" value="b">
+                                            <label class="form-check-label" :for="index + 'b'">b</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" :id="index + 'c'" :name="index" value="c">
+                                            <label class="form-check-label" :for="index + 'c'">c</label>
+                                        </div>
+                                        <div class="form-check">
+                                            <input type="radio" class="form-check-input" :id="index + 'd'" :name="index" value="d">
+                                            <label class="form-check-label" :for="index + 'd'">d</label>
+                                        </div>
+                                    </form>
+                                </li>
+                            </ul>
+                            <div class="text-center">
+                                <button id="startTest" type="button" class="btn btn-primary" @click="startTest();">Start Test</button>
+                            </div>
+                            
+                        </div>
+                        <div class="test-footer text-center">
+                            <button type="button" class="btn btn-primary" @click="previousQuestion();">Previous</button>
+                            <button id="submitTest" type="button" class="btn btn-primary" @click="submitTest();">Submit Test</button>
+                            <button id="restartTest" type="button" class="btn btn-primary" @click="restartTest();">Restart Test</button>
+                            <button type="button" class="btn btn-primary" @click="nextQuestion();">Next</button>
+                        </div>
+                    </div>
+                    <div id="results" class="col p-4 text-center ">
+                        <h3>Results:</h3>
+                        <h3 id="percentage">{{correctAnswerCount}}/{{Object.keys(questions).length}} = %{{testPercentage}}</h3>
+                    </div>
+                </div>
+                
+            </div>
+            <div v-if="onCreatorPage" id="creator-page" class="page">
+            </div>
+
+        </div>
+
+        <script src="gentester/gentester.css"></script>
+        <script src="gentester/gentester.js"></script>
+    </body>
+</html>
