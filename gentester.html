@@ -14,99 +14,79 @@
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
         <!-- Bootstrap JavaScript Bundle with Popper -->
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
-        <!-- Latest compiled HighCharts -->
         <!-- Latest compiled Vue.js dev build -->
         <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
-        <!-- axios build -->
-        <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-        <!-- Mapping -->
-        <script src="https://unpkg.com/leaflet@1.6.0/dist/leaflet.js"></script>
-        <link href="https://unpkg.com/leaflet@1.6.0/dist/leaflet.css" rel="stylesheet"/>
-        <!-- Make sure you put this AFTER leaflet.js -->
-        <script src="https://cdn.jsdelivr.net/npm/leaflet.geodesic"></script>
-
-
 
         <link rel="stylesheet" href="gentester/gentester.css" />
+        <script src="create_alert/create_alert_controller.js"></script>
+        <script src="util/create_alert.js"></script>
     </head>
     <body>
 
         <!-- TODO:
-            Load gen
-
-            Rerun gen
-
-            Create questions and expor them
+            Write test page
+            Make the main splash screen.
         -->
         <div id="app" class="container">
-            <div id="header" class="mx-auto">
-                <div id="notes" class="w-75 my-4 p-4 mx-auto border">
-                    <ul>
-                        <li><p>This website is static and does not save or store any information that is entered. Every visit will require you to re-enter gen. </p></li>
-                        <li><p>I've provided a gen creation tool and templates for ease of use! Formatting is the same as the old gen tester to support interchangeability.</p></li>
-                        <li><p>I made this for fun and to allow for a more accessible tool to gen test.</p></li>
-                        <li><p>Currently no support for file upload. SOON!</p></li>
-                        <li><p>Currently no support for writing gen tests. SOON!</p></li>
-                        <li><p>Currently no support for multi-answer responses. SOON!</p></li>
-                        <li><p>Will fix screen jumping up and down from different length questions. SOON!</p></li>
-                        <li><p>Made in a few hours... don't judge</p></li>
-                    </ul>
-                </div>
 
-                <div id="instructions" class="w-75 my-4 p-4 mx-auto border">
-                    <ul>
-                        <li><p>Sometimes random \ that are at the end of a line in the python questions will cause an error. I've only seen this in one file so far. </p></li>
-                        <li><p>As of right now, not handling commented out questions.</p></li>
-                        <li><p>Paste everything from the .txt files found between the checklist object. See highlighted example below:</p></li>
-                        <li>
-                            <code>
-                                checklist = {<br>
-                                    <br><div style="background-color: rgba(8,8,255,0.2);">
-                                    'exmaple': 'here',<br>
-                                    'exmaple': 'here',<br>
-                                    'exmaple': 'here',<br></div>
-                                    <br>
-                                }<br>
-                            </code>
-                        </li>
-                        <li><p>Using the 'Load Example Gen' just shows two filler questions and will likely break the website. Just refresh</p></li>
-                        <li><p>Feel free to restart the test as much as you like, the questions get scrambled.</p></li>
-                    </ul>
-                    
-                    
-                    
-                    
-                    <p></p>
-                </div>
+
+            <!-- <div id="main-page" class="mx-auto page">
                 <div class="page-buttons text-center">
                     <button type="button" class="btn btn-primary mx-4" disabled>Take a Test</button>
                     <button type="button" class="btn btn-primary mx-4">Write a Test</button>
                 </div>
-            
-            </div>
-            <div v-if="onTestPage" id="test-page" class="page p-4 ">
+            </div> -->
 
 
-                <!-- Actually enable when questions are loaded correctly and without error -->
-                <div id="control-container" class="border w-75 mx-auto my-4">
-                    <div class="upload-buttons text-center my-4">
-                        <button id="loadCustomGen" type="button" class="btn btn-primary mx-4">Upload Custom Gen</button>
-                        <button id="loadExampleGen" type="button" class="btn btn-primary mx-4" @click="loadExampleGen();">Load Example Gen</button>
+            <div v-if="onTestPage" id="test-page" class="page">
+
+                <div class="container-sm border shadow-sm my-5 mx-auto">
+                    <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#notes">
+                        <h6 class="m-0">Notes <i class="fa fa-chevron-down float-end"></i></h6>
+                    </div>
+                    <div id="notes" class="px-3 pb-3 collapse">
+                        <ul>
+                            <li><p>This website is static and does not save or store any information that is entered. Every visit will require you to re-enter gen. </p></li>
+                            <li><p>Gen test creation tool and templates coming soon! Formatting will be the same as the old gen tester to support interchangeability.</p></li>
+                            <li><p>I made this for fun and to allow for a more accessible tool to gen test.</p></li>
+                            <li><p>Currently no support for file upload. SOON!</p></li>
+                            <li><p>Currently no support for writing gen tests. SOON!</p></li>
+                            <li><p>Currently no support for multi-answer responses. SOON! Currently any question with an answer longer than one character will get removed from the questions pool.</p></li>
+                            <li><p>Made in a few hours... don't judge</p></li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div id="control-container" class="container-sm border shadow-sm my-3 mx-auto">
+                    <div class="upload-buttons text-center row my-3 w-75 mx-auto">
+                        <p class="hover mt-3" data-bs-toggle="modal" data-bs-target="#genExampleModal"><u>What can I upload or insert into the textfield <i class="fa-regular fa-circle-question"></i></u></p>
+                        <div class="col my-2">
+                            <input class="d-none" type="file" id="uploadedFile" accept=".txt,.py"/>
+                            <button id="loadCustomGen" type="button" class="btn btn-primary my-2" @click="uploadGenData();"><i class="fa-solid fa-file-arrow-up"></i> Upload Custom Gen</button>
+                        </div>
+                        <div class="col my-2">
+                            <button id="loadExampleGen" type="button" class="btn btn-primary my-2" @click="insertExampleGen();"><i class="fa-solid fa-right-left"></i> Insert Example Gen</button>
+                        </div>
                     </div>
     
-                    <div class="text-center">
-                        <h3 >OR</h3>
-                        <p>Paste Gen in the below textfield and click "Submit"</p>
-                        <textarea id="textfield" class="form-control w-75 mx-auto" rows="5" name="textfield"></textarea>
-                        <button id="loadTextFieldGen" type="button" class="btn btn-primary my-4" @click="loadTextGen();">Submit</button>
+                    <div class="container-sm text-center">
+                        <p class="text-center">Or paste Gen in the below textfield and click "Generate Test"</p>
+                        <textarea id="textfield" class="form-control mx-auto" rows="5" name="textfield" minlength="1"></textarea>
+                        <div class="row w-75 mx-auto">
+                            <div class="col my-2">
+                                <button id="loadExampleGen" type="button" class="btn btn-danger my-4" @click="clearGenText();"><i class="fa-solid fa-trash"></i> Clear Text</button>
+                            </div>
+                            <div class="col my-2">
+                                <button id="loadTextFieldGen" type="button" class="btn btn-success my-4" @click="loadGenText();"><i class="fa-solid fa-arrows-rotate"></i> Generate Test</button>
+                            </div>
+                        </div>
                     </div>
                 </div>
         
-        
-                <div id="test-container" class="w-75 mx-auto row">
-                    <h3 class="text-center my-3"><u>TEST</u></h3>
-                    <p id="notest" class="text-center py-5">Load Gen to Start Test...</p>
-                    <div id="test" class="border p-4 m-4 col">
+                <div id="test-container" class="row container-sm border shadow-sm my-5 mx-auto">
+                    <p id="notest" class="text-center p-5 my-5">Load Gen to Start Test ...</p>
+                    <div id="test" class="col-sm">
+                        <h3 class="text-center my-3"><u>TEST</u></h3>
                         <div class="test-body">
                             <ul id="questions">
                                 <li v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="index" class="question">
@@ -133,30 +113,154 @@
                                 </li>
                             </ul>
                             <div class="text-center">
-                                <button id="startTest" type="button" class="btn btn-primary" @click="startTest();">Start Test</button>
+                                <button id="startTest" type="button" class="btn btn-primary my-5 p-2 px-5" @click="startTest();">Start Test</button>
                             </div>
-                            
                         </div>
                         <div class="test-footer text-center">
-                            <button type="button" class="btn btn-primary" @click="previousQuestion();">Previous</button>
-                            <button id="submitTest" type="button" class="btn btn-primary" @click="submitTest();">Submit Test</button>
-                            <button id="restartTest" type="button" class="btn btn-primary" @click="restartTest();">Restart Test</button>
-                            <button type="button" class="btn btn-primary" @click="nextQuestion();">Next</button>
+                            <div class="row my-5">
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary px-5" @click="previousQuestion();"><i class="fa-solid fa-caret-left fa-2x"></i></button>
+                                </div>
+                                
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary px-5" @click="nextQuestion();"><i class="fa-solid fa-caret-right fa-2x"></i></button>
+                                </div>
+                            </div>
+                            <div class="row my-5">
+                                <div class="col">
+                                    <button id="submitTest" type="button" class="btn btn-primary p-2 px-5" @click="submitTest();">Submit Test</button>
+                                    <button id="restartTest" type="button" class="btn btn-primary p-2 px-5" @click="restartTest();">Restart Test</button>
+                                </div>
+                            </div>
                         </div>
                     </div>
-                    <div id="results" class="col p-4 text-center ">
-                        <h3>Results:</h3>
-                        <h3 id="percentage">{{correctAnswerCount}}/{{Object.keys(questions).length}} = %{{testPercentage}}</h3>
+                    <div id="results" class="col-sm text-center">
+                        <h3 class="text-center my-3"><u>RESULTS</u></h3>
+                        <h3 id="percentage" class="my-4">{{correctAnswerCount}}/{{Object.keys(questions).length}} = %{{testPercentage}}</h3>
+                        <button id="showIncorrectAnswers" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#incorrectAnswersModal">Show Incorrect Answers</button><br>
+                        <button id="showSkippedMultiAnswerQuestions" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#skippedMultiAnswerQuestionsModal">Show Skipped Multi-Answer Questions</button>
                     </div>
                 </div>
-                
             </div>
+            
             <div v-if="onCreatorPage" id="creator-page" class="page">
             </div>
 
+
+
+
+            <div class="modal fade" id="genExampleModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Gen examples</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <p>These are some gen examples that can be accepted into the textfield or uploaded as a .txt file</h4>
+                            <ul class="list-group my-2">
+                                <li class="list-group-item p-4">
+                                    <h4>1. The text between the "checklist = {}" in the .py or .txt gen files:</h4>
+                                    <div class="border rounded p-3 shadow-sm">
+                                        <code>
+                                            checklist = {<br>
+                                                <br><div style="background-color: rgba(8,8,255,0.2);">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br></div>
+                                                <br>
+                                            }<br>
+                                        </code>
+                                    </div>
+                                </li>
+    
+                                <li class="list-group-item p-4">
+                                    <h4>2. The entire "checklist = {}" py variable in the .py or .txt gen files:</h4>
+                                    <div class="border rounded p-3 shadow-sm">
+                                        <code style="background-color: rgba(8,8,255,0.2);">
+                                            checklist = {<br>
+                                                <br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                <br>
+                                            }<br>
+                                        </code>
+                                    </div>
+                                </li>
+    
+                                <li class="list-group-item p-4">
+                                    <h4>3. The entire .py or .txt gen files:</h4>
+                                    <p>Upload the entire .txt file, or paste the contents of the .txt or .py file directly into the textfield!</p>
+                                </li>
+                            </ul>
+                            <p>Note: The code works based on the "{}" surrounding the questions. So either submit exactly what is between those curly braces, or include the curly braces at the begining and end of the questions. E.g. If you decide to upload the entire existing gen files or partial files for whatever reason, the code will grab only the questions between those two curly braces. If the tool is not working with full files, use the 1. way of inserting gen.</p>
+                        
+                            <ul style="list-style: circle;"> Known Issues:
+                                <li>Sometimes random \ that are at the end of a line in the python questions will cause an error. I've only seen this in one file so far. </li>
+                            </ul>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="modal fade" id="incorrectAnswersModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Incorrect Answers</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul class="list-group">
+                                <li v-if="incorrectlyAnsweredQuestions.length==0" class="list-group-item">No incorrect answers. Noice.</li>
+                                <li v-for="incorrectAnswer in incorrectlyAnsweredQuestions" class="list-group-item">
+                                    <p class="prompt fw-bolder">{{incorrectAnswer.question}}</p>
+                                    <p class="m-0 p-0">Actual Answer: {{incorrectAnswer.answer}}</p>
+                                    <p>Your Answer: {{incorrectAnswer.userAnswer}}</p>
+                                </li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+            <div class="modal fade" id="skippedMultiAnswerQuestionsModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Skipped Multi-Answer Questions</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul class="list-group">
+                                <li v-if="multiAnswerQuestions.length==0" class="list-group-item">No multi-answer questions removed from test.</li>
+                                <li v-for="mulitAnswerQuestion in multiAnswerQuestions" class="list-group-item">
+                                    <p class="prompt fw-bolder">{{mulitAnswerQuestion.q}}</p>
+                                    <p class="m-0 p-0">Answer: {{mulitAnswerQuestion.a}}</p>
+                                </li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+
         </div>
 
-        <script src="gentester/gentester.css"></script>
+
+        
         <script src="gentester/gentester.js"></script>
     </body>
 </html>

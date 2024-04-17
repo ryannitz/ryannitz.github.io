@@ -8,10 +8,10 @@
     display: none;
 }
 
-li, ul {
+#questions, #questions>li{
     list-style: none;
-    margin: 0;
     padding: 0;
+    margin: 0;
 }
 
 .prompt {
@@ -26,4 +26,8 @@ li, ul {
 
 .correct {
     background-color: rgba(0,255,0, .5);
+}
+
+.hover {
+    cursor: pointer;
 }
