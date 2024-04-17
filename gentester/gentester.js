@@ -83,32 +83,49 @@ var app = new Vue({
             this.nextQuestion();
             this.previousQuestion();
             $("#startTest").hide()
-            $(".test-footer").show()
+            $(".test-hidden").show()
         },
 
         previousQuestion(){
-            var index = this.currentQuestionIndex;
-            if(index == 0){
+            if(this.currentQuestionIndex == 0){
                 return
             }
-            
-            $(".question").hide()
-            $("#"+(index-1)).show()
             this.currentQuestionIndex--;
-            console.log(index)
+            $(".question").hide()
+            $("#"+(this.currentQuestionIndex)).show()
+            console.log(this.currentQuestionIndex)
         },
 
         nextQuestion(){
-            var index = this.currentQuestionIndex;
-            if(index == Object.keys(this.questions).length-1){
+            if(this.currentQuestionIndex == Object.keys(this.questions).length-1){
                 return
             }
-            
-            $(".question").hide()
-            $("#"+(index+1)).show()
             this.currentQuestionIndex++;
-            console.log(index)
+            $(".question").hide()
+            $("#"+(this.currentQuestionIndex)).show()
+            console.log(this.currentQuestionIndex)
         },
+
+        manualQuestionDisplay(){
+            var requestedQuestion = parseInt($("#questionNumber").val())
+            if(!requestedQuestion){
+                requestedQuestion = 1
+            }
+            this.currentQuestionIndex = requestedQuestion-1;
+            if(this.currentQuestionIndex > Object.keys(this.questions).length-1){
+                this.currentQuestionIndex = Object.keys(this.questions).length-1
+            }
+            if(this.currentQuestionIndex < 0){
+                this.currentQuestionIndex = 0
+            }
+
+            $(".question").hide()
+            $("#"+(this.currentQuestionIndex)).show()
+            $("#questionNumber").val(this.currentQuestionIndex+1)
+            console.log(this.currentQuestionIndex)
+            
+        },
+
 
         submitTest(){
             for(var i = 0; i < Object.keys(this.questions).length; i++){
