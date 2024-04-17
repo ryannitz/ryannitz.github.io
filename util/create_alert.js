@@ -26,8 +26,8 @@ function createAlert(type, location, duration, text) {
     $("body").append(alert_html);
     if(duration > 0) {
         setTimeout(function(){
-            $(id).fadeOut(500, function(){
-                $(id).remove();
+            $("#"+id).fadeOut(500, function(){
+                $("#"+id).remove();
             });
         }, duration)
     }
