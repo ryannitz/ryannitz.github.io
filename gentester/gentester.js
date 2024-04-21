@@ -35,6 +35,9 @@ var app = new Vue({
             }
         },
 
+        restartTest(){
+            this.initTest()
+        },
 
         initTest(){
             this.correctAnswerCount = 0
@@ -153,19 +156,6 @@ var app = new Vue({
             $("#results").show()
             $(".form-check-input").prop('disabled', true);
         },
-
-        restartTest(){
-            // $("#restartTest").hide()
-            // $("#submitTest").show()
-            // $("#results").hide()
-
-            // $(".form-check-input").prop('disabled', false);
-            // $("input").parent().removeClass('correct incorrect')
-            // $(`input:checked`).prop('checked', false);
-            
-
-            this.initTest()
-        },
         
         insertExampleGen(){
             $("#textfield").val(this.devQuestionsText)
@@ -190,14 +180,17 @@ var app = new Vue({
 
                 //remove python comment lines
                 var regex = new RegExp('#.*', 'g');
+
                 text = text.replaceAll(regex, "")
+                regex = new RegExp('\\\n', 'gm');
+                text = text.replaceAll(regex, "")
+                text = text.replaceAll("\\        ", "")
 
                 //finally remove the last comma
                 text = text.substring(0, text.lastIndexOf(","))
             
                 //wrap everything in json curly brackets to parse as an obj
                 text = "{" + text + "}"
-
                 return text
             }
             return null
@@ -219,9 +212,13 @@ var app = new Vue({
                 return
             }
             //console.log(text)
-            //generate the test
-            this.questions = JSON.parse(text)
-            this.initTest();
+            try {
+                this.questions = JSON.parse(text)
+                this.initTest();
+            } catch (error) {
+                createAlert(alertType.danger, alertLocation.top, -1, "Could not parse the input. Standar format rule was broken")
+            }
+            
         },
 
         clearGenText(){

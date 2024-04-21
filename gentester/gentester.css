@@ -4,7 +4,7 @@
     display: none;
 } */
 
-#creator-page, #restartTest, #results, #test, .question, .test-hidden {
+#create-page, #restartTest, #results, #test, .question, .test-hidden {
     display: none;
 }
 

@@ -30,17 +30,8 @@
         -->
         <div id="app" class="container">
 
-
-            <!-- <div id="main-page" class="mx-auto page">
-                <div class="page-buttons text-center">
-                    <button type="button" class="btn btn-primary mx-4" disabled>Take a Test</button>
-                    <button type="button" class="btn btn-primary mx-4">Write a Test</button>
-                </div>
-            </div> -->
-
-
             <div v-if="onTestPage" id="test-page" class="page">
-
+                <!-- <button id="showCreatePage" type="button" class="btn btn-primary mx-4">Create Test</button> -->
                 <div class="container-sm border shadow-sm my-5 mx-auto">
                     <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#notes">
                         <h6 class="m-0">Notes <i class="fa fa-chevron-down float-end"></i></h6>
@@ -145,7 +136,8 @@
                 </div>
             </div>
             
-            <div v-if="onCreatorPage" id="creator-page" class="page">
+            <div v-if="createPage" id="create-page" class="page">
+                <button id="showTestPage" type="button" class="btn btn-primary mx-4">Take Test</button>
             </div>
 
 
@@ -197,10 +189,6 @@
                                 </li>
                             </ul>
                             <p>Note: The code works based on the "{}" surrounding the questions. So either submit exactly what is between those curly braces, or include the curly braces at the begining and end of the questions. E.g. If you decide to upload the entire existing gen files or partial files for whatever reason, the code will grab only the questions between those two curly braces. If the tool is not working with full files, use the 1. way of inserting gen.</p>
-                        
-                            <ul style="list-style: circle;"> Known Issues:
-                                <li>Sometimes random \ that are at the end of a line in the python questions will cause an error. I've only seen this in one file so far. </li>
-                            </ul>
                         </div>
                         <div class="modal-footer">
                             <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
