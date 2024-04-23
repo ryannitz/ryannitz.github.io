@@ -176,15 +176,18 @@ var app = new Vue({
         parseQuestions(text){
             if(text){
                 //cannot parse json with ' symbols
+                text = text.replaceAll("\\'", "APOST")
                 text = text.replaceAll("\'", "\"")
+                text = text.replaceAll("APOST", "\\'")
 
                 //remove python comment lines
                 var regex = new RegExp('#.*', 'g');
+                text = text.replaceAll(regex, "")
 
-                text = text.replaceAll(regex, "")
-                regex = new RegExp('\\\n', 'gm');
-                text = text.replaceAll(regex, "")
-                text = text.replaceAll("\\        ", "")
+                text = text.replaceAll('\\\n', "")
+                text = text.replaceAll('\\n', "NEWLINE")
+                text = text.replaceAll("\\", "")
+                text = text.replaceAll("NEWLINE", "\\n")
 
                 //finally remove the last comma
                 text = text.substring(0, text.lastIndexOf(","))
@@ -211,12 +214,13 @@ var app = new Vue({
                 createAlert(alertType.danger, alertLocation.top, 5000, "Could not parse the input. Reference the instructions prompt for more...")
                 return
             }
-            //console.log(text)
+            console.log(text)
             try {
                 this.questions = JSON.parse(text)
                 this.initTest();
             } catch (error) {
                 createAlert(alertType.danger, alertLocation.top, -1, "Could not parse the input. Standar format rule was broken")
+                console.log(error)
             }
             
         },
