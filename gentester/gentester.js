@@ -258,9 +258,17 @@ $(document).ready(function(){
         e.preventDefault();
     });
 
+
     $("#uploadedFile").change( async function(){
         const uploadedFile = $(this).prop('files')[0];
         const fileContents = await uploadedFile.text();
         $("#textfield").val(fileContents)
     })
 });
+
+$(document)
+    .on("click", ".form-check", function() {
+        $(this).find("input").prop("checked", true);
+    })
+
+

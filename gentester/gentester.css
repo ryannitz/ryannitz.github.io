@@ -23,6 +23,11 @@
     white-space: pre-wrap;
 }
 
+.form-check:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,255,0.2);
+}
+
 
 .incorrect {
     background-color: rgba(255,0,0, .5);
