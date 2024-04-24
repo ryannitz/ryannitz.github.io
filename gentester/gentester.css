@@ -4,7 +4,7 @@
     display: none;
 } */
 
-#create-page, #restartTest, #results, #test, .question, .test-hidden {
+#create-page, #restartTest, #results, #test, .question, .test-hidden, .maqa {
     display: none;
 }
 
@@ -17,6 +17,8 @@
 #questionNumber {
     width: 75px;
 }
+
+
 
 .prompt {
     white-space: pre-line;
@@ -39,4 +41,8 @@
 
 .hover {
     cursor: pointer;
+}
+
+.disabled-answer:hover {
+    cursor: not-allowed;
 }

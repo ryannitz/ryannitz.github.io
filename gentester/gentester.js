@@ -22,7 +22,9 @@ var app = new Vue({
         multiAnswerQuestions : [],
 
         incorrectlyAnsweredQuestions: [],
-        testPercentage: 0
+        testPercentage: 0,
+
+        unAnsweredQuestionCount: 0
     },
 
 
@@ -43,7 +45,6 @@ var app = new Vue({
             this.correctAnswerCount = 0
             this.currentQuestionIndex = 0
             this.incorrectlyAnsweredQuestions = []
-            this.multiAnswerQuestions = []
             this.scrambleQuestions();
 
             $("#restartTest").hide()
@@ -52,10 +53,12 @@ var app = new Vue({
 
             $(".form-check-input").prop('disabled', false);
             $("input").parent().removeClass('correct incorrect')
+            $(".form-check").removeClass('disabled-answer');
             $(`input:checked`).prop('checked', false);
 
             $("#notest").hide()
             $(".question").hide()
+            $(".maqa").hide()
             $("#test").show()
             $("#0").show()
         },
@@ -79,6 +82,7 @@ var app = new Vue({
                 
                 delete tempQuestions[randomQuestion]
             }
+            this.unAnsweredQuestionCount = Object.keys(this.questions).length
             console.log(this.multiAnswerQuestions)
         },
 
@@ -155,6 +159,7 @@ var app = new Vue({
             $("#restartTest").show()
             $("#results").show()
             $(".form-check-input").prop('disabled', true);
+            $(".form-check").addClass('disabled-answer');
         },
         
         insertExampleGen(){
@@ -217,16 +222,20 @@ var app = new Vue({
             console.log(text)
             try {
                 this.questions = JSON.parse(text)
+                this.multiAnswerQuestions = []
                 this.initTest();
             } catch (error) {
                 createAlert(alertType.danger, alertLocation.top, -1, "Could not parse the input. Standar format rule was broken")
                 console.log(error)
             }
-            
         },
 
         clearGenText(){
             $("#textfield").val("")
+        },
+
+        clickAnswer(){
+            this.unAnsweredQuestionCount = Object.keys(this.questions).length - $('.form-check-input:checked').length
         }
 
     },
@@ -268,7 +277,12 @@ $(document).ready(function(){
 
 $(document)
     .on("click", ".form-check", function() {
-        $(this).find("input").prop("checked", true);
+        if(!$(this).hasClass('disabled-answer')){
+            $(this).find("input").prop("checked", true);   
+        }
+    })
+    .on("click", ".show-maqa", function() {
+        $(this).siblings().show()  
     })
 
 
