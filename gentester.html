@@ -82,7 +82,7 @@
                                 <input class="text-center" id="questionNumber" type="number" step="1" min="1" :max="[Object.keys(questions).length]" name="questionNumber" :value="[currentQuestionIndex+1]" @change="manualQuestionDisplay();">
                                 /{{Object.keys(questions).length}}
                             </h3>
-                            <p class="text-center test-hidden">Unanswered Questions: {{this.unAnsweredQuestionCount}}</p>
+                            <p class="text-center test-hidden">Unanswered Questions: {{this.unAnsweredQuestionCount}} (not working 100%)</p>
                             <ul id="questions">
                                 <li v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="index" class="question">
                                     <p class="prompt fw-bolder">{{questionPrompt}}</p>
