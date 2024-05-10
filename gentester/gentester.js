@@ -235,6 +235,7 @@ var app = new Vue({
         },
 
         clickAnswer(){
+            console.log("Answer Clicked")
             this.unAnsweredQuestionCount = Object.keys(this.questions).length - $('.form-check-input:checked').length
         }
 
