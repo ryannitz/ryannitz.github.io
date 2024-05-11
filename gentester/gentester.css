@@ -19,6 +19,10 @@
 }
 
 
+.q-control {
+    font-size: x-large;
+}
+
 
 .prompt {
     white-space: pre-line;
