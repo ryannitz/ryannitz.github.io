@@ -1,5 +1,8 @@
 
-
+/*
+    Behold the actual worst code to do this... Only using vue to hack the question bindings.
+    Yes I could've parsed the questions and answers and stored them in an array as proper objects... did I... ha? 
+*/
 var app = new Vue({
     el: "#app",
 
@@ -91,6 +94,7 @@ var app = new Vue({
             this.previousQuestion();
             $("#startTest").hide()
             $(".test-hidden").show()
+            $("#gen").collapse()
         },
 
         previousQuestion(){
@@ -255,7 +259,16 @@ var app = new Vue({
     },
 
     created() {
-
+        window.addEventListener('keydown', function(e) { 
+            var keyCode = e.keyCode || e.which; 
+            console.log("KEY")
+            if (keyCode == 37) {
+                app.previousQuestion()
+            } 
+            if (keyCode == 39) {
+                app.nextQuestion()
+            } 
+        })
     },
 
     computed: {
@@ -267,6 +280,16 @@ $(document).ready(function(){
     $("form").submit(function (e) { 
         e.preventDefault();
     });
+
+    $("#toggleDarkMode").click(function(){
+        var currentTheme = document.documentElement.getAttribute('data-bs-theme')
+        if(currentTheme == 'dark'){
+            document.documentElement.setAttribute('data-bs-theme', "light")
+        }else{
+            document.documentElement.setAttribute('data-bs-theme', "dark")
+        }
+        
+    })
 
 
     $("#uploadedFile").change( async function(){

@@ -26,15 +26,14 @@
         <!-- TODO:
             Write test page
             Make the main splash screen.
-            Allow people to input the question they want to view.
         -->
         <div id="app" class="container">
 
             <div v-if="onTestPage" id="test-page" class="page">
                 <!-- <button id="showCreatePage" type="button" class="btn btn-primary mx-4">Create Test</button> -->
-                <div class="container-sm border shadow-sm my-5 mx-auto">
+                <div class="container-sm border shadow-sm my-4 mx-auto">
                     <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#notes">
-                        <h6 class="m-0">Notes <i class="fa fa-chevron-down float-end"></i></h6>
+                        <h6 class="m-0 text-center">Notes <i class="fa fa-chevron-down float-end"></i></h6>
                     </div>
                     <div id="notes" class="px-3 pb-3 collapse">
                         <ul>
@@ -44,36 +43,44 @@
                             <li><p>Currently no support for multi-answer responses. SOON! Currently any question with an answer longer than one character will get removed from the questions pool.</p></li>
                             <li><p>Made in a few hours... don't judge</p></li>
                         </ul>
+                        <p class="text-center">
+                            <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
+                        </p>
                     </div>
                 </div>
 
-                <div id="control-container" class="container-sm border shadow-sm my-3 mx-auto">
-                    <div class="upload-buttons text-center row my-3 w-75 mx-auto">
-                        <p class="hover mt-3" data-bs-toggle="modal" data-bs-target="#genExampleModal"><u>What can I upload or insert into the textfield <i class="fa-regular fa-circle-question"></i></u></p>
-                        <div class="col my-2">
-                            <input class="d-none" type="file" id="uploadedFile" accept=".txt,.py"/>
-                            <button id="loadCustomGen" type="button" class="btn btn-primary my-2" @click="uploadGenData();"><i class="fa-solid fa-file-arrow-up"></i> Upload Custom Gen</button>
-                        </div>
-                        <div class="col my-2">
-                            <button id="loadExampleGen" type="button" class="btn btn-primary my-2" @click="insertExampleGen();"><i class="fa-solid fa-right-left"></i> Insert Example Gen</button>
-                        </div>
+                <div id="control-container" class="container-sm border shadow-sm my-4 mx-auto">
+                    <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#gen">
+                        <h6 class="m-0 text-center">Gen <i class="fa fa-chevron-down float-end"></i></h6>
                     </div>
-    
-                    <div class="container-sm text-center">
-                        <p class="text-center">Or paste Gen in the below textfield and click "Generate Test"</p>
-                        <textarea id="textfield" class="form-control mx-auto" rows="5" name="textfield" minlength="1"></textarea>
-                        <div class="row w-75 mx-auto">
+                    <div id="gen" class="collapse show">
+                        <div class="upload-buttons text-center row my-3 w-75 mx-auto">
+                            <p class="hover" data-bs-toggle="modal" data-bs-target="#genExampleModal"><u>What can I upload or insert into the textfield <i class="fa-regular fa-circle-question"></i></u></p>
                             <div class="col my-2">
-                                <button id="loadExampleGen" type="button" class="btn btn-danger my-4" @click="clearGenText();"><i class="fa-solid fa-trash"></i> Clear Text</button>
+                                <input class="d-none" type="file" id="uploadedFile" accept=".txt,.py"/>
+                                <button id="loadCustomGen" type="button" class="btn btn-primary my-2" @click="uploadGenData();"><i class="fa-solid fa-file-arrow-up"></i> Upload Custom Gen</button>
                             </div>
                             <div class="col my-2">
-                                <button id="loadTextFieldGen" type="button" class="btn btn-success my-4" @click="loadGenText();"><i class="fa-solid fa-arrows-rotate"></i> Generate Test</button>
+                                <button id="loadExampleGen" type="button" class="btn btn-primary my-2" @click="insertExampleGen();"><i class="fa-solid fa-right-left"></i> Insert Example Gen</button>
+                            </div>
+                        </div>
+                    
+                        <div class="container-sm text-center">
+                            <p class="text-center">Or paste Gen in the below textfield and click "Generate Test"</p>
+                            <textarea id="textfield" class="form-control mx-auto" rows="5" name="textfield" minlength="1"></textarea>
+                            <div class="row w-75 mx-auto">
+                                <div class="col my-2">
+                                    <button id="loadExampleGen" type="button" class="btn btn-danger my-4" @click="clearGenText();"><i class="fa-solid fa-trash"></i> Clear Text</button>
+                                </div>
+                                <div class="col my-2">
+                                    <button id="loadTextFieldGen" type="button" class="btn btn-success my-4" @click="loadGenText();"><i class="fa-solid fa-arrows-rotate"></i> Generate Test</button>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
         
-                <div id="test-container" class="row container-sm border shadow-sm my-5 mx-auto">
+                <div id="test-container" class="row container-sm border shadow-sm my-4 mx-auto">
                     <p id="notest" class="text-center p-5 my-5">Load Gen to Start Test ...</p>
                     <div id="test" class="col-sm">
                         <h3 class="text-center my-3"><u>TEST</u></h3>
