@@ -42,6 +42,9 @@
                             <li><p>I made this for fun and to allow for a more accessible tool to gen test.</p></li>
                             <li><p>Currently no support for multi-answer responses. SOON! Currently any question with an answer longer than one character will get removed from the questions pool.</p></li>
                             <li><p>Made in a few hours... don't judge</p></li>
+                            <li><p>Update: You can now use Arrow Keys to navigate between questions!</p></li>
+                            <li><p>Update: Dark mode can now be toggled using the button below</p></li>
+                            <li><p>Update: Gen section now collapses to help prevent screen jump with longer questions</p></li>
                         </ul>
                         <p class="text-center">
                             <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
@@ -217,8 +220,8 @@
                                 <li v-if="incorrectlyAnsweredQuestions.length==0" class="list-group-item">No incorrect answers. Noice.</li>
                                 <li v-for="incorrectAnswer in incorrectlyAnsweredQuestions" class="list-group-item">
                                     <p class="prompt fw-bolder">{{incorrectAnswer.question}}</p>
-                                    <p class="m-0 p-0">Actual Answer: {{incorrectAnswer.answer}}</p>
-                                    <p>Your Answer: {{incorrectAnswer.userAnswer}}</p>
+                                    <p class="m-0 p-0 correct fw-bolder">Actual Answer: {{incorrectAnswer.answer}}</p>
+                                    <p class="incorrect">Your Answer: {{incorrectAnswer.userAnswer}}</p>
                                 </li>
                             </ul>
                         </div>  
