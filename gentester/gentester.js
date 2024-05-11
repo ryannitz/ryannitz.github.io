@@ -261,7 +261,6 @@ var app = new Vue({
     created() {
         window.addEventListener('keydown', function(e) { 
             var keyCode = e.keyCode || e.which; 
-            console.log("KEY")
             if (keyCode == 37) {
                 app.previousQuestion()
             } 
