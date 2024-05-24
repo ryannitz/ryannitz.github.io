@@ -29,7 +29,7 @@
         -->
         <div id="app" class="container">
 
-            <div v-if="onTestPage" id="test-page" class="page">
+            <div v-if="showCreatorPageOnLoad == false" id="test-page" class="page">
                 <!-- <button id="showCreatePage" type="button" class="btn btn-primary mx-4">Create Test</button> -->
                 <div class="container-sm border shadow-sm my-4 mx-auto">
                     <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#notes">
@@ -38,6 +38,7 @@
                     <div id="notes" class="px-3 pb-3 collapse">
                         <ul>
                             <li><p class="hover" data-bs-toggle="modal" data-bs-target="#disclaimersModal"><u>DISCLAIMERS</u></p></li>
+                            <li><p>Want to update or create your own gen: <button id="showCreatorPage" type="button" class="btn btn-primary">Creator Page</button></p></li>
                             <li><p>Update: Multi-answer questions are now available to be viewed at the end of the test! They do not count in the final result. I will not be adding them to the regular test because I don't want to code.</p></li>
                             <li><p>Update: You can now manually select which question to see in the numberbox above the question!</p></li>
                             <li><p>Update: You can now use Arrow Keys to navigate between questions!</p></li>
@@ -97,7 +98,7 @@
                             
                             <ul id="questions">
                                 <li v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="index" class="question">
-                                    <p class="text-center">
+                                    <p class="text-center cheater-buttons">
                                         <button type="button" class="revealAnswer btn btn-primary" @click="revealAnswer(index);" data-bs-toggle="tooltip" title="If you're not cheating, you're not trying">Reveal Answer</button>
                                         <button type="button" class="hideAnswer btn btn-primary" @click="hideAnswer(index);">Hide Answer</button>
                                     </p>
@@ -153,8 +154,84 @@
                 </div>
             </div>
             
-            <div id="create-page" class="page">
-                <button id="showTestPage" type="button" class="btn btn-primary mx-4">Take Test</button>
+            <div v-if="showCreatorPageOnLoad" id="creator-page" class="page">
+                <h1>WORK IN PROGRESS. IGNORE</h1>
+                <button id="showTestPage" type="button" class="btn btn-primary mx-4">Test Page</button>
+                <div class="container-sm">
+                    <div class="row">
+                        <div class="col">
+                            <form>
+                                <div class="form-floating mb-3">
+                                    <textarea class="form-control" id="newQuestion" v-model="newQuestion" name="newQuestion" placeholder="Question"></textarea>
+                                    <label for="comment">Question</label>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">a.</span>
+                                    <input type="text" class="form-control" v-model="newAnswerA" placeholder="A answer...">
+                                    <div class="input-group-text">
+                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerAInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="a" tabindex="-1" checked="checked">
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">b.</span>
+                                    <input type="text" class="form-control" v-model="newAnswerB" placeholder="B answer...">
+                                    <div class="input-group-text">
+                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerBInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="b" tabindex="-1">
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">c.</span>
+                                    <input type="text" class="form-control" v-model="newAnswerC" placeholder="C answer...">
+                                    <div class="input-group-text">
+                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerCInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="c" tabindex="-1">
+                                    </div>
+                                </div>
+                                <div class="input-group mb-3">
+                                    <span class="input-group-text">d.</span>
+                                    <input type="text" class="form-control" v-model="newAnswerD" placeholder="D answer...">
+                                    <div class="input-group-text">
+                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerDInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="d" tabindex="-1">
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="col">
+                            <div class="border p-3">
+                                <p class="prompt fw-bolder">{{newQuestionPrompt}}</p>
+                                <form id="exampleNewQuestion" class="question-form">
+                                    <div class="form-check disabled-answer correct">
+                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="a">
+                                        <label class="form-check-label">a</label>
+                                    </div>
+                                    <div class="form-check disabled-answer">
+                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="b">
+                                        <label class="form-check-label">b</label>
+                                    </div>
+                                    <div class="form-check disabled-answer">
+                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="c">
+                                        <label class="form-check-label">c</label>
+                                    </div>
+                                    <div class="form-check disabled-answer">
+                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="d">
+                                        <label class="form-check-label">d</label>
+                                    </div>
+                                </form>
+                            </div>
+                            <div>
+                                <button type="button" class="btn btn-primary" @click="addNewQuestion">Add Question</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col">
+                            Show individual questions here:
+                        </div>
+                        <div class="col">
+                            <label for="comment">Plain Text Gen:</label>
+                            <textarea class="form-control" rows="5" id="plainTextGen" name="text"></textarea>
+                        </div>
+                    </div>
+                </div>
             </div>
 
 
@@ -171,7 +248,7 @@
                             <p>These are some gen examples that can be accepted into the textfield or uploaded as a .txt file</h4>
                             <ul class="list-group my-2">
                                 <li class="list-group-item p-4">
-                                    <h4>1. The text between the "checklist = {}" in the .py or .txt gen files:</h4>
+                                    <h4>1. The text between the "checklist = {}" curly braces in the .py or .txt gen files:</h4>
                                     <div class="border rounded p-3 shadow-sm">
                                         <code>
                                             checklist = {<br>
@@ -238,7 +315,6 @@
                 </div>
             </div>
 
-
             <div class="modal fade" id="skippedMultiAnswerQuestionsModal">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
@@ -266,7 +342,6 @@
                 </div>
             </div>
 
-
             <div class="modal fade" id="disclaimersModal">
                 <div class="modal-dialog modal-lg modal-dialog-centered">
                     <div class="modal-content">
@@ -288,8 +363,6 @@
                     </div>
                 </div>
             </div>
-
-
 
         </div>
         

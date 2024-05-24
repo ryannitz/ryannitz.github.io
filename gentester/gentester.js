@@ -2,14 +2,16 @@
 /*
     Behold the actual worst code to do this... Only using vue to hack the question bindings.
     Yes I could've parsed the questions and answers and stored them in an array as proper objects... did I... ha? 
+    Using actual component architecture? Couldn't be me
 */
 var app = new Vue({
     el: "#app",
 
 
     data : {
-        onTestPage: true,
-        onCreatorPage: false,
+
+        //DEV BLOCK
+        showCreatorPageOnLoad: false,
 
         devQuestions : {
             'Planes are: \n a. Cool \n b. Not Cool \n c. IDK \n d. TEST?': 'a',
@@ -17,6 +19,8 @@ var app = new Vue({
         },
 
         devQuestionsText : `'Planes are: \\n a. Cool \\n b. Not Cool \\n c. IDK \\n d. TEST?': 'a', \n'Clouds are: \\n a. Made of evaporated tears \\n b. Fake \\n c. Water I guess \\n d. CLOUDS!': 'd',`,
+        //END DEV BLOCK
+
 
         questions: {},
         currentQuestionIndex: 0,
@@ -27,7 +31,19 @@ var app = new Vue({
         incorrectlyAnsweredQuestions: [],
         testPercentage: 0,
 
-        unAnsweredQuestionCount: 0
+        unAnsweredQuestionCount: 0,
+
+
+        //Creator Page
+        newQuestion:"",
+        newAnswerA:"",
+        newAnswerB:"",
+        newAnswerC:"",
+        newAnswerD:"",
+        newCorrectAnswer: 'a',
+
+        creatorQuestions : {},
+
     },
 
 
@@ -50,20 +66,23 @@ var app = new Vue({
             this.incorrectlyAnsweredQuestions = []
             this.scrambleQuestions();
 
-            $("#restartTest").hide()
-            $("#submitTest").show()
-            $("#results").hide()
-
             $(".form-check-input").prop('disabled', false);
             $("input").parent().removeClass('correct incorrect')
             $(".form-check").removeClass('disabled-answer');
             $(`input:checked`).prop('checked', false);
 
+            $("#restartTest").hide()
+            $("#results").hide()
             $("#notest").hide()
             $(".question").hide()
             $(".maqa").hide()
+            $(".hideAnswer").hide()
+
             $("#test").show()
             $("#0").show()
+            $(".cheater-buttons").show()
+            $("#submitTest").show()
+            $(".revealAnswer").show()
         },
 
         scrambleQuestions(){
@@ -174,6 +193,7 @@ var app = new Vue({
             
             this.testPercentage = ((this.correctAnswerCount/Object.keys(this.questions).length)*100).toFixed(2)
             $("#submitTest").hide()
+            $(".cheater-buttons").hide()
             $("#restartTest").show()
             $("#results").show()
             $(".form-check-input").prop('disabled', true);
@@ -255,7 +275,43 @@ var app = new Vue({
         clickAnswer(){
             console.log("Answer Clicked")
             this.unAnsweredQuestionCount = Object.keys(this.questions).length - $('.form-check-input:checked').length
-        }
+        },
+
+
+        /**
+         * Creator Page
+         */
+
+        addNewQuestion() {
+
+            var keyString = `${this.newQuestion} \\n a. ${this.newAnswerA} \\n b. ${this.newAnswerB} \\n c. ${this.newAnswerC} \\n d. ${this.newAnswerD}`
+            keyString = keyString.replaceAll(`\"`, "\'")
+            var objKey = `"${keyString}"`
+
+            var objVal = `${this.newCorrectAnswer}`
+            if(objKey in this.creatorQuestions){
+                return
+            }
+            this.creatorQuestions[objKey] = objVal
+            console.log(this.creatorQuestions)
+
+            var genTextField = ""
+            for(var i = 0; i < Object.keys(this.creatorQuestions).length; i++){
+                var key = Object.keys(this.creatorQuestions)[i]
+                var val = this.creatorQuestions[key];
+
+                key = key.replaceAll(`\'`, `\\\'`)
+                key = key.substring(1,key.length-1)
+                key = key.replaceAll(`\"`, `\\\"`)
+
+                val = val.replaceAll(`\"`, `\'`)
+            
+                var questionText = `'${key}':'${val}', \n`;
+                genTextField += questionText
+                
+            }
+            $("#plainTextGen").val(genTextField)
+        },
 
     },
 
@@ -285,8 +341,12 @@ var app = new Vue({
     },
 
     computed: {
-
+        newQuestionPrompt: function() {
+            var val = ` ${this.newQuestion} \n a. ${this.newAnswerA} \n b. ${this.newAnswerB} \n c. ${this.newAnswerC} \n d. ${this.newAnswerD} `
+            return val.replaceAll(`\"`, `\'`)
+        },
     }
+
 });
 
 $(document).ready(function(){
@@ -305,11 +365,26 @@ $(document).ready(function(){
         
     })
 
-
     $("#uploadedFile").change( async function(){
         const uploadedFile = $(this).prop('files')[0];
         const fileContents = await uploadedFile.text();
         $("#textfield").val(fileContents)
+    })
+
+    $("#showCreatorPage").click( function(){
+        $("#test-page").hide()
+        $("#creator-page").show()
+    })
+
+    $("#showTestPage").click( function(){
+        $("#creator-page").hide()
+        $("#test-page").show()
+    })
+
+    $(".newAnswer").change(function(){
+        var val = $('input[name="newCorrectAnswer"]:checked').val()
+        $(`input[name="exampleAnswer"]`).parent().removeClass("correct")
+        $(`input[name="exampleAnswer"][value="${val}"]`).parent().addClass("correct")
     })
 });
 
