@@ -97,6 +97,20 @@ var app = new Vue({
             $("#gen").collapse()
         },
 
+        revealAnswer(questionIndex) {
+            var correctAnswer = this.questions[Object.keys(this.questions)[questionIndex]]
+            $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().addClass('correct')
+            $("#"+questionIndex).find(".revealAnswer").hide()
+            $("#"+questionIndex).find(".hideAnswer").show()
+        },
+
+        hideAnswer(questionIndex) {
+            var correctAnswer = this.questions[Object.keys(this.questions)[questionIndex]]
+            $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().removeClass('correct')
+            $("#"+questionIndex).find(".hideAnswer").hide()
+            $("#"+questionIndex).find(".revealAnswer").show()
+        },
+
         previousQuestion(){
             if(this.currentQuestionIndex == 0){
                 return
@@ -276,6 +290,7 @@ var app = new Vue({
 });
 
 $(document).ready(function(){
+    window.onbeforeunload = function(){return "Leaving?"}
     $("form").submit(function (e) { 
         e.preventDefault();
     });

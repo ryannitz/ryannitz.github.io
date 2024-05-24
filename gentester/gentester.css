@@ -4,7 +4,7 @@
     display: none;
 } */
 
-#create-page, #restartTest, #results, #test, .question, .test-hidden, .maqa {
+#create-page, #restartTest, #results, #test, .question, .test-hidden, .maqa, .hideAnswer {
     display: none;
 }
 

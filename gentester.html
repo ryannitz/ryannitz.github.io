@@ -37,15 +37,12 @@
                     </div>
                     <div id="notes" class="px-3 pb-3 collapse">
                         <ul>
-                            <li><p>IMPORTANT: This website is static and does not save, store, or transmit any information that is entered. Every visit will require you to re-enter gen. </p></li>
-                            <li><p>Gen test creation tool and templates coming soon! Formatting will be the same as the old gen tester to support interchangeability.</p></li>
-                            <li><p>I made this for fun and to allow for a more accessible tool to gen test.</p></li>
-                            <li><p>Made in a few hours... don't judge</p></li>
-                            <li><p>Update: Multi-answer questions are now available to be answered at the end of the test! They do not count in the final result. I will not be adding them to the regular test because I don't want to code.</p></li>
+                            <li><p class="hover" data-bs-toggle="modal" data-bs-target="#disclaimersModal"><u>DISCLAIMERS</u></p></li>
+                            <li><p>Update: Multi-answer questions are now available to be viewed at the end of the test! They do not count in the final result. I will not be adding them to the regular test because I don't want to code.</p></li>
                             <li><p>Update: You can now manually select which question to see in the numberbox above the question!</p></li>
                             <li><p>Update: You can now use Arrow Keys to navigate between questions!</p></li>
-                            <li><p>Update: Dark mode can now be toggled using the button below</p></li>
-                            <li><p>Update: Gen section now collapses to help prevent screen jump with longer questions</p></li>
+                            <li><p>Update: Dark mode can now be toggled using the button below!</p></li>
+                            <li><p>Gen test creation tool and templates coming soon! Formatting will be the same as the old gen tester to support interchangeability.</p></li>
                         </ul>
                         <p class="text-center">
                             <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
@@ -89,13 +86,21 @@
                     <div id="test" class="col-sm">
                         <h3 class="text-center my-3"><u>TEST</u></h3>
                         <div class="test-body">
-                            <h3 class="text-center test-hidden">
-                                <input class="text-center" id="questionNumber" type="number" step="1" min="1" :max="[Object.keys(questions).length]" name="questionNumber" :value="[currentQuestionIndex+1]" @change="manualQuestionDisplay();">
-                                /{{Object.keys(questions).length}}
-                            </h3>
-                            <p class="text-center test-hidden">Unanswered Questions: {{this.unAnsweredQuestionCount}} (not reliable 100%)</p>
+
+                            <div class="text-center">
+                                <h3 class="test-hidden">
+                                    <input id="questionNumber" type="number" step="1" min="1" :max="[Object.keys(questions).length]" name="questionNumber" :value="[currentQuestionIndex+1]" @change="manualQuestionDisplay();">
+                                    /{{Object.keys(questions).length}}
+                                </h3>
+                                <p class="test-hidden">Unanswered Questions: {{this.unAnsweredQuestionCount}} (not reliable 100%)</p>
+                            </div>
+                            
                             <ul id="questions">
                                 <li v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="index" class="question">
+                                    <p class="text-center">
+                                        <button type="button" class="revealAnswer btn btn-primary" @click="revealAnswer(index);" data-bs-toggle="tooltip" title="If you're not cheating, you're not trying">Reveal Answer</button>
+                                        <button type="button" class="hideAnswer btn btn-primary" @click="hideAnswer(index);">Hide Answer</button>
+                                    </p>
                                     <p class="prompt fw-bolder">{{questionPrompt}}</p>
                                     <form :id="'questionForm' + index" class="question-form">
                                         <div class="form-check" @click="clickAnswer();">
@@ -262,10 +267,31 @@
             </div>
 
 
+            <div class="modal fade" id="disclaimersModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Disclaimers</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul>
+                                <li><p>IMPORTANT: This website is static and does not save, store, or transmit any information that is entered. Every visit will require you to re-enter gen. </p></li>
+                                <li><p>This site is only as good as the gen provided. If the answer is not correct, the provided gen is not correct and wouldn't have been in the python script either.</p></li>
+                                <li><p>If you know who I am and how to contact me, feel free to suggest changes or updates as you see fit.</p></li>
+                                <li><p>This site was not originally intended for use on small(er) screen devices.</p></li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
 
         </div>
-
-
         
         <script src="gentester/gentester.js"></script>
     </body>
