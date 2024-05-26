@@ -1,0 +1,18 @@
+.prompt {
+    white-space: pre-line;
+    white-space: pre-wrap;
+}
+
+
+.correct {
+    background-color: rgba(0,255,0, .5);
+}
+
+
+.question-table-text {
+    word-wrap: break-word;
+}
+
+.hover {
+    cursor: pointer;
+}

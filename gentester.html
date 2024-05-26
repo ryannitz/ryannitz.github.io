@@ -29,8 +29,7 @@
         -->
         <div id="app" class="container">
 
-            <div v-if="showCreatorPageOnLoad == false" id="test-page" class="page">
-                <!-- <button id="showCreatePage" type="button" class="btn btn-primary mx-4">Create Test</button> -->
+            <div id="test-page" class="page">
                 <div class="container-sm border shadow-sm my-4 mx-auto">
                     <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#notes">
                         <h6 class="m-0 text-center">Notes <i class="fa fa-chevron-down float-end"></i></h6>
@@ -154,88 +153,6 @@
                 </div>
             </div>
             
-            <div v-if="showCreatorPageOnLoad" id="creator-page" class="page">
-                <h1>WORK IN PROGRESS. IGNORE</h1>
-                <button id="showTestPage" type="button" class="btn btn-primary mx-4">Test Page</button>
-                <div class="container-sm">
-                    <div class="row">
-                        <div class="col">
-                            <form>
-                                <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="newQuestion" v-model="newQuestion" name="newQuestion" placeholder="Question"></textarea>
-                                    <label for="comment">Question</label>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">a.</span>
-                                    <input type="text" class="form-control" v-model="newAnswerA" placeholder="A answer...">
-                                    <div class="input-group-text">
-                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerAInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="a" tabindex="-1" checked="checked">
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">b.</span>
-                                    <input type="text" class="form-control" v-model="newAnswerB" placeholder="B answer...">
-                                    <div class="input-group-text">
-                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerBInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="b" tabindex="-1">
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">c.</span>
-                                    <input type="text" class="form-control" v-model="newAnswerC" placeholder="C answer...">
-                                    <div class="input-group-text">
-                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerCInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="c" tabindex="-1">
-                                    </div>
-                                </div>
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">d.</span>
-                                    <input type="text" class="form-control" v-model="newAnswerD" placeholder="D answer...">
-                                    <div class="input-group-text">
-                                        <input type="radio" class="newAnswer form-check-input" id="newAnswerDInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="d" tabindex="-1">
-                                    </div>
-                                </div>
-                            </form>
-                        </div>
-                        <div class="col">
-                            <div class="border p-3">
-                                <p class="prompt fw-bolder">{{newQuestionPrompt}}</p>
-                                <form id="exampleNewQuestion" class="question-form">
-                                    <div class="form-check disabled-answer correct">
-                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="a">
-                                        <label class="form-check-label">a</label>
-                                    </div>
-                                    <div class="form-check disabled-answer">
-                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="b">
-                                        <label class="form-check-label">b</label>
-                                    </div>
-                                    <div class="form-check disabled-answer">
-                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="c">
-                                        <label class="form-check-label">c</label>
-                                    </div>
-                                    <div class="form-check disabled-answer">
-                                        <input type="radio" class="form-check-input" name="exampleAnswer" value="d">
-                                        <label class="form-check-label">d</label>
-                                    </div>
-                                </form>
-                            </div>
-                            <div>
-                                <button type="button" class="btn btn-primary" @click="addNewQuestion">Add Question</button>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col">
-                            Show individual questions here:
-                        </div>
-                        <div class="col">
-                            <label for="comment">Plain Text Gen:</label>
-                            <textarea class="form-control" rows="5" id="plainTextGen" name="text"></textarea>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-
-
 
             <div class="modal fade" id="genExampleModal">
                 <div class="modal-dialog modal-lg modal-dialog-centered">

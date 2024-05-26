@@ -33,17 +33,6 @@ var app = new Vue({
 
         unAnsweredQuestionCount: 0,
 
-
-        //Creator Page
-        newQuestion:"",
-        newAnswerA:"",
-        newAnswerB:"",
-        newAnswerC:"",
-        newAnswerD:"",
-        newCorrectAnswer: 'a',
-
-        creatorQuestions : {},
-
     },
 
 
@@ -273,46 +262,8 @@ var app = new Vue({
         },
 
         clickAnswer(){
-            console.log("Answer Clicked")
             this.unAnsweredQuestionCount = Object.keys(this.questions).length - $('.form-check-input:checked').length
         },
-
-
-        /**
-         * Creator Page
-         */
-
-        addNewQuestion() {
-
-            var keyString = `${this.newQuestion} \\n a. ${this.newAnswerA} \\n b. ${this.newAnswerB} \\n c. ${this.newAnswerC} \\n d. ${this.newAnswerD}`
-            keyString = keyString.replaceAll(`\"`, "\'")
-            var objKey = `"${keyString}"`
-
-            var objVal = `${this.newCorrectAnswer}`
-            if(objKey in this.creatorQuestions){
-                return
-            }
-            this.creatorQuestions[objKey] = objVal
-            console.log(this.creatorQuestions)
-
-            var genTextField = ""
-            for(var i = 0; i < Object.keys(this.creatorQuestions).length; i++){
-                var key = Object.keys(this.creatorQuestions)[i]
-                var val = this.creatorQuestions[key];
-
-                key = key.replaceAll(`\'`, `\\\'`)
-                key = key.substring(1,key.length-1)
-                key = key.replaceAll(`\"`, `\\\"`)
-
-                val = val.replaceAll(`\"`, `\'`)
-            
-                var questionText = `'${key}':'${val}', \n`;
-                genTextField += questionText
-                
-            }
-            $("#plainTextGen").val(genTextField)
-        },
-
     },
 
 
@@ -341,10 +292,7 @@ var app = new Vue({
     },
 
     computed: {
-        newQuestionPrompt: function() {
-            var val = ` ${this.newQuestion} \n a. ${this.newAnswerA} \n b. ${this.newAnswerB} \n c. ${this.newAnswerC} \n d. ${this.newAnswerD} `
-            return val.replaceAll(`\"`, `\'`)
-        },
+
     }
 
 });
@@ -369,16 +317,6 @@ $(document).ready(function(){
         const uploadedFile = $(this).prop('files')[0];
         const fileContents = await uploadedFile.text();
         $("#textfield").val(fileContents)
-    })
-
-    $("#showCreatorPage").click( function(){
-        $("#test-page").hide()
-        $("#creator-page").show()
-    })
-
-    $("#showTestPage").click( function(){
-        $("#creator-page").hide()
-        $("#test-page").show()
     })
 
     $(".newAnswer").change(function(){
