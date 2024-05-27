@@ -1,5 +1,5 @@
 
-<html>
+<html data-bs-theme="dark">
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -26,14 +26,16 @@
             <div class="page">
                 <p class="text-center">
                     <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
+                    <br>
+                    <a href="" data-bs-toggle="modal" data-bs-target="#instructionsModal">Instructions and Tips</a>
                 </p>
                 <div class="container-sm">
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md">
                             <form>
                                 <div class="form-floating mb-3">
-                                    <textarea class="form-control" id="newQuestion" v-model="newQuestion" name="newQuestion" placeholder="Question" rows="5"></textarea>
-                                    <label for="comment">Question</label>
+                                    <textarea class="form-control" id="newQuestion" v-model="newQuestion" name="newQuestion" rows="5" style="height: auto;"></textarea>
+                                    <label for="comment">New Question here...</label>
                                 </div>
                                 <div class="input-group mb-3">
                                     <span class="input-group-text">a.</span>
@@ -65,7 +67,7 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="col">
+                        <div class="col-md">
                             <div class="border p-3">
                                 <p class="prompt fw-bolder">{{newQuestionPrompt}}</p>
                                 <form id="exampleNewQuestion" class="question-form">
@@ -92,8 +94,16 @@
                             </div>
                         </div>
                     </div>
+                    <br>
                     <div class="row">
-                        <div class="col">
+                        <div class="col-md">
+                            <!-- <button type="button" class="btn btn-primary" @click="loadGenText()">Edit Gen from Text</button> -->
+                            <div class="form-floating my-3">
+                                <textarea class="form-control" rows="5" id="plainTextGen" name="text" style="height: auto;"></textarea>
+                                <label for="comment">Plain Text Gen</label>
+                            </div>
+                        </div>
+                        <div class="col-md">
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -106,20 +116,44 @@
                                 <tbody>
                                     <tr class="hover table-hover" v-for="(answer, question, index) in creatorQuestions" :id="index" @click="populateUIfromQuestion(question)">
                                         <td>{{index}}</td>
-                                        <td class="question-table-text">{{question.substring(1, question.indexOf(`\\n a.`))}}</td>
+                                        <td class="question-table-text">{{question.substring(1, question.indexOf(` \\n a. `))}}</td>
                                         <td>{{answer}}</td>
                                         <td><button type="button" class="btn-close" @click="removeQuestion(question)"></button></td>
                                     </tr>
                                 </tbody>
                             </table>
                         </div>
-                        <div class="col">
-                            <label class="text-center" for="comment">Plain Text Gen</label>
-                            <textarea class="form-control" rows="5" id="plainTextGen" name="text"></textarea>
-                        </div>
+                        
                     </div>
                 </div>
             </div>     
+
+
+            <div class="modal fade" id="instructionsModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Instructions</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul>
+                                <li>To edit gen:
+                                    <ul>
+                                        <li>Paste gen into the gen textfield and click the "Edit Gen from Text" button.</li>
+                                        <li>Click the question you would like to edit from the questions table. This will populate the question into the form to be edited.</li>
+                                        <li>Either before or after you add the new/updated question, you should delete it from the questions table by clicking the "X"</li>
+                                    </ul>
+                                </li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div>   
         <script src="gencreator/gencreator.js"></script>
     </body>
