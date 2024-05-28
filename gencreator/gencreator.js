@@ -92,7 +92,7 @@ var app = new Vue({
             console.log(text)
             try {
                 this.creatorQuestions = JSON.parse(text)
-                console.log(this.creatorQuestions)
+                this.reloadGenTextField()
             } catch (error) {
                 createAlert(alertType.danger, alertLocation.top, -1, "Could not parse the input. Standar format rule was broken")
                 console.log(error)
@@ -105,12 +105,14 @@ var app = new Vue({
                 var key = Object.keys(this.creatorQuestions)[i]
                 var val = this.creatorQuestions[key];
 
-                key = key.substring(1,key.length-1)
+                //key = key.substring(1,key.length-1)
                 console.log(key)
                 key = key.replaceAll(`\'`, `\\\'`)
-                val = val.replaceAll(`\"`, `\'`)
+                key = key.replaceAll(`\"`, `\'`)
                 key = key.replaceAll(`\n`, `\\n`)
+                console.log(key)
             
+                val = val.replaceAll(`\"`, `\'`)
                 var questionText = `'${key}':'${val}', \n`;
                 console.log(questionText)
                 genTextField += questionText
@@ -122,12 +124,13 @@ var app = new Vue({
 
         addNewQuestion() {
 
-            var keyString = `${this.newQuestion} \\n a. ${this.newAnswerA} \\n b. ${this.newAnswerB} \\n c. ${this.newAnswerC} \\n d. ${this.newAnswerD}`
-            keyString = keyString.replaceAll(`\"`, "\'")
-            var objKey = `"${keyString}"`
+            var keyString = `${this.newQuestion} \n a. ${this.newAnswerA} \n b. ${this.newAnswerB} \n c. ${this.newAnswerC} \n d. ${this.newAnswerD}`
+            keyString = keyString.replaceAll(`\"`, `\\'`)
+            objKey = `${keyString}`
 
             var objVal = `${this.newCorrectAnswer}`
             if(objKey in this.creatorQuestions){
+                createAlert(alertType.danger, alertLocation.top, 5000, "Exact question and answers already exist!")
                 return
             }
 
@@ -157,16 +160,20 @@ var app = new Vue({
         },
 
         populateUIfromQuestion(question){
-            this.newQuestion = question.substring(1, question.indexOf(` \\n a. `))
-            this.newAnswerA = question.substring(question.indexOf(` \\n a. `)+7, question.indexOf(` \\n b. `))
-            this.newAnswerB = question.substring(question.indexOf(` \\n b. `)+7, question.indexOf(` \\n c. `))
-            this.newAnswerC = question.substring(question.indexOf(` \\n c. `)+7, question.indexOf(` \\n d. `))
-            this.newAnswerD = question.substring(question.indexOf(` \\n d. `)+7, question.length-1)
-            console.log(this.newQuestion)
-            console.log(this.newAnswerA)
-            console.log(this.newAnswerB)
-            console.log(this.newAnswerC)
-            console.log(this.newAnswerD)
+            var correctQuestionAnswer = this.creatorQuestions[question]
+            $(`input[name="newCorrectAnswer"][value="${correctQuestionAnswer}"]`).prop('checked', true);
+            this.newQuestion = question.substring(0, question.indexOf(` \n a. `))
+            this.newAnswerA = question.substring(question.indexOf(` \n a. `)+6, question.indexOf(` \n b. `))
+            this.newAnswerB = question.substring(question.indexOf(` \n b. `)+6, question.indexOf(` \n c. `))
+            this.newAnswerC = question.substring(question.indexOf(` \n c. `)+6, question.indexOf(` \n d. `))
+            this.newAnswerD = question.substring(question.indexOf(` \n d. `)+6, question.length)
+            $(`input[name="exampleAnswer"]`).parent().removeClass("correct")
+            $(`input[name="exampleAnswer"][value="${correctQuestionAnswer}"]`).parent().addClass("correct")
+
+        },
+
+        questionTableItemClick(){
+            $("html, body").animate({ scrollTop: 0 }, "fast");
         }
 
     },
@@ -224,9 +231,14 @@ $(document).ready(function(){
         $(`input[name="exampleAnswer"]`).parent().removeClass("correct")
         $(`input[name="exampleAnswer"][value="${val}"]`).parent().addClass("correct")
     })
-});
 
-$(document)
+    $("#questionTableSearch").on("keyup", function() {
+        var value = $(this).val().toLowerCase();
+            $("#questionTable tr").filter(function() {
+            $(this).toggle($(this).text().toLowerCase().indexOf(value) > -1)
+        });
+    });
+});
 
 
 

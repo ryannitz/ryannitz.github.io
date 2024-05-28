@@ -22,14 +22,14 @@
         <script src="util/create_alert.js"></script>
     </head>
     <body>
-        <div id="app" class="container">
+        <div id="app" class="container-fluid">
             <div class="page">
                 <p class="text-center">
                     <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
                     <br>
                     <a href="" data-bs-toggle="modal" data-bs-target="#instructionsModal">Instructions and Tips</a>
                 </p>
-                <div class="container-sm">
+                <div class="container-fluid">
                     <div class="row">
                         <div class="col-md">
                             <form>
@@ -97,13 +97,17 @@
                     <br>
                     <div class="row">
                         <div class="col-md">
-                            <!-- <button type="button" class="btn btn-primary" @click="loadGenText()">Edit Gen from Text</button> -->
+                            <button type="button" class="btn btn-primary" @click="loadGenText()">Edit Gen from Text</button>
                             <div class="form-floating my-3">
                                 <textarea class="form-control" rows="5" id="plainTextGen" name="text" style="height: auto;"></textarea>
                                 <label for="comment">Plain Text Gen</label>
                             </div>
                         </div>
                         <div class="col-md">
+                            <div class="input-group mb-3">
+                                <span class="input-group-text">Search Question Table</span>
+                                <input id="questionTableSearch" type="text" class="form-control">
+                              </div>
                             <table class="table table-striped">
                                 <thead>
                                     <tr>
@@ -113,11 +117,11 @@
                                         <th style="width: 50px;"></th>
                                     </tr>
                                 </thead>
-                                <tbody>
-                                    <tr class="hover table-hover" v-for="(answer, question, index) in creatorQuestions" :id="index" @click="populateUIfromQuestion(question)">
-                                        <td>{{index}}</td>
-                                        <td class="question-table-text">{{question.substring(1, question.indexOf(` \\n a. `))}}</td>
-                                        <td>{{answer}}</td>
+                                <tbody id="questionTable">
+                                    <tr class="hover table-hover" v-for="(answer, question, index) in creatorQuestions" :id="index" @click="questionTableItemClick()">
+                                        <td class="text-center" @click="populateUIfromQuestion(question)">{{index}}</td>
+                                        <td @click="populateUIfromQuestion(question)" class="question-table-text">{{question.substring(0, question.indexOf(` \n a. `))}}</td>
+                                        <td @click="populateUIfromQuestion(question)">{{answer}}</td>
                                         <td><button type="button" class="btn-close" @click="removeQuestion(question)"></button></td>
                                     </tr>
                                 </tbody>
@@ -145,6 +149,7 @@
                                         <li>Either before or after you add the new/updated question, you should delete it from the questions table by clicking the "X"</li>
                                     </ul>
                                 </li>
+                                <li>To see the correct answer text for a given question, please click the question in the questions table to populate the form. OR search it in the gen text field</li>
                             </ul>
                         </div>  
                         <div class="modal-footer">
