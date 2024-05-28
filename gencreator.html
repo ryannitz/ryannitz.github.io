@@ -32,7 +32,7 @@
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md">
-                            <form>
+                            <form class="border p-4 m-0">
                                 <div class="form-floating mb-3">
                                     <textarea class="form-control" id="newQuestion" v-model="newQuestion" name="newQuestion" rows="5" style="height: auto;"></textarea>
                                     <label for="comment">New Question here...</label>
@@ -65,10 +65,13 @@
                                         <input type="radio" class="newAnswer form-check-input" id="newAnswerDInput" v-model="newCorrectAnswer" name="newCorrectAnswer" value="d" tabindex="-1">
                                     </div>
                                 </div>
+                                <p class="text-center">
+                                    <button type="button" class="btn btn-primary" @click="clearQuestionUI">Clear Question Form</button>
+                                </p>
                             </form>
                         </div>
                         <div class="col-md">
-                            <div class="border p-3">
+                            <div class="border p-3 h-100">
                                 <p class="prompt fw-bolder">{{newQuestionPrompt}}</p>
                                 <form id="exampleNewQuestion" class="question-form">
                                     <div class="form-check disabled-answer correct">

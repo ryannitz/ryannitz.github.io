@@ -172,6 +172,14 @@ var app = new Vue({
 
         },
 
+        clearQuestionUI(){
+            this.newQuestion = ""
+            this.newAnswerA = ""
+            this.newAnswerB = ""
+            this.newAnswerC = ""
+            this.newAnswerD = ""
+        },
+
         questionTableItemClick(){
             $("html, body").animate({ scrollTop: 0 }, "fast");
         }
