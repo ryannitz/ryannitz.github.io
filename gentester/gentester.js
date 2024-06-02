@@ -56,8 +56,8 @@ var app = new Vue({
             this.scrambleQuestions();
 
             $(".form-check-input").prop('disabled', false);
-            $("input").parent().removeClass('correct incorrect')
-            $(".form-check").removeClass('disabled-answer');
+            $("input").parent().parent().removeClass('correct incorrect')
+            $(".answer").removeClass('disabled-answer');
             $(`input:checked`).prop('checked', false);
 
             $("#restartTest").hide()
@@ -107,14 +107,14 @@ var app = new Vue({
 
         revealAnswer(questionIndex) {
             var correctAnswer = this.questions[Object.keys(this.questions)[questionIndex]]
-            $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().addClass('correct')
+            $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().parent().addClass('correct')
             $("#"+questionIndex).find(".revealAnswer").hide()
             $("#"+questionIndex).find(".hideAnswer").show()
         },
 
         hideAnswer(questionIndex) {
             var correctAnswer = this.questions[Object.keys(this.questions)[questionIndex]]
-            $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().removeClass('correct')
+            $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().parent().removeClass('correct')
             $("#"+questionIndex).find(".hideAnswer").hide()
             $("#"+questionIndex).find(".revealAnswer").show()
         },
@@ -165,12 +165,12 @@ var app = new Vue({
                 var correctAnswer = this.questions[Object.keys(this.questions)[i]]
                 var userA = $(`input[name="${i}"]:checked`).val()
                 //just show the correct answer always
-                $(`input[name="${i}"][value="${correctAnswer}"]`).parent().addClass('correct')
+                $(`input[name="${i}"][value="${correctAnswer}"]`).parent().parent().addClass('correct')
 
                 if(userA === correctAnswer){
                     this.correctAnswerCount++;
                 }else{
-                    $(`input[name="${i}"]:checked`).parent().addClass('incorrect')
+                    $(`input[name="${i}"]:checked`).parent().parent().addClass('incorrect')
                     incorrectQA = {
                         question: Object.keys(this.questions)[i],
                         answer: correctAnswer,
@@ -186,7 +186,7 @@ var app = new Vue({
             $("#restartTest").show()
             $("#results").show()
             $(".form-check-input").prop('disabled', true);
-            $(".form-check").addClass('disabled-answer');
+            $(".answer").addClass('disabled-answer');
         },
         
         insertExampleGen(){
@@ -327,7 +327,7 @@ $(document).ready(function(){
 });
 
 $(document)
-    .on("click", ".form-check", function() {
+    .on("click", ".answer", function() {
         if(!$(this).hasClass('disabled-answer')){
             $(this).find("input").prop("checked", true);   
         }

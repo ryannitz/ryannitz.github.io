@@ -29,7 +29,7 @@
     white-space: pre-wrap;
 }
 
-.form-check:hover{
+.answer:hover{
     cursor: pointer;
     background-color: rgba(0,0,255,0.2);
 }
@@ -49,4 +49,12 @@
 
 .disabled-answer:hover {
     cursor: not-allowed;
+}
+
+.form-check-input:disabled{
+    opacity: 1!important;
+}
+
+.form-check-input:disabled~.form-check-label, .form-check-input[disabled]~.form-check-label{
+    opacity: 1!important;
 }
