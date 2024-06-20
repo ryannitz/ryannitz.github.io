@@ -187,6 +187,10 @@ var app = new Vue({
             $("#results").show()
             $(".form-check-input").prop('disabled', true);
             $(".answer").addClass('disabled-answer');
+
+            if(this.multiAnswerQuestions.length > 0){
+                createAlert(alertType.info, alertLocation.top, 10000, "There were multi-answer questions skipped in this test. Please review them with the button provided below...(AS REQUIRED)")
+            }
         },
         
         insertExampleGen(){

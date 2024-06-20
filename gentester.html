@@ -148,7 +148,7 @@
                             </div>
                             <div class="row my-4">
                                 <div class="col">
-                                    <button id="submitTest" type="button" class="btn btn-primary p-2 px-5" @click="submitTest();">Submit Test</button>
+                                    <button id="submitTest" type="button" class="btn btn-primary p-2 px-5" data-bs-toggle="modal" data-bs-target="#submitTestConfirmation">Submit Test</button>
                                     <button id="restartTest" type="button" class="btn btn-primary p-2 px-5" @click="restartTest();">Restart Test</button>
                                 </div>
                             </div>
@@ -158,7 +158,25 @@
                         <h3 class="text-center my-3"><u>RESULTS</u></h3>
                         <h3 id="percentage" class="my-4">{{correctAnswerCount}}/{{Object.keys(questions).length}} = {{testPercentage}}%</h3>
                         <button id="showIncorrectAnswers" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#incorrectAnswersModal">Show Incorrect Answers</button><br>
-                        <button id="showSkippedMultiAnswerQuestions" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#skippedMultiAnswerQuestionsModal">Show Skipped Multi-Answer Questions</button>
+                        <button v-if="multiAnswerQuestions.length > 0" id="showSkippedMultiAnswerQuestions" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#skippedMultiAnswerQuestionsModal">Show Skipped Multi-Answer Questions</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="submitTestConfirmation">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmation</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            Are you sure you would like to submit the test?
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submitTest();">Submit</button>
+                        </div>
                     </div>
                 </div>
             </div>
