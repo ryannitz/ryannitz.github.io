@@ -34,6 +34,7 @@ var app = new Vue({
         unAnsweredQuestionCount: 0,
 
         reviewing: true,
+        showAuthenticQuestionTree: true,
 
     },
 

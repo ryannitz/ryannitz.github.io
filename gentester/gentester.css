@@ -70,7 +70,7 @@
     padding-top: 5px;
 }
 
-#questionTree>li:hover, #questionTree>li.active{
+#questionTree>div>li:hover, #questionTree>div>li.active{
     background-color: rgba(87,141,184,1);
     cursor: pointer;
 }

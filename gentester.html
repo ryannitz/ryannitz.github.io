@@ -35,11 +35,22 @@
                 <div id="test-container" class="row">
                 
                     <div id="questionTreeContainer" class="col-2 p-0">
-                        <ul id="questionTree" class="pt-5">
-                            <li class="px-4 py-1 questionTreeItem" v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="'questionTreeItem' + index" @click="manualQuestionDisplay(index);">
-                                <span class="text-body fw-bolder">( )</span>
-                                {{index+1}}. {{questionPrompt.substring(0, questionPrompt.indexOf(` \n a. `))}}
-                            </li>
+                        <p class="m-0 text-center pt-2">
+                            <a class="pt-1 text-light" href="#" @click="showAuthenticQuestionTree? showAuthenticQuestionTree=false : showAuthenticQuestionTree=true">toggle authentic mode</a>
+                        </p>
+                        <ul id="questionTree" class="pt-2">
+                            <div v-if="!showAuthenticQuestionTree">
+                                <li class="px-4 py-1 questionTreeItem" v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="'questionTreeItem' + index" @click="manualQuestionDisplay(index);">
+                                    <span class="text-body fw-bolder">( )</span>
+                                    Question
+                                </li>
+                            </div>
+                            <div v-if="showAuthenticQuestionTree">
+                                <li class="px-4 py-1 questionTreeItem" v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="'questionTreeItem' + index" @click="manualQuestionDisplay(index);">
+                                    <span class="text-body fw-bolder">( )</span>
+                                    {{index+1}}. {{questionPrompt.substring(0, questionPrompt.indexOf(` \n a. `))}}
+                                </li>
+                            </div>
                         </ul>
                     </div>
                     <div class="col p-0 box">
