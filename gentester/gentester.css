@@ -3,9 +3,76 @@
 /* #creator-page, #test, #restartTest, #results {
     display: none;
 } */
-
-#create-page, #restartTest, #results, #test, .question, .test-hidden, .maqa, .hideAnswer {
+.col, .row{
+    padding: 0px!important;
+    margin: 0px!important;
+}
+#create-page, #startTest, #restartTest, #results, .question, .test-hidden, .maqa, .hideAnswer, #navControls {
     display: none;
+}
+
+.box{
+    display: flex;
+    flex-flow: column;
+    height: 100%;
+}
+#testHeader {
+    flex: 0 1 auto;
+    /* The above is shorthand for:
+    flex-grow: 0,
+    flex-shrink: 1,
+    flex-basis: auto
+    */
+}
+#test {
+    flex: 1 1 auto;
+}
+#testFooter {
+    flex: 0 1 0px;
+}
+
+#test-container{
+    height: 100%;
+}
+
+#testHeader, .banner{
+    color: white!important;;
+    background-color: rgba(26, 71, 109);
+}
+
+.header-controls{
+    border-left: 1px solid white;
+}
+
+#testFooter{
+    color:white;
+    background-color: rgba(26, 71, 109);
+}
+
+#questionTreeContainer{
+    color: white;
+    background-color: rgba(53, 97, 135, 1);
+    height: 100%;
+    overflow-y: scroll;
+    min-width: 250px;
+}
+
+#questionTree{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+}
+
+#questionTree>li{
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    padding-top: 5px;
+}
+
+#questionTree>li:hover, #questionTree>li.active{
+    background-color: rgba(87,141,184,1);
+    cursor: pointer;
 }
 
 #questions, #questions>li{
@@ -29,7 +96,7 @@
     white-space: pre-wrap;
 }
 
-.answer:hover{
+.option:hover{
     cursor: pointer;
     background-color: rgba(0,0,255,0.2);
 }
@@ -47,7 +114,13 @@
     cursor: pointer;
 }
 
-.disabled-answer:hover {
+.option{
+    border: 1px solid black;
+    border-radius:5px;
+    cursor: pointer;
+}
+
+.disabled-option:hover {
     cursor: not-allowed;
 }
 
@@ -57,4 +130,13 @@
 
 .form-check-input:disabled~.form-check-label, .form-check-input[disabled]~.form-check-label{
     opacity: .75!important;
+}
+
+#navControls{
+    user-select: none;
+}
+
+#navControls > li:hover, .header-controls:hover{
+    cursor: pointer;
+    background-color: rgb(15, 41, 61);
 }

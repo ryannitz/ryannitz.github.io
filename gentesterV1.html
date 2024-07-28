@@ -1,0 +1,320 @@
+
+<html data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Gen Tester</title>
+        <!-- <link rel="icon" href=""/> -->
+
+        <!--FontAwesome-->
+        <script src="https://kit.fontawesome.com/f5b3d1b329.js" crossorigin="anonymous"></script>
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- Bootstrap CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Latest compiled Vue.js dev build -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="gentesterV1/gentester.css" />
+        <script src="create_alert/create_alert_controller.js"></script>
+        <script src="util/create_alert.js"></script>
+    </head>
+    <body>
+
+        <!-- TODO:
+            Write test page
+            Make the main splash screen.
+        -->
+        <div id="app" class="container">
+            <p class="text-center text-light">
+                <a target="_blank" href="https://ryannitz.github.io/gentester">Click here for new site</a>
+            </p>     
+            <div id="test-page" class="page">
+                <div class="container-sm border shadow-sm my-4 mx-auto">
+                    <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#notes">
+                        <h6 class="m-0 text-center">Notes <i class="fa fa-chevron-down float-end"></i></h6>
+                    </div>
+                    <div id="notes" class="px-3 pb-3 collapse">
+                        <ul>
+                            <li><p class="hover" data-bs-toggle="modal" data-bs-target="#disclaimersModal"><u>DISCLAIMERS</u></p></li>
+                            <li><p>Want to update or create your own gen: <a href="http://ryannitz.github.io/gencreator" target="_blank">Gen Creator Site</a></p></li>
+                            <li><p>Update: Multi-answer questions are now available to be viewed at the end of the test! They do not count in the final result. I will not be adding them to the regular test because I don't want to code.</p></li>
+                            <li><p>Update: You can now manually select which question to see in the numberbox above the question!</p></li>
+                            <li><p>Update: You can now use Arrow Keys to navigate between questions!</p></li>
+                            <li><p>Update: Dark mode can now be toggled using the button below!</p></li>
+                            <li><p>Gen test creation tool and templates coming soon! Formatting will be the same as the old gen tester to support interchangeability.</p></li>
+                        </ul>
+                        <p class="text-center">
+                            <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
+                        </p>
+                    </div>
+                </div>
+
+                <div id="control-container" class="container-sm border shadow-sm my-4 mx-auto">
+                    <div class="hover p-3 clearfix" data-bs-toggle="collapse" data-bs-target="#gen">
+                        <h6 class="m-0 text-center">Gen <i class="fa fa-chevron-down float-end"></i></h6>
+                    </div>
+                    <div id="gen" class="collapse show">
+                        <div class="upload-buttons text-center row my-3 w-75 mx-auto">
+                            <p class="hover" data-bs-toggle="modal" data-bs-target="#genExampleModal"><u>What can I upload or insert into the textfield <i class="fa-regular fa-circle-question"></i></u></p>
+                            <div class="col my-2">
+                                <input class="d-none" type="file" id="uploadedFile" accept=".txt,.py"/>
+                                <button id="loadCustomGen" type="button" class="btn btn-primary my-2" @click="uploadGenData();"><i class="fa-solid fa-file-arrow-up"></i> Upload Custom Gen</button>
+                            </div>
+                            <div class="col my-2">
+                                <button id="loadExampleGen" type="button" class="btn btn-primary my-2" @click="insertExampleGen();"><i class="fa-solid fa-right-left"></i> Insert Example Gen</button>
+                            </div>
+                        </div>
+                    
+                        <div class="container-sm text-center">
+                            <p class="text-center">Or paste Gen in the below textfield and click "Generate Test"</p>
+                            <textarea id="textfield" class="form-control mx-auto" rows="5" name="textfield" minlength="1"></textarea>
+                            <div class="row w-75 mx-auto">
+                                <div class="col my-2">
+                                    <button id="loadExampleGen" type="button" class="btn btn-danger my-4" @click="clearGenText();"><i class="fa-solid fa-trash"></i> Clear Text</button>
+                                </div>
+                                <div class="col my-2">
+                                    <button id="loadTextFieldGen" type="button" class="btn btn-success my-4" @click="loadGenText();"><i class="fa-solid fa-arrows-rotate"></i> Generate Test</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+        
+                <div id="test-container" class="row container-sm border shadow-sm my-4 mx-auto">
+                    <p id="notest" class="text-center p-5 my-5">Load Gen to Start Test ...</p>
+                    <div id="test" class="col-sm">
+                        <h3 class="text-center my-3"><u>TEST</u></h3>
+                        <div class="test-body">
+
+                            <div class="text-center">
+                                <h3 class="test-hidden">
+                                    <input id="questionNumber" type="number" step="1" min="1" :max="[Object.keys(questions).length]" name="questionNumber" :value="[currentQuestionIndex+1]" @change="manualQuestionDisplay();">
+                                    /{{Object.keys(questions).length}}
+                                </h3>
+                                <p class="test-hidden">Unanswered Questions: {{this.unAnsweredQuestionCount}} (not reliable 100%)</p>
+                            </div>
+                            
+                            <ul id="questions">
+                                <li v-for="(questionCorrectAnswer,questionPrompt, index) in questions" :id="index" class="question">
+                                    <p class="text-center cheater-buttons">
+                                        <button type="button" class="revealAnswer btn btn-primary" @click="revealAnswer(index);" data-bs-toggle="tooltip" title="If you're not cheating, you're not trying">Reveal Answer</button>
+                                        <button type="button" class="hideAnswer btn btn-primary" @click="hideAnswer(index);">Hide Answer</button>
+                                    </p>
+                                    <p class="prompt fw-bolder">{{questionPrompt.substring(0, questionPrompt.indexOf(` \n a. `))}}</p>
+                                    <form :id="'questionForm' + index" class="question-form">
+                                        <ul class="list-group">
+                                            <li class="list-group-item answer">
+                                                <div class="form-check" @click="clickAnswer();">
+                                                    <input type="radio" class="form-check-input" :id="index + 'a'" :name="index" value="a">
+                                                    <label class="form-check-label hover fw-bolder" :for="index + 'a'">a&rpar; {{questionPrompt.substring(questionPrompt.indexOf(` \n a. `)+6, questionPrompt.indexOf(` \n b. `))}}</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item answer">
+                                                <div class="form-check" @click="clickAnswer();">
+                                                    <input type="radio" class="form-check-input" :id="index + 'b'" :name="index" value="b">
+                                                    <label class="form-check-label hover fw-bolder" :for="index + 'b'">b&rpar; {{questionPrompt.substring(questionPrompt.indexOf(` \n b. `)+6, questionPrompt.indexOf(` \n c. `))}}</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item answer">
+                                                <div class="form-check" @click="clickAnswer();">
+                                                    <input type="radio" class="form-check-input" :id="index + 'c'" :name="index" value="c">
+                                                    <label class="form-check-label hover fw-bolder" :for="index + 'c'">c&rpar; {{questionPrompt.substring(questionPrompt.indexOf(` \n c. `)+6, questionPrompt.indexOf(` \n d. `))}}</label>
+                                                </div>
+                                            </li>
+                                            <li class="list-group-item answer">
+                                                <div class="form-check" @click="clickAnswer();">
+                                                    <input type="radio" class="form-check-input" :id="index + 'd'" :name="index" value="d">
+                                                    <label class="form-check-label hover fw-bolder" :for="index + 'd'">d&rpar; {{questionPrompt.substring(questionPrompt.indexOf(` \n d. `)+6, questionPrompt.length)}}</label>
+                                                </div>
+                                            </li>
+                                        </ul>
+                                    </form>
+                                </li>
+                            </ul>
+                            <div class="text-center">
+                                <button id="startTest" type="button" class="btn btn-primary my-5 p-2 px-5" @click="startTest();">Start Test</button>
+                            </div>
+                        </div>
+                        <div class="test-hidden text-center">
+                            <div class="row my-4">
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary px-5 py-0 fw-bolder q-control" @click="previousQuestion();">&lt;</button>
+                                </div>
+                                
+                                <div class="col">
+                                    <button type="button" class="btn btn-primary px-5 py-0 fw-bolder q-control" @click="nextQuestion();">&gt;</button>
+                                </div>
+                            </div>
+                            <div class="row my-4">
+                                <div class="col">
+                                    <button id="submitTest" type="button" class="btn btn-primary p-2 px-5" data-bs-toggle="modal" data-bs-target="#submitTestConfirmation">Submit Test</button>
+                                    <button id="restartTest" type="button" class="btn btn-primary p-2 px-5" @click="restartTest();">Restart Test</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div id="results" class="col-sm text-center">
+                        <h3 class="text-center my-3"><u>RESULTS</u></h3>
+                        <h3 id="percentage" class="my-4">{{correctAnswerCount}}/{{Object.keys(questions).length}} = {{testPercentage}}%</h3>
+                        <button id="showIncorrectAnswers" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#incorrectAnswersModal">Show Incorrect Answers</button><br>
+                        <button v-if="multiAnswerQuestions.length > 0" id="showSkippedMultiAnswerQuestions" type="button" class="btn btn-primary my-4" data-bs-toggle="modal" data-bs-target="#skippedMultiAnswerQuestionsModal">Show Skipped Multi-Answer Questions</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="submitTestConfirmation">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Confirmation</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            Are you sure you would like to submit the test?
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Cancel</button>
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="submitTest();">Submit</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+
+            <div class="modal fade" id="genExampleModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Gen examples</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <p>These are some gen examples that can be accepted into the textfield or uploaded as a .txt file</h4>
+                            <ul class="list-group my-2">
+                                <li class="list-group-item p-4">
+                                    <h4>1. A group of text between the "checklist = {}" curly braces in the .py or .txt gen files:</h4>
+                                    <div class="border rounded p-3 shadow-sm">
+                                        <code>
+                                            checklist = {<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    <div style="background-color: rgba(8,8,255,0.2);">
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    </div>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                            }<br>
+                                        </code>
+                                    </div>
+                                </li>
+    
+                                <li class="list-group-item p-4">
+                                    <h4>2. The entire "checklist = {}" py variable in the .py or .txt gen files:</h4>
+                                    <div class="border rounded p-3 shadow-sm">
+                                        <code style="background-color: rgba(8,8,255,0.2);">
+                                            checklist = {<br>
+                                                <br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                    &nbsp;&nbsp;&nbsp;&nbsp; 'example': 'here',<br>
+                                                <br>
+                                            }<br>
+                                        </code>
+                                    </div>
+                                </li>
+    
+                                <li class="list-group-item p-4">
+                                    <h4>3. The entire .py or .txt gen files:</h4>
+                                    <p>Upload the entire .txt/.py file, or paste the contents of the entire .txt/.py file directly into the textfield!</p>
+                                </li>
+                            </ul>
+                            <p>Note: The code works based on the "{}" surrounding the questions. So either submit text from between those curly braces, or include the curly braces at the begining and end of the questions. i.e. If you decide to upload the entire gen file or partial file for whatever reason, the code will grab only the questions between those two curly braces. If the tool is not working with full files, use the #1 way of inserting gen.</p>
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+    
+            <div class="modal fade" id="incorrectAnswersModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Incorrect Answers</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul class="list-group">
+                                <li v-if="incorrectlyAnsweredQuestions.length==0" class="list-group-item">No incorrect answers. Noice.</li>
+                                <li v-for="incorrectAnswer in incorrectlyAnsweredQuestions" class="list-group-item">
+                                    <p class="prompt fw-bolder">{{incorrectAnswer.question}}</p>
+                                    <p class="m-0 p-0 correct fw-bolder">Actual Answer: {{incorrectAnswer.answer}}</p>
+                                    <p class="incorrect">Your Answer: {{incorrectAnswer.userAnswer}}</p>
+                                </li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="skippedMultiAnswerQuestionsModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Skipped Multi-Answer Questions</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul class="list-group">
+                                <li v-if="multiAnswerQuestions.length==0" class="list-group-item">No multi-answer questions removed from test.</li>
+                                <li v-for="mulitAnswerQuestion in multiAnswerQuestions" class="list-group-item">
+                                    <p class="prompt fw-bolder">{{mulitAnswerQuestion.q}}</p>
+                                    <div>
+                                        <button type="button" class="btn btn-danger show-maqa">Show Answer</button>
+                                        <span class="m-0 p-0 ms-3 maqa">Answer: {{mulitAnswerQuestion.a}}</span>
+                                    </div>
+                                    
+                                </li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="modal fade" id="disclaimersModal">
+                <div class="modal-dialog modal-lg modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Disclaimers</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <ul>
+                                <li><p>IMPORTANT: This website is static and does not save, store, or transmit any information that is entered. Every visit will require you to re-enter gen. </p></li>
+                                <li><p>This site is only as good as the gen provided. If the answer is not correct, the provided gen is not correct and wouldn't have been in the python script either.</p></li>
+                                <li><p>If you know who I am and how to contact me, feel free to suggest changes or updates as you see fit.</p></li>
+                                <li><p>This site was not originally intended for use on small(er) screen devices.</p></li>
+                            </ul>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-danger" data-bs-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        
+        <script src="gentesterV1/gentester.js"></script>
+    </body>
+</html>

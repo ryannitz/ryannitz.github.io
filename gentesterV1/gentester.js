@@ -33,8 +33,6 @@ var app = new Vue({
 
         unAnsweredQuestionCount: 0,
 
-        reviewing: true,
-
     },
 
 
@@ -52,7 +50,6 @@ var app = new Vue({
         },
 
         initTest(){
-            this.reviewing = false;
             this.correctAnswerCount = 0
             this.currentQuestionIndex = 0
             this.incorrectlyAnsweredQuestions = []
@@ -60,10 +57,8 @@ var app = new Vue({
 
             $(".form-check-input").prop('disabled', false);
             $("input").parent().parent().removeClass('correct incorrect')
-            $(".questionTreeItem").removeClass("incorrect")
-            $(".option").removeClass('disabled-option');
+            $(".answer").removeClass('disabled-answer');
             $(`input:checked`).prop('checked', false);
-            $(`.questionTreeItem > span`).text("( )")
 
             $("#restartTest").hide()
             $("#results").hide()
@@ -71,19 +66,12 @@ var app = new Vue({
             $(".question").hide()
             $(".maqa").hide()
             $(".hideAnswer").hide()
-            $("#navControls").css('display','inherit');
+
             $("#test").show()
-
-            //gross, but the only way
-            this.$nextTick(() => {
-                this.manualQuestionDisplay(0)
-            });
-
+            $("#0").show()
             $(".cheater-buttons").show()
             $("#submitTest").show()
             $(".revealAnswer").show()
-
-            $("#createTestModal").modal("hide")
         },
 
         scrambleQuestions(){
@@ -109,6 +97,14 @@ var app = new Vue({
             console.log(this.multiAnswerQuestions)
         },
 
+        startTest() { //so dumb but the only way to trigger the render
+            this.nextQuestion();
+            this.previousQuestion();
+            $("#startTest").hide()
+            $(".test-hidden").show()
+            $("#gen").collapse()
+        },
+
         revealAnswer(questionIndex) {
             var correctAnswer = this.questions[Object.keys(this.questions)[questionIndex]]
             $(`input[name="${questionIndex}"][value="${correctAnswer}"]`).parent().parent().addClass('correct')
@@ -128,7 +124,9 @@ var app = new Vue({
                 return
             }
             this.currentQuestionIndex--;
-            this.setActiveQuestion();
+            $(".question").hide()
+            $("#"+(this.currentQuestionIndex)).show()
+            console.log(this.currentQuestionIndex)
         },
 
         nextQuestion(){
@@ -136,39 +134,33 @@ var app = new Vue({
                 return
             }
             this.currentQuestionIndex++;
-            this.setActiveQuestion();
+            $(".question").hide()
+            $("#"+(this.currentQuestionIndex)).show()
+            console.log(this.currentQuestionIndex)
         },
 
-        manualQuestionDisplay(index){
-            var requestedQuestion = index
+        manualQuestionDisplay(){
+            var requestedQuestion = parseInt($("#questionNumber").val())
             if(!requestedQuestion){
-                requestedQuestion = 0
+                requestedQuestion = 1
             }
-            this.currentQuestionIndex = requestedQuestion;
+            this.currentQuestionIndex = requestedQuestion-1;
             if(this.currentQuestionIndex > Object.keys(this.questions).length-1){
                 this.currentQuestionIndex = Object.keys(this.questions).length-1
             }
             if(this.currentQuestionIndex < 0){
                 this.currentQuestionIndex = 0
             }
-            this.setActiveQuestion();
-            
-        },
 
-        setActiveQuestion(){
-            $(".test-hidden").show()
             $(".question").hide()
             $("#"+(this.currentQuestionIndex)).show()
+            $("#questionNumber").val(this.currentQuestionIndex+1)
             console.log(this.currentQuestionIndex)
-            if(!this.reviewing){
-                $(".questionTreeItem").removeClass("active")
-                $("#questionTreeItem"+(this.currentQuestionIndex)).addClass("active")
-            }
+            
         },
 
 
         submitTest(){
-            this.reviewing = true;
             for(var i = 0; i < Object.keys(this.questions).length; i++){
                 var correctAnswer = this.questions[Object.keys(this.questions)[i]]
                 var userA = $(`input[name="${i}"]:checked`).val()
@@ -179,8 +171,6 @@ var app = new Vue({
                     this.correctAnswerCount++;
                 }else{
                     $(`input[name="${i}"]:checked`).parent().parent().addClass('incorrect')
-                    $(".questionTreeItem").removeClass("active")
-                    $(`#questionTreeItem${i}`).addClass('incorrect')
                     incorrectQA = {
                         question: Object.keys(this.questions)[i],
                         answer: correctAnswer,
@@ -196,7 +186,7 @@ var app = new Vue({
             $("#restartTest").show()
             $("#results").show()
             $(".form-check-input").prop('disabled', true);
-            $(".option").addClass('disabled-option');
+            $(".answer").addClass('disabled-answer');
 
             if(this.multiAnswerQuestions.length > 0){
                 createAlert(alertType.warning, alertLocation.top, 10000, "There were multi-answer questions skipped in this test. Please review them with the button provided below...(AS REQUIRED)")
@@ -275,9 +265,8 @@ var app = new Vue({
             $("#textfield").val("")
         },
 
-        clickAnswer(index){
+        clickAnswer(){
             this.unAnsweredQuestionCount = Object.keys(this.questions).length - $('.form-check-input:checked').length
-            $(`#questionTreeItem${index} > span`).text("(X)")
         },
     },
 
@@ -313,11 +302,7 @@ var app = new Vue({
 });
 
 $(document).ready(function(){
-    if(screen.width < 750 || window.innerWidth < 750){
-        console.log("smol")
-        window.location.replace("https://ryannitz.github.io/gentesterV1");
-    }
-    //window.onbeforeunload = function(){return "Leaving?"}
+    window.onbeforeunload = function(){return "Leaving?"}
     $("form").submit(function (e) { 
         e.preventDefault();
     });
@@ -340,16 +325,14 @@ $(document).ready(function(){
 
     $(".newAnswer").change(function(){
         var val = $('input[name="newCorrectAnswer"]:checked').val()
-        $(`input[name="exampleAnswer"]`).parent().parent().removeClass("correct")
-        $(`input[name="exampleAnswer"][value="${val}"]`).parent().parent().addClass("correct")
+        $(`input[name="exampleAnswer"]`).parent().removeClass("correct")
+        $(`input[name="exampleAnswer"][value="${val}"]`).parent().addClass("correct")
     })
-
-    $("#createTestModal").modal("show")
 });
 
 $(document)
-    .on("click", ".option", function() {
-        if(!$(this).hasClass('disabled-option')){
+    .on("click", ".answer", function() {
+        if(!$(this).hasClass('disabled-answer')){
             $(this).find("input").prop("checked", true);   
         }
     })

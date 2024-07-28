@@ -1,0 +1,60 @@
+
+
+/* #creator-page, #test, #restartTest, #results {
+    display: none;
+} */
+
+#create-page, #restartTest, #results, #test, .question, .test-hidden, .maqa, .hideAnswer {
+    display: none;
+}
+
+#questions, #questions>li{
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+#questionNumber {
+    width: 75px;
+}
+
+
+.q-control {
+    font-size: x-large;
+}
+
+
+.prompt {
+    white-space: pre-line;
+    white-space: pre-wrap;
+}
+
+.answer:hover{
+    cursor: pointer;
+    background-color: rgba(0,0,255,0.2);
+}
+
+
+.incorrect {
+    background-color: rgba(255,0,0, .5);
+}
+
+.correct {
+    background-color: rgba(0,255,0, .5);
+}
+
+.hover {
+    cursor: pointer;
+}
+
+.disabled-answer:hover {
+    cursor: not-allowed;
+}
+
+.form-check-input:disabled{
+    opacity: .75!important;
+}
+
+.form-check-input:disabled~.form-check-label, .form-check-input[disabled]~.form-check-label{
+    opacity: .75!important;
+}
