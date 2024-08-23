@@ -107,7 +107,7 @@ var app = new Vue({
                 delete tempQuestions[randomQuestion]
             }
             this.unAnsweredQuestionCount = Object.keys(this.questions).length
-            console.log(this.multiAnswerQuestions)
+            //console.log(this.multiAnswerQuestions)
         },
 
         revealAnswer(questionIndex) {
@@ -190,7 +190,7 @@ var app = new Vue({
                     this.incorrectlyAnsweredQuestions.push(incorrectQA);
                 }
             }
-            
+            this.jsIncorrectAnswersObjToPythonText()
             this.testPercentage = ((this.correctAnswerCount/Object.keys(this.questions).length)*100).toFixed(2)
             $("#submitTest").hide()
             $(".cheater-buttons").hide()
@@ -202,6 +202,32 @@ var app = new Vue({
             if(this.multiAnswerQuestions.length > 0){
                 createAlert(alertType.warning, alertLocation.top, 10000, "There were multi-answer questions skipped in this test. Please review them with the button provided below...(AS REQUIRED)")
             }
+        },
+
+        jsIncorrectAnswersObjToPythonText(){
+            var pythonText = "";
+            for(var i = 0; i < this.incorrectlyAnsweredQuestions.length; i++){
+                var incorrectQuestionObj = this.incorrectlyAnsweredQuestions[i]
+                
+                var question = incorrectQuestionObj["question"]
+                var answer = incorrectQuestionObj["answer"]
+
+                question = question.replaceAll(`\'`, `\\\'`)
+                question = question.replaceAll(`\"`, `\'`)
+                question = question.replaceAll(`\n`, `\\n`)
+            
+                answer = answer.replaceAll(`\"`, `\'`)
+                var questionText = `'${question}':'${answer}', \n`;
+                pythonText += questionText
+                
+            }
+            $("#rawIncorrectAnswers").val(pythonText)
+        },
+
+        copyIncorrectAnswersToClipBoard(){
+            $("#rawIncorrectAnswers").select();
+            navigator.clipboard.writeText($("#rawIncorrectAnswers").val());
+            createAlert(alertType.info, alertLocation.top, 5000, "Copied Text To ClipBoard")
         },
         
         insertExampleGen(){
@@ -261,7 +287,7 @@ var app = new Vue({
                 createAlert(alertType.danger, alertLocation.top, 5000, "Could not parse the input. Reference the instructions prompt for more...")
                 return
             }
-            console.log(text)
+            //console.log(text)
             try {
                 this.questions = JSON.parse(text)
                 this.multiAnswerQuestions = []

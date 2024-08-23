@@ -136,7 +136,7 @@
     user-select: none;
 }
 
-#navControls > li:hover, .header-controls:hover{
+.header-controls:hover{
     cursor: pointer;
     background-color: rgb(15, 41, 61);
 }
