@@ -205,7 +205,7 @@ var app = new Vue({
 
     computed: {
         newQuestionPrompt: function() {
-            var val = ` ${this.newQuestion} \n a. ${this.newAnswerA} \n b. ${this.newAnswerB} \n c. ${this.newAnswerC} \n d. ${this.newAnswerD} `
+            var val = `${this.newQuestion}`
             return val.replaceAll(`\"`, `\'`)
         },
     }
