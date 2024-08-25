@@ -253,7 +253,7 @@ var app = new Vue({
                 text = text.replaceAll(emptyBraces, "")
 
                 //second question set
-                if(text.includes("checklist") && text.includes("checklist2 =")){
+                if(text.includes("checklist2 =")){
                     questionText += text.substring(text.indexOf("= {")+3, text.indexOf("}"))
                     text = text.replace(questionText, "")//remove the question set
                     text = text.replaceAll(emptyBraces, "")
