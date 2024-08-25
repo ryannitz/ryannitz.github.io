@@ -241,7 +241,7 @@ var app = new Vue({
             //find the two encapsulating curly braces
             if(text.includes("= {") && text.includes("}")){
                 text = text.replaceAll(emptyBraces, "")
-                
+
                 /**
                  * These two code blocks below are now identical. If more checklist blocks wish to be added
                  * we can simply create a loop :)
@@ -258,9 +258,9 @@ var app = new Vue({
                     text = text.replace(questionText, "")//remove the question set
                     text = text.replaceAll(emptyBraces, "")
                 }
-
+                return questionText
             }
-            return questionText
+            return text
         },
 
         parseQuestions(text){
