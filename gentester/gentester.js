@@ -242,6 +242,9 @@ var app = new Vue({
                     text = text.replace("{}", "")
                 }
                 text = text.substring(text.indexOf("{")+1, text.indexOf("}"))
+                if(text.includes("checklist") && text.includes("checklist2")){
+	                text = text + ", " + text.substring(text.indexOf("{", text.indexOf("checklist2"))+1, text.indexOf("}", text.indexOf("checklist2")))
+                }
             }
             return text
         },
