@@ -219,19 +219,6 @@ var app = new Vue({
           }
     },
 
-
-    beforeMount() {
-
-    },
-
-    mounted() {
-        
-    },
-
-    updated() {
-
-    },
-
     created() {
         window.addEventListener('keydown', function(e) { 
 
