@@ -236,17 +236,29 @@ var app = new Vue({
 
         cleanInput(text){
 
+            var questionText = ""
+            var emptyBraces = new RegExp('{(\s)*}', 'g');
             //find the two encapsulating curly braces
-            if(text.includes("{") && text.includes("}")){
-                if(text.includes("{}")){//removing orig comment
-                    text = text.replace("{}", "")
-                }
-                text = text.substring(text.indexOf("{")+1, text.indexOf("}"))
-                if(text.includes("checklist") && text.includes("checklist2 =")){
-	                text = text + ", " + text.substring(text.indexOf("{", text.indexOf("checklist2"))+1, text.indexOf("}", text.indexOf("checklist2")))
-                }
+            if(text.includes("= {") && text.includes("}")){
+                text = text.replaceAll(emptyBraces, "")
+                
+                /**
+                 * These two code blocks below are now identical. If more checklist blocks wish to be added
+                 * we can simply create a loop :)
+                 */
+
+                //first question set
+                questionText += text.substring(text.indexOf("= {")+3, text.indexOf("}"))
+                text = text.replace(questionText, "")//remove the question set
+                text = text.replaceAll(emptyBraces, "")
+
+                //second question set
+                questionText += text.substring(text.indexOf("= {")+3, text.indexOf("}"))
+                text = text.replace(questionText, "")//remove the question set
+                text = text.replaceAll(emptyBraces, "")
+
             }
-            return text
+            return questionText
         },
 
         parseQuestions(text){
@@ -292,6 +304,7 @@ var app = new Vue({
             }
             //console.log(text)
             try {
+                console.log(text)
                 this.questions = JSON.parse(text)
                 this.multiAnswerQuestions = []
                 this.initTest();
