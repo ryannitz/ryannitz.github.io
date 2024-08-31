@@ -127,8 +127,8 @@
                     </div>
                     <div class="col-md">
                         <div class="my-3">
-                            <input type="range" class="form-range" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
                             <label for="canvasHeightPercentage">EHSI size percentage:</label>
+                            <input type="range" class="form-range" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
                         </div>
                     </div>
                 </div>
@@ -139,7 +139,7 @@
                         <canvas id="scaleCanvas" class="canvas" width="600" height="600"></canvas>
                     </div>
                 </div>
-                <div class="col-md my-auto" id="ehsiControls">
+                <div class="col-md my-auto px-5" id="ehsiControls">
                     <div class="form-floating my-3">
                         <input id="headingInput" type="number" class="form-control" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
                         <label for="headingInput">Go To Heading:</label>

@@ -60,12 +60,10 @@ var app = new Vue({
             var diameter = windowHeight * this.canvasHeightPercentage/100;
 
             var ehsiContainerWidth = $("#ehsi").width();
-            console.log(ehsiContainerWidth)
             if(diameter > ehsiContainerWidth-20){
                 console.log("hello>")
                 diameter = ehsiContainerWidth-20
             }
-            console.log(diameter)
 
             var canvas = document.getElementById('canvas')
             canvas.height = diameter
