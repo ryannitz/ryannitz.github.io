@@ -122,7 +122,7 @@ var app = new Vue({
         createCustomPtP(){
             const ctx = this.getCanvasContext();
             ctx.resetTransform();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
 
             $(".answer").hide();
             this.initPoints();
@@ -140,7 +140,7 @@ var app = new Vue({
         generatePtP(){
             const ctx = this.getCanvasContext();
             ctx.resetTransform();
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
 
             $(".answer").hide();
             this.generatePoints();
