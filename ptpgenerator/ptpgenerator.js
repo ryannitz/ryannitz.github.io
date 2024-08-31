@@ -13,19 +13,22 @@ var app = new Vue({
 
     data : {
 
-        canvasHeightPercentage: 50,
+        //EHSI
+        canvasHeightPercentage: 60,
         scalesDrawn: false,
-
         ehsi:{
             pointsDrawn: false,
             lineDrawn: false,
         },
-
         dmeMax: 50,
         dmeStep: 5,
         radialStep: 10,
         headingInput: 360,
 
+
+        //PTP
+        heading: 0,
+        distance: 0,
         orig: {
             radial:360,
             dme:10,
@@ -145,9 +148,9 @@ var app = new Vue({
 
             $("#origPoint").text(`${this.orig.radial}/${this.orig.dme}`);
             $("#destPoint").text(`${this.dest.radial}/${this.dest.dme}`);
-
-            $("#initialHeading").text(`${this.getAngle(this.orig, this.dest)}`);
-            $("#distance").text(`${this.getDistance(this.orig, this.dest)}`);
+            this.heading = this.getAngle(this.orig, this.dest)
+            this.distance = this.getDistance(this.orig, this.dest)
+        
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
         },
@@ -446,6 +449,8 @@ var app = new Vue({
         this.initCanvasLayers();
         this.drawScales()
         this.createCustomPtP()
+        this.heading = this.getAngle(this.orig, this.dest)
+        this.distance = this.getDistance(this.orig, this.dest)
     },
 
     created() {
@@ -467,7 +472,20 @@ var app = new Vue({
 
 });
 
+
+$(document).on("scroll", function(){
+    var scrollY = window.scrollY
+    var triggerY = $("#generatePtP").position().top + $("#generatePtP").height()
+    if(scrollY > triggerY){
+        $("#navbar").slideDown();
+    }else{
+        $("#navbar").slideUp();
+    }
+
+})
+
 $(document).ready(function(){
+
 
     $("form").submit(function (e) { 
         e.preventDefault();

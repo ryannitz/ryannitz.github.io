@@ -2,12 +2,22 @@ p{
     margin:0!important;
 }
 
-.answer{
-    display: none;
+#navbar, .hidden-answer, .answer, #ehsiControls{
+    display:none
 }
 
-#ehsiControls{
+.navbar-answer{
+    cursor: pointer;
+}
+
+.navbar-answer:hover .hidden-answer{
+    display: block;
+    white-space:nowrap;
+}
+
+.navbar-answer:hover .mask{
     display: none;
+    white-space:nowrap;
 }
 
 #scaleCanvas{

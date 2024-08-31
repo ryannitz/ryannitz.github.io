@@ -21,9 +21,21 @@
     </head>
 
     <body>
-        <div id="app" class="container">
-            <div class="row shadow">
-                <div class="col-md-5 border">
+        <div id="app" class="container-fluid px-5">
+
+            <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top border-bottom shadow-lg">
+                <div class="container-fluid text-center">
+                    <h4 class="px-4">Origin: {{orig.radial}}/{{orig.dme}}</h4>
+                    <h4 class="px-4">Destination: {{dest.radial}}/{{dest.dme}}</h4>
+                    <h4 class="px-4 navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
+                    <h4 class="px-4 navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
+                    <button type="button" class="btn btn-primary px-3" @click="generatePtP()">Generate New</button>
+                </div>
+            </nav>
+
+
+            <div class="row shadow my-5">
+                <div class="col-md border">
                     <form class="p-4 my-2">
                         <legend>Point to Point Generation Parameters</legend>
                         <div class="form-floating mb-3">
@@ -39,11 +51,11 @@
                             <label for="radialStep">Radial Step</label>
                         </div>
                         <p class="text-center">
-                            <button type="button" class="btn btn-primary" @click="generatePtP()">Generate New Point to Point</button>
+                            <button id="generatePtP" type="button" class="btn btn-primary" @click="generatePtP()">Generate Random Point to Point</button>
                         </p>
                     </form>
                 </div>
-                <div class="col-md-7 border">
+                <div class="col-md border">
                     <form class="p-4 my-2">
                         <legend>Custom Point to Point Values</legend>
                         <div class="row">
@@ -85,7 +97,7 @@
                 
             </div>
 
-            <div class="row shadow">
+            <div class="row shadow my-5">
                     <div class="col-md border p-3 mt-3">
                         <div class="my-auto">
                             <h3>Starting Point: <span id="origPoint" class="fw-bolder text-decoration-underline"></span></h3>
@@ -94,18 +106,18 @@
                     </div>
                     <div class="col-md border p-3 mt-3">
                         <div class="d-flex justify-content-between mb-1">
-                            <h3 class="mx-2">Heading: <span id="initialHeading" class="fw-bolder answer"></span></h3>
+                            <h3 class="mx-2">Heading: <span id="initialHeading" class="fw-bolder answer">{{heading}}</span></h3>
                             <button type="button" class="btn btn-primary float-end text-end" @click="showAnswer($event)">Show</button>
                         </div>
                         <div class="d-flex justify-content-between">
-                            <h3 class="mx-2">Distance: <span id="distance" class="fw-bolder answer"></span></h3>
+                            <h3 class="mx-2">Distance: <span id="distance" class="fw-bolder answer">{{distance}}</span></h3>
                             <button type="button" class="btn btn-primary float-end text-end" @click="showAnswer($event)">Show</button>
                         </div>
                     </div>
             </div>
 
             
-            <div id="ehsi" class="row border my-4 shadow">
+            <div id="ehsi" class="row border my-5 shadow">
                 <div class="row">
                     <div class="col-md">
                         <div class="form-floating my-3">
