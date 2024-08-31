@@ -132,8 +132,9 @@ var app = new Vue({
             $("#origPoint").text(`${this.orig.radial}/${this.orig.dme}`);
             $("#destPoint").text(`${this.dest.radial}/${this.dest.dme}`);
 
-            $("#initialHeading").text(`${this.getAngle(this.orig, this.dest)}`);
-            $("#distance").text(`${this.getDistance(this.orig, this.dest)}`);
+            this.heading = this.getAngle(this.orig, this.dest)
+            this.distance = this.getDistance(this.orig, this.dest)
+            
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
         },
