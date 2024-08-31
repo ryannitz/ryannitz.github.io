@@ -390,7 +390,7 @@ var app = new Vue({
 
             var radialRadian = (radial)*Math.PI/180;
             //tail
-            this.drawline(ctx, radialRadian, radius, radius*1/3, 4, "white")
+            this.drawline(ctx, radialRadian, radius, radius*1/3, radius*2/100, "white")
             //triangle
             var tipOfLine = radius*2/3
             var leftBase = -radius*5/100
@@ -410,7 +410,7 @@ var app = new Vue({
 
             //head
             radialRadian = (radial-180)*Math.PI/180;
-            this.drawline(ctx, radialRadian, radius, radius*2/4, 4, "white")
+            this.drawline(ctx, radialRadian, radius, radius*2/4, radius*2/100, "white")
             //triangle
             var tipOfTriangle = radius //edge of ehsi
             var leftBase = -radius*5/100
