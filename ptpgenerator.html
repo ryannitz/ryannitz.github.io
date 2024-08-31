@@ -19,60 +19,61 @@
         <script src="create_alert/create_alert_controller.js"></script>
         <script src="util/create_alert.js"></script>
     </head>
+
     <body>
         <div id="app" class="container">
             <div class="row shadow">
-                <div class="col-5 border">
+                <div class="col-md-5 border">
                     <form class="p-4 my-2">
                         <legend>Point to Point Generation Parameters</legend>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Max DME</span>
-                            <input type="number" class="form-control" v-model="dmeMax" v-bind:step="dmeStep" min="0" value="50">
+                        <div class="form-floating mb-3">
+                            <input id="dmeMax" type="number" class="form-control" v-model="dmeMax" v-bind:step="dmeStep" min="0" value="50">
+                            <label for="dmeMax">Max DME</label>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">DME Step</span>
-                            <input type="number" class="form-control" v-model="dmeStep">
+                        <div class="form-floating mb-3">
+                            <input id="dmeStep" type="number" class="form-control" v-model="dmeStep">
+                            <label for="dmeStep">DME Step</label>
                         </div>
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">Radial Step</span>
-                            <input type="number" class="form-control" v-model="radialStep">
+                        <div class="form-floating mb-3">
+                            <input id="radialStep" type="number" class="form-control" v-model="radialStep">
+                            <label for="radialStep">Radial Step</label>
                         </div>
                         <p class="text-center">
                             <button type="button" class="btn btn-primary" @click="generatePtP()">Generate New Point to Point</button>
                         </p>
                     </form>
                 </div>
-                <div class="col-7 border">
+                <div class="col-md-7 border">
                     <form class="p-4 my-2">
                         <legend>Custom Point to Point Values</legend>
                         <div class="row">
                             <p class="mb-1">Origin Point</p>
-                            <div class="col">
-                                <div class="input-group">
-                                    <span class="input-group-text">Radial:</span>
+                            <div class="col-sm">
+                                <div class="form-floating mb-3">
                                     <input type="number" id="customOriginRadial" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
+                                    <label for="customOriginRadial">Radial</label>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="input-group">
-                                    <span class="input-group-text">DME:</span>
+                            <div class="col-sm">
+                                <div class="form-floating mb-3">
                                     <input type="number" id="customOriginDME" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <label for="customOriginDME">DME</label>
                                 </div>
                             </div>
                         </div>
                         <hr>
                         <div class="row">
                             <p class="mb-1">Destination Point</p>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">Radial:</span>
+                            <div class="col-sm">
+                                <div class="form-floating mb-3">
                                     <input type="number" id="customDestinationRadial" class="form-control" min="0" max="360" step="1" value="360" placeholder="360">
+                                    <label for="customDestinationRadial">Radial</label>
                                 </div>
                             </div>
-                            <div class="col">
-                                <div class="input-group mb-3">
-                                    <span class="input-group-text">DME:</span>
+                            <div class="col-sm">
+                                <div class="form-floating mb-3">
                                     <input type="number" id="customDestinationDME" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <label for="customDestinationDME">DME</label>
                                 </div>
                             </div>
                         </div>
@@ -85,13 +86,13 @@
             </div>
 
             <div class="row shadow">
-                    <div class="col border p-3 mt-3">
+                    <div class="col-md border p-3 mt-3">
                         <div class="my-auto">
                             <h3>Starting Point: <span id="origPoint" class="fw-bolder text-decoration-underline"></span></h3>
                             <h3>Destination Point: <span id="destPoint" class="fw-bolder text-decoration-underline"></span></h3>
                         </div>
                     </div>
-                    <div class="col border p-3 mt-3">
+                    <div class="col-md border p-3 mt-3">
                         <div class="d-flex justify-content-between mb-1">
                             <h3 class="mx-2">Heading: <span id="initialHeading" class="fw-bolder answer"></span></h3>
                             <button type="button" class="btn btn-primary float-end text-end" @click="showAnswer($event)">Show</button>
@@ -102,35 +103,55 @@
                         </div>
                     </div>
             </div>
-            
 
             
             <div id="ehsi" class="row border my-4 shadow">
-                <div class="input-group my-3">
-                    <span class="input-group-text">Set EHSI size as screen height percentage:</span>
-                    <input type="number" id="canvasHeightPercentage" class="form-control" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50">
+                <div class="row">
+                    <div class="col-md">
+                        <div class="form-floating my-3">
+                            <input type="number" id="canvasHeightPercentage" class="form-control" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
+                            <label for="canvasHeightPercentage">EHSI size percentage:</label>
+                        </div>
+                    </div>
+                    <div class="col-md">
+                        <div class="my-3">
+                            <input type="range" class="form-range" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
+                            <label for="canvasHeightPercentage">EHSI size percentage:</label>
+                        </div>
+                    </div>
                 </div>
-                <div class="col my-3">
+                <hr>
+                <div class="col-md my-3 text-center">
                     <div style="position: relative;">
                         <canvas id="canvas" class="canvas" width="600" height="600"></canvas>
                         <canvas id="scaleCanvas" class="canvas" width="600" height="600"></canvas>
                     </div>
                 </div>
-                <div id="ehsiControls" class="col">
-                    <div class="input-group my-3 w-100">
-                        <input id="headingInput" v-model="headingInput" @input="rotateCanvas(headingInput)" type="number" class="form-control" placeholder="360" step="1" min="0" max="360">
-                        <button class="btn btn-success" type="button" @click="rotateCanvas(headingInput)">Go to Heading</button>
+                <div class="col-md" id="ehsiControls">
+                    <div class="form-floating my-3 w-100">
+                        <input id="headingInput" type="number" class="form-control" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
+                        <label for="headingInput">Go To Heading:</label>
                     </div>
-                    <button type="button" class="btn btn-primary my-3" @click="drawPoints()">Display Points</button>
-                    <button type="button" class="btn btn-primary my-3" @click="drawPtPLine()">Display Pen Line</button>
-                    <button type="button" class="btn btn-primary my-3" @click="drawRoughHeading()">Parallel Check</button>
-                    <br>
-                    <button type="button" class="btn btn-primary my-3" @click="toggleScales()">Toggle Scale</button>
-                    <p>Warning: Some features on this compass are not scaled based on any known EHSI.</p>
-                    <ul>
-                        <li>Red scale: 1/4 radius increments</li>
-                        <li>Blue scale: 1/3 radius increments</li>
-                    </ul>
+                    <div class="my-3">
+                        <input type="range" class="form-range" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
+                    </div>
+                    <hr>
+                    <div class="d-flex justify-content-around">
+                        <button type="button" class="btn btn-primary my-3 mx-1" @click="drawPoints()">Display Points</button>
+                        <button type="button" class="btn btn-primary my-3 mx-1" @click="drawPtPLine()">Display Pen Line</button>
+                        <button type="button" class="btn btn-primary my-3 mx-1" @click="drawRoughHeading()">Parallel Check</button>
+                    </div>
+                    <hr>
+                    <div>
+                        <p class="text-center">
+                            <button type="button" class="btn btn-primary my-3" @click="toggleScales()">Toggle Scale</button>
+                        </p>
+                        <p>Warning: Some features on this compass are not scaled based on any known EHSI.</p>
+                        <ul>
+                            <li>Red scale: 1/4 radius increments</li>
+                            <li>Blue scale: 1/3 radius increments</li>
+                        </ul>
+                    </div>
                 </div>
                 
             </div>

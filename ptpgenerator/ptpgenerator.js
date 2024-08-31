@@ -5,6 +5,8 @@ var centerX = canvas.width/2;
 var centerY = canvas.width/2;
 var radius = canvas.width/2;
 
+var diameter = canvas.width;
+
 var app = new Vue({
     el: "#app",
 
@@ -53,6 +55,14 @@ var app = new Vue({
             var windowHeight = window.innerHeight;
             var diameter = windowHeight * this.canvasHeightPercentage/100;
 
+            var ehsiContainerWidth = $("#ehsi").width();
+            console.log(ehsiContainerWidth)
+            if(diameter > ehsiContainerWidth-20){
+                console.log("hello>")
+                diameter = ehsiContainerWidth-20
+            }
+            console.log(diameter)
+
             var canvas = document.getElementById('canvas')
             canvas.height = diameter
             canvas.width = diameter
@@ -66,6 +76,8 @@ var app = new Vue({
             centerY = canvas.width/2;
             radius = canvas.width/2;
             this.drawEHSI()
+
+            this.drawBearingPointer(this.orig.radial)
         },
 
         getCanvasContext(){
@@ -431,6 +443,13 @@ var app = new Vue({
     },
 
     created() {
+        window.addEventListener('resize', function(e){
+            var ehsiContainerWidth = $("#ehsi").width();
+            if(diameter > ehsiContainerWidth-20){
+                app.resizeCanvasLayers();
+            }
+        });
+
         window.addEventListener('keydown', function(e) { 
 
         })
@@ -468,6 +487,7 @@ $(document)
     .on("click", "", function() {
 
     })
+
 
 
 
