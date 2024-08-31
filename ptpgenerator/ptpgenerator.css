@@ -9,3 +9,8 @@ p{
 #ehsiControls{
     display: none;
 }
+
+#scaleCanvas{
+    display: none;
+    position: relative;
+}
