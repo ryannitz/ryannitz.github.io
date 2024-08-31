@@ -18,6 +18,7 @@ var app = new Vue({
 
         ehsi:{
             pointsDrawn: false,
+            lineDrawn: false,
         },
 
         dmeMax: 50,
@@ -194,6 +195,9 @@ var app = new Vue({
 
         drawPtPLine(){
             this.drawPoints()
+            if(this.ehsi.lineDrawn){
+                return;
+            }
             const ctx = this.getCanvasContext();
             ctx.resetTransform();
 
@@ -204,6 +208,7 @@ var app = new Vue({
             ctx.moveTo(this.orig.coords[0],this.orig.coords[1]);
             ctx.lineTo(this.dest.coords[0],this.dest.coords[1]);
             ctx.stroke();
+            this.ehsi.lineDrawn = true;
         },
 
         drawRoughHeading(){
@@ -236,6 +241,7 @@ var app = new Vue({
 
         drawEHSI(){
             this.ehsi.pointsDrawn = false;
+            this.ehsi.lineDrawn = false;
 
             const ctx = this.getCanvasContext();
             ctx.resetTransform()
