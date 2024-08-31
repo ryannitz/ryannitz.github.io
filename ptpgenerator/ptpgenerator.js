@@ -56,7 +56,7 @@ var app = new Vue({
         },
 
         resizeCanvasLayers(){
-            var windowHeight = window.innerHeight;
+            var windowHeight = window.innerHeight-$("#navbar").height()-20;
             var diameter = windowHeight * this.canvasHeightPercentage/100;
 
             var ehsiContainerWidth = $("#ehsi").width();
@@ -134,7 +134,7 @@ var app = new Vue({
 
             this.heading = this.getAngle(this.orig, this.dest)
             this.distance = this.getDistance(this.orig, this.dest)
-            
+
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
         },
