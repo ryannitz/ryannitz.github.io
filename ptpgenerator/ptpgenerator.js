@@ -61,7 +61,6 @@ var app = new Vue({
 
             var ehsiContainerWidth = $("#ehsi").width();
             if(diameter > ehsiContainerWidth-20){
-                console.log("hello>")
                 diameter = ehsiContainerWidth-20
             }
 
@@ -72,7 +71,7 @@ var app = new Vue({
             var scaleCanvas = document.getElementById('scaleCanvas')
             scaleCanvas.height = diameter
             scaleCanvas.width = diameter
-            scaleCanvas.style.marginTop = (-diameter + "px")
+            scaleCanvas.style.marginLeft = (-diameter + "px")
 
             centerX = canvas.width/2;
             centerY = canvas.width/2;

@@ -22,5 +22,5 @@ p{
 
 #scaleCanvas{
     display: none;
-    position: relative;
+    position: absolute;
 }
