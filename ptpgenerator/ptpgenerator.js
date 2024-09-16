@@ -14,7 +14,7 @@ var app = new Vue({
     data : {
 
         //EHSI
-        canvasHeightPercentage: 60,
+        canvasHeightPercentage: 55,
         scalesDrawn: false,
         ehsi:{
             pointsDrawn: false,
