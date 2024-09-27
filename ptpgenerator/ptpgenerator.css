@@ -24,3 +24,15 @@ p{
     display: none;
     position: absolute;
 }
+
+#ehsiDME {
+    position: absolute;
+    left: 0;
+    bottom: 2%;
+}
+
+#ehsiDest{
+    position:absolute;
+    right: 0;
+    top:0;
+}
