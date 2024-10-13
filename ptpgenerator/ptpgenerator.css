@@ -25,6 +25,11 @@ p{
     position: absolute;
 }
 
+#cdiCanvas{
+    display: inline-block;
+    position: absolute;
+}
+
 #ehsiDME {
     position: absolute;
     left: 0;

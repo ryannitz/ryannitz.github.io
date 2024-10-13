@@ -1,4 +1,18 @@
 
+
+/**
+ * Wanna see spaghet code? Scroll down.
+ * TODO:
+ *      Extract known scaling values
+ *      Extract methods throughout
+ *      Extract classes/components
+ *      Optimize redraws (to/from indicator doesn't need a redraw every update)
+ *      Add MIN DME perhaps??
+ *      Make top UI row more compact.
+ *      Rebind enter to submit new PTPs. Mouse clicking is lame.
+ *      Research nicer solution for CDI/HEADING sliders. A nice knob mayhaps
+ */
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var centerX = canvas.width/2;
@@ -15,7 +29,8 @@ var app = new Vue({
 
         //EHSI
         canvasHeightPercentage: 55,
-        scalesDrawn: false,
+        scalesShown: false,
+        cdiShown: true,
         ehsi:{
             pointsDrawn: false,
             lineDrawn: false,
@@ -23,7 +38,9 @@ var app = new Vue({
         dmeMax: 50,
         dmeStep: 5,
         radialStep: 10,
-        headingInput: 360,
+
+        headingInput: 0,
+        courseInput: 0,
 
 
         //PTP
@@ -73,12 +90,18 @@ var app = new Vue({
             scaleCanvas.width = diameter
             scaleCanvas.style.marginLeft = (-diameter + "px")
 
+            var cdiCanvas = document.getElementById('cdiCanvas')
+            cdiCanvas.height = diameter
+            cdiCanvas.width = diameter
+            cdiCanvas.style.marginLeft = (-diameter + "px")
+
             centerX = canvas.width/2;
             centerY = canvas.width/2;
             radius = canvas.width/2;
-            this.drawEHSI()
 
+            this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
+            this.drawCDI(this.orig.radial)
         },
 
         getCanvasContext(){
@@ -151,6 +174,7 @@ var app = new Vue({
         
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
+            this.drawCDI(this.orig.radial)
         },
 
         showAnswer(event){
@@ -203,7 +227,7 @@ var app = new Vue({
             ctx.resetTransform();
 
             ctx.beginPath();
-            ctx.strokeStyle = "green"
+            ctx.strokeStyle = "blue"
             ctx.lineWidth = radius*2/100;
             ctx.lineCap = "round";
             ctx.moveTo(this.orig.coords[0],this.orig.coords[1]);
@@ -218,13 +242,14 @@ var app = new Vue({
             ctx.translate(radius, radius);
 
             var radianForDraw = this.getAngle(this.orig, this.dest)*Math.PI/180;
-            this.drawline(ctx, radianForDraw, radius, radius, radius/100, "magenta")
+            this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "magenta")
             this.rotateCanvas(this.getAngle(this.orig, this.dest))
         },
 
         rotateCanvas(newAngle){
             var transformValues = ctx.getTransform();
             var radians = Math.atan2(transformValues.b, transformValues.a);
+
             var currentAngle = radians*180/Math.PI
 
             if(currentAngle == newAngle) return;
@@ -235,9 +260,11 @@ var app = new Vue({
             }
 
             $("#canvas").css({
-                'transition': "transform 1s",
+                //'transition': "transform 1s",
                 'transform' : 'rotate('+ newAngle +'deg)'
             });
+
+            this.drawCDI()
         },
 
         drawEHSI(){
@@ -280,13 +307,13 @@ var app = new Vue({
             //draw the 5 increments
             for(let num = 1; num < 37; num++){
                 let angle = (num+.5)*Math.PI/18;
-                this.drawline(ctx, angle, radius, radius*1/12, 2, "white")
+                this.drawline(ctx, angle, radius,0, radius*1/12, 2, "white")
             }
             
             //draw the 10 increments
             for(let num = 1; num < 37; num++){
                 let angle = num*Math.PI/18;
-                this.drawline(ctx, angle, radius, radius*1/6, 2, "white")
+                this.drawline(ctx, angle, radius,0, radius*1/6, 2, "white")
             }
         },
 
@@ -334,12 +361,12 @@ var app = new Vue({
         },
 
         toggleScales(){
-            if(!this.scalesDrawn){
+            if(!this.scalesShown){
                 $("#scaleCanvas").show()
-                this.scalesDrawn = true
+                this.scalesShown = true
             }else{
                 $("#scaleCanvas").hide()
-                this.scalesDrawn = false
+                this.scalesShown = false
             }
         },
 
@@ -354,7 +381,7 @@ var app = new Vue({
             ctx.resetTransform();
 
             ctx.lineWidth = radius*1/100;
-            for(var i = 1; i < 4; i++){
+            for(var i = 1; i <= 4; i++){
                 ctx.beginPath();
                 ctx.strokeStyle = "red"
                 ctx.arc(centerX, centerY, radius*i/4, 0, 2*Math.PI, false);
@@ -385,9 +412,14 @@ var app = new Vue({
             ctx.rotate(0);
             this.rotateCanvas(0)
 
+            ctx.shadowColor = "black";
+            ctx.shadowBlur = 3;
+            ctx.shadowOffsetY = 0;
+            ctx.shadowOffsetX = 0;
+
             var radialRadian = (radial)*Math.PI/180;
             //tail
-            this.drawline(ctx, radialRadian, radius, radius*1/3, radius*2/100, "white")
+            this.drawline(ctx, radialRadian, radius,0, radius*1/3, radius*2/100, "white")
             //triangle
             var tipOfLine = radius*2/3
             var leftBase = -radius*5/100
@@ -407,11 +439,11 @@ var app = new Vue({
 
             //head
             radialRadian = (radial-180)*Math.PI/180;
-            this.drawline(ctx, radialRadian, radius, radius*2/4, radius*2/100, "white")
+            this.drawline(ctx, radialRadian, radius, radius*2/4, radius*1/4, radius*2/100, "white")
             //triangle
             var tipOfTriangle = radius //edge of ehsi
-            var leftBase = -radius*5/100
-            var rightBase = radius*5/100
+            var leftBase = -radius*6/100
+            var rightBase = radius*6/100
             var triangleHeight = (radius*1/4)
             ctx.rotate(radialRadian-Math.PI/2);
             ctx.beginPath();
@@ -427,7 +459,9 @@ var app = new Vue({
             ctx.rotate(-(radialRadian-Math.PI/2));
         },
 
-        drawline(ctx, angle, radius, length, width, color) {
+        //draws a line from the outside edge of the circle inwards.
+        //startpoint is the distance from the edge to start the line
+        drawline(ctx, angle, radius, startpoint, length, width, color) {
             ctx.resetTransform();
             ctx.translate(radius, radius);
             ctx.beginPath();
@@ -436,11 +470,183 @@ var app = new Vue({
             ctx.lineCap = "round";
 
             ctx.rotate(angle);
-            ctx.moveTo(0,-radius);
+            ctx.moveTo(0,-radius+startpoint);
             ctx.lineTo(0, -radius+length);
             ctx.stroke();
             ctx.rotate(-angle);
-          }
+        },
+
+        drawCDI(){
+            const canvas = document.getElementById('cdiCanvas');
+            const ctx = canvas.getContext('2d');
+            ctx.resetTransform();
+            ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
+            ctx.translate(radius, radius);
+            ctx.rotate(0);
+            this.rotateCanvas(0)
+
+            //get cdi canvas offset to ehsi canvas offset
+            var cdiDrawOffset = 360 - this.headingInput;
+
+            ctx.shadowColor = "black";
+            ctx.shadowBlur = 3;
+            ctx.shadowOffsetY = 0;
+            ctx.shadowOffsetX = 0;
+
+
+            //tail
+            var radialRadian = (parseInt(this.courseInput)-180+parseInt(cdiDrawOffset))*Math.PI/180;
+            this.drawline(ctx, radialRadian, radius, radius*1/4, radius-(radius*1/3), radius*2/100, "lime")
+            //head
+            radialRadian = (parseInt(this.courseInput)+parseInt(cdiDrawOffset))*Math.PI/180;
+            this.drawline(ctx, radialRadian, radius, radius*1/3, radius-(radius*1/3), radius*2/100, "lime")
+            //head triangle
+            var tipOfTriangle = radius-(radius*4/18) //edge of ehsi
+            var leftBase = -radius*5/100
+            var rightBase = radius*5/100
+            var triangleHeight = (radius*1/4)*3/4
+            ctx.rotate(radialRadian-Math.PI/2);
+            ctx.beginPath();
+            ctx.fillStyle = 'lime';
+            ctx.lineWidth = radius*2/100;
+            ctx.lineCap = "square";
+            ctx.moveTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+            ctx.lineTo(tipOfTriangle-triangleHeight,rightBase);//rightbase
+            ctx.lineTo(tipOfTriangle,0); //tip of triangle
+            ctx.lineTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+            ctx.closePath();
+            ctx.fill();
+
+
+
+            //scale circles
+            var circleRadius = radius*1/12/2.5;
+            ctx.lineWidth = radius*1/100;
+            ctx.strokeStyle = "white"
+
+            ctx.beginPath();
+            ctx.arc(0, radius*1/3-(circleRadius), circleRadius, 0, 2*Math.PI, false);
+            ctx.stroke()
+            ctx.beginPath();
+            ctx.arc(0, radius*2/4+(circleRadius), circleRadius, 0, 2*Math.PI, false);
+            ctx.stroke()
+
+            ctx.beginPath();
+            ctx.arc(0, -radius*1/3+(circleRadius), circleRadius, 0, 2*Math.PI, false);
+            ctx.stroke()
+            ctx.beginPath();
+            ctx.arc(0, -radius*2/4-(circleRadius), circleRadius, 0, 2*Math.PI, false);
+            ctx.stroke()
+
+            //deflection bar
+            var deflectionUnit = (-radius*2/4-(radius*1/12))/10; //full deflection is 10radials
+            var course = parseInt(this.courseInput)%360;
+            var radial = parseInt(this.orig.radial)
+
+            currentRadialDeflection = 0
+
+            var angleDiff = this.getAngleDiff(course, this.getWrappedRadial(radial, 0))
+            if(Math.abs(angleDiff) >= 90){
+                //console.log("to")
+                var toDiff = this.getAngleDiff(course, this.getWrappedRadial(radial, 180))
+                currentRadialDeflection = toDiff
+                if(toDiff < -10){
+                    currentRadialDeflection = -10
+                }
+                if(toDiff > 10){
+                    currentRadialDeflection = 10
+                }
+                var tipOfTriangle = radius*1/4
+                var leftBase = -radius*7/100
+                var rightBase = radius*7/100
+                var triangleHeight = (radius*1/9)
+                ctx.beginPath();
+                ctx.fillStyle = 'white';
+                ctx.lineWidth = radius*2/100;
+                ctx.lineCap = "round";
+                ctx.moveTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+                ctx.lineTo(tipOfTriangle-triangleHeight,rightBase);//rightbase
+                ctx.lineTo(tipOfTriangle,0); //tip of triangle
+                ctx.lineTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+                ctx.closePath();
+                ctx.fill();
+            }else{
+                //console.log("from")
+                var fromDiff = this.getAngleDiff(course, this.getWrappedRadial(radial, 0))
+                currentRadialDeflection = -fromDiff
+                if(fromDiff < -10){
+                    currentRadialDeflection = 10
+                }
+                if(fromDiff > 10){
+                    currentRadialDeflection = -10
+                }
+                var tipOfTriangle = -radius*1/4
+                var leftBase = -radius*7/100
+                var rightBase = radius*7/100
+                var triangleHeight = -(radius*1/9)
+                ctx.beginPath();
+                ctx.fillStyle = 'white';
+                ctx.lineWidth = radius*2/100;
+                ctx.lineCap = "round";
+                ctx.moveTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+                ctx.lineTo(tipOfTriangle-triangleHeight,rightBase);//rightbase
+                ctx.lineTo(tipOfTriangle,0); //tip of triangle
+                ctx.lineTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+                ctx.closePath();
+                ctx.fill();
+            }
+
+            ctx.resetTransform();
+            ctx.translate(radius, radius);
+            ctx.strokeStyle = "lime"
+            ctx.lineCap = "butt";//lol
+            ctx.lineWidth = radius*2/100;
+            ctx.beginPath();
+           
+            ctx.rotate(radialRadian);
+            ctx.moveTo(deflectionUnit*currentRadialDeflection,-radius+radius*2/3 + radius*1/50);
+            ctx.lineTo(deflectionUnit*currentRadialDeflection, radius*1/3 - radius*1/50);
+            ctx.stroke();
+            ctx.rotate(-radialRadian);
+            
+
+            ctx.rotate(-(radialRadian-Math.PI/2));
+        },
+
+        getWrappedRadial(radial, addition){
+            var newRadial = radial + addition
+            if(newRadial > 360){
+                newRadial -= 360
+            }
+            if(newRadial < -360){
+                newRadial += 360
+            }
+            if(newRadial == 0){
+                newRadial = 360
+            }
+
+            return newRadial;
+        },
+
+        getAngleDiff(a, b){
+            var diff = a - b
+            diff += (diff>180)? -360 : (diff<-180)? 360 : 0
+            return diff;
+        },
+
+        rotateCDI(){
+            this.drawCDI()
+        },
+
+        toggleCDI(){
+            if(!this.cdiShown){
+                $("#cdiCanvas").show()
+                this.cdiShown = true
+            }else{
+                $("#cdiCanvas").hide()
+                this.cdiShown = false
+            }
+        }
     },
 
     mounted() {
@@ -479,7 +685,6 @@ $(document).on("scroll", function(){
     }else{
         $("#navbar").slideUp();
     }
-
 })
 
 $(document).ready(function(){
@@ -504,12 +709,3 @@ $(document).ready(function(){
     });
 
 });
-
-$(document)
-    .on("click", "", function() {
-
-    })
-
-
-
-
