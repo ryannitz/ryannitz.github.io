@@ -85,13 +85,13 @@
                             <p class="mb-1">Destination Point</p>
                             <div class="col-sm">
                                 <div class="form-floating mb-3">
-                                    <input type="number" id="customDestinationRadial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
+                                    <input type="number" id="customDestinationRadial" v-model="dest.radial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
                                     <label for="customDestinationRadial">Radial</label>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="form-floating mb-3">
-                                    <input type="number" id="customDestinationDME" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <input type="number" id="customDestinationDME" v-model="dest.dme" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
                                     <label for="customDestinationDME">DME</label>
                                 </div>
                             </div>
