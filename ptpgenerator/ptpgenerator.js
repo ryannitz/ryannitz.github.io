@@ -168,7 +168,7 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
 
-            $(".answer").hide();
+            //$(".answer").hide();
             this.generatePoints();
 
             $("#origPoint").text(`${this.orig.radial}/${this.orig.dme}`);
