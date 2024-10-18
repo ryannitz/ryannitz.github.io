@@ -1,0 +1,13 @@
+.ui-knob-container{
+	position: relative;
+	/* height: 75px; */
+	width: 65px;
+	cursor: default;
+
+	-webkit-user-select: none;
+	-moz-user-select: none;
+	-ms-user-select: none;
+	-o-user-select: none;
+	user-select: none;
+}
+

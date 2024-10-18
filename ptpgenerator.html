@@ -3,6 +3,7 @@
     <head>
         <meta charset="utf-8" />
         <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="user-scalable=no, width=device-width">
         <title>PtP Generator</title>
         <!-- <link rel="icon" href=""/> -->
 
@@ -18,6 +19,12 @@
         <link rel="stylesheet" href="ptpgenerator/ptpgenerator.css" />
         <script src="create_alert/create_alert_controller.js"></script>
         <script src="util/create_alert.js"></script>
+
+        <!-- knobs -->
+        <!-- <link rel="stylesheet" href="util/knob/ui.css" /> -->
+        <!-- <link rel="stylesheet" href="util/knob/css_knobs.css" /> -->
+        <!-- <script type="text/javascript" src="util/knob/Knob.js"></script> -->
+
     </head>
 
     <body>
@@ -62,13 +69,13 @@
                             <p class="mb-1">Origin Point</p>
                             <div class="col-sm">
                                 <div class="form-floating mb-3">
-                                    <input type="number" id="customOriginRadial" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
+                                    <input type="number" id="customOriginRadial" v-model="orig.radial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1">
                                     <label for="customOriginRadial">Radial</label>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="form-floating mb-3">
-                                    <input type="number" id="customOriginDME" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <input type="number" id="customOriginDME" v-model="orig.dme" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
                                     <label for="customOriginDME">DME</label>
                                 </div>
                             </div>
@@ -78,20 +85,17 @@
                             <p class="mb-1">Destination Point</p>
                             <div class="col-sm">
                                 <div class="form-floating mb-3">
-                                    <input type="number" id="customDestinationRadial" class="form-control" min="0" max="360" step="1" value="360" placeholder="360">
+                                    <input type="number" id="customDestinationRadial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
                                     <label for="customDestinationRadial">Radial</label>
                                 </div>
                             </div>
                             <div class="col-sm">
                                 <div class="form-floating mb-3">
-                                    <input type="number" id="customDestinationDME" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <input type="number" id="customDestinationDME" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
                                     <label for="customDestinationDME">DME</label>
                                 </div>
                             </div>
                         </div>
-                        <p class="text-center">
-                            <button type="button" class="btn btn-primary" @click="createCustomPtP()">Create Point to Point</button>
-                        </p>
                     </form>
                 </div>
                 <div class="col-lg">
@@ -128,57 +132,86 @@
                     </div>
                 </div>
                 <div class="col-md border-start" id="ehsiControls">
-                    <div class="row border-bottom px-3">
+                    <div class="row mx-2 pt-4">
                         <div class="col-md-4">
-                            <div class="form-floating my-3">
+                            <div class="form-floating">
                                 <input type="number" id="canvasHeightPercentage" class="form-control" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
                                 <label for="canvasHeightPercentage">EHSI %</label>
                             </div>
                         </div>
                         <div class="col-md-8">
-                            <div class="my-3">
-                                <label for="canvasHeightPercentage">EHSI size percentage:</label>
+                            <div class="">
+                                <label for="canvasHeightPercentage">EHSI Size Percentage:</label>
                                 <input type="range" class="form-range" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
                             </div>
                         </div>
                     </div>
-                    <div class="my-auto p-3 pt">
-                        <div class="row">
-                            <div class="col-4">
-                                <div class="form-floating">
-                                    <input id="headingInput" type="number" class="form-control" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
-                                    <label for="headingInput">Set HDG:</label>
-                                </div>
-                            </div>
-                            <div class="col-8">
-                                <label for="headingInput">Heading Slider:</label>
-                                <input type="range" class="form-range" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
+                    <div class="row m-2">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input id="headingInput" type="number" class="form-control" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
+                                <label for="headingInput">Set HDG:</label>
                             </div>
                         </div>
-                        <div class="row pt-3">
-                            <div class="col-4">
-                                <div class="form-floating">
-                                    <input id="courseInput" type="number" class="form-control" v-model="courseInput" @input="rotateCDI()" placeholder="360" step="1" min="0" max="360" :disabled="!cdiShown">
-                                    <label for="courseInput">Set CRS:</label>
-                                </div>
+                        <div class="col-md-8">
+                            <label for="headingInput">Heading Slider:</label>
+                            <input type="range" class="form-range" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
+                            <!-- <input id="headingKnob" name="position-css-knob" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                        </div>
+                    </div>
+                    <div class="row m-2 pb-2 border-bottom">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input id="courseInput" type="number" class="form-control" v-model="courseInput" @change="rotateCDI()" placeholder="360" step="1" min="0" max="360" :disabled="!cdiShown">
+                                <label for="courseInput">Set CRS:</label>
                             </div>
-                            <div class="col-8">
+                        </div>
+                        <div class="col-md-8">
                                 <label for="courseInput">CRS Slider:</label>
                                 <input type="range" class="form-range" v-model="courseInput" @input="rotateCDI()" placeholder="360" step="1" min="0" max="360" :disabled="!cdiShown">
+                            <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                        </div>
+                        <p class="text-center">
+                            <button type="button" class="btn btn-primary m-3" @click="toggleCDI()">Toggle HSI</button>
+                            <button type="button" class="btn btn-primary m-3" @click="toggleScales()">Toggle Scale</button>
+                        </p>
+                    </div>
+                    <div class="my-auto p-3">
+                        <div class="row my-2">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360">
+                                    <label>Set Radial:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                    <label>Radial Slider:</label>
+                                    <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360" >
+                                
+                                <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
                             </div>
                         </div>
-                        <hr>
+                        <div class="row my-2">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" min="0">
+                                    <label>Set DME:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                    <label>DME Slider:</label>
+                                    <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" min="0">
+                                
+                                <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                            </div>
+                        </div>
                         <div class="d-flex justify-content-around">
                             <button type="button" class="btn btn-primary my-3 mx-1" @click="drawPoints()">Display Points</button>
                             <button type="button" class="btn btn-primary my-3 mx-1" @click="drawPtPLine()">Display Pen Line</button>
-                            <button type="button" class="btn btn-primary my-3 mx-1" @click="drawRoughHeading()">Parallel Check</button>
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="drawRoughHeading()">Display Heading</button>
                         </div>
                         <hr>
                         <div>
-                            <p class="text-center">
-                                <button type="button" class="btn btn-primary m-3" @click="toggleCDI()">Toggle HSI</button>
-                                <button type="button" class="btn btn-primary m-3" @click="toggleScales()">Toggle Scale</button>
-                            </p>
                             <p>Warning: Some features on this compass are not scaled based on any known EHSI. (If you know what a TAD FAIL is... Then this ehsi will be <b>mathmatically 1:1</b>)</p>
                             <ul>
                                 <li>Red scale: 1/4 radius increments</li>
@@ -187,8 +220,10 @@
                             <p>Notes:</p>
                             <ul>
                                 <li>After selecting a slider or number box, you can use arrow keys to increase/decrease values.</li>
-                                <li>This site was primarily made to provide practice PTP values. The EHSI was just a fun coding project!</li>
                                 <li>Setting EHSI size to 100% will perfectly fit your screen. A dropdown will appear for generating new PTPs and checking answers!</li>
+                                <li>Changing the current radial or dme will reset any drawn points/lines AND automatically recalculate the new PTP</li>
+                                <li>You can only change the destination ptp values at the top. Too many sliders already. YOU are the one moving, not the destination ;)</li>
+                                <li>This site was primarily made to provide practice PTP values. The EHSI was just a fun coding project!</li>
                             </ul>
                         </div>
                     </div>
@@ -197,8 +232,20 @@
             <p class="text-center mb-4">
                 <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
             </p>
+
         </div>
         
+        
+    
+        
         <script src="ptpgenerator/ptpgenerator.js"></script>
+
+        <!-- <script type="text/javascript" src="util/knob/ui.js"></script>
+        <script type="text/javascript" src="util/knob/knob_helper.js"></script> -->
+
+        <!-- <script type="text/javascript">
+            headingKnob = KnobHelper.createKnobCSS(document.getElementById('headingKnob'), 'position-css-knob')
+            courseKnob = KnobHelper.createKnobCSS(document.getElementById('courseKnob'), 'position-css-knob')
+        </script> -->
     </body>
 </html>

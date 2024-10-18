@@ -13,6 +13,9 @@
  *      Research nicer solution for CDI/HEADING sliders. A nice knob mayhaps
  */
 
+var headingKnob
+var courseKnob
+
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
 var centerX = canvas.width/2;
@@ -118,8 +121,8 @@ var app = new Vue({
         },
 
         initPoints(){
-            this.orig.radial = $("#customOriginRadial").val()
-            this.orig.dme = $("#customOriginDME").val()
+            //this.orig.radial = $("#customOriginRadial").val()
+            //this.orig.dme = $("#customOriginDME").val()
             this.dest.radial = $("#customDestinationRadial").val()
             this.dest.dme = $("#customDestinationDME").val()
         },
@@ -146,7 +149,7 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
 
-            $(".answer").hide();
+            //$(".answer").hide();
             this.initPoints();
 
             $("#origPoint").text(`${this.orig.radial}/${this.orig.dme}`);
@@ -157,6 +160,7 @@ var app = new Vue({
 
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
+            this.drawCDI(this.orig.radial)
         },
 
         generatePtP(){
@@ -177,8 +181,15 @@ var app = new Vue({
             this.drawCDI(this.orig.radial)
         },
 
-        showAnswer(event){
-            $(event.target).siblings().find("span").show();
+        showAnswer(event){//make a toggle
+            if($(event.target).html() == "Show"){
+                $(event.target).siblings().find("span").show();
+                $(event.target).html('Hide')
+            }else{
+                $(event.target).siblings().find("span").hide();
+                $(event.target).html('Show')
+            }
+            
         },
 
         getPtPscale(){
@@ -243,7 +254,7 @@ var app = new Vue({
 
             var radianForDraw = this.getAngle(this.orig, this.dest)*Math.PI/180;
             this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "magenta")
-            this.rotateCanvas(this.getAngle(this.orig, this.dest))
+            //this.rotateCanvas(this.getAngle(this.orig, this.dest))
         },
 
         rotateCanvas(newAngle){
@@ -707,5 +718,35 @@ $(document).ready(function(){
     $("input").focus(function (e) { 
         (this).select()
     });
+
+
+    // $("#courseKnob").on("change", function(){
+    //     var newCourseVal = $("#courseKnob").val()
+    //     var curCourseInputVal = $("#courseInput").val()
+
+    //     $("#courseInput").val(newCourseVal)
+    //     app.courseInput = newCourseVal;
+    //     app.rotateCDI()
+    // })
+
+    // $("#courseInput").on("change", function(){
+    //     console.log("tryingto update the thing..." + $(this).val())
+    //     courseKnob.val($(this).val())
+    //     $("#courseKnob").val($(this).val())
+    // })
+
+    // $("#headingKnob").on("change", function(){
+    //     var newHeadingVal = $("#headingKnob").val()
+    //     var curHeadingInputVal = $("#headingInput").val()
+
+    //     $("#headingInput").val(newHeadingVal)
+    //     app.headingInput = newHeadingVal;
+    //     app.rotateCanvas(newHeadingVal)
+    // })
+
+    // $("#headingInput").on("change", function(){
+    //     $("#headingKnob").val($(this).val())
+    //     headingKnob.val($(this).val())
+    // })
 
 });
