@@ -32,8 +32,13 @@ var app = new Vue({
 
         //EHSI
         canvasHeightPercentage: 55,
+        
         scalesShown: false,
         cdiShown: true,
+        pointsShown: false,
+        ptpLineShown: false,
+        roughHeadingShown: false,
+
         ehsi:{
             pointsDrawn: false,
             lineDrawn: false,
@@ -161,6 +166,9 @@ var app = new Vue({
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
             this.drawCDI(this.orig.radial)
+            this.drawPoints();
+            this.drawPtPLine();
+            this.drawRoughHeading()
         },
 
         generatePtP(){
@@ -176,9 +184,13 @@ var app = new Vue({
             this.heading = this.getAngle(this.orig, this.dest)
             this.distance = this.getDistance(this.orig, this.dest)
         
+
             this.drawEHSI()
             this.drawBearingPointer(this.orig.radial)
             this.drawCDI(this.orig.radial)
+            this.drawPoints();
+            this.drawPtPLine();
+            this.drawRoughHeading()
         },
 
         showAnswer(event){//make a toggle
@@ -196,10 +208,37 @@ var app = new Vue({
             return Math.max(this.orig.dme, this.dest.dme);
         },
 
+        // togglePoints(){
+        //     if(!this.scalesShown){
+        //         $("#scaleCanvas").show()
+        //         this.scalesShown = true
+        //     }else{
+        //         $("#scaleCanvas").hide()
+        //         this.scalesShown = false
+        //     }
+        // },
+
+        // togglePtPLine(){
+        //     if(!this.scalesShown){
+        //         $("#scaleCanvas").show()
+        //         this.scalesShown = true
+        //     }else{
+        //         $("#scaleCanvas").hide()
+        //         this.scalesShown = false
+        //     }
+        // },
+
+        // toggleRoughHeading(){
+        //     if(!this.scalesShown){
+        //         $("#scaleCanvas").show()
+        //         this.scalesShown = true
+        //     }else{
+        //         $("#scaleCanvas").hide()
+        //         this.scalesShown = false
+        //     }
+        // }
+
         drawPoints(){
-            if(this.ehsi.pointsDrawn){
-                return;
-            }
             var scale = this.getPtPscale();
             if(this.orig.dme == scale){
                 this.orig.coords = this.drawPoint(this.orig.radial, 1, "A");
@@ -218,22 +257,24 @@ var app = new Vue({
             var x = centerX + radius*Math.cos((radial-90)*Math.PI/180)*ratio;
             var y = centerY + radius*Math.sin((radial-90)*Math.PI/180)*ratio;
         
-            ctx.beginPath();
-            ctx.arc(x, y, pointWidth, 0, 2*Math.PI);
-            ctx.fillStyle = 'red';
-            ctx.fill();
+            if(this.pointsShown){
+                ctx.beginPath();
+                ctx.arc(x, y, pointWidth, 0, 2*Math.PI);
+                ctx.fillStyle = 'red';
+                ctx.fill();
         
-            ctx.font = radius*0.05 + "px arial";
-            ctx.fillText(label,x+radius*0.1,y);
-
+                ctx.font = radius*0.05 + "px arial";
+                ctx.fillText(label,x+radius*0.1,y);
+            }
+            
             return [x,y];
         },
 
         drawPtPLine(){
-            this.drawPoints()
-            if(this.ehsi.lineDrawn){
+            if(!this.ptpLineShown){
                 return;
             }
+            this.drawPoints();
             const ctx = this.getCanvasContext();
             ctx.resetTransform();
 
@@ -248,6 +289,9 @@ var app = new Vue({
         },
 
         drawRoughHeading(){
+            if(!this.roughHeadingShown){
+                return;
+            }
             const ctx = this.getCanvasContext();
             ctx.resetTransform();
             ctx.translate(radius, radius);
