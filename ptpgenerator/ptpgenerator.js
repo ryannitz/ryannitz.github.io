@@ -39,10 +39,6 @@ var app = new Vue({
         ptpLineShown: false,
         roughHeadingShown: false,
 
-        ehsi:{
-            pointsDrawn: false,
-            lineDrawn: false,
-        },
         dmeMax: 50,
         dmeStep: 5,
         radialStep: 10,
@@ -208,36 +204,6 @@ var app = new Vue({
             return Math.max(this.orig.dme, this.dest.dme);
         },
 
-        // togglePoints(){
-        //     if(!this.scalesShown){
-        //         $("#scaleCanvas").show()
-        //         this.scalesShown = true
-        //     }else{
-        //         $("#scaleCanvas").hide()
-        //         this.scalesShown = false
-        //     }
-        // },
-
-        // togglePtPLine(){
-        //     if(!this.scalesShown){
-        //         $("#scaleCanvas").show()
-        //         this.scalesShown = true
-        //     }else{
-        //         $("#scaleCanvas").hide()
-        //         this.scalesShown = false
-        //     }
-        // },
-
-        // toggleRoughHeading(){
-        //     if(!this.scalesShown){
-        //         $("#scaleCanvas").show()
-        //         this.scalesShown = true
-        //     }else{
-        //         $("#scaleCanvas").hide()
-        //         this.scalesShown = false
-        //     }
-        // }
-
         drawPoints(){
             var scale = this.getPtPscale();
             if(this.orig.dme == scale){
@@ -247,7 +213,6 @@ var app = new Vue({
                 this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "A");
                 this.dest.coords = this.drawPoint(this.dest.radial, 1, "B");
             }
-            this.ehsi.pointsDrawn = true;
         },
 
         drawPoint(radial,ratio,label){
@@ -285,7 +250,6 @@ var app = new Vue({
             ctx.moveTo(this.orig.coords[0],this.orig.coords[1]);
             ctx.lineTo(this.dest.coords[0],this.dest.coords[1]);
             ctx.stroke();
-            this.ehsi.lineDrawn = true;
         },
 
         drawRoughHeading(){
@@ -323,9 +287,6 @@ var app = new Vue({
         },
 
         drawEHSI(){
-            this.ehsi.pointsDrawn = false;
-            this.ehsi.lineDrawn = false;
-
             const ctx = this.getCanvasContext();
             ctx.resetTransform()
             ctx.translate(radius, radius);
