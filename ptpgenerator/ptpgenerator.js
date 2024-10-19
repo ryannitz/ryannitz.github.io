@@ -310,13 +310,13 @@ var app = new Vue({
             //draw the 5 increments
             for(let num = 1; num < 37; num++){
                 let angle = (num+.5)*Math.PI/18;
-                this.drawline(ctx, angle, radius,0, radius*1/12, 2, "white")
+                this.drawline(ctx, angle, radius,0, radius*1/14, 2, "white")
             }
             
             //draw the 10 increments
             for(let num = 1; num < 37; num++){
                 let angle = num*Math.PI/18;
-                this.drawline(ctx, angle, radius,0, radius*1/6, 2, "white")
+                this.drawline(ctx, angle, radius,0, radius*1/7, 2, "white")
             }
         },
 
@@ -326,14 +326,14 @@ var app = new Vue({
             ctx.resetTransform()
             ctx.translate(radius, radius);
 
-            ctx.font = radius*1/6.5 + "px arial";//should be 6 but still works and look more similar
+            ctx.font = radius*1/6.5 + "px arial";// font selection issue
             ctx.fillStyle = "white";
             ctx.textBaseline="middle";
             ctx.textAlign="center";
             for(let num = 1; num < 13; num++){
               var angle = num * Math.PI/6;
               ctx.rotate(angle);
-              ctx.translate(0, -radius*8.5/12);
+              ctx.translate(0, -radius*8.75/12); //font selection issue
               ctx.rotate(-angle);
 
               var hdgVal = num*3
@@ -358,7 +358,7 @@ var app = new Vue({
               ctx.restore()
 
               ctx.rotate(angle);
-              ctx.translate(0, radius*8.5/12);
+              ctx.translate(0, radius*8.75/12); //font selection issue
               ctx.rotate(-angle);
             }
         },
@@ -542,7 +542,7 @@ var app = new Vue({
             ctx.stroke()
 
             //deflection bar and to/from
-            var deflectionUnit = (-radius*2/4-(radius*1/12))/10; //full deflection is 10radials
+            var deflectionUnit = (-radius/2-(radius/10))/10; //full deflection is 10radials
             var course = parseInt(this.courseInput)%360;
             var radial = parseInt(this.orig.radial)
 
@@ -598,8 +598,8 @@ var app = new Vue({
             ctx.beginPath();
            
             ctx.rotate(radialRadian);
-            ctx.moveTo(deflectionUnit*currentRadialDeflection,-radius+radius*2/3 + radius*1/50);
-            ctx.lineTo(deflectionUnit*currentRadialDeflection, radius*1/3 - radius*1/50);
+            ctx.moveTo(deflectionUnit*currentRadialDeflection,-radius+radius*2/3 + radius*2/50);
+            ctx.lineTo(deflectionUnit*currentRadialDeflection, radius*1/3 - radius*2/50);
             ctx.stroke();
             ctx.rotate(-radialRadian);
             
