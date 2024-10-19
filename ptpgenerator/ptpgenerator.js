@@ -103,9 +103,7 @@ var app = new Vue({
             centerY = canvas.width/2;
             radius = canvas.width/2;
 
-            this.drawEHSI()
-            this.drawBearingPointer(this.orig.radial)
-            this.drawCDI(this.orig.radial)
+            this.draw();
         },
 
         getCanvasContext(){
@@ -122,8 +120,6 @@ var app = new Vue({
         },
 
         initPoints(){
-            //this.orig.radial = $("#customOriginRadial").val()
-            //this.orig.dme = $("#customOriginDME").val()
             this.dest.radial = $("#customDestinationRadial").val()
             this.dest.dme = $("#customDestinationDME").val()
         },
@@ -150,21 +146,12 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
 
-            //$(".answer").hide();
             this.initPoints();
-
-            $("#origPoint").text(`${this.orig.radial}/${this.orig.dme}`);
-            $("#destPoint").text(`${this.dest.radial}/${this.dest.dme}`);
 
             this.heading = this.getAngle(this.orig, this.dest)
             this.distance = this.getDistance(this.orig, this.dest)
 
-            this.drawEHSI()
-            this.drawBearingPointer(this.orig.radial)
-            this.drawCDI(this.orig.radial)
-            this.drawPoints();
-            this.drawPtPLine();
-            this.drawRoughHeading()
+            this.draw();
         },
 
         generatePtP(){
@@ -172,21 +159,12 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
 
-            //$(".answer").hide();
             this.generatePoints();
 
-            $("#origPoint").text(`${this.orig.radial}/${this.orig.dme}`);
-            $("#destPoint").text(`${this.dest.radial}/${this.dest.dme}`);
             this.heading = this.getAngle(this.orig, this.dest)
             this.distance = this.getDistance(this.orig, this.dest)
         
-
-            this.drawEHSI()
-            this.drawBearingPointer(this.orig.radial)
-            this.drawCDI(this.orig.radial)
-            this.drawPoints();
-            this.drawPtPLine();
-            this.drawRoughHeading()
+            this.draw();
         },
 
         showAnswer(event){//make a toggle
@@ -198,6 +176,15 @@ var app = new Vue({
                 $(event.target).html('Show')
             }
             
+        },
+
+        draw(){
+            this.drawEHSI()
+            this.drawBearingPointer(this.orig.radial)
+            this.drawCDI(this.orig.radial)
+            this.drawPoints();
+            this.drawPtPLine();
+            this.drawRoughHeading()
         },
 
         getPtPscale(){
@@ -339,7 +326,7 @@ var app = new Vue({
             ctx.resetTransform()
             ctx.translate(radius, radius);
 
-            ctx.font = radius*1/6 + "px arial";
+            ctx.font = radius*1/6.5 + "px arial";//should be 6 but still works and look more similar
             ctx.fillStyle = "white";
             ctx.textBaseline="middle";
             ctx.textAlign="center";
@@ -541,20 +528,20 @@ var app = new Vue({
             ctx.strokeStyle = "white"
 
             ctx.beginPath();
-            ctx.arc(0, radius*1/3-(circleRadius), circleRadius, 0, 2*Math.PI, false);
+            ctx.arc(0, radius*1/3.5-(circleRadius), circleRadius, 0, 2*Math.PI, false);
             ctx.stroke()
             ctx.beginPath();
             ctx.arc(0, radius*2/4+(circleRadius), circleRadius, 0, 2*Math.PI, false);
             ctx.stroke()
 
             ctx.beginPath();
-            ctx.arc(0, -radius*1/3+(circleRadius), circleRadius, 0, 2*Math.PI, false);
+            ctx.arc(0, -radius*1/3.5+(circleRadius), circleRadius, 0, 2*Math.PI, false);
             ctx.stroke()
             ctx.beginPath();
             ctx.arc(0, -radius*2/4-(circleRadius), circleRadius, 0, 2*Math.PI, false);
             ctx.stroke()
 
-            //deflection bar
+            //deflection bar and to/from
             var deflectionUnit = (-radius*2/4-(radius*1/12))/10; //full deflection is 10radials
             var course = parseInt(this.courseInput)%360;
             var radial = parseInt(this.orig.radial)
@@ -573,19 +560,7 @@ var app = new Vue({
                     currentRadialDeflection = 10
                 }
                 var tipOfTriangle = radius*1/4
-                var leftBase = -radius*7/100
-                var rightBase = radius*7/100
                 var triangleHeight = (radius*1/9)
-                ctx.beginPath();
-                ctx.fillStyle = 'white';
-                ctx.lineWidth = radius*2/100;
-                ctx.lineCap = "round";
-                ctx.moveTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
-                ctx.lineTo(tipOfTriangle-triangleHeight,rightBase);//rightbase
-                ctx.lineTo(tipOfTriangle,0); //tip of triangle
-                ctx.lineTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
-                ctx.closePath();
-                ctx.fill();
             }else{
                 //console.log("from")
                 var fromDiff = this.getAngleDiff(course, this.getWrappedRadial(radial, 0))
@@ -597,21 +572,24 @@ var app = new Vue({
                     currentRadialDeflection = -10
                 }
                 var tipOfTriangle = -radius*1/4
-                var leftBase = -radius*7/100
-                var rightBase = radius*7/100
                 var triangleHeight = -(radius*1/9)
-                ctx.beginPath();
-                ctx.fillStyle = 'white';
-                ctx.lineWidth = radius*2/100;
-                ctx.lineCap = "round";
-                ctx.moveTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
-                ctx.lineTo(tipOfTriangle-triangleHeight,rightBase);//rightbase
-                ctx.lineTo(tipOfTriangle,0); //tip of triangle
-                ctx.lineTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
-                ctx.closePath();
-                ctx.fill();
-            }
 
+            }
+            //to/from triangle
+            var leftBase = -radius*7/100
+            var rightBase = radius*7/100
+            ctx.beginPath();
+            ctx.fillStyle = 'white';
+            ctx.lineWidth = radius*2/100;
+            ctx.lineCap = "round";
+            ctx.moveTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+            ctx.lineTo(tipOfTriangle-triangleHeight,rightBase);//rightbase
+            ctx.lineTo(tipOfTriangle,0); //tip of triangle
+            ctx.lineTo(tipOfTriangle-triangleHeight,leftBase);//leftbase
+            ctx.closePath();
+            ctx.fill();
+
+            //cdi deflection
             ctx.resetTransform();
             ctx.translate(radius, radius);
             ctx.strokeStyle = "lime"
