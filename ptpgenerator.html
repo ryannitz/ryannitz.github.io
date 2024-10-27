@@ -66,17 +66,23 @@
 
             <div class="row shadow mb-5">
                 <div class="col-lg border">
-                    <form class="p-4 my-2">
+                    <form class="p-2 my-2">
                         <legend>Point to Point Generation Parameters</legend>
-                        <div class="form-floating mb-3">
-                            <input id="dmeMax" type="number" class="form-control" v-model="dmeMax" v-bind:step="dmeStep" min="0" value="50">
-                            <label for="dmeMax">Max DME</label>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-2">
+                                    <input id="dmeMax" type="number" class="form-control" v-model="dmeMax" v-bind:step="dmeStep" min="0" value="50">
+                                    <label for="dmeMax">Max DME</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-2">
+                                    <input id="dmeStep" type="number" class="form-control" v-model="dmeStep">
+                                    <label for="dmeStep">DME Step</label>
+                                </div>
+                            </div>
                         </div>
-                        <div class="form-floating mb-3">
-                            <input id="dmeStep" type="number" class="form-control" v-model="dmeStep">
-                            <label for="dmeStep">DME Step</label>
-                        </div>
-                        <div class="form-floating mb-3">
+                        <div class="form-floating mb-2">
                             <input id="radialStep" type="number" class="form-control" v-model="radialStep">
                             <label for="radialStep">Radial Step</label>
                         </div>
@@ -86,34 +92,33 @@
                     </form>
                 </div>
                 <div class="col-lg border">
-                    <form class="p-4 my-2">
+                    <form class="p-2 my-2">
                         <legend>Custom Point to Point Values</legend>
                         <div class="row">
                             <p class="mb-1">Origin Point</p>
                             <div class="col-sm">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-2">
                                     <input type="number" id="customOriginRadial" v-model="orig.radial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1">
                                     <label for="customOriginRadial">Radial</label>
                                 </div>
                             </div>
                             <div class="col-sm">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-2">
                                     <input type="number" id="customOriginDME" v-model="orig.dme" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
                                     <label for="customOriginDME">DME</label>
                                 </div>
                             </div>
                         </div>
-                        <hr>
                         <div class="row">
                             <p class="mb-1">Destination Point</p>
                             <div class="col-sm">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-2">
                                     <input type="number" id="customDestinationRadial" v-model="dest.radial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
                                     <label for="customDestinationRadial">Radial</label>
                                 </div>
                             </div>
                             <div class="col-sm">
-                                <div class="form-floating mb-3">
+                                <div class="form-floating mb-2">
                                     <input type="number" id="customDestinationDME" v-model="dest.dme" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
                                     <label for="customDestinationDME">DME</label>
                                 </div>
@@ -122,13 +127,13 @@
                     </form>
                 </div>
                 <div class="col-lg">
-                    <div class="row border h-50 p-3">
+                    <div class="row border h-50 p-2">
                         <div class="my-auto">
                             <h3>Starting Point: <span id="origPoint" class="fw-bolder text-decoration-underline">{{orig.radial}}/{{orig.dme}}</span></h3>
                             <h3>Destination Point: <span id="destPoint" class="fw-bolder text-decoration-underline">{{dest.radial}}/{{dest.dme}}</span></h3>
                         </div>
                     </div>
-                    <div class="row border h-50 p-3">
+                    <div class="row border h-50 p-2">
                         <div class="my-auto">
                             <div class="d-flex justify-content-between mb-1">
                                 <h3 class="mx-2">Heading: <span id="initialHeading" class="fw-bolder answer">{{heading}}</span></h3>
