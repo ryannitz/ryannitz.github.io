@@ -30,6 +30,8 @@ var app = new Vue({
 
     data : {
 
+        screenSizeWarningAccepted: false,
+
         //EHSI
         canvasHeightPercentage: 55,
         
@@ -253,6 +255,7 @@ var app = new Vue({
         },
 
         rotateCanvas(newAngle){
+        
             var transformValues = ctx.getTransform();
             var radians = Math.atan2(transformValues.b, transformValues.a);
 
@@ -657,6 +660,14 @@ var app = new Vue({
             if(diameter > ehsiContainerWidth-20){
                 app.resizeCanvasLayers();
             }
+
+            
+            if(window.innerWidth <= 600){
+                if(!this.screenSizeWarningAccepted && !$("#screenSizeWarning").hasClass("show")){
+                    $("#screenSizeWarning").modal("show")
+                }
+            }
+            
         });
 
         window.addEventListener('keydown', function(e) { 
@@ -683,6 +694,10 @@ $(document).on("scroll", function(){
 
 $(document).ready(function(){
 
+    if(window.innerWidth <= 600){
+        $("#screenSizeWarning").modal("show")
+    }
+
 
     $("form").submit(function (e) { 
         e.preventDefault();
@@ -703,33 +718,32 @@ $(document).ready(function(){
     });
 
 
-    // $("#courseKnob").on("change", function(){
-    //     var newCourseVal = $("#courseKnob").val()
-    //     var curCourseInputVal = $("#courseInput").val()
+    $("#courseKnob").on("change", function(){
+        var newCourseVal = $("#courseKnob").val() % 360
+        if(newCourseVal < 0){
+            newCourseVal += 360
+        }
 
-    //     $("#courseInput").val(newCourseVal)
-    //     app.courseInput = newCourseVal;
-    //     app.rotateCDI()
-    // })
+        app.courseInput = newCourseVal;
+        app.rotateCDI()
+    })
+    $("#courseInput, #courseSlider").on("input", function(){
+        $("#courseKnob").val(parseInt($(this).val()))
+        courseKnob.val(parseInt($(this).val()))
+    })
 
-    // $("#courseInput").on("change", function(){
-    //     console.log("tryingto update the thing..." + $(this).val())
-    //     courseKnob.val($(this).val())
-    //     $("#courseKnob").val($(this).val())
-    // })
 
-    // $("#headingKnob").on("change", function(){
-    //     var newHeadingVal = $("#headingKnob").val()
-    //     var curHeadingInputVal = $("#headingInput").val()
-
-    //     $("#headingInput").val(newHeadingVal)
-    //     app.headingInput = newHeadingVal;
-    //     app.rotateCanvas(newHeadingVal)
-    // })
-
-    // $("#headingInput").on("change", function(){
-    //     $("#headingKnob").val($(this).val())
-    //     headingKnob.val($(this).val())
-    // })
+    $("#headingKnob").on("change", function(){
+        var newHeadingVal = $("#headingKnob").val() % 360
+        if(newHeadingVal < 0){
+            newHeadingVal += 360
+        }
+        app.headingInput = newHeadingVal;
+        app.rotateCanvas(newHeadingVal)
+    })
+    $("#headingInput, #headingSlider").on("input", function(){
+        $("#headingKnob").val(parseInt($(this).val()))
+        headingKnob.val(parseInt($(this).val()))
+    })
 
 });

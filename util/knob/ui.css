@@ -2,7 +2,8 @@
 	position: relative;
 	/* height: 75px; */
 	width: 65px;
-	cursor: default;
+	cursor: pointer;
+	margin:auto;
 
 	-webkit-user-select: none;
 	-moz-user-select: none;

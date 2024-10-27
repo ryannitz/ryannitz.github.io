@@ -21,22 +21,45 @@
         <script src="util/create_alert.js"></script>
 
         <!-- knobs -->
-        <!-- <link rel="stylesheet" href="util/knob/ui.css" /> -->
-        <!-- <link rel="stylesheet" href="util/knob/css_knobs.css" /> -->
-        <!-- <script type="text/javascript" src="util/knob/Knob.js"></script> -->
+        <link rel="stylesheet" href="util/knob/ui.css" />
+        <link rel="stylesheet" href="util/knob/css_knobs.css" />
+        <script type="text/javascript" src="util/knob/Knob.js"></script>
 
     </head>
 
     <body>
         <div id="app" class="container-fluid px-5">
 
+            <div class="modal fade" id="screenSizeWarning">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Screen Size Warning</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" @click="this.screenSizeWarningAccepted=true;"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <p>
+                                We have detected that your screen width is too small for optimal user experience. Some features may not work as intended if you continue.
+                            </p>
+                            <br>
+                            <p>
+                                Please rotate your device to landscape mode or increase the width of your window and/or screen. Thank you!
+                            </p>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="this.screenSizeWarningAccepted=true;">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top border-bottom shadow-lg">
                 <div class="container-fluid text-center">
-                    <h4 class="px-4">Origin: {{orig.radial}}/{{orig.dme}}</h4>
-                    <h4 class="px-4">Destination: {{dest.radial}}/{{dest.dme}}</h4>
-                    <h4 class="px-4 navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
-                    <h4 class="px-4 navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
-                    <button type="button" class="btn btn-primary px-3" @click="generatePtP()">Generate New</button>
+                    <h4 class="header-text px-4">Origin: {{orig.radial}}/{{orig.dme}}</h4>
+                    <h4 class="header-text px-4">Destination: {{dest.radial}}/{{dest.dme}}</h4>
+                    <h4 class="header-text px-4 navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
+                    <h4 class="header-text px-4 navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
+                    <button type="button" class="header-text btn btn-primary px-3" @click="generatePtP()">Generate New</button>
                 </div>
             </nav>
 
@@ -132,7 +155,8 @@
                     </div>
                 </div>
                 <div class="col-md border-start" id="ehsiControls">
-                    <div class="row mx-2 pt-4">
+
+                    <div class="row mx-2 py-3">
                         <div class="col-md-4">
                             <div class="form-floating">
                                 <input type="number" id="canvasHeightPercentage" class="form-control" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
@@ -146,42 +170,39 @@
                             </div>
                         </div>
                     </div>
-                    <div class="row m-2">
-                        <div class="col-md-4">
+
+                    <div class="row mx-2 py-3 border-bottom border-top">
+                        <div class="col">
                             <div class="form-floating">
                                 <input id="headingInput" type="number" class="form-control" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
                                 <label for="headingInput">Set HDG:</label>
                             </div>
+                            <div class="mt-2">
+                                <input id="headingKnob" name="position-css-knob" placeholder="360" step="1" type="range" min="-36000000" max="36000000" data-indicator-auto-position="true" data-indicator-radius="22" />
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                            <label for="headingInput">Heading Slider:</label>
-                            <input type="range" class="form-range" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
-                            <!-- <input id="headingKnob" name="position-css-knob" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
-                        </div>
-                    </div>
-                    <div class="row m-2 pb-2 border-bottom">
-                        <div class="col-md-4">
+                        <div class="col">
                             <div class="form-floating">
                                 <input id="courseInput" type="number" class="form-control" v-model="courseInput" @change="rotateCDI()" placeholder="360" step="1" min="0" max="360" :disabled="!cdiShown">
                                 <label for="courseInput">Set CRS:</label>
                             </div>
+                            <div class="mt-2">
+                                <input id="courseKnob" v-model="courseInput" step="1" min="-36000000" max="36000000" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" />
+                            </div>
                         </div>
-                        <div class="col-md-8">
-                                <label for="courseInput">CRS Slider:</label>
-                                <input type="range" class="form-range" v-model="courseInput" @input="rotateCDI()" placeholder="360" step="1" min="0" max="360" :disabled="!cdiShown">
-                            <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                        <div class="col text-center my-auto">
+                                <button type="button" class="btn btn-primary m-2" @click="toggleCDI()">Toggle HSI</button><br>
+                                <button type="button" class="btn btn-primary m-2" @click="toggleScales()">Toggle Scale</button>
                         </div>
-                        <p class="text-center">
-                            <button type="button" class="btn btn-primary m-3" @click="toggleCDI()">Toggle HSI</button>
-                            <button type="button" class="btn btn-primary m-3" @click="toggleScales()">Toggle Scale</button>
-                        </p>
+                        
                     </div>
+                    
                     <div class="my-auto p-3">
                         <div class="row my-2">
                             <div class="col-md-4">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360">
-                                    <label>Set Radial:</label>
+                                    <label>Radial:</label>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -195,7 +216,7 @@
                             <div class="col-md-4">
                                 <div class="form-floating">
                                     <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" min="0">
-                                    <label>Set DME:</label>
+                                    <label>DME:</label>
                                 </div>
                             </div>
                             <div class="col-md-8">
@@ -206,9 +227,9 @@
                             </div>
                         </div>
                         <div class="d-flex justify-content-around">
-                            <button type="button" class="btn btn-primary my-3 mx-1" @click="pointsShown = !pointsShown; drawPoints()">Toggle Points</button>
-                            <button type="button" class="btn btn-primary my-3 mx-1" @click="ptpLineShown = !ptpLineShown; drawPtPLine()">Toggle Pen Line</button>
-                            <button type="button" class="btn btn-primary my-3 mx-1" @click="roughHeadingShown = !roughHeadingShown; drawRoughHeading()">Toggle Heading</button>
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="pointsShown = !pointsShown; draw()">{{pointsShown? "Hide":"Show"}} Points</button>
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="ptpLineShown = !ptpLineShown; draw()">{{ptpLineShown? "Hide":"Show"}} Pen Line</button>
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="roughHeadingShown = !roughHeadingShown; draw()">{{roughHeadingShown? "Hide":"Show"}} Heading</button>
                         </div>
                         <hr>
                         <div>
@@ -219,7 +240,8 @@
                             </ul>
                             <p>Notes:</p>
                             <ul>
-                                <li>After selecting a slider or number box, you can use arrow keys to increase/decrease values.</li>
+                                <li>After selecting a number box, you can use arrow keys to increase/decrease values.</li>
+                                <li>Mouse scroll while hovering over left and right side of a knob will increase/decrease the value.</li>
                                 <li>Setting EHSI size to 100% will perfectly fit your screen. A dropdown will appear for generating new PTPs and checking answers!</li>
                                 <li>You can only change the destination ptp values at the top. Too many sliders already. YOU are the one moving, not the destination ;)</li>
                                 <li>This site was primarily made to provide practice PTP values. The EHSI was just a fun coding project!</li>
@@ -239,12 +261,12 @@
         
         <script src="ptpgenerator/ptpgenerator.js"></script>
 
-        <!-- <script type="text/javascript" src="util/knob/ui.js"></script>
-        <script type="text/javascript" src="util/knob/knob_helper.js"></script> -->
+        <script type="text/javascript" src="util/knob/ui.js"></script>
+        <script type="text/javascript" src="util/knob/knob_helper.js"></script>
 
-        <!-- <script type="text/javascript">
+        <script type="text/javascript">
             headingKnob = KnobHelper.createKnobCSS(document.getElementById('headingKnob'), 'position-css-knob')
             courseKnob = KnobHelper.createKnobCSS(document.getElementById('courseKnob'), 'position-css-knob')
-        </script> -->
+        </script>
     </body>
 </html>

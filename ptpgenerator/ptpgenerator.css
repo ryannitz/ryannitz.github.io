@@ -20,6 +20,8 @@ p{
     white-space:nowrap;
 }
 
+
+
 #scaleCanvas{
     display: none;
     position: absolute;
@@ -34,12 +36,14 @@ p{
     position: absolute;
     left: 0;
     bottom: 2%;
+    font-size: 2cqw;
 }
 
 #ehsiDest{
     position: absolute;
     right: 0;
     top:0;
+    font-size: 2cqw;
 }
 
 #headingReference{
