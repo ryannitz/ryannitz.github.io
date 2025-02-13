@@ -1,0 +1,91 @@
+p, .row{
+    margin:0!important;
+}
+
+
+    /* Chrome, Safari, Edge, Opera */
+.sidebar-input::-webkit-outer-spin-button,
+.sidebar-input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+#sidebar{
+    padding: 10px;
+    width: 25%;
+    max-width: 25%;
+    min-width: 300px;
+}
+
+.sidebar-input {
+    display: block;
+    width: 100%;
+    text-align: center;
+    padding: 2px 0px;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 1px solid black;
+    outline: none;
+    background-color: transparent;
+    font-size: x-large;
+}
+
+.sidebar-input:active, .sidebar-input:focus {
+    border-bottom: 1px solid white;
+}
+
+#navbar, .hidden-answer, .answer, #ehsiControls{
+    display:none
+}
+
+.navbar-answer{
+    cursor: pointer;
+}
+
+.navbar-answer:hover .hidden-answer{
+    display: block;
+    white-space:nowrap;
+}
+
+.navbar-answer:hover .mask{
+    display: none;
+    white-space:nowrap;
+}
+
+
+
+#scaleCanvas{
+    display: none;
+    position: absolute;
+}
+
+#cdiCanvas{
+    position: absolute;
+    display: inline-block;
+}
+
+#ehsiDME {
+    position: absolute;
+    left: 0;
+    bottom: 2%;
+    font-size: 2cqw;
+}
+
+#ehsiDest{
+    position: absolute;
+    right: 0;
+    top:0;
+    font-size: 2cqw;
+}
+
+#headingReference{
+    z-index: 999;
+    position: absolute;
+    top: -2;
+    left:calc(50% - 2px);
+    display: block;
+    background-color: yellow;
+    border: 1px solid black;
+    width: .25vw;
+    height: 3vh;
+}

@@ -10,7 +10,6 @@
  *      Add MIN DME perhaps??
  *      Make top UI row more compact.
  *      Rebind enter to submit new PTPs. Mouse clicking is lame.
- *      Research nicer solution for CDI/HEADING sliders. A nice knob mayhaps
  */
 
 var headingKnob
