@@ -38,6 +38,7 @@ var app = new Vue({
         scalesShown: false,
         cdiShown: true,
         bearingPointerShown:true,
+        windShown:false,
 
     
         pointsShown: false,
@@ -208,6 +209,7 @@ var app = new Vue({
             this.drawPoints();
             this.drawPtPLine();
             this.drawRoughHeading()
+            this.drawWind();
         },
 
         getPtPscale(){
@@ -273,6 +275,25 @@ var app = new Vue({
             var radianForDraw = this.getAngle(this.orig, this.dest)*Math.PI/180;
             this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "yellow")
             //this.rotateCanvas(this.getAngle(this.orig, this.dest))
+        },
+
+        drawWind(){
+            if(!this.windShown){
+                return;
+            }
+            const ctx = this.getCanvasContext();
+            ctx.resetTransform();
+            ctx.translate(radius, radius);
+
+            this.drawline(ctx, this.windBearing*Math.PI/180, radius,0, radius, radius/100, "cyan")
+            
+            var crosswindComponent = (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180))
+            var maxDrift = (this.windspeed/(this.airspeed/60))
+            if(crosswindComponent < 0){
+                this.drawline(ctx, (this.headingInput+90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/100, "cyan")
+            }else{
+                this.drawline(ctx, (this.headingInput-90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/100, "cyan")
+            }
         },
 
         rotateCanvas(newAngle){
@@ -706,6 +727,7 @@ var app = new Vue({
     },
 
     computed: {
+
         crosswindComponent: function(){
            var component =  (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180)).toFixed(2);
            if(component < 0){
