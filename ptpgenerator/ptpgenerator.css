@@ -79,11 +79,25 @@ p, .row{
     font-size: 1.5cqw;
 }
 
+#ehsiCrs{
+    position: absolute;
+    right: 3%;
+    top:0;
+    font-size: 1.5cqw;
+}
+
+#ehsiHdg{
+    position: absolute;
+    right: 3%;
+    top:40px;
+    font-size: 1.5cqw;
+}
+
 #ehsiDest{
     position: absolute;
     right: 0;
-    top:0;
-    font-size: 2cqw;
+    bottom:0;
+    font-size: 1.5cqw;
 }
 
 #headingReference{
