@@ -195,11 +195,11 @@ var app = new Vue({
         drawPoints(){
             var scale = this.getPtPscale();
             if(this.orig.dme == scale){
-                this.orig.coords = this.drawPoint(this.orig.radial, 1, "");
-                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "");
+                this.orig.coords = this.drawPoint(this.orig.radial, 1, "A");
+                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "B");
             }else{
-                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "");
-                this.dest.coords = this.drawPoint(this.dest.radial, 1, "");
+                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "A");
+                this.dest.coords = this.drawPoint(this.dest.radial, 1, "B");
             }
         },
 
@@ -232,7 +232,7 @@ var app = new Vue({
             ctx.resetTransform();
 
             ctx.beginPath();
-            ctx.strokeStyle = "magenta"
+            ctx.strokeStyle = "blue"
             ctx.lineWidth = radius*2/100;
             ctx.lineCap = "round";
             ctx.moveTo(this.orig.coords[0],this.orig.coords[1]);
@@ -249,7 +249,7 @@ var app = new Vue({
             ctx.translate(radius, radius);
 
             var radianForDraw = this.getAngle(this.orig, this.dest)*Math.PI/180;
-            this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "yellow")
+            this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "magenta")
             //this.rotateCanvas(this.getAngle(this.orig, this.dest))
         },
 
@@ -293,7 +293,6 @@ var app = new Vue({
             $("#ehsiControls").show()
         },
 
-        //make this a seperate scaling canvas to ignore rotattion. Always points up
         drawEHSIcenter(){
             const ctx = this.getCanvasContext();
             ctx.resetTransform()

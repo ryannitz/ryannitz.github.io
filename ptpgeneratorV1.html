@@ -1,0 +1,277 @@
+
+<html data-bs-theme="dark">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <meta name="viewport" content="user-scalable=no, width=device-width">
+        <title>PtP Generator</title>
+        <!-- <link rel="icon" href=""/> -->
+
+        <!-- jQuery library -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+        <!-- Bootstrap CSS only -->
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+        <!-- Latest compiled JavaScript -->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Latest compiled Vue.js dev build -->
+        <script type="text/javascript" src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+
+        <link rel="stylesheet" href="ptpgenerator/ptpgeneratorV1.css" />
+        <script src="create_alert/create_alert_controller.js"></script>
+        <script src="util/create_alert.js"></script>
+
+        <!-- knobs -->
+        <link rel="stylesheet" href="util/knob/ui.css" />
+        <link rel="stylesheet" href="util/knob/css_knobs.css" />
+        <script type="text/javascript" src="util/knob/Knob.js"></script>
+
+    </head>
+
+    <body>
+        <div id="app" class="container-fluid px-5">
+
+            <div class="modal fade" id="screenSizeWarning">
+                <div class="modal-dialog modal-dialog-centered">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h4 class="modal-title">Screen Size Warning</h4>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" @click="this.screenSizeWarningAccepted=true;"></button>
+                        </div>
+                        <div class="modal-body container">
+                            <p>
+                                We have detected that your screen width is too small for optimal user experience. Some features may not work as intended if you continue.
+                            </p>
+                            <br>
+                            <p>
+                                Please rotate your device to landscape mode or increase the width of your window and/or screen. Thank you!
+                            </p>
+                        </div>  
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" @click="this.screenSizeWarningAccepted=true;">Continue</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top border-bottom shadow-lg">
+                <div class="container-fluid text-center">
+                    <h4 class="header-text px-4">Origin: {{orig.radial}}/{{orig.dme}}</h4>
+                    <h4 class="header-text px-4">Destination: {{dest.radial}}/{{dest.dme}}</h4>
+                    <h4 class="header-text px-4 navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
+                    <h4 class="header-text px-4 navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
+                    <button type="button" class="header-text btn btn-primary px-3" @click="generatePtP()">Generate New</button>
+                </div>
+            </nav>
+
+
+            <div class="row shadow mb-5">
+                <div class="col-lg border">
+                    <form class="p-2 my-2">
+                        <legend>Point to Point Generation Parameters</legend>
+                        <div class="row">
+                            <div class="col">
+                                <div class="form-floating mb-2">
+                                    <input id="dmeMax" type="number" class="form-control" v-model="dmeMax" v-bind:step="dmeStep" min="0" value="50">
+                                    <label for="dmeMax">Max DME</label>
+                                </div>
+                            </div>
+                            <div class="col">
+                                <div class="form-floating mb-2">
+                                    <input id="dmeStep" type="number" class="form-control" v-model="dmeStep">
+                                    <label for="dmeStep">DME Step</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-floating mb-2">
+                            <input id="radialStep" type="number" class="form-control" v-model="radialStep">
+                            <label for="radialStep">Radial Step</label>
+                        </div>
+                        <p class="text-center">
+                            <button id="generatePtP" type="button" class="btn btn-primary" @click="generatePtP()">Generate Random Point to Point</button>
+                        </p>
+                    </form>
+                </div>
+                <div class="col-lg border">
+                    <form class="p-2 my-2">
+                        <legend>Custom Point to Point Values</legend>
+                        <div class="row">
+                            <p class="mb-1">Origin Point</p>
+                            <div class="col-sm">
+                                <div class="form-floating mb-2">
+                                    <input type="number" id="customOriginRadial" v-model="orig.radial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1">
+                                    <label for="customOriginRadial">Radial</label>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-floating mb-2">
+                                    <input type="number" id="customOriginDME" v-model="orig.dme" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <label for="customOriginDME">DME</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <p class="mb-1">Destination Point</p>
+                            <div class="col-sm">
+                                <div class="form-floating mb-2">
+                                    <input type="number" id="customDestinationRadial" v-model="dest.radial" @input="createCustomPtP()" class="form-control" min="0" max="360" step="1" value="180" placeholder="180">
+                                    <label for="customDestinationRadial">Radial</label>
+                                </div>
+                            </div>
+                            <div class="col-sm">
+                                <div class="form-floating mb-2">
+                                    <input type="number" id="customDestinationDME" v-model="dest.dme" @input="createCustomPtP()" class="form-control" min="0" step="1" value="10" placeholder="10">
+                                    <label for="customDestinationDME">DME</label>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="col-lg">
+                    <div class="row border h-50 p-2">
+                        <div class="my-auto">
+                            <h3>Starting Point: <span id="origPoint" class="fw-bolder text-decoration-underline">{{orig.radial}}/{{orig.dme}}</span></h3>
+                            <h3>Destination Point: <span id="destPoint" class="fw-bolder text-decoration-underline">{{dest.radial}}/{{dest.dme}}</span></h3>
+                        </div>
+                    </div>
+                    <div class="row border h-50 p-2">
+                        <div class="my-auto">
+                            <div class="d-flex justify-content-between mb-1">
+                                <h3 class="mx-2">Heading: <span id="initialHeading" class="fw-bolder answer">{{heading}}</span></h3>
+                                <button type="button" class="btn btn-primary float-end text-end" @click="showAnswer($event)">Show</button>
+                            </div>
+                            <div class="d-flex justify-content-between">
+                                <h3 class="mx-2">Distance: <span id="distance" class="fw-bolder answer">{{distance}}</span></h3>
+                                <button type="button" class="btn btn-primary float-end text-end" @click="showAnswer($event)">Show</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="ehsi" class="row border my-5 shadow">
+                <div class="col-md my-3 text-center">
+                    <div style="position: relative;">
+                        <div id="headingReference"></div>
+                        <h3 id="ehsiDest" >Dest: {{dest.radial}}/{{dest.dme}}</h3>
+                        <canvas id="canvas" class="canvas" width="600" height="600"></canvas>
+                        <canvas id="scaleCanvas" class="canvas" width="600" height="600"></canvas>
+                        <canvas id="cdiCanvas" class="canvas" width="600" height="600"></canvas>
+                        <h2 id="ehsiDME" class="fw-bolder">DME: {{orig.dme}}</h2>
+                    </div>
+                </div>
+                <div class="col-md border-start" id="ehsiControls">
+
+                    <div class="row mx-2 py-3">
+                        <div class="col-md-4">
+                            <div class="form-floating">
+                                <input type="number" id="canvasHeightPercentage" class="form-control" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
+                                <label for="canvasHeightPercentage">EHSI %</label>
+                            </div>
+                        </div>
+                        <div class="col-md-8">
+                            <div class="">
+                                <label for="canvasHeightPercentage">EHSI Size Percentage:</label>
+                                <input type="range" class="form-range" v-model="canvasHeightPercentage" @input="resizeCanvasLayers()" min="20" max="100" value="50" step="1">
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="row mx-2 py-3 border-bottom border-top">
+                        <div class="col">
+                            <div class="form-floating">
+                                <input id="headingInput" type="number" class="form-control" v-model="headingInput" @input="rotateCanvas(headingInput)" placeholder="360" step="1" min="0" max="360">
+                                <label for="headingInput">Set HDG:</label>
+                            </div>
+                            <div class="mt-2">
+                                <input id="headingKnob" name="position-css-knob" placeholder="360" step="1" type="range" min="-36000000" max="36000000" data-indicator-auto-position="true" data-indicator-radius="22" />
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="form-floating">
+                                <input id="courseInput" type="number" class="form-control" v-model="courseInput" @change="rotateCDI()" placeholder="360" step="1" min="0" max="360" :disabled="!cdiShown">
+                                <label for="courseInput">Set CRS:</label>
+                            </div>
+                            <div class="mt-2">
+                                <input id="courseKnob" v-model="courseInput" step="1" min="-36000000" max="36000000" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" />
+                            </div>
+                        </div>
+                        <div class="col text-center my-auto">
+                                <button type="button" class="btn btn-primary m-2" @click="toggleCDI()">Toggle HSI</button><br>
+                                <button type="button" class="btn btn-primary m-2" @click="toggleScales()">Toggle Scale</button>
+                        </div>
+                        
+                    </div>
+                    
+                    <div class="my-auto p-3">
+                        <div class="row my-2">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360">
+                                    <label>Radial:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                    <label>Radial Slider:</label>
+                                    <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360" >
+                                
+                                <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                            </div>
+                        </div>
+                        <div class="row my-2">
+                            <div class="col-md-4">
+                                <div class="form-floating">
+                                    <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" min="0">
+                                    <label>DME:</label>
+                                </div>
+                            </div>
+                            <div class="col-md-8">
+                                    <label>DME Slider:</label>
+                                    <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" min="0">
+                                
+                                <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                            </div>
+                        </div>
+                        <div class="d-flex justify-content-around">
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="pointsShown = !pointsShown; draw()">{{pointsShown? "Hide":"Show"}} Points</button>
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="ptpLineShown = !ptpLineShown; draw()">{{ptpLineShown? "Hide":"Show"}} Line</button>
+                            <button type="button" class="btn btn-primary my-3 mx-1" @click="roughHeadingShown = !roughHeadingShown; draw()">{{roughHeadingShown? "Hide":"Show"}} Heading</button>
+                        </div>
+                        <hr>
+                        <div>
+                            <p>Warning: Some features on this compass are not scaled based on any known EHSI. (If you know what a TAD FAIL is... Then this ehsi will be <b>mathmatically 1:1</b>). It may not visually look similar because the ACTUAL ehsi scaling uses a dead area in the middle while this one doesn't. All of the visuals are scaled to work. Toggle the scales to see!</p>
+                            <ul>
+                                <li>Red scale: 1/4 radius increments</li>
+                                <li>Blue scale: 1/3 radius increments</li>
+                            </ul>
+                            <p>Notes:</p>
+                            <ul>
+                                <li>After selecting a number box, you can use arrow keys to increase/decrease values.</li>
+                                <li>Mouse scroll while hovering over left and right side of a knob will increase/decrease the value.</li>
+                                <li>Setting EHSI size to 100% will perfectly fit your screen. A dropdown will appear for generating new PTPs and checking answers!</li>
+                                <li>You can only change the destination ptp values at the top. Too many sliders already. YOU are the one moving, not the destination ;)</li>
+                                <li>This site was primarily made to provide practice PTP values. The EHSI was just a fun coding project!</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <p class="text-center mb-4">
+                <button id="toggleDarkMode" type="button" class="btn btn-primary my-2">Toggle Dark Mode</button>
+            </p>
+
+        </div>
+        
+        
+    
+        
+        <script src="ptpgenerator/ptpgeneratorV1.js"></script>
+
+        <script type="text/javascript" src="util/knob/ui.js"></script>
+        <script type="text/javascript" src="util/knob/knob_helper.js"></script>
+
+        <script type="text/javascript">
+            headingKnob = KnobHelper.createKnobCSS(document.getElementById('headingKnob'), 'position-css-knob')
+            courseKnob = KnobHelper.createKnobCSS(document.getElementById('courseKnob'), 'position-css-knob')
+        </script>
+    </body>
+</html>

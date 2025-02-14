@@ -36,16 +36,29 @@ var app = new Vue({
         
         scalesShown: false,
         cdiShown: true,
+        bearingPointerShown:true,
+
+    
         pointsShown: false,
         ptpLineShown: false,
         roughHeadingShown: false,
 
-        dmeMax: 50,
+        dmeMin: 20,
+        dmeMax: 40,
         dmeStep: 5,
+        
         radialStep: 10,
+        radialStart: 150,
+        radialEnd: 210,
 
         headingInput: 0,
         courseInput: 0,
+
+        airspeed: 240,
+        windBearing: 290,
+        windspeed: 10,
+        maxDrift: 0,
+        
 
 
         //PTP
@@ -113,11 +126,19 @@ var app = new Vue({
         },
 
         generateRandomRadial(){
-            return Math.floor(Math.random() * (360/this.radialStep)+1)*this.radialStep;
+            var diff, generatedRadial;
+            if(this.radialStart > this.radialEnd){
+                diff = 360 - parseInt(this.radialStart) + this.radialEnd
+                generatedRadial = (Math.round(Math.random() * (diff/this.radialStep))*this.radialStep + this.radialStart)%360;
+            }else{
+                diff = this.radialEnd - this.radialStart;
+                generatedRadial = (Math.round(Math.random() * (diff/this.radialStep))*this.radialStep + parseInt(this.radialStart))
+            }
+            return generatedRadial;
         },
 
         generateRandomDME(){
-            return Math.floor(Math.random() * (this.dmeMax/this.dmeStep)+1)*this.dmeStep;
+            return Math.round(Math.random()*((this.dmeMax-this.dmeMin)/this.dmeStep))*this.dmeStep + this.dmeMin
         },
 
         initPoints(){
@@ -195,11 +216,11 @@ var app = new Vue({
         drawPoints(){
             var scale = this.getPtPscale();
             if(this.orig.dme == scale){
-                this.orig.coords = this.drawPoint(this.orig.radial, 1, "A");
-                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "B");
+                this.orig.coords = this.drawPoint(this.orig.radial, 1, "");
+                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "");
             }else{
-                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "A");
-                this.dest.coords = this.drawPoint(this.dest.radial, 1, "B");
+                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "");
+                this.dest.coords = this.drawPoint(this.dest.radial, 1, "");
             }
         },
 
@@ -232,7 +253,7 @@ var app = new Vue({
             ctx.resetTransform();
 
             ctx.beginPath();
-            ctx.strokeStyle = "blue"
+            ctx.strokeStyle = "magenta"
             ctx.lineWidth = radius*2/100;
             ctx.lineCap = "round";
             ctx.moveTo(this.orig.coords[0],this.orig.coords[1]);
@@ -249,7 +270,7 @@ var app = new Vue({
             ctx.translate(radius, radius);
 
             var radianForDraw = this.getAngle(this.orig, this.dest)*Math.PI/180;
-            this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "magenta")
+            this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "yellow")
             //this.rotateCanvas(this.getAngle(this.orig, this.dest))
         },
 
@@ -293,6 +314,7 @@ var app = new Vue({
             $("#ehsiControls").show()
         },
 
+        //make this a seperate scaling canvas to ignore rotattion. Always points up
         drawEHSIcenter(){
             const ctx = this.getCanvasContext();
             ctx.resetTransform()
@@ -410,7 +432,15 @@ var app = new Vue({
             ctx.stroke();
         },
 
+        toggleBearingPointer(){
+            this.bearingPointerShown = !this.bearingPointerShown;
+            this.draw()
+        },
+
         drawBearingPointer(radial){
+            if(!this.bearingPointerShown){
+                return;
+            }
             const ctx = this.getCanvasContext();
             ctx.resetTransform();
             ctx.translate(radius, radius);
@@ -675,7 +705,14 @@ var app = new Vue({
     },
 
     computed: {
-
+        crosswindComponent: function(){
+           var component =  (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180)).toFixed(2);
+           if(component < 0){
+                return Math.abs(component) + "R"
+           }else{
+                return Math.abs(component) + "L"
+           }
+        }
     }
 
 });
