@@ -54,7 +54,7 @@ var app = new Vue({
         radialEnd: 360,
 
         headingInput: 0,
-        courseInput: 0,
+        courseInput: 180,
 
         airspeed: 240,
         windBearing: 290,
@@ -285,14 +285,14 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.translate(radius, radius);
 
-            this.drawline(ctx, this.windBearing*Math.PI/180, radius,0, radius, radius/100, "cyan")
+            this.drawline(ctx, this.windBearing*Math.PI/180, radius,0, radius, radius/200, "cyan")
             
             var crosswindComponent = (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180))
             var maxDrift = (this.windspeed/(this.airspeed/60))
             if(crosswindComponent < 0){
-                this.drawline(ctx, (this.headingInput+90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/100, "cyan")
+                this.drawline(ctx, (this.headingInput+90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/50, "cyan")
             }else{
-                this.drawline(ctx, (this.headingInput-90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/100, "cyan")
+                this.drawline(ctx, (this.headingInput-90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/50, "cyan")
             }
         },
 
