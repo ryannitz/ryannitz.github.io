@@ -14,6 +14,7 @@
 
 var headingKnob
 var courseKnob
+var radialKnob
 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -32,7 +33,7 @@ var app = new Vue({
         screenSizeWarningAccepted: false,
 
         //EHSI
-        canvasHeightPercentage: 55,
+        canvasHeightPercentage: 75,
         
         scalesShown: false,
         cdiShown: true,
@@ -48,8 +49,8 @@ var app = new Vue({
         dmeStep: 5,
         
         radialStep: 10,
-        radialStart: 150,
-        radialEnd: 210,
+        radialStart: 0,
+        radialEnd: 360,
 
         headingInput: 0,
         courseInput: 0,
@@ -66,15 +67,15 @@ var app = new Vue({
         distance: 0,
         orig: {
             radial:360,
-            dme:10,
+            dme:20,
             getRadian(){
                 return this.radial*Math.PI/180
             },
             coords: [],
         },
         dest: {
-            radial:180,
-            dme:10,
+            radial:360,
+            dme:30,
             getRadian(){
                 return this.radial*Math.PI/180
             },
@@ -216,11 +217,11 @@ var app = new Vue({
         drawPoints(){
             var scale = this.getPtPscale();
             if(this.orig.dme == scale){
-                this.orig.coords = this.drawPoint(this.orig.radial, 1, "");
-                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "");
+                this.orig.coords = this.drawPoint(this.orig.radial, 1, "A");
+                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "B");
             }else{
-                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "");
-                this.dest.coords = this.drawPoint(this.dest.radial, 1, "");
+                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "A");
+                this.dest.coords = this.drawPoint(this.dest.radial, 1, "B");
             }
         },
 
@@ -780,6 +781,19 @@ $(document).ready(function(){
     $("#headingInput, #headingSlider").on("input", function(){
         $("#headingKnob").val(parseInt($(this).val()))
         headingKnob.val(parseInt($(this).val()))
+    })
+
+
+    $("#radialKnob").on("change", function(){
+        var newRadialVal = $("#radialKnob").val() % 360
+        if(newRadialVal < 0){
+            newRadialVal += 360
+        }
+        app.orig.radial = newRadialVal;
+    })
+    $("#radialInput, #customOriginRadial").on("input", function(){
+        $("#radialKnob").val(parseInt($(this).val()))
+        radialKnob.val(parseInt($(this).val()))
     })
 
 });

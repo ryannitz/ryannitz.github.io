@@ -205,7 +205,7 @@
                             </div>
         
                             
-                            <div class="row mx-2 py-3 border-bottom border-top">
+                            <div class="row mx-2 py-3 border-bottom">
                                 <div id="ehsiControlPanel" class="d-flex justify-content-between border p-3">
                                     <div id="hdgCol">
                                         <p class="text-center">HDG</p>
@@ -240,46 +240,40 @@
  
 
                                 <div class="col text-center my-auto">
-                                        <!-- <button type="button" class="btn btn-primary m-2" @click="toggleCDI()">Toggle HSI</button><br> -->
                                         <button type="button" class="btn btn-primary m-2" @click="toggleScales()">Toggle Scale</button>
                                 </div>
                                 
                             </div>
                             
-                            <div class="my-auto p-3">
-                                <div class="row my-2">
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360">
-                                            <label>Radial:</label>
+                            <div class="my-auto">
+
+
+                                <div class="d-flex justify-content-between border p-3">
+                                    <div class="me-3">
+                                        <p class="text-center">Radial</p>
+                                        <div class="mt-2 m-auto">
+                                            <input id="radialKnob" v-model="orig.radial" @change="createCustomPtP()" step="1" min="-36000000" max="36000000" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" />
                                         </div>
+                                        <input type="number" id="radialInput" class="sidebar-input" @input="createCustomPtP()" v-model="orig.radial" :placeholder="orig.radial" step="1" min="0" max="360">
                                     </div>
-                                    <div class="col-md-8">
-                                            <label>Radial Slider:</label>
-                                            <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.radial" placeholder="180" step="1" min="0" max="360" >
-                                        
-                                        <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
-                                    </div>
-                                </div>
-                                <div class="row my-2">
-                                    <div class="col-md-4">
-                                        <div class="form-floating">
-                                            <input type="number" class="form-control" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" min="0">
-                                            <label>DME:</label>
-                                        </div>
-                                    </div>
-                                    <div class="col-md-8">
+                                    <div class="flex-fill align-self-center">
+                                        <div class="w-75 m-auto">
                                             <label>DME Slider:</label>
-                                            <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.dme" placeholder="10" step="1" :min="dmeMin" :max="dmeMax">
+                                            <input type="range" class="form-range" @input="createCustomPtP()" v-model="orig.dme" :placeholder="orig.dme" step="1" min="0">
+                                        </div>
+                                        <div class="form-floating w-25 m-auto">
+                                            <input type="number" class="sidebar-input" @input="createCustomPtP()" v-model="orig.dme" :placeholder="orig.dme" step="1" min="0">
+                                        </div>
                                         
-                                        <!-- <input id="courseKnob" v-model="courseInput" @input="rotateCDI()" step="1" min="0" max="360" :disabled="!cdiShown" name="position-css-knob" type="range" data-indicator-auto-position="true" data-indicator-radius="22" /> -->
+                                    </div>
+                                    <div class="d-flex flex-column" style="white-space: nowrap;">
+                                        <button type="button" class="btn btn-primary m-1" @click="pointsShown = !pointsShown; draw()">{{pointsShown? "Hide":"Show"}} Points</button>
+                                        <button type="button" class="btn btn-primary m-1" @click="ptpLineShown = !ptpLineShown; draw()">{{ptpLineShown? "Hide":"Show"}} Line</button>
+                                        <button type="button" class="btn btn-primary m-1" @click="roughHeadingShown = !roughHeadingShown; draw()">{{roughHeadingShown? "Hide":"Show"}} Heading</button>
                                     </div>
                                 </div>
-                                <div class="d-flex justify-content-around">
-                                    <button type="button" class="btn btn-primary my-3 mx-1" @click="pointsShown = !pointsShown; draw()">{{pointsShown? "Hide":"Show"}} Points</button>
-                                    <button type="button" class="btn btn-primary my-3 mx-1" @click="ptpLineShown = !ptpLineShown; draw()">{{ptpLineShown? "Hide":"Show"}} Line</button>
-                                    <button type="button" class="btn btn-primary my-3 mx-1" @click="roughHeadingShown = !roughHeadingShown; draw()">{{roughHeadingShown? "Hide":"Show"}} Heading</button>
-                                </div>
+                                
+                                
                                 <hr>
                                 <div>
                                     <p>Warning: Some features on this compass are not scaled based on any known EHSI. (If you know what a TAD FAIL is... Then this ehsi will be <b>mathmatically 1:1</b>). It may not visually look similar because the ACTUAL ehsi scaling uses a dead area in the middle while this one doesn't. All of the visuals are scaled to work. Toggle the scales to see!</p>
@@ -291,7 +285,7 @@
                                     <ul>
                                         <li>After selecting a number box, you can use arrow keys to increase/decrease values.</li>
                                         <li>Mouse scroll while hovering over left and right side of a knob will increase/decrease the value.</li>
-                                        <li>Setting EHSI size to 100% will perfectly fit your screen. A dropdown will appear for generating new PTPs and checking answers!</li>
+                                        <li>Setting EHSI size to 100% will perfectly fit your screen.</li>
                                         <li>You can only change the destination ptp values at the top. Too many sliders already. YOU are the one moving, not the destination ;)</li>
                                         <li>This site was primarily made to provide practice PTP values. The EHSI was just a fun coding project!</li>
                                     </ul>
@@ -319,6 +313,7 @@
         <script type="text/javascript">
             headingKnob = KnobHelper.createKnobCSS(document.getElementById('headingKnob'), 'position-css-knob')
             courseKnob = KnobHelper.createKnobCSS(document.getElementById('courseKnob'), 'position-css-knob')
+            radialKnob = KnobHelper.createKnobCSS(document.getElementById('radialKnob'), 'position-css-knob')
         </script>
     </body>
 </html>
