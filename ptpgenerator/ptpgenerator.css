@@ -14,7 +14,7 @@ p, .row{
 }
 
 #sidebar{
-    width: 33%;
+    width: 20%;
     min-width: 300px;
 }
 
@@ -57,7 +57,10 @@ p, .row{
     white-space:nowrap;
 }
 
-
+.control-panel{
+    max-width: 600px;
+    margin: auto;
+}
 
 #scaleCanvas{
     display: none;
