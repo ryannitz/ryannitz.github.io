@@ -24,6 +24,8 @@ var radius = canvas.width/2;
 
 var diameter = canvas.width;
 
+var simulationLoop
+
 var app = new Vue({
     el: "#app",
 
@@ -40,7 +42,6 @@ var app = new Vue({
         bearingPointerShown:true,
         windShown:false,
 
-    
         pointsShown: false,
         ptpLineShown: false,
         roughHeadingShown: false,
@@ -48,19 +49,20 @@ var app = new Vue({
         dmeMin: 20,
         dmeMax: 40,
         dmeStep: 5,
-        
         radialStep: 10,
         radialStart: 0,
         radialEnd: 360,
-
-        headingInput: 0,
-        courseInput: 180,
-
         airspeed: 240,
         windBearing: 290,
         windspeed: 10,
         maxDrift: 0,
+
+        headingInput: 0,
+        courseInput: 180,
         
+
+        //Simulation
+        simulationRunning: false,
 
 
         //PTP
@@ -277,25 +279,6 @@ var app = new Vue({
             //this.rotateCanvas(this.getAngle(this.orig, this.dest))
         },
 
-        drawWind(){
-            if(!this.windShown){
-                return;
-            }
-            const ctx = this.getCanvasContext();
-            ctx.resetTransform();
-            ctx.translate(radius, radius);
-
-            this.drawline(ctx, this.windBearing*Math.PI/180, radius,0, radius, radius/200, "cyan")
-            
-            var crosswindComponent = (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180))
-            var maxDrift = (this.windspeed/(this.airspeed/60))
-            if(crosswindComponent < 0){
-                this.drawline(ctx, (this.headingInput+90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/50, "cyan")
-            }else{
-                this.drawline(ctx, (this.headingInput-90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/50, "cyan")
-            }
-        },
-
         rotateCanvas(newAngle){
         
             var transformValues = ctx.getTransform();
@@ -315,7 +298,9 @@ var app = new Vue({
                 'transform' : 'rotate('+ newAngle +'deg)'
             });
 
-            this.drawCDI()
+            this.draw()
+            // this.drawCDI()
+            // this.drawWind()
         },
 
         drawEHSI(){
@@ -338,14 +323,19 @@ var app = new Vue({
 
         //make this a seperate scaling canvas to ignore rotattion. Always points up
         drawEHSIcenter(){
+            var offset = (this.headingInput)*Math.PI/180
             const ctx = this.getCanvasContext();
+            ctx.fillStyle = "yellow";
             ctx.resetTransform()
             ctx.translate(radius, radius);
-            //draw the center
+            ctx.rotate(offset)
+                          // x, y, w, h
+            ctx.fillRect(-20, -4, 40,8); // Wing
+            ctx.fillRect(-12, 16, 24,4); // Stab
+            ctx.fillRect(-3, -30, 6,60); // Body
             ctx.resetTransform();
-            ctx.fillStyle = "white";
-            ctx.fillRect(centerX-15,centerY-2, 30,4);
-            ctx.fillRect(centerX-2,centerY-15, 4,30);
+            
+            
         },
 
         drawEHSIincrements(){
@@ -533,6 +523,26 @@ var app = new Vue({
             ctx.rotate(-angle);
         },
 
+        drawWind(){
+            if(!this.windShown){
+                return;
+            }
+
+            const ctx = this.getCanvasContext();
+            ctx.resetTransform();
+            ctx.translate(radius, radius);
+
+            this.drawline(ctx, this.windBearing*Math.PI/180, radius,0, radius, radius/200, "cyan")
+            
+            var crosswindComponent = this.crosswindComponent
+            var maxDrift = (this.windspeed/(this.airspeed/60))
+            if(crosswindComponent < 0){
+                this.drawline(ctx, (this.headingInput+90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/50, "cyan")
+            }else{
+                this.drawline(ctx, (this.headingInput-90)*Math.PI/180, radius, (radius-radius*Math.abs(crosswindComponent)/maxDrift), radius, radius/50, "cyan")
+            }
+        },
+
         drawCDI(){
             const canvas = document.getElementById('cdiCanvas');
             const ctx = canvas.getContext('2d');
@@ -598,7 +608,7 @@ var app = new Vue({
             //deflection bar and to/from
             var deflectionUnit = (-radius/2-(radius/10))/10; //full deflection is 10radials
             var course = parseInt(this.courseInput)%360;
-            var radial = parseInt(this.orig.radial)
+            var radial = parseFloat(this.orig.radial)
 
             currentRadialDeflection = 0
 
@@ -694,7 +704,51 @@ var app = new Vue({
                 $("#cdiCanvas").hide()
                 this.cdiShown = false
             }
+        },
+
+        simulate(fps){
+            
+        },
+
+        startSimulation(){
+            if(this.simulationRunning){
+                clearInterval(simulationLoop)
+            }else{
+                var fps = 30;
+                var frametime = 1/fps; //used for setInterval()
+                simulationLoop = setInterval(function(){
+                    var windBearing = app.windBearing - 180
+                    var planeXSpeed = app.airspeed * Math.cos(app.headingInput*Math.PI/180)
+                    var planeYSpeed = app.airspeed * Math.sin(app.headingInput*Math.PI/180)
+                    var windXSpeed = app.windspeed * Math.cos(windBearing*Math.PI/180)
+                    var windYSpeed = app.windspeed * Math.sin(windBearing*Math.PI/180)
+                    var xSpeed = planeXSpeed + windXSpeed
+                    var ySpeed = planeYSpeed + windYSpeed
+                    var windKilledSpeed = Math.sqrt(xSpeed*xSpeed + ySpeed*ySpeed)
+                    var windKilledHeading = Math.atan2(ySpeed, xSpeed)/Math.PI*180;
+
+                    var distancePerSecond = windKilledSpeed/60/60;
+                    var distancePerFrame = distancePerSecond/fps;
+                    var moveY = distancePerFrame * Math.sin(windKilledHeading*Math.PI/180);//causing issues
+                    var moveX = distancePerFrame * Math.cos(windKilledHeading*Math.PI/180);//causing issues
+                    console.log(moveY)
+                    console.log(moveX)
+   
+                    var newRadial = Math.atan2(moveY,moveX)*Math.PI/180;
+                    var newDme = Math.sqrt(Math.pow(moveX,2) + Math.pow(moveY,2));
+                    newRadial = (parseFloat(app.orig.radial) + parseFloat(newRadial))% 360
+                    if(newRadial < 0){
+                        newRadial += 360
+                    }
+                    app.orig.radial = newRadial;
+
+                    app.orig.dme = parseFloat(app.orig.dme) + parseFloat(newDme)
+                    app.draw()
+                }, 1/30*1000) 
+            }
+            this.simulationRunning = !this.simulationRunning
         }
+
     },
 
     mounted() {
@@ -729,12 +783,8 @@ var app = new Vue({
     computed: {
 
         crosswindComponent: function(){
-           var component =  (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180)).toFixed(2);
-           if(component < 0){
-                return Math.abs(component) + "R"
-           }else{
-                return Math.abs(component) + "L"
-           }
+           return (this.windspeed/(this.airspeed/60) * Math.sin(this.getAngleDiff(this.headingInput, this.windBearing)*Math.PI/180)).toFixed(2);
+
         }
     }
 
