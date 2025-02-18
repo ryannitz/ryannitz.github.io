@@ -7,9 +7,6 @@
  *      Extract methods throughout
  *      Extract classes/components
  *      Optimize redraws (to/from indicator doesn't need a redraw every update)
- *      Add MIN DME perhaps??
- *      Make top UI row more compact.
- *      Rebind enter to submit new PTPs. Mouse clicking is lame.
  */
 
 var headingKnob
@@ -298,12 +295,13 @@ var app = new Vue({
             this.drawEHSInumbers()
             this.drawEHSIincrements()
             this.drawEHSIcenter()
-            this.drawScales()
-
-            $("#ehsiControls").show()
+            if(this.scalesShown){
+                this.drawScales()
+            }
+            
         },
 
-        //make this a seperate scaling canvas to ignore rotattion. Always points up
+
         drawEHSIcenter(){
             var offset = (this.headingInput)*Math.PI/180
             const ctx = this.getCanvasContext();
@@ -385,6 +383,7 @@ var app = new Vue({
         toggleScales(){
             $("#scaleCanvas").toggle()
             this.scalesShown = !this.scalesShown
+            this.draw()
         },
 
         drawScales(){
@@ -520,7 +519,16 @@ var app = new Vue({
             }
         },
 
+        toggleCDI(){
+            $("#cdiCanvas").toggle()
+            this.cdiShown = !this.cdiShown;
+            this.draw();
+        },
+
         drawCDI(){
+            if(!this.cdiShown){
+                return;
+            }
             const canvas = document.getElementById('cdiCanvas');
             const ctx = canvas.getContext('2d');
             ctx.resetTransform();
@@ -668,13 +676,6 @@ var app = new Vue({
             return diff;
         },
 
-
-        toggleCDI(){
-            $("#cdiCanvas").toggle()
-            this.cdiShown = !this.cdiShown;
- 
-        },
-
         showSidebar(){
             $("#showSidebar").css({
                 'display': 'none'
@@ -767,7 +768,6 @@ var app = new Vue({
 
     mounted() {
         this.initCanvasLayers();
-        this.drawScales()
         this.createCustomPtP()
         this.heading = this.getAngle(this.orig, this.dest)
         this.distance = this.getDistance(this.orig, this.dest)

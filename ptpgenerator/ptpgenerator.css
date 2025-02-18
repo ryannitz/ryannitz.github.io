@@ -43,7 +43,7 @@ p, .row{
     font-size: x-large;
 }
 
-#navbar, .hidden-answer, .answer, #ehsiControls, #showSidebar{
+#navbar, .hidden-answer, .answer, #showSidebar{
     display:none
 }
 
