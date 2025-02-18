@@ -280,27 +280,10 @@ var app = new Vue({
         },
 
         rotateCanvas(newAngle){
-        
-            var transformValues = ctx.getTransform();
-            var radians = Math.atan2(transformValues.b, transformValues.a);
-
-            var currentAngle = radians*180/Math.PI
-
-            if(currentAngle == newAngle) return;
-
-            var direction =  (currentAngle - newAngle) % 360;
-            if(direction <= 0){
-                newAngle = -newAngle
-            }
-
             $("#canvas").css({
-                //'transition': "transform 1s",
-                'transform' : 'rotate('+ newAngle +'deg)'
+                'transform' : 'rotate('+ -newAngle +'deg)'
             });
-
-            this.draw()
-            // this.drawCDI()
-            // this.drawWind()
+            this.draw();
         },
 
         drawEHSI(){
@@ -457,7 +440,7 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.translate(radius, radius);
             ctx.rotate(0);
-            this.rotateCanvas(0)
+            //this.rotateCanvas(0)
 
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
@@ -550,7 +533,7 @@ var app = new Vue({
             ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
             ctx.translate(radius, radius);
             ctx.rotate(0);
-            this.rotateCanvas(0)
+            //this.rotateCanvas(0)
 
             //get cdi canvas offset to ehsi canvas offset
             var cdiDrawOffset = 360 - this.headingInput;
