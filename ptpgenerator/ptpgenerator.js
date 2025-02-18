@@ -128,12 +128,15 @@ var app = new Vue({
 
         generateRandomRadial(){
             var diff, generatedRadial;
-            if(this.radialStart > this.radialEnd){
-                diff = 360 - parseInt(this.radialStart) + this.radialEnd
-                generatedRadial = (Math.round(Math.random() * (diff/this.radialStep))*this.radialStep + this.radialStart)%360;
+            var radialStart = parseInt(this.radialStart)
+            var radialEnd = parseInt(this.radialEnd)
+            
+            if(radialStart > radialEnd){
+                diff = 360 - radialStart + radialEnd
+                generatedRadial = (Math.round(Math.random() * (diff/this.radialStep))*this.radialStep + radialStart)%360;
             }else{
-                diff = this.radialEnd - this.radialStart;
-                generatedRadial = (Math.round(Math.random() * (diff/this.radialStep))*this.radialStep + parseInt(this.radialStart))
+                diff = radialEnd - radialStart;
+                generatedRadial = (Math.round(Math.random() * (diff/this.radialStep))*this.radialStep + radialStart)
             }
             return generatedRadial;
         },
