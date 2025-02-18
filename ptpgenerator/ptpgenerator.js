@@ -218,11 +218,11 @@ var app = new Vue({
         drawPoints(){
             var scale = this.getPtPscale();
             if(this.orig.dme == scale){
-                this.orig.coords = this.drawPoint(this.orig.radial, 1, "A");
-                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "B");
+                this.orig.coords = this.drawPoint(this.orig.radial, 1, "");
+                this.dest.coords = this.drawPoint(this.dest.radial, this.dest.dme/this.orig.dme, "");
             }else{
-                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "A");
-                this.dest.coords = this.drawPoint(this.dest.radial, 1, "B");
+                this.orig.coords = this.drawPoint(this.orig.radial, this.orig.dme/this.dest.dme, "");
+                this.dest.coords = this.drawPoint(this.dest.radial, 1, "");
             }
         },
 
@@ -279,7 +279,7 @@ var app = new Vue({
             $("#canvas").css({
                 'transform' : 'rotate('+ -newAngle +'deg)'
             });
-            this.draw();
+            this.draw()
         },
 
         drawEHSI(){
@@ -295,12 +295,9 @@ var app = new Vue({
             this.drawEHSInumbers()
             this.drawEHSIincrements()
             this.drawEHSIcenter()
-            if(this.scalesShown){
-                this.drawScales()
-            }
-            
+            this.drawScales()
+        
         },
-
 
         drawEHSIcenter(){
             var offset = (this.headingInput)*Math.PI/180
@@ -387,6 +384,9 @@ var app = new Vue({
         },
 
         drawScales(){
+            if(!this.scalesShown){
+                return;
+            }
             this.drawQuarterScale()
             this.drawThirdScale()
         },
