@@ -276,7 +276,6 @@ var app = new Vue({
 
             var radianForDraw = this.getAngle(this.orig, this.dest)*Math.PI/180;
             this.drawline(ctx, radianForDraw, radius,0, radius, radius/100, "yellow")
-            //this.rotateCanvas(this.getAngle(this.orig, this.dest))
         },
 
         rotateCanvas(newAngle){
@@ -312,6 +311,7 @@ var app = new Vue({
             ctx.resetTransform()
             ctx.translate(radius, radius);
             ctx.rotate(offset)
+            //need to scale these based on ratio
                           // x, y, w, h
             ctx.fillRect(-20, -4, 40,8); // Wing
             ctx.fillRect(-12, 16, 24,4); // Stab
@@ -383,13 +383,8 @@ var app = new Vue({
         },
 
         toggleScales(){
-            if(!this.scalesShown){
-                $("#scaleCanvas").show()
-                this.scalesShown = true
-            }else{
-                $("#scaleCanvas").hide()
-                this.scalesShown = false
-            }
+            $("#scaleCanvas").toggle()
+            this.scalesShown = !this.scalesShown
         },
 
         drawScales(){
@@ -440,7 +435,6 @@ var app = new Vue({
             ctx.resetTransform();
             ctx.translate(radius, radius);
             ctx.rotate(0);
-            //this.rotateCanvas(0)
 
             ctx.shadowColor = "black";
             ctx.shadowBlur = 3;
@@ -533,7 +527,6 @@ var app = new Vue({
             ctx.clearRect(0-10, 0-10, canvas.width+20, canvas.height+20);
             ctx.translate(radius, radius);
             ctx.rotate(0);
-            //this.rotateCanvas(0)
 
             //get cdi canvas offset to ehsi canvas offset
             var cdiDrawOffset = 360 - this.headingInput;
@@ -675,18 +668,11 @@ var app = new Vue({
             return diff;
         },
 
-        rotateCDI(){
-            this.drawCDI()
-        },
 
         toggleCDI(){
-            if(!this.cdiShown){
-                $("#cdiCanvas").show()
-                this.cdiShown = true
-            }else{
-                $("#cdiCanvas").hide()
-                this.cdiShown = false
-            }
+            $("#cdiCanvas").toggle()
+            this.cdiShown = !this.cdiShown;
+ 
         },
 
         showSidebar(){
@@ -705,6 +691,11 @@ var app = new Vue({
             $("#sidebar").hide()
             $("#navbar").slideDown();
         },
+
+
+
+
+
 
         simulate(fps){
             
@@ -736,44 +727,7 @@ var app = new Vue({
                     var moveX = distancePerFrame * Math.cos((windKilledHeading)*Math.PI/180);//causing issues
                     windKilledHeading = app.getWrappedRadial(windKilledHeading, -90)
                     //console.log(windKilledHeading)
-                    // if(windKilledHeading > 0 && windKilledHeading < 91){
-                    //     if(app.orig.radial > 0 && app.orig.radial < 91){
-                    //         //console.log("0-90")
-                    //         moveY = (Math.abs(moveY))
-                    //         moveX = (Math.abs(moveX))
-                    //     }
-                    //     if(app.orig.radial > 90 && app.orig.radial < 181){
-                    //         //console.log("90-180")
-                    //         moveY = -(Math.abs(moveY))
-                    //         moveX = (Math.abs(moveX))
-                    //     }
-                    //     if(app.orig.radial > 180 && app.orig.radial < 271){
-                    //         //console.log("180-270")
-                    //         moveY = -(Math.abs(moveY))
-                    //         moveX = -(Math.abs(moveX))
-                    //     }
-                    //     if(app.orig.radial > 270 && app.orig.radial < 360){
-                    //         //console.log("270-360")
-                    //         moveY = (Math.abs(moveY))
-                    //         moveX = -(Math.abs(moveX))
-                    //     }
-                    // }
-                    // if(windKilledHeading > 90 && windKilledHeading < 181){
-                    //     //console.log("90-180")
-                    //     moveY = -(Math.abs(moveY))
-                    //     moveX = (Math.abs(moveX))
-                    // }
-                    // if(windKilledHeading > 180 && windKilledHeading < 271){
-                    //     //console.log("180-270")
-                    //     moveY = -(Math.abs(moveY))
-                    //     moveX = -(Math.abs(moveX))
-                    // }
-                    // if(windKilledHeading > 270 && windKilledHeading < 360){
-                    //     //console.log("270-360")
-                    //     moveY = (Math.abs(moveY))
-                    //     moveX = -(Math.abs(moveX))
-                    // }
-                    
+
                     //console.log(moveX)
                     //console.log(moveY)
 
@@ -826,7 +780,6 @@ var app = new Vue({
                 app.resizeCanvasLayers();
             }
 
-            
             if(window.innerWidth <= 600){
                 if(!this.screenSizeWarningAccepted && !$("#screenSizeWarning").hasClass("show")){
                     $("#screenSizeWarning").modal("show")
@@ -849,17 +802,6 @@ var app = new Vue({
     }
 
 });
-
-
-// $(document).on("scroll", function(){
-//     var scrollY = window.scrollY
-//     var triggerY = $("#generatePtP").position().top + $("#generatePtP").height()
-//     if(scrollY > triggerY){
-//         $("#navbar").slideDown();
-//     }else{
-//         $("#navbar").slideUp();
-//     }
-// })
 
 $(document).ready(function(){
 
@@ -894,7 +836,7 @@ $(document).ready(function(){
         }
 
         app.courseInput = newCourseVal;
-        app.rotateCDI()
+        app.drawCDI()
     })
     $("#courseInput, #courseSlider").on("input", function(){
         $("#courseKnob").val(parseInt($(this).val()))
