@@ -55,8 +55,8 @@
 
             <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark shadow-lg">
                 <div class="d-flex flex-wrap justify-content-evenly text-center">
-                    <h4 class="header-text">Origin: {{orig.radial}}/{{orig.dme}}</h4>
-                    <h4 class="header-text">Destination: {{dest.radial}}/{{dest.dme}}</h4>
+                    <h4 class="header-text">Start: {{orig.radial}}/{{orig.dme}}</h4>
+                    <h4 class="header-text">End: {{dest.radial}}/{{dest.dme}}</h4>
                     <h4 class="header-text navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
                     <h4 class="header-text navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
                     <div class="header-text">
@@ -68,7 +68,7 @@
 
             <div id="content" class="d-flex">
                 <button id="showSidebar" type="button" class="btn p-1 border-top" @click="showSidebar();">>></button>
-                <div id="sidebar" class="border p-4 align-self-stretch" >
+                <div id="sidebar" class=" p-4 align-self-stretch border-top" >
                     <button type="button" class="btn-close float-end" @click="hideSidebar();"></button>
                     <p class="text-center">Point Generation Settings</p>
                     <div class="d-flex align-items-end my-2">

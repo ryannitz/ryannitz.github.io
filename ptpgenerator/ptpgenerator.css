@@ -64,7 +64,7 @@ p, .row{
 .header-text{
     white-space: nowrap;
     width:20%;
-    min-width: 225px;
+    min-width: 180px;
 }
 
 .control-panel{
