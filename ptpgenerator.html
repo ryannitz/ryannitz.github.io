@@ -53,20 +53,24 @@
                 </div>
             </div>
 
-            <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark fixed-top border-bottom shadow-lg">
-                <div class="container-fluid text-center">
-                    <h4 class="header-text px-4">Origin: {{orig.radial}}/{{orig.dme}}</h4>
-                    <h4 class="header-text px-4">Destination: {{dest.radial}}/{{dest.dme}}</h4>
-                    <h4 class="header-text px-4 navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
-                    <h4 class="header-text px-4 navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
-                    <button type="button" class="header-text btn btn-primary px-3" @click="generatePtP()">Generate New</button>
+            <nav id="navbar" class="navbar navbar-expand-sm bg-dark navbar-dark shadow-lg">
+                <div class="d-flex flex-wrap justify-content-evenly text-center">
+                    <h4 class="header-text">Origin: {{orig.radial}}/{{orig.dme}}</h4>
+                    <h4 class="header-text">Destination: {{dest.radial}}/{{dest.dme}}</h4>
+                    <h4 class="header-text navbar-answer">Heading: <span class="hidden-answer">{{heading}}</span><span class="mask">***</span></h4>
+                    <h4 class="header-text navbar-answer">Distance: <span class="hidden-answer">{{distance}}</span><span class="mask">***</span></h4>
+                    <div class="header-text">
+                        <button type="button" class=" btn btn-primary" @click="generatePtP()">Generate New</button>
+                    </div>
+                    
                 </div>
             </nav>
 
-            <div class="d-flex">
-                <div id="sidebar" class="border p-4">
-
-                    <p class="text-center my-2">Point Generation Settings</p>
+            <div id="content" class="d-flex">
+                <button id="showSidebar" type="button" class="btn p-1 border-top" @click="showSidebar();">>></button>
+                <div id="sidebar" class="border p-4 align-self-stretch" >
+                    <button type="button" class="btn-close float-end" @click="hideSidebar();"></button>
+                    <p class="text-center">Point Generation Settings</p>
                     <div class="d-flex align-items-end my-2">
                         <label style="white-space: nowrap; width: 110px;">DME Range:</label>
                         <div class="d-flex align-items-end w-50">
@@ -131,7 +135,7 @@
                     </div>
 
                     <hr>
-                    <p class="text-center my-2">Configuration</p>
+                    <p class="text-center my-2">Wind Calculator</p>
                     <div class="d-flex align-items-end my-2">
                         <label style="white-space: nowrap; width: 110px;">Wind(M)/(Kts):</label>
                         <div class="d-flex align-items-end w-50">
@@ -157,36 +161,33 @@
                         <p class="config-results text-center w-50">{{(windspeed/(airspeed/60)).toFixed(2)}}kts</p>
                     </div>
 
-                    <div class="d-flex align-items-center">
+                    <!-- <div class="d-flex align-items-center">
                         <label style="white-space: nowrap; width: 110px;">θ:</label>
-                        <!-- <p class="config-results text-center w-50">{{getAngleDiff(headingInput, windBearing)%90}}deg</p> -->
-                    </div>
+                        <p class="config-results text-center w-50">{{getAngleDiff(headingInput, windBearing)%90}}deg</p>
+                    </div> -->
                     <div class="d-flex align-items-center">
                         <label style="white-space: nowrap; width: 110px;">Actual Drift:</label>
                         <p class="config-results text-center w-50">{{Math.abs(crosswindComponent) + (crosswindComponent<0? "R": "L")}}</p>
                     </div>
-            
-                    <p class="text-center">
+                    <hr>
+                    <p class="text-center mt-3">
                         <button id="toggleDarkMode" type="button" class="btn btn-primary">Toggle Dark Mode</button>
                     </p>
-                </div>
-                <div>
-
-                    
-                    <div id="ehsi" class="row border my-5">
+                </div>           
+                <div id="ehsi" class="row border my-5 align-self-stretch">
                         <div class="col-md my-3 text-center mx-3">
                             <div style="position: relative; background-color: black;">
                                 <div id="headingReference"></div>
-                                <h3 id="ehsiCrs" style="color: lime;">CRS {{courseInput}}</h3>
-                                <h3 id="ehsiHdg" style="color: yellow;">HDG {{headingInput}}</h3>
-                                <h3 id="ehsiDest" >Dest: {{dest.radial}}/{{dest.dme}}</h3>
+                                <h3 class="ehsi-text" id="ehsiCrs" style="color: lime;">CRS {{courseInput}}</h3>
+                                <h3 class="ehsi-text" id="ehsiHdg" style="color: yellow;">HDG {{headingInput}}</h3>
+                                <h3 class="ehsi-text" id="ehsiDest" >Dest: {{dest.radial}}/{{dest.dme}}</h3>
                                 <canvas id="canvas" class="canvas" width="600" height="600"></canvas>
                                 <canvas id="scaleCanvas" class="canvas" width="600" height="600"></canvas>
                                 <canvas id="cdiCanvas" class="canvas" width="600" height="600"></canvas>
                                 <!-- TO FIX! -->
-                                <span id="ehsiDME" class="fw-bolder" style="font-size: 600%; position: absolute; margin-bottom: -4%;">↑</span>
-                                <h4 id="ehsiDME" class="fw-bolder ms-5">VOR 1 <br><br></h4>
-                                <h4 id="ehsiDME" class="fw-bolder ms-5"> {{Math.round(orig.dme * 10) / 10}} NM</h4>
+                                <span id="ehsiDME" class="ehsi-text fw-bolder" style="font-size: 600%; margin-bottom: -4%;">↑</span>
+                                <h4 id="ehsiDME" class="ehsi-text fw-bolder ms-5">VOR 1 <br><br></h4>
+                                <h4 id="ehsiDME" class="ehsi-text fw-bolder ms-5"> {{Math.round(orig.dme * 10) / 10}} NM</h4>
                             </div>
                         </div>
 
@@ -275,7 +276,7 @@
 
 
                             <div class="row py-2">
-                                <div class="d-flex">
+                                <div class="d-flex justify-content-center">
                                     <button type="button" class="btn btn-primary m-2" @click="toggleScales()">Toggle Scale</button>
                                     <button type="button" class="btn btn-primary m-2" @click="windShown = !windShown; draw()">{{windShown? "Hide":"Show"}} Wind</button>
                                     <!-- <button type="button" class="btn btn-primary m-2" @click="startSimulation()">Simulate</button> -->
@@ -301,10 +302,7 @@
                                 </ul>
                             </div>
                         </div>
-                    </div>
-                    
                 </div>
-                
             </div>
     
             

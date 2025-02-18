@@ -672,7 +672,7 @@ var app = new Vue({
         },
 
         getWrappedRadial(radial, addition){
-            var newRadial = radial + addition
+            var newRadial = parseFloat(radial) + parseFloat(addition)
             if(newRadial > 360){
                 newRadial -= 360
             }
@@ -706,10 +706,28 @@ var app = new Vue({
             }
         },
 
+        showSidebar(){
+            $("#showSidebar").css({
+                'display': 'none'
+            })
+            $("#sidebar").show()
+            $("#navbar").slideUp();
+
+        },
+
+        hideSidebar(){
+            $("#showSidebar").css({
+                'display': 'flex'
+            })
+            $("#sidebar").hide()
+            $("#navbar").slideDown();
+        },
+
         simulate(fps){
             
         },
 
+        //always swapping radial increase/decrease when passing through 180/360. Need to offset the current radial from windKilled heading perhaps??
         startSimulation(){
             if(this.simulationRunning){
                 clearInterval(simulationLoop)
@@ -717,7 +735,7 @@ var app = new Vue({
                 var fps = 30;
                 var frametime = 1/fps; //used for setInterval()
                 simulationLoop = setInterval(function(){
-                    var windBearing = app.windBearing - 180
+                    var windBearing = app.getWrappedRadial(app.windBearing, -180)// the direction you're being pushed
                     var planeXSpeed = app.airspeed * Math.cos(app.headingInput*Math.PI/180)
                     var planeYSpeed = app.airspeed * Math.sin(app.headingInput*Math.PI/180)
                     var windXSpeed = app.windspeed * Math.cos(windBearing*Math.PI/180)
@@ -725,25 +743,84 @@ var app = new Vue({
                     var xSpeed = planeXSpeed + windXSpeed
                     var ySpeed = planeYSpeed + windYSpeed
                     var windKilledSpeed = Math.sqrt(xSpeed*xSpeed + ySpeed*ySpeed)
-                    var windKilledHeading = Math.atan2(ySpeed, xSpeed)/Math.PI*180;
+                    var windKilledHeading = (Math.atan2(ySpeed, xSpeed)/Math.PI*180);
+                    windKilledHeading = app.getWrappedRadial(windKilledHeading, 360)
 
                     var distancePerSecond = windKilledSpeed/60/60;
                     var distancePerFrame = distancePerSecond/fps;
-                    var moveY = distancePerFrame * Math.sin(windKilledHeading*Math.PI/180);//causing issues
-                    var moveX = distancePerFrame * Math.cos(windKilledHeading*Math.PI/180);//causing issues
-                    console.log(moveY)
-                    console.log(moveX)
-   
-                    var newRadial = Math.atan2(moveY,moveX)*Math.PI/180;
-                    var newDme = Math.sqrt(Math.pow(moveX,2) + Math.pow(moveY,2));
-                    newRadial = (parseFloat(app.orig.radial) + parseFloat(newRadial))% 360
-                    if(newRadial < 0){
-                        newRadial += 360
+
+                    var moveY = distancePerFrame * Math.sin((windKilledHeading)*Math.PI/180);//causing issues when going negative
+                    var moveX = distancePerFrame * Math.cos((windKilledHeading)*Math.PI/180);//causing issues
+                    windKilledHeading = app.getWrappedRadial(windKilledHeading, -90)
+                    //console.log(windKilledHeading)
+                    // if(windKilledHeading > 0 && windKilledHeading < 91){
+                    //     if(app.orig.radial > 0 && app.orig.radial < 91){
+                    //         //console.log("0-90")
+                    //         moveY = (Math.abs(moveY))
+                    //         moveX = (Math.abs(moveX))
+                    //     }
+                    //     if(app.orig.radial > 90 && app.orig.radial < 181){
+                    //         //console.log("90-180")
+                    //         moveY = -(Math.abs(moveY))
+                    //         moveX = (Math.abs(moveX))
+                    //     }
+                    //     if(app.orig.radial > 180 && app.orig.radial < 271){
+                    //         //console.log("180-270")
+                    //         moveY = -(Math.abs(moveY))
+                    //         moveX = -(Math.abs(moveX))
+                    //     }
+                    //     if(app.orig.radial > 270 && app.orig.radial < 360){
+                    //         //console.log("270-360")
+                    //         moveY = (Math.abs(moveY))
+                    //         moveX = -(Math.abs(moveX))
+                    //     }
+                    // }
+                    // if(windKilledHeading > 90 && windKilledHeading < 181){
+                    //     //console.log("90-180")
+                    //     moveY = -(Math.abs(moveY))
+                    //     moveX = (Math.abs(moveX))
+                    // }
+                    // if(windKilledHeading > 180 && windKilledHeading < 271){
+                    //     //console.log("180-270")
+                    //     moveY = -(Math.abs(moveY))
+                    //     moveX = -(Math.abs(moveX))
+                    // }
+                    // if(windKilledHeading > 270 && windKilledHeading < 360){
+                    //     //console.log("270-360")
+                    //     moveY = (Math.abs(moveY))
+                    //     moveX = -(Math.abs(moveX))
+                    // }
+                    
+                    //console.log(moveX)
+                    //console.log(moveY)
+
+                    //need to add the move y/x to the existing point, or we need to update sign based on radial quadrant AND heading
+                    //need to account for ehsi scale when using the coords
+                    var scale = app.getPtPscale();
+                    var origX, origY
+                    if(app.orig.dme == scale){
+                        origX = centerX + radius*Math.cos((app.orig.radial-90)*Math.PI/180)
+                        origY = centerY + radius*Math.sin((app.orig.radial-90)*Math.PI/180)
+                    }else{
+                        var ratio = app.orig.dme/app.dest.dme
+                        origX = centerX + (radius*Math.cos((app.orig.radial-90)*Math.PI/180))
+                        origY = centerY + (radius*Math.sin((app.orig.radial-90)*Math.PI/180))
+                        origX = origX*parseFloat(ratio)
+                        origY = origY*parseFloat(ratio)
                     }
+                    var newX = parseFloat(origX)+parseFloat(moveX);
+                    var newY = parseFloat(origY)+parseFloat(moveY);
+
+                    var newRadial = Math.atan2(moveY,moveX)*Math.PI/180;
+                    newRadial = app.getWrappedRadial(app.orig.radial, newRadial)
                     app.orig.radial = newRadial;
 
+                    var newDme = Math.sqrt(Math.pow(moveX,2) + Math.pow(moveY,2));
                     app.orig.dme = parseFloat(app.orig.dme) + parseFloat(newDme)
                     app.draw()
+
+
+                    //clearInterval(simulationLoop)
                 }, 1/30*1000) 
             }
             this.simulationRunning = !this.simulationRunning
@@ -791,15 +868,15 @@ var app = new Vue({
 });
 
 
-$(document).on("scroll", function(){
-    var scrollY = window.scrollY
-    var triggerY = $("#generatePtP").position().top + $("#generatePtP").height()
-    if(scrollY > triggerY){
-        $("#navbar").slideDown();
-    }else{
-        $("#navbar").slideUp();
-    }
-})
+// $(document).on("scroll", function(){
+//     var scrollY = window.scrollY
+//     var triggerY = $("#generatePtP").position().top + $("#generatePtP").height()
+//     if(scrollY > triggerY){
+//         $("#navbar").slideDown();
+//     }else{
+//         $("#navbar").slideUp();
+//     }
+// })
 
 $(document).ready(function(){
 
