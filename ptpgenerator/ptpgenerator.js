@@ -722,18 +722,21 @@ var app = new Vue({
                     var ySpeed = planeYSpeed + windYSpeed
                     var windKilledSpeed = Math.sqrt(xSpeed*xSpeed + ySpeed*ySpeed)
                     var windKilledHeading = (Math.atan2(ySpeed, xSpeed)/Math.PI*180);
-                    windKilledHeading = app.getWrappedRadial(windKilledHeading, 360)
+                    windKilledHeading = app.getWrappedRadial(windKilledHeading, 360)-90
 
                     var distancePerSecond = windKilledSpeed/60/60;
-                    var distancePerFrame = distancePerSecond/fps;
+                    var distancePerFrame = distancePerSecond/fps; // in miles
+                    var pixelsPerMile = radius/app.getPtPscale()
+                    var pixelsTraveledPerFrame = distancePerFrame * pixelsPerMile
 
-                    var moveY = distancePerFrame * Math.sin((windKilledHeading)*Math.PI/180);//causing issues when going negative
-                    var moveX = distancePerFrame * Math.cos((windKilledHeading)*Math.PI/180);//causing issues
-                    windKilledHeading = app.getWrappedRadial(windKilledHeading, -90)
+
+                    var moveY = distancePerFrame * Math.sin((app.getAngleDiff(windKilledHeading, 360))*Math.PI/180);//good
+                    var moveX = distancePerFrame * Math.cos((app.getAngleDiff(windKilledHeading, 360))*Math.PI/180);//good
+                    //windKilledHeading = app.getWrappedRadial(windKilledHeading, -90)
                     //console.log(windKilledHeading)
 
-                    //console.log(moveX)
-                    //console.log(moveY)
+                    console.log(moveX)
+                    console.log(moveY)
 
                     //need to add the move y/x to the existing point, or we need to update sign based on radial quadrant AND heading
                     //need to account for ehsi scale when using the coords
@@ -749,15 +752,24 @@ var app = new Vue({
                         origX = origX*parseFloat(ratio)
                         origY = origY*parseFloat(ratio)
                     }
+
+                    //we need to always move "up" inside the compass. 
+                        //we need to calculate our move Y, then do more trig to get the offest between to heading and the actual canvas rotation
+                        //that way our lil dot will move directly up towards the top of the computer screen. 
+
+
+
+
+
                     var newX = parseFloat(origX)+parseFloat(moveX);
                     var newY = parseFloat(origY)+parseFloat(moveY);
 
-                    var newRadial = Math.atan2(moveY,moveX)*Math.PI/180;
+                    var newRadial = Math.atan2(newY,newX)*Math.PI/180;
                     newRadial = app.getWrappedRadial(app.orig.radial, newRadial)
                     app.orig.radial = newRadial;
 
-                    var newDme = Math.sqrt(Math.pow(moveX,2) + Math.pow(moveY,2));
-                    app.orig.dme = parseFloat(app.orig.dme) + parseFloat(newDme)
+                    var newDme = Math.sqrt(Math.pow(newX,2) + Math.pow(newY,2)); //broken
+                    app.orig.dme = parseFloat(newDme/pixelsPerMile) //broken
                     app.draw()
 
 
