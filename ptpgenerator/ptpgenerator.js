@@ -7,6 +7,7 @@
  *      Extract methods throughout
  *      Extract classes/components
  *      Optimize redraws (to/from indicator doesn't need a redraw every update)
+ *      Refactor to actual good coding standards
  */
 
 var headingKnob
@@ -124,6 +125,22 @@ var app = new Vue({
         getCanvasContext(){
             const canvas = document.getElementById('canvas');
             return canvas.getContext('2d');
+        },
+
+        setPtpGenerationValues(
+            dmeMinIn = this.dmeMin,
+            dmeMaxIn = this.dmeMax,
+            dmeStepIn = this.dmeStep,
+            radialStartIn = this.radialStart, 
+            radialEndIn = this.radialEnd,
+            radialStepIn = this.radialStep
+        ){
+            this.dmeMin = dmeMinIn;
+            this.dmeMax = dmeMaxIn;
+            this.dmeStep = dmeStepIn;
+            this.radialStart = radialStartIn;
+            this.radialEnd = radialEndIn;
+            this.radialStep = radialStepIn;
         },
 
         generateRandomRadial(){
