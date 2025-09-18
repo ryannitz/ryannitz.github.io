@@ -10,9 +10,9 @@
  *      Refactor to actual good coding standards
  */
 
-var headingKnob
-var courseKnob
-var radialKnob
+var headingKnob;
+var courseKnob;
+var radialKnob;
 
 var canvas = document.getElementById('canvas');
 var ctx = canvas.getContext('2d');
@@ -22,7 +22,7 @@ var radius = canvas.width/2;
 
 var diameter = canvas.width;
 
-var simulationLoop
+var simulationLoop;
 
 var app = new Vue({
     el: "#app",
