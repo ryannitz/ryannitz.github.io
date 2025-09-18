@@ -54,7 +54,7 @@
             <nav id="navbar" class="navbar navbar-expand-md sticky-top">
                 <div class="container-fluid p-0 h-100">
                     <div class="navbar-toggler w-100 h-100" type="button" data-bs-toggle="collapse" data-bs-target="#collapsibleNavbar">
-                        <span class="navbar-toggler-icon"></span>
+                        <i class="fa-solid fa-bars fa-2x"></i>
                     </div>
                     <div id="expandedNav" class="collapse navbar-collapse">
                         <ul class="d-flex w-100 navbar-nav">
@@ -112,11 +112,11 @@
                         <span class="badge rounded-pill bg-dark border category-filter my-1" id="accessoryFilter" @click="activeCategoryFilter = 'accessory'">Accessory</span>
                     </h3>
                                         
-                    <div class="row my-5" id="gearRow" v-for="item in filteredGear">
-                        <div class="col-md border m-2">
-                            <img class="" src="" alt="Image Coming Soon">
+                    <div class="row my-5 border" id="gearRow" v-for="item in filteredGear">
+                        <div class="gear-image-container col-md p-0 m-2 text-center m-auto d-flex">
+                            <img class="gear-image" :src="item.img" alt="Image Coming Soon">
                         </div>
-                        <div class="col-md mx-2">
+                        <div class="col-md p-3">
                             <h3>{{item.name}}</h3>
                             <div class="row border-top mx-1 py-1">
                                 <div class="col-md-3 fw-bold">Brand:</div>

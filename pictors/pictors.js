@@ -14,7 +14,7 @@ var app = new Vue({
 
         gear: [
             {
-                img: "",
+                img: "pictors/img/Olympus_Trip_35.jpg",
                 name: "Olympus Trip 35",
                 brand: "Olympus",
                 price: "200",
@@ -34,7 +34,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/cameras/3314982-olympus-trip-35/photos"
             },
             {
-                img: "",
+                img: "pictors/img/Nikon_D5300.jpg",
                 name: "Nikon D5300",
                 brand: "Nikon",
                 price: "400",
@@ -44,7 +44,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/cameras/3352134-nikon-d5300/photos"
             },
             {
-                img: "",
+                img: "pictors/img/nikon_18-55.png",
                 name: "Nikon AF-P DX NIKKOR 18-55mm f/3.5-5.6G VR II Lens",
                 brand: "Nikon",
                 price: "0",
@@ -54,7 +54,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/lenses/3733-nikon-af-s-dx-nikkor-18-55mm-f-3-5-5-6g-vr-ii-lens/photos"
             },
             {
-                img: "",
+                img: "pictors/img/nikon_70-300mm.webp",
                 name: "Nikon AF-P DX NIKKOR 70-300mm f/4.5-6.3 G ED VR",
                 brand: "Nikon",
                 price: "330",
@@ -64,7 +64,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/lenses/20104-nikon-af-p-dx-nikkor-70-300mm-f-4-5-6-3-g-ed-vr/photos"
             },
             {
-                img: "",
+                img: "pictors/img/nikon_60mm.jpg",
                 name: "Nikon AF-D Micro NIKKOR 60mm f/2.8",
                 brand: "Nikon",
                 price: "120",
@@ -74,7 +74,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/lenses/20331-nikon-af-nikkor-60mm-f-2-8/photos"
             },
             {
-                img: "",
+                img: "pictors/img/Canon_EOS_R6_Mark_II.jpg",
                 name: "Canon R6 Mark II",
                 brand: "Canon",
                 price: "3050",
@@ -84,7 +84,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/cameras/3366741-canon-eos-r6-mark-ll/photos"
             },
             {
-                img: "",
+                img: "pictors/img/canon_24-105.jpg",
                 name: "Canon RF 24-105mm f/4 L IS USM ",
                 brand: "Canon",
                 price: "1890",
@@ -94,7 +94,7 @@ var app = new Vue({
                 images_link: "https://www.lomography.com/homes/rpn/lenses/20365-canon-rf-24-105mm-f-4-l-usm/photos"
             },
             {
-                img: "",
+                img: "pictors/img/RF200_800mm_3_500px.png",
                 name: "Canon RF 200-800mm f/6.3-9 IS USM",
                 brand: "Canon",
                 price: "2625",
