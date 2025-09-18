@@ -89,18 +89,18 @@ ul, p, .col, .col-md-3, hr{
 }
 
 #bannerSubtitle{
-    font-size: 35px;
-    padding-bottom: 2vh;
+    font-size: 27px;
+    padding-bottom: 30px;
 }
 
 @media (max-width: 600px) {
     #bannerTitle{
-        font-size: 20vw;
+        font-size: 21vw;
         text-decoration: underline;
     }
     #bannerSubtitle{
-        font-size: 5vw;
-        padding-bottom: 2vh;
+        font-size: 4.5vw;
+        padding-bottom: 2.5vh;
     }
 }
 
