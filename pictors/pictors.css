@@ -71,7 +71,7 @@ ul, p, .col, .col-md-3, hr{
 #bannerBox {
     width: 600px;
     max-width: 75%;
-    min-width: fit-content;
+    /* min-width: fit-content; */
     border: 2px solid white;
     color: white;
     backdrop-filter: blur(8px);
@@ -81,6 +81,8 @@ ul, p, .col, .col-md-3, hr{
     user-select: none;
 }
 
+
+
 #bannerTitle{
     font-size: 125px;
     text-decoration: underline;
@@ -88,7 +90,18 @@ ul, p, .col, .col-md-3, hr{
 
 #bannerSubtitle{
     font-size: 35px;
-    padding-bottom: 30px;
+    padding-bottom: 2vh;
+}
+
+@media (max-width: 600px) {
+    #bannerTitle{
+        font-size: 20vw;
+        text-decoration: underline;
+    }
+    #bannerSubtitle{
+        font-size: 5vw;
+        padding-bottom: 2vh;
+    }
 }
 
 #navbar{
