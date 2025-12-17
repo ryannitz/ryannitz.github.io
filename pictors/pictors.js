@@ -212,4 +212,12 @@ $(document).ready(function(){
         $(".category-filter").removeClass("active")
         $(this).addClass("active")
     })
+
+    $(".navbar-toggler, .nav-item").click(function(){
+        if($(".navbar-toggler").hasClass("collapsed")){
+            $(".navbar-toggler").removeClass("active")
+        }else{
+            $(".navbar-toggler").addClass("active")
+        }
+    })
 });
