@@ -8,7 +8,7 @@ ul, p, .col, .col-md-3, hr, .row{
     display: none;
 }
 
-#gear{
+#home{
     display: block;
 }
 
@@ -246,15 +246,19 @@ ul, p, .col, .col-md-3, hr, .row{
     #collapsibleNavbar {
         display: none;
     }
-
 }
 
 @media (max-width: 768px) {
     #navbar.sticky-top {
         position: relative!important;
     }
+    #interestNav{
+        display: none;
+    }
 }
 
+#home{
+}
 
 #content{
     color: white;
@@ -262,4 +266,107 @@ ul, p, .col, .col-md-3, hr, .row{
 
 .word-break{
     word-break: break-all;
+}
+
+#interestNav{
+    max-width: 25%;
+}
+
+#interest-nav-list{
+    position: sticky;
+    height: 33vh;
+    top:33vh;
+    max-height: 100vh;
+    min-height: fit-content;
+    justify-content: space-between;
+    text-align: center;
+}
+
+.interest-nav-link{
+    display: block;
+    /* width: 100%; */
+}
+.interest-nav-link > a{
+    text-decoration: none;
+    color: white;
+    font-size: x-large;
+    margin-bottom: 10px;
+    /* width: 100%; */
+    display: block;
+
+}
+
+.interest-nav-link > a:hover{
+    transition: .25s;
+    text-decoration: underline;
+    padding-left:10px;
+    
+}
+
+.interest-banner{
+    position: relative;
+    display: block;
+    width: 90%;
+    text-align: center;
+    cursor: pointer;
+    aspect-ratio: 2/1;
+    scroll-margin-top: 25vh;
+    border: 1px solid white;
+    overflow: hidden;
+}
+
+#mobileInterestsIntro{
+    width: 50%;
+}
+
+@media (max-width: 768px) {
+    .interest-banner{
+        position: relative;
+        display: block;
+        width: 100%;
+        text-align: center;
+        cursor: pointer;
+        aspect-ratio: 2/1;
+        scroll-margin-top: 25vh;
+        border: 1px solid white;
+        overflow: hidden;
+    }
+
+    #mobileInterestsIntro{
+        width: 90%;
+    }
+}
+
+.interest-banner:hover{
+    transition: .25s;
+}
+
+.interest-banner:hover > .interest-img{
+    transition: .25s;
+    filter: blur(0px);
+}
+.interest-banner:hover > .interest-banner-text {
+    transition: .25s;
+    opacity: 0;
+}
+
+.interest-banner > h1{
+    transition: .25s;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: max(7vw, 350%);
+    -webkit-text-stroke: 2px #000; 
+    text-stroke: 2px #000; 
+}
+
+
+.interest-img{
+    transition: .25s;
+    display: block;
+    width: 100%;
+    object-fit: cover;
+    aspect-ratio: 2/1;
+    filter: blur(3px);
 }

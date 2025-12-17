@@ -171,7 +171,8 @@ var app = new Vue({
         showpage(id){
             $(".content-page").hide()
             $(id).show()
-
+            $('html, body').animate({scrollTop : 0}, 0); // Smooth scroll animation (800ms duration)
+            return false; // Prevent default anchor behavior
         },
 
         write(){
@@ -219,5 +220,10 @@ $(document).ready(function(){
         }else{
             $(".navbar-toggler").addClass("active")
         }
+    })
+    $("#gear").click(function(){
+        console.log("hello")
+        $('html, body').animate({scrollTop : 0}, 500); // Smooth scroll animation (800ms duration)
+        return false; // Prevent default anchor behavior
     })
 });

@@ -24,6 +24,9 @@
     </head>
 
     <body class="bg-dark">
+        <script>
+            var isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+        </script>
         <div id="app">
             <div id="banner">
 
@@ -117,13 +120,13 @@
                     </div>
                     <div id="expandedNav" class="collapse navbar-collapse">
                         <ul class="d-flex w-100 navbar-nav">
-                            <li class="nav-item nav-item-expanded flex-fill" @click=showpage('#home')>
+                            <li class="nav-item nav-item-expanded flex-fill active" @click=showpage('#home')>
                                 <span>Home</span>
                             </li>
                             <li class="nav-item nav-item-expanded flex-fill" @click=showpage('#portfolio')>
                                 <span>See My Work</span>
                             </li>
-                            <li class="nav-item nav-item-expanded flex-fill active" @click=showpage('#gear')>
+                            <li class="nav-item nav-item-expanded flex-fill" @click=showpage('#gear')>
                                 <span>Gear</span>
                             </li>
                             <!-- <li class="nav-item flex-fill">
@@ -149,20 +152,81 @@
             </div>
 
 
-            <div id="content" class="mt-5">
-                <div id="home" class="container content-page">
-                    <h2 class="text-center">Decided to cook up a static webpage because social media description boxes are just TOO DANG SMALL.</h2>
+            <div id="content">
+                <div id="home" class="content-page">
+                    <div id="mobileInterestsIntro" class="text-center my-5 m-auto">
+                        <h1>My interests</h1>
+                        <h4>The following tiles show my main photographic interests. However, I don't limit myself to certain styles or niches. If I like the thing I'm seeing, I will capture it. To view my galleries and albums: Navigate to "See my Work" or "Gear", or visit my socials for the links. Thank you. </h4>
+                    </div>
+                    <div class="row my-5">
+                        <div class="col" id="interestNav">
+                            <div class="d-flex flex-column nav" id="interest-nav-list">
+                            
+                                <h1><u>Interests</u></h1>
+                                <div class="interest-nav-link" data-bs-target="interestFilm">
+                                    <a href="#interestFilm">35mm Film</a>
+                                </div>
+                                <div class="interest-nav-link" data-bs-target="interestAviation">
+                                    <a href="#interestAviation">Aviation</a>
+                                </div>
+                                <div class="interest-nav-link" data-bs-target="interestAnimals">
+                                    <a href="#interestAnimals">Animals</a>
+                                </div>
+                                <div class="interest-nav-link" data-bs-target="interestArchitecture">
+                                    <a href="#interestArchitecture">Architecture</a>
+                                </div>
+                                <div class="interest-nav-link" data-bs-target="interestTravel">
+                                    <a href="#interestTravel">Travel</a>
+                                </div>
+                                <div class="interest-nav-link" data-bs-target="interestStreet">
+                                    <a href="#interestStreet">Street</a>
+                                </div>
+                                <div class="interest-nav-link" data-bs-target="interestCreative">
+                                    <a href="#interestCreative">Creative</a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div id="interestFilm" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Film/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">35mm Film</h1>
+                            </div>
+                            <div id="interestAviation" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Aviation/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">Aviation</h1>
+                            </div>
+                            <div id="interestAnimals" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Animals/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">Animals</h1>
+                            </div>
+                            <div id="interestArchitecture" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Architecture/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">Architecture</h1>
+                            </div>
+                            <div id="interestTravel" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Travel/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">Travel</h1>
+                            </div>
+                            <div id="interestStreet" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Street/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">Street</h1>
+                            </div>
+                            <div id="interestCreative" class="interest-banner mb-5">
+                                <img src="pictors/img/interests/Creative/1.jpg" class="d-block interest-img" alt="...">
+                                <h1 class="interest-banner-text">Creative</h1>
+                            </div>
+                        </div>
+                    </div>
                 </div>
 
-                <div id="portfolio" class="container content-page">
-                    <h2 class="my-3">On lomography: <a class="word-break" href="https://www.lomography.com/homes/rpn">https://www.lomography.com/homes/rpn</a></h2>
-                    <h2 class="my-3">On instagram: <a class="word-break" href="https://www.instagram.com/rpn_pictors/">https://www.instagram.com/rpn_pictors/</a></h2>
-                    <hr>
-                    <h4 class="text-center my-3">You can also see camera or lens specific galleries by using the links listed in the "gear" section.</h4>
+                <div id="portfolio" class="container content-page my-5 m-auto">
+                    <h2 class="my-5">On lomography: <a class="word-break" href="https://www.lomography.com/homes/rpn" target="_blank" rel="noopener noreferrer">https://www.lomography.com/homes/rpn</a></h2>
+                    <h2 class="my-5">On instagram: <a class="word-break" href="https://www.instagram.com/rpn_pictors/" target="_blank" rel="noopener noreferrer">https://www.instagram.com/rpn_pictors/</a></h2>
+                    <h2 class="my-5">You can see camera or lens specific galleries by using the links listed on the "Gear" page.</h2>
                 </div>
 
                 <div id="gear" class="container content-page">
-                    <h3 class="text-center">
+                    <h3 class="text-center my-5">
                         Filters:
                         <span class="badge rounded-pill bg-dark border category-filter my-1 active" id="accessoryFilter" @click="activeCategoryFilter = ''">None</span>
                         <span class="badge rounded-pill bg-dark border category-filter my-1" id="cameraFilter" @click="activeCategoryFilter = 'camera'">Camera</span>
