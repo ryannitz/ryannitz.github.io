@@ -207,6 +207,7 @@ $(document).ready(function(){
     $(".nav-item").click(function(){
         $(".nav-item").removeClass("active")
         $(this).addClass("active")
+        $('html, body').animate({scrollTop : 0}, 250);
     })
 
     $(".category-filter").click(function(){
@@ -220,9 +221,5 @@ $(document).ready(function(){
         }else{
             $(".navbar-toggler").addClass("active")
         }
-    })
-    $("#gear").click(function(){
-        console.log("hello")
-        $('html, body').animate({scrollTop : 0}, 500); // Smooth scroll animation (800ms duration)
     })
 });
