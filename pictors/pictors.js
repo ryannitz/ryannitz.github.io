@@ -224,6 +224,5 @@ $(document).ready(function(){
     $("#gear").click(function(){
         console.log("hello")
         $('html, body').animate({scrollTop : 0}, 500); // Smooth scroll animation (800ms duration)
-        return false; // Prevent default anchor behavior
     })
 });
