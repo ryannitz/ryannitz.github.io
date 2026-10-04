@@ -23,7 +23,3 @@
 ### https://ryannitz.github.io/mersenne.html
 
 **[project]** This site was created for a number theory course as a final project. The grammar is not very good (oops). I'm decently proud of the overall layout and design. The calculators and modals could have been refined more.
-
-### https://ryannitz.github.io/sleep.html
-
-**[project]** This site was created for a health psychology course as a final project. This site was exceptionally fun due to the extensive use of highcharts with unique graphs and data.
